@@ -11,6 +11,6 @@ struct Request {
   let path: String
   let method: HTTPMethod
   let headers: [HTTPHeader]
-  let query: String?
+  let queryItems: [URLQueryItem]
   let body: Data?
 }

@@ -10,9 +10,12 @@ import Foundation
 final class URLSessionTransport: NetworkTransport {
   
   private let urlSession: URLSession
+  private let baseURL: URL
   
-  init(urlSession: URLSession) {
+  init(urlSession: URLSession,
+       baseURL: URL) {
     self.urlSession = urlSession
+    self.baseURL = baseURL
   }
   
   // MARK: - NetworkTransport

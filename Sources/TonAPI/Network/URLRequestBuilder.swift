@@ -7,14 +7,7 @@
 
 import Foundation
 
-protocol URLRequestBuilder {
-  func build(
-    with request: Request,
-    baseURL: URL
-  ) throws -> URLRequest
-}
-
-struct DefaultURLRequestBuilder: URLRequestBuilder {
+struct URLRequestBuilder {
   enum Error: Swift.Error {
     case invalidURL
   }

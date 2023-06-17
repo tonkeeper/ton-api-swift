@@ -8,9 +8,9 @@
 import XCTest
 @testable import TonAPI
 
-final class DefaultURLRequestBuilderTests: XCTestCase {
+final class URLRequestBuilderTests: XCTestCase {
   
-  let requestBuilder = DefaultURLRequestBuilder()
+  let requestBuilder = URLRequestBuilder()
   let baseURL = URL(string: "https://tonapi.io/")!
   
   func testBuildGetURLRequestOnlyWithBaseURL() throws {

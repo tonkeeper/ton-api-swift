@@ -1,0 +1,3574 @@
+openapi: 3.0.2
+info:
+  title: REST api to TON blockchain explorer
+  version: 2.0.0
+  description: Provide access to indexed TON blockchain
+  contact:
+    name: Support
+    email: support@tonkeeper.com
+servers:
+  - url: "https://tonapi.io"
+  - url: "https://testnet.tonapi.io"
+  - url: "http://localhost:8081"
+paths:
+  /v2/blockchain/blocks/{block_id}:
+    get:
+      description: Get block data
+      operationId: getBlock
+      tags:
+        - Blockchain
+      parameters:
+        - $ref: '#/components/parameters/blockIdParameter'
+      responses:
+        '200':
+          description: block
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/blocks/{block_id}/transactions:
+    get:
+      description: Get transactions from block
+      operationId: getBlockTransactions
+      tags:
+        - Blockchain
+      parameters:
+        - $ref: '#/components/parameters/blockIdParameter'
+      responses:
+        '200':
+          description: transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/transactions/{transaction_id}:
+    get:
+      description: Get transaction data
+      operationId: getTransaction
+      tags:
+        - Blockchain
+      parameters:
+        - $ref: '#/components/parameters/transactionIdParameter'
+      responses:
+        '200':
+          description: transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/validators:
+    get:
+      description: Get validators
+      operationId: getValidators
+      tags:
+        - Blockchain
+      responses:
+        '200':
+          description: validators
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Validators'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/masterchain-head:
+    get:
+      description: Get last known masterchain block
+      operationId: getMasterchainHead
+      tags:
+        - Blockchain
+      responses:
+        '200':
+          description: masterchain head
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/accounts/{account_id}:
+    get:
+      description: Get low-level information about an account taken directly from the blockchain.
+      operationId: getRawAccount
+      tags:
+        - Blockchain
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: raw account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RawAccount'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/blockchain/accounts/{account_id}/transactions:
+    get:
+      description: Get account transactions
+      operationId: getAccountTransactions
+      tags:
+        - Blockchain
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - name: after_lt
+          in: query
+          description: "omit this parameter to get last transactions"
+          schema:
+            type: integer
+            format: int64
+            example: ""
+        - name: before_lt
+          in: query
+          description: "omit this parameter to get last transactions"
+          schema:
+            type: integer
+            format: int64
+            example: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+            maximum: 1000
+            default: 100
+            example: 100
+      responses:
+        '200':
+          description: account transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transactions'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/accounts/{account_id}/methods/{method_name}:
+    get:
+      description: Execute get method for account
+      operationId: execGetMethod
+      tags:
+        - Blockchain
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/methodNameParameter'
+        - name: args
+          in: query
+          required: false
+          schema:
+            type: array
+            description: "Supported values: NaN, Null, 10-base digits for tiny int, 0x-prefixed hex digits for int257, all forms of addresses for slice, single-root base64-encoded BOC for cell"
+            items:
+              type: string
+            example: [ "0:9a33970f617bcd71acf2cd28357c067aa31859c02820d8f01d74c88063a8f4d8" ]
+      responses:
+        '200':
+          description: "result"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodExecutionResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/message:
+    post:
+      description: Send message to blockchain
+      operationId: sendMessage
+      tags:
+        - Blockchain
+      requestBody:
+        $ref: "#/components/requestBodies/Boc"
+      responses:
+        '200':
+          description: "success"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/events/emulate:
+    post:
+      description: Emulate sending message to blockchain
+      operationId: emulateMessageToEvent
+      tags:
+        - Emulation
+      parameters:
+        - $ref: '#/components/parameters/i18n'
+      requestBody:
+        $ref: "#/components/requestBodies/Boc"
+      responses:
+        '200':
+          description: "event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/traces/emulate:
+    post:
+      description: Emulate sending message to blockchain
+      operationId: emulateMessageToTrace
+      tags:
+        - Emulation
+      requestBody:
+        $ref: "#/components/requestBodies/Boc"
+      responses:
+        '200':
+          description: "event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trace'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/wallet/emulate:
+    post:
+      description: Emulate sending message to blockchain
+      operationId: emulateWalletMessage
+      tags:
+        - Emulation
+      parameters:
+        - $ref: '#/components/parameters/i18n'
+      requestBody:
+        $ref: "#/components/requestBodies/Boc"
+      responses:
+        '200':
+          description: "event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageConsequences'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/events/emulate:
+    post:
+      description: Emulate sending message to blockchain
+      operationId: emulateMessageToAccountEvent
+      tags:
+        - Emulation
+      parameters:
+        - $ref: '#/components/parameters/i18n'
+        - $ref: '#/components/parameters/accountIdParameter'
+      requestBody:
+        $ref: "#/components/requestBodies/Boc"
+      responses:
+        '200':
+          description: "event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEvent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/blockchain/config:
+    get:
+      description: Get blockchain config
+      operationId: getConfig
+      tags:
+        - Blockchain
+      responses:
+        '200':
+          description: blockchain config
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/_bulk:
+    post:
+      description: Get human-friendly information about several accounts without low-level details.
+      operationId: getAccounts
+      tags:
+        - Accounts
+      requestBody:
+        $ref: "#/components/requestBodies/AccountIds"
+      responses:
+        '200':
+          description: a list of accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accounts'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}:
+    get:
+      description: Get human-friendly information about an account without low-level details.
+      operationId: getAccount
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/dns/backresolve:
+    get:
+      description: Get domains for wallet account
+      operationId: dnsBackResolve
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: domains for wallet account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainNames'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/jettons:
+    get:
+      description: Get all Jettons balances by owner address
+      operationId: getJettonsBalances
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: jetton balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JettonsBalances'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /v2/accounts/{account_id}/jettons/history:
+    get:
+      description: "Get the transfer jettons history for account_id"
+      operationId: getJettonsHistory
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/i18n'
+        - name: before_lt
+          in: query
+          description: "omit this parameter to get last events"
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 25758317000002
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1000
+            maximum: 1000
+        - name: start_date
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1668436763
+        - name: end_date
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1668436763
+      responses:
+        '200':
+          description: jetton history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEvents'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/accounts/{account_id}/jettons/{jetton_id}/history:
+    get:
+      description: "Get the transfer jetton history for account_id and jetton_id"
+      operationId: getJettonsHistoryByID
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/jettonIdParameter'
+        - $ref: '#/components/parameters/i18n'
+        - name: before_lt
+          in: query
+          description: "omit this parameter to get last events"
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 25758317000002
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1000
+            maximum: 1000
+        - name: start_date
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1668436763
+        - name: end_date
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1668436763
+      responses:
+        '200':
+          description: jetton history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEvents'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/nfts:
+    get:
+      description: Get all NFT items by owner address
+      operationId: getNftItemsByOwner
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/collectionQuery'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - in: query
+          name: indirect_ownership
+          required: false
+          description: "Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly."
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: "nft items"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftItems'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/events:
+    get:
+      description: Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+      operationId: getEventsByAccount
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/i18n'
+        - name: before_lt
+          in: query
+          description: "omit this parameter to get last events"
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 25758317000002
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+            example: 1000
+            maximum: 1000
+        - name: start_date
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1668436763
+        - name: end_date
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+            example: 1668436763
+      responses:
+        '200':
+          description: "events"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEvents'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/traces:
+    get:
+      description: Get traces for account
+      operationId: getTracesByAccount
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+            maximum: 1000
+            default: 100
+            example: 100
+      responses:
+        '200':
+          description: "traces"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceIds'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/subscriptions:
+    get:
+      description: Get all subscriptions by wallet address
+      operationId: getSubscriptionsByAccount
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "subscriptions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriptions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/{account_id}/reindex:
+    post:
+      description: "Update internal cache for a particular account"
+      operationId: reindexAccount
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "success"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/accounts/search:
+    get:
+      description: "Search for accounts by name. You can find the account by the first characters of the domain."
+      operationId: getSearchAccounts
+      tags:
+        - Accounts
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 15
+      responses:
+        '200':
+          description: "found accounts"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoundAccounts'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /v2/accounts/{account_id}/dns/expiring:
+    get:
+      description: "Get expiring .ton dns"
+      operationId: getDnsExpiring
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/periodQuery'
+      responses:
+        '200':
+          description: "expiring .ton dns"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsExpiring'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /v2/accounts/{account_id}/publickey:
+    get:
+      description: "Get public key by account id"
+      operationId: getPublicKeyByAccountID
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "public key"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - public_key
+                properties:
+                  public_key:
+                    type: string
+                    example: "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/dns/{domain_name}:
+    get:
+      description: get full information about domain name
+      operationId: dnsInfo
+      tags:
+        - DNS
+      parameters:
+        - $ref: '#/components/parameters/domainNameParameter'
+      responses:
+        '200':
+          description: "domain info"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainInfo'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/dns/{domain_name}/resolve:
+    get:
+      description: DNS resolve for domain name
+      operationId: dnsResolve
+      tags:
+        - DNS
+      parameters:
+        - $ref: '#/components/parameters/domainNameParameter'
+      responses:
+        '200':
+          description: "dns record"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/dns/{domain_name}/bids:
+    get:
+      description: Get domain bids
+      operationId: getDomainBids
+      tags:
+        - DNS
+      parameters:
+        - $ref: '#/components/parameters/domainNameParameter'
+      responses:
+        '200':
+          description: "domain bids"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainBids'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/dns/auctions:
+    get:
+      description: Get all auctions
+      operationId: getAllAuctions
+      tags:
+        - DNS
+      parameters:
+        - $ref: '#/components/parameters/domainFilterParameter'
+      responses:
+        '200':
+          description: "auctions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auctions'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/nfts/collections:
+    get:
+      description: Get NFT collections
+      operationId: getNftCollections
+      tags:
+        - NFT
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+            maximum: 1000
+            default: 100
+            example: 15
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            example: 10
+      responses:
+        '200':
+          description: "nft collections"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftCollections'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/nfts/collections/{account_id}:
+    get:
+      description: Get NFT collection by collection address
+      operationId: getNftCollection
+      tags:
+        - NFT
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "nft collection"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftCollection'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/nfts/collections/{account_id}/items:
+    get:
+      description: Get NFT items from collection by collection address
+      operationId: getItemsFromCollection
+      tags:
+        - NFT
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: "nft collection"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftItems'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/nfts/_bulk:
+    post:
+      description: Get NFT items by their addresses
+      operationId: getNftItemsByAddresses
+      tags:
+        - NFT
+      requestBody:
+        $ref: "#/components/requestBodies/AccountIds"
+      responses:
+        '200':
+          description: "nft items"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftItems'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/nfts/{account_id}:
+    get:
+      description: Get NFT item by its address
+      operationId: getNftItemByAddress
+      tags:
+        - NFT
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "nft item"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/traces/{trace_id}:
+    get:
+      description: Get the trace by trace ID or hash of any transaction in trace
+      operationId: getTrace
+      tags:
+        - Traces
+      parameters:
+        - $ref: '#/components/parameters/traceIdParameter'
+      responses:
+        '200':
+          description: "trace"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trace'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/events/{event_id}:
+    get:
+      description: Get an event either by event ID or a hash of any transaction in a trace. An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+      operationId: getEvent
+      tags:
+        - Events
+      parameters:
+        - $ref: '#/components/parameters/eventIdParameter'
+        - $ref: '#/components/parameters/i18n'
+      responses:
+        '200':
+          description: "event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/jettons/{account_id}:
+    get:
+      description: Get jetton metadata by jetton master address
+      operationId: getJettonInfo
+      tags:
+        - Jettons
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "jetton info"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JettonInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/staking/nominator/{account_id}/pools:
+    get:
+      description: All pools where account participates
+      operationId: "poolsByNominators"
+      tags:
+        - Staking
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+      responses:
+        '200':
+          description: "user pools"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStaking'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/staking/pool/{account_id}:
+    get:
+      description: Pool info
+      operationId: stakingPoolInfo
+      tags:
+        - Staking
+      parameters:
+        - $ref: '#/components/parameters/accountIdParameter'
+        - $ref: '#/components/parameters/i18n'
+      responses:
+        '200':
+          description: "user pools"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - implementation
+                  - pool
+                properties:
+                  implementation:
+                    $ref: '#/components/schemas/PoolImplementation'
+                  pool:
+                    $ref: '#/components/schemas/PoolInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/staking/pools:
+    get:
+      description: All pools available in network
+      operationId: stakingPools
+      tags:
+        - Staking
+      parameters:
+        - in: query
+          name: available_for
+          required: false
+          description: account ID
+          schema:
+            type: string
+            example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+        - in: query
+          name: include_unverified
+          required: false
+          description: "return also pools not from white list - just compatible by interfaces (maybe dangerous!)"
+          schema:
+            type: boolean
+            example: false
+        - $ref: '#/components/parameters/i18n'
+      responses:
+        '200':
+          description: "list of pools"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pools
+                  - implementations
+                properties:
+                  pools:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PoolInfo'
+                  implementations:
+                    type: object
+                    additionalProperties:
+                      $ref: '#/components/schemas/PoolImplementation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/storage/providers:
+    get:
+      description: Get TON storage providers deployed to the blockchain.
+      operationId: getStorageProviders
+      tags:
+        - Storage
+      responses:
+        '200':
+          description: "list of storage providers"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - providers
+                properties:
+                  providers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StorageProvider'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v2/rates:
+    get:
+      description: Get the token price to the currency
+      operationId: getRates
+      tags:
+        - Rates
+      parameters:
+        - in: query
+          name: tokens
+          description: accept ton and jetton master addresses, separated by commas
+          required: true
+          schema:
+            type: string
+            example: ton
+        - in: query
+          name: currencies
+          description: accept ton and all possible fiat currencies, separated by commas
+          required: true
+          schema:
+            type: string
+            example: ton,usd,rub
+      responses:
+        '200':
+          description: "ton price"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - rates
+                properties:
+                  rates:
+                    additionalProperties: true
+                    example: { }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /v2/tonconnect/payload:
+    get:
+      description: Get a payload for further token receipt
+      operationId: getTonConnectPayload
+      tags:
+        - Connect
+      responses:
+        '200':
+          description: "payload"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - payload
+                properties:
+                  payload:
+                    type: string
+                    example: "84jHVNLQmZsAAAAAZB0Zryi2wqVJI-KaKNXOvCijEi46YyYzkaSHyJrMPBMOkVZa"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/tonconnect/stateinit:
+    post:
+      description: "Get account info by state init"
+      operationId: getAccountInfoByStateInit
+      tags:
+        - Connect
+      requestBody:
+        $ref: "#/components/requestBodies/TonConnectStateInit"
+      responses:
+        '200':
+          description: "account info"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfoByStateInit'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /v2/wallet/backup:
+    get:
+      description: Get backup info
+      operationId: getWalletBackup
+      tags:
+        - Wallet
+      parameters:
+        - in: header
+          name: X-TonConnect-Auth
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: "backup"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - dump
+                properties:
+                  dump:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      description: Set backup info
+      operationId: setWalletBackup
+      tags:
+        - Wallet
+      parameters:
+        - in: header
+          name: X-TonConnect-Auth
+          schema:
+            type: string
+          required: true
+      requestBody:
+        $ref: "#/components/requestBodies/Backup"
+      responses:
+        '200':
+          description: "success"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /v2/wallet/auth/proof:
+    post:
+      description: Account verification and token issuance
+      operationId: tonConnectProof
+      tags:
+        - Wallet
+      requestBody:
+        $ref: "#/components/requestBodies/TonConnectProof"
+      responses:
+        '200':
+          description: "token"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - token
+                properties:
+                  token:
+                    type: string
+                    example: "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  parameters:
+    blockIdParameter:
+      in: path
+      name: block_id
+      required: true
+      description: block ID
+      schema:
+        type: string
+        example: (-1,8000000000000000,4234234)
+    transactionIdParameter:
+      in: path
+      name: transaction_id
+      required: true
+      description: transaction ID
+      schema:
+        type: string
+        example: 97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    accountIdParameter:
+      in: path
+      name: account_id
+      required: true
+      description: account ID
+      schema:
+        type: string
+        example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    accountIdParameters:
+      in: path
+      name: account_ids
+      required: true
+      description: account ID
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    jettonIdParameter:
+      in: path
+      name: jetton_id
+      required: true
+      description: jetton ID
+      schema:
+        type: string
+        example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    methodNameParameter:
+      in: path
+      name: method_name
+      required: true
+      description: contract get method name
+      schema:
+        type: string
+        example: get_wallet_address
+    domainNameParameter:
+      in: path
+      name: domain_name
+      required: true
+      description: domain name with .ton or .t.me
+      schema:
+        type: string
+        example: wallet.ton
+    domainFilterParameter:
+      in: query
+      name: tld
+      required: false
+      description: domain filter for current auctions "ton" or "t.me"
+      schema:
+        type: string
+        example: ton
+    traceIdParameter:
+      in: path
+      name: trace_id
+      required: true
+      description: "trace ID or transaction hash in hex (without 0x) or base64url format"
+      schema:
+        type: string
+        example: 97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    eventIdParameter:
+      in: path
+      name: event_id
+      required: true
+      description: "event ID or transaction hash in hex (without 0x) or base64url format"
+      schema:
+        type: string
+        example: 97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    i18n:
+      in: header
+      name: Accept-Language
+      required: false
+      schema:
+        type: string
+        example: "ru-RU,ru;q=0.5"
+        default: "en"
+    limit:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        default: 1000
+        maximum: 1000
+    offset:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        default: 0
+    periodQuery:
+      in: query
+      name: period
+      required: false
+      description: "number of days before expiration"
+      schema:
+        type: integer
+        default: 30
+        minimum: 1
+        maximum: 360
+    collectionQuery:
+      in: query
+      name: collection
+      required: false
+      description: "nft collection"
+      schema:
+        type: string
+        example: "0:06d811f426598591b32b2c49f29f66c821368e4acb1de16762b04e0174532465"
+
+  requestBodies:
+    MethodParameters:
+      description: input parameters for contract get method
+      content:
+        application/json:
+          schema:
+            type: object
+
+    Boc:
+      description: bag-of-cells serialized to base64
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - boc
+            properties:
+              boc:
+                type: string
+                example: te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg
+    AccountIds:
+      description: a list of account ids
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - account_ids
+            properties:
+              account_ids:
+                type: array
+                items:
+                  type: string
+                  example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    TonConnectProof:
+      description: "Data that is expected from TON Connect"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - address
+              - proof
+            properties:
+              address:
+                type: string
+                example: "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+              proof:
+                type: object
+                required:
+                  - timestamp
+                  - domain
+                  - signature
+                  - payload
+                properties:
+                  timestamp:
+                    type: integer
+                    format: int64
+                    example: "1678275313"
+                  domain:
+                    type: object
+                    required:
+                      - value
+                    properties:
+                      length_bytes:
+                        type: integer
+                        format: uint32
+                      value:
+                        type: string
+                  signature:
+                    type: string
+                  payload:
+                    type: string
+                    example: "84jHVNLQmZsAAAAAZB0Zryi2wqVJI-KaKNXOvCijEi46YyYzkaSHyJrMPBMOkVZa"
+                  state_init:
+                    type: string
+    Backup:
+      description: "Information for saving backup"
+      required: true
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+            format: binary
+    TonConnectStateInit:
+      description: "Data that is expected"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - state_init
+            properties:
+              state_init:
+                type: string
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          example: error description
+
+    AccountAddress:
+      type: object
+      required:
+        - address
+        - is_scam
+      properties:
+        address:
+          type: string
+          example: 0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365
+        name:
+          type: string
+          example: Ton foundation
+          description: Display name. Data collected from different sources like moderation lists, dns, collections names and over.
+        is_scam:
+          type: boolean
+          example: true
+          description: Is this account was marked as part of scammers activity
+        icon:
+          type: string
+          example: https://ton.org/logo.png
+
+    Block:
+      type: object
+      required:
+        - workchain_id
+        - shard
+        - seqno
+        - root_hash
+        - file_hash
+        - global_id
+        # ValueFlow pgtype.JSONB
+        - version
+        - after_merge
+        - before_split
+        - after_split
+        - want_split
+        - want_merge
+        - key_block
+        - gen_utime
+        - start_lt
+        - end_lt
+        - vert_seqno
+        - gen_catchain_seqno
+        - min_ref_mc_seqno
+        - prev_key_block_seqno
+        - prev_refs
+        - in_msg_descr_length
+        - out_msg_descr_length
+        - rand_seed
+        - created_by
+
+      properties:
+        workchain_id:
+          type: integer
+          example: 0
+          format: int32
+        shard:
+          type: string
+          example: 8000000000000000
+        seqno:
+          type: integer
+          example: 21734019
+          format: int32
+        root_hash:
+          type: string
+          example: 131D0C65055F04E9C19D687B51BC70F952FD9CA6F02C2801D3B89964A779DF85
+        file_hash:
+          type: string
+          example: A6A0BD6608672B11B79538A50B2204E748305C12AA0DED9C16CF0006CE3AF8DB
+        global_id:
+          type: integer
+          example: -239
+          format: int32
+        version:
+          type: integer
+          example: 0
+          format: int32
+        after_merge:
+          type: boolean
+          example: true
+        before_split:
+          type: boolean
+          example: true
+        after_split:
+          type: boolean
+          example: true
+        want_split:
+          type: boolean
+          example: true
+        want_merge:
+          type: boolean
+          example: true
+        key_block:
+          type: boolean
+          example: true
+        gen_utime:
+          type: integer
+          format: int64
+          example: 1674826775
+        start_lt:
+          type: integer
+          format: int64
+          example: 23814011000000
+        end_lt:
+          type: integer
+          format: int64
+          example: 23814011000001
+        vert_seqno:
+          type: integer
+          example: 0
+          format: int32
+        gen_catchain_seqno:
+          type: integer
+          example: 0
+          format: int32
+        min_ref_mc_seqno:
+          type: integer
+          example: 0
+          format: int32
+        prev_key_block_seqno:
+          type: integer
+          example: 0
+          format: int32
+        gen_software_version:
+          type: integer
+          example: 0
+          format: int32
+        gen_software_capabilities:
+          type: integer
+          format: int64
+          example: 0
+        master_ref:
+          type: string
+          example: (-1,4234234,8000000000000000)
+        prev_refs:
+          type: array
+          items:
+            type: string
+            example: [ (-1,4234235,8000000000000000) ]
+        in_msg_descr_length:
+          type: integer
+          format: int64
+          example: 0
+        out_msg_descr_length:
+          type: integer
+          format: int64
+          example: 0
+        rand_seed:
+          type: string
+          example: 131D0C65055F04E9C19D687B51BC70F952FD9CA6F02C2801D3B89964A779DF85
+        created_by:
+          type: string
+          example: A6A0BD6608672B11B79538A50B2204E748305C12AA0DED9C16CF0006CE3AF8DB
+
+    AccountStatus:
+      type: string
+      example: active
+      enum:
+        - nonexist
+        - uninit
+        - active
+        - frozen
+
+    StateInit:
+      type: object
+      required:
+        - boc
+      properties:
+        boc:
+          type: string
+          example: te6ccgEBBgEARAABFP8A9KQT9LzyyAsBAgEgAgMCAUgEBQAE8jAAONBsIdMfMO1E0NM/MAHAAZekyMs/ye1UkzDyBuIAEaE0MdqJoaZ+YQ==
+
+    Message:
+      type: object
+      required:
+        - created_lt
+        - ihr_disabled
+        - bounce
+        - bounced
+        - value
+        - fwd_fee
+        - ihr_fee
+        - import_fee
+        - created_at
+        - decoded_body
+      properties:
+        created_lt:
+          type: integer
+          format: int64
+          example: 25713146000001
+        ihr_disabled:
+          type: boolean
+          example: true
+        bounce:
+          type: boolean
+          example: true
+        bounced:
+          type: boolean
+          example: true
+        value:
+          type: integer
+          format: int64
+          example: 60000000
+        fwd_fee:
+          type: integer
+          format: int64
+          example: 5681002
+        ihr_fee:
+          type: integer
+          format: int64
+          example: 5681002
+        destination:
+          $ref: '#/components/schemas/AccountAddress'
+        source:
+          $ref: '#/components/schemas/AccountAddress'
+        import_fee:
+          type: integer
+          format: int64
+          example: 5681002
+        created_at:
+          type: integer
+          format: int64
+          example: 5681002
+        op_code:
+          type: string
+          example: "0xdeadbeaf"
+        init:
+          $ref: '#/components/schemas/StateInit'
+        raw_body:
+          type: string
+          description: hex-encoded BoC with raw message body
+          example: "B5EE9C7201010101001100001D00048656C6C6F2C20776F726C64218"
+        decoded_op_name:
+          type: string
+          example: "nft_transfer"
+        decoded_body: { } # Free-form JSON value
+
+    TransactionType:
+      type: string
+      example: TransOrd
+      enum:
+        - TransOrd
+        - TransTickTock
+        - TransSplitPrepare
+        - TransSplitInstall
+        - TransMergePrepare
+        - TransMergeInstall
+        - TransStorage
+
+    AccStatusChange:
+      type: string
+      example: acst_unchanged
+      enum:
+        - acst_unchanged
+        - acst_frozen
+        - acst_deleted
+
+    ComputeSkipReason:
+      type: string
+      example: cskip_no_state
+      enum:
+        - cskip_no_state
+        - cskip_bad_state
+        - cskip_no_gas
+
+    BouncePhaseType:
+      type: string
+      example: cskip_no_state
+      enum:
+        - TrPhaseBounceNegfunds
+        - TrPhaseBounceNofunds
+        - TrPhaseBounceOk
+
+    ComputePhase:
+      type: object
+      required:
+        - skipped
+      properties:
+        skipped:
+          type: boolean
+          example: true
+        skip_reason:
+          $ref: '#/components/schemas/ComputeSkipReason'
+        success:
+          type: boolean
+          example: true
+        gas_fees:
+          type: integer
+          format: int64
+          example: 1000
+        gas_used:
+          type: integer
+          format: int64
+          example: 10000
+        vm_steps:
+          type: integer
+          format: uint32
+          example: 5
+        exit_code:
+          type: integer
+          format: int32
+          example: 0
+
+    StoragePhase:
+      type: object
+      required:
+        - fees_collected
+        - status_change
+      properties:
+        fees_collected:
+          type: integer
+          format: int64
+          example: 25713146000001
+        fees_due:
+          type: integer
+          format: int64
+          example: 25713146000001
+        status_change:
+          $ref: '#/components/schemas/AccStatusChange'
+
+    CreditPhase:
+      type: object
+      required:
+        - fees_collected
+        - credit
+      properties:
+        fees_collected:
+          type: integer
+          format: int64
+          example: 100
+        credit:
+          type: integer
+          format: int64
+          example: 1000
+
+    ActionPhase:
+      type: object
+      required:
+        - success
+        - total_actions
+        - skipped_actions
+        - fwd_fees
+        - total_fees
+      properties:
+        success:
+          type: boolean
+          example: true
+        total_actions:
+          type: integer
+          format: int32
+          example: 5
+        skipped_actions:
+          type: integer
+          format: int32
+          example: 5
+        fwd_fees:
+          type: integer
+          format: int64
+          example: 1000
+        total_fees:
+          type: integer
+          format: int64
+          example: 1000
+
+    Transaction:
+      type: object
+      required:
+        - hash
+        - lt
+        - account
+        - success
+        - utime
+        - orig_status
+        - end_status
+        - total_fees
+        - transaction_type
+        - state_update_old
+        - state_update_new
+        - out_msgs
+        - block
+        - aborted
+        - destroyed
+      properties:
+        hash:
+          type: string
+          example: 55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+        lt:
+          type: integer
+          format: int64
+          example: 25713146000001
+        account:
+          $ref: '#/components/schemas/AccountAddress'
+        success:
+          type: boolean
+          example: true
+        utime:
+          type: integer
+          format: int64
+          example: 1645544908
+        orig_status:
+          $ref: '#/components/schemas/AccountStatus'
+        end_status:
+          $ref: '#/components/schemas/AccountStatus'
+        total_fees:
+          type: integer
+          format: int64
+          example: 25713146000001
+        transaction_type:
+          $ref: '#/components/schemas/TransactionType'
+        state_update_old:
+          type: string
+          example: 55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+        state_update_new:
+          type: string
+          example: 55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+        in_msg:
+          $ref: '#/components/schemas/Message'
+        out_msgs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        block:
+          type: string
+          example: (-1,4234234,8000000000000000)
+        prev_trans_hash:
+          type: string
+          example: 55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+        prev_trans_lt:
+          type: integer
+          format: int64
+          example: 25713146000001
+        compute_phase:
+          $ref: '#/components/schemas/ComputePhase'
+        storage_phase:
+          $ref: '#/components/schemas/StoragePhase'
+        credit_phase:
+          $ref: '#/components/schemas/CreditPhase'
+        action_phase:
+          $ref: '#/components/schemas/ActionPhase'
+        bounce_phase:
+          $ref: '#/components/schemas/BouncePhaseType'
+        aborted:
+          type: boolean
+          example: true
+        destroyed:
+          type: boolean
+          example: true
+
+    Transactions:
+      type: object
+      required:
+        - transactions
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+
+    Validator:
+      type: object
+      required:
+        - address
+      properties:
+        address:
+          type: string
+          example: 0:55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+
+    Validators:
+      type: object
+      required:
+        - transactions
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Validator'
+
+    AccountStorageInfo:
+      type: object
+      required:
+        - used_cells
+        - used_bits
+        - used_public_cells
+        - last_paid
+        - due_payment
+      properties:
+        used_cells:
+          type: integer
+          format: int64
+          example: 567
+        used_bits:
+          type: integer
+          format: int64
+          example: 567
+        used_public_cells:
+          type: integer
+          format: int64
+          example: 567
+        last_paid:
+          type: integer
+          format: int64
+          example: 567
+        due_payment:
+          type: integer
+          format: int64
+          example: 567
+    RawAccount:
+      type: object
+      required:
+        - address
+        - balance
+        - status
+        - last_transaction_lt
+        - storage
+      properties:
+        address:
+          type: string
+          example: 0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf
+        balance:
+          type: integer
+          format: int64
+          example: 123456789
+        extra_balance:
+          type: object
+          additionalProperties:
+            type: string
+        code:
+          type: string
+          example: b5ee9c72410104010087000114ff00f4a413f4a0f2c80b0102012002030002d200dfa5ffff76a268698fe9ffe8e42c5267858f90e785ffe4f6aa6467c444ffb365ffc10802faf0807d014035e7a064b87d804077e7857fc10803dfd2407d014035e7a064b86467cd8903a32b9ba4410803ade68afd014035e7a045ea432b6363796103bb7b9363210c678b64b87d807d8040c249b3e4
+        data:
+          type: string
+          example: b5ee9c7241010101002600004811fd096c0000000000000000000000000000000000000000000000000000000000000000cb78264d
+        last_transaction_lt:
+          type: integer
+          format: int64
+          example: 123456789
+        status:
+          type: string
+          example: active
+        storage:
+          $ref: '#/components/schemas/AccountStorageInfo'
+
+    Account:
+      type: object
+      required:
+        - address
+        - balance
+        - status
+        - last_activity
+        - get_methods
+      properties:
+        address:
+          type: string
+          example: 0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf
+        balance:
+          type: integer
+          format: int64
+          example: 123456789
+        last_activity:
+          type: integer
+          description: unix timestamp
+          format: int64
+          example: 123456789
+        status:
+          type: string
+          example: active
+        interfaces:
+          type: array
+          items:
+            type: string
+            example: nft_sale
+        name:
+          type: string
+          example: "Ton foundation"
+        is_scam:
+          type: boolean
+          example: true
+        icon:
+          type: string
+          example: "https://ton.org/logo.png"
+        memo_required:
+          type: boolean
+          example: true
+        get_methods:
+          type: array
+          items:
+            type: string
+          example: [ 'get_item_data' ]
+
+    Accounts:
+      type: object
+      required:
+        - accounts
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+
+    MethodExecutionResult:
+      type: object
+      required:
+        - success
+        - exit_code
+        - stack
+      properties:
+        success:
+          type: boolean
+          example: true
+        exit_code:
+          type: integer
+          example: 0
+          description: tvm exit code
+        stack:
+          type: array
+          items:
+            $ref: "#/components/schemas/TvmStackRecord"
+        decoded: { } # Free-form JSON value
+    TvmStackRecord:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          example: "cell"
+          enum:
+            - cell
+            - num
+            - nan
+            - "null"
+            - tuple
+        cell:
+          type: string
+          example: "te6cckEBAQEAJAAAQ4ARPeUceMlv4l12d6jdLpIzzbAV6amYXNZeZK2aicQdC/Apj8aJ"
+        slice:
+          type: string
+          example: ""
+        num:
+          type: string
+          example: ""
+        tuple:
+          type: array
+          example: [ ]
+          items:
+            $ref: '#/components/schemas/TvmStackRecord'
+    Config:
+      type: object
+      required:
+        - boc
+      properties:
+        boc:
+          type: string
+          description: config boc in base64 format
+          example: te6ccgEBBgEARAABFP8A9KQT9LzyyAsBAgEgAgMCAUgEBQAE8jAAONBsIdMfMO1E0NM/MAHAAZekyMs/ye1UkzDyBuIAEaE0MdqJoaZ+YQ==
+
+    DomainNames:
+      type: object
+      required:
+        - domains
+      properties:
+        domains:
+          type: array
+          items:
+            type: string
+            example: vasya.ton
+
+    DomainBid:
+      type: object
+      required:
+        - success
+        - value
+        - txTime
+        - bidder
+        - txHash
+      properties:
+        success:
+          type: boolean
+          example: true
+          default: false
+        value:
+          type: integer
+          format: int64
+          example: 1660050553
+        txTime:
+          type: integer
+          format: int64
+          example: 1660050553
+        txHash:
+          type: string
+          example: 55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+        bidder:
+          $ref: '#/components/schemas/AccountAddress'
+
+    DomainBids:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainBid'
+
+    JettonVerificationType:
+      type: string
+      enum:
+        - whitelist
+        - blacklist
+        - none
+
+    JettonPreview:
+      type: object
+      required:
+        - address
+        - name
+        - symbol
+        - decimals
+        - verification
+        - image
+      properties:
+        address:
+          type: string
+          example: 0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0
+        name:
+          type: string
+          example: Wrapped TON
+        symbol:
+          type: string
+          example: WTON
+        decimals:
+          type: integer
+          example: 9
+        image:
+          type: string
+          example: https://cache.tonapi.io/images/jetton.jpg
+        verification:
+          $ref: '#/components/schemas/JettonVerificationType'
+
+    JettonBalance:
+      type: object
+      required:
+        - balance
+        - wallet_address
+        - jetton
+      properties:
+        balance:
+          type: string
+          example: 597968399
+        wallet_address:
+          $ref: '#/components/schemas/AccountAddress'
+        jetton:
+          $ref: '#/components/schemas/JettonPreview'
+
+    JettonsBalances:
+      type: object
+      required:
+        - balances
+      properties:
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/JettonBalance'
+
+    Price:
+      type: object
+      required:
+        - value
+        - token_name
+      properties:
+        value:
+          type: string
+          example: 123000000000
+        token_name:
+          type: string
+          example: TON
+
+    ImagePreview:
+      type: object
+      required:
+        - resolution
+        - url
+      properties:
+        resolution:
+          type: string
+          example: "100x100"
+        url:
+          type: string
+          example: "https://site.com/pic1.jpg"
+
+    Sale:
+      type: object
+      required:
+        - address
+        - market
+        - price
+      properties:
+        address:
+          type: string
+          example: 0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365
+        market:
+          $ref: '#/components/schemas/AccountAddress'
+        owner:
+          $ref: '#/components/schemas/AccountAddress'
+        price:
+          $ref: '#/components/schemas/Price'
+
+    NftItem:
+      type: object
+      required:
+        - address
+        - index
+        - verified
+        - metadata
+        - approved_by
+      properties:
+        address:
+          type: string
+          example: 0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B
+        index:
+          type: integer
+          format: int64
+          example: 58
+        owner:
+          $ref: '#/components/schemas/AccountAddress'
+        collection:
+          type: object
+          required:
+            - address
+            - name
+          properties:
+            address:
+              type: string
+              example: 0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B
+            name:
+              type: string
+              example: TON Diamonds
+        verified:
+          type: boolean
+          example: true
+        metadata:
+          type: object
+          additionalProperties: true
+          example: { }
+        sale:
+          $ref: '#/components/schemas/Sale'
+        previews:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImagePreview'
+        dns:
+          type: string
+          example: crypto.ton
+        approved_by:
+          type: array
+          items:
+            type: string
+            example: getgems
+            enum:
+              - getgems
+              - tonkeeper
+    NftItems:
+      type: object
+      required:
+        - nft_items
+      properties:
+        nft_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/NftItem'
+
+    Fee:
+      type: object
+      required:
+        - account
+        - total
+        - gas
+        - rent
+        - deposit
+        - refund
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountAddress'
+        total:
+          type: integer
+          format: int64
+          example: 100
+          description: "gas + rent + deposit - refund"
+        gas:
+          type: integer
+          format: int64
+          example: 80
+        rent:
+          type: integer
+          format: int64
+          example: 10
+        deposit:
+          type: integer
+          format: int64
+          example: 110
+        refund:
+          type: integer
+          format: int64
+          example: 100
+
+    Refund:
+      type: object
+      required:
+        - type
+        - origin
+      properties:
+        type:
+          type: string
+          example: DNS.ton
+          enum:
+            - DNS.ton
+            - DNS.tg
+            - GetGems
+        origin:
+          type: string
+          example: "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+    ValueFlow:
+      type: object
+      required:
+        - account
+        - ton
+        - fees
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountAddress'
+        ton:
+          type: integer
+          format: int64
+          example: 80
+        fees:
+          type: integer
+          format: int64
+          example: 10
+        jettons:
+          type: array
+          items:
+            type: object
+            required:
+              - account
+              - quantity
+            properties:
+              account:
+                $ref: '#/components/schemas/AccountAddress'
+              quantity:
+                type: integer
+                format: int64
+                example: 10
+
+    Action:
+      type: object
+      required:
+        - type
+        - status
+        - simple_preview
+      properties:
+        type:
+          type: string
+          example: "TonTransfer"
+          enum:
+            - TonTransfer
+            - JettonTransfer
+            - NftItemTransfer
+            - ContractDeploy
+            - Subscribe
+            - UnSubscribe
+            - AuctionBid
+            - NftPurchase
+            - SmartContractExec
+            - Unknown
+        status:
+          type: string
+          example: "ok"
+          enum:
+            - ok
+            - failed
+            - pending
+        TonTransfer:
+          $ref: '#/components/schemas/TonTransferAction'
+        ContractDeploy:
+          $ref: '#/components/schemas/ContractDeployAction'
+        JettonTransfer:
+          $ref: '#/components/schemas/JettonTransferAction'
+        NftItemTransfer:
+          $ref: '#/components/schemas/NftItemTransferAction'
+        Subscribe:
+          $ref: '#/components/schemas/SubscriptionAction'
+        UnSubscribe:
+          $ref: '#/components/schemas/UnSubscriptionAction'
+        AuctionBid:
+          $ref: '#/components/schemas/AuctionBidAction'
+        NftPurchase:
+          $ref: '#/components/schemas/NftPurchaseAction'
+        SmartContractExec:
+          $ref: '#/components/schemas/SmartContractAction'
+        simple_preview:
+          $ref: '#/components/schemas/ActionSimplePreview'
+
+    TonTransferAction:
+      type: object
+      required:
+        - sender
+        - recipient
+        - amount
+      properties:
+        sender:
+          $ref: '#/components/schemas/AccountAddress'
+        recipient:
+          $ref: '#/components/schemas/AccountAddress'
+        amount:
+          type: integer
+          description: amount in nanotons
+          format: int64
+          example: 123456789
+        comment:
+          type: string
+          example: "Hi! This is your salary. \nFrom accounting with love."
+        refund:
+          $ref: '#/components/schemas/Refund'
+
+    SmartContractAction:
+      type: object
+      required:
+        - executor
+        - contract
+        - ton_attached
+        - operation
+      properties:
+        executor:
+          $ref: '#/components/schemas/AccountAddress'
+        contract:
+          $ref: '#/components/schemas/AccountAddress'
+        ton_attached:
+          type: integer
+          description: amount in nanotons
+          format: int64
+          example: 123456789
+        operation:
+          type: string
+          example: "NftTransfer or 0x35d95a12"
+        payload:
+          type: string
+        refund:
+          $ref: '#/components/schemas/Refund'
+
+    NftItemTransferAction:
+      type: object
+      required:
+        - nft
+      properties:
+        sender:
+          $ref: '#/components/schemas/AccountAddress'
+        recipient:
+          $ref: '#/components/schemas/AccountAddress'
+        nft:
+          type: string
+          example: ""
+        comment:
+          type: string
+          example: "Hi! This is your salary. \nFrom accounting with love."
+        payload:
+          type: string
+          description: raw hex encoded payload
+          example: '0234de3e21d21b3ee21f3'
+        refund:
+          $ref: '#/components/schemas/Refund'
+
+    JettonTransferAction:
+      type: object
+      required:
+        - amount
+        - jetton
+        - senders_wallet
+        - recipients_wallet
+      properties:
+        sender:
+          $ref: '#/components/schemas/AccountAddress'
+        recipient:
+          $ref: '#/components/schemas/AccountAddress'
+        senders_wallet:
+          type: string
+          example: 0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B
+        recipients_wallet:
+          type: string
+          example: 0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B
+        amount:
+          type: string
+          description: amount in quanta of tokens
+          example: 1000000000
+        comment:
+          type: string
+          example: "Hi! This is your salary. \nFrom accounting with love."
+        refund:
+          $ref: '#/components/schemas/Refund'
+        jetton:
+          $ref: '#/components/schemas/JettonPreview'
+
+    ContractDeployAction:
+      type: object
+      required:
+        - address
+        - interfaces
+      properties:
+        address:
+          type: string
+          example: "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+        interfaces:
+          type: array
+          items:
+            type: string
+          example: [ "nft_item", "nft_royalty" ]
+
+    SubscriptionAction:
+      type: object
+      required:
+        - subscriber
+        - subscription
+        - beneficiary
+        - amount
+        - initial
+      properties:
+        subscriber:
+          $ref: '#/components/schemas/AccountAddress'
+        subscription:
+          type: string
+          example: "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+        beneficiary:
+          $ref: '#/components/schemas/AccountAddress'
+        amount:
+          type: integer
+          format: int64
+          example: 1000000000
+        initial:
+          type: boolean
+          example: false
+
+    UnSubscriptionAction:
+      type: object
+      required:
+        - subscriber
+        - subscription
+        - beneficiary
+      properties:
+        subscriber:
+          $ref: '#/components/schemas/AccountAddress'
+        subscription:
+          type: string
+          example: "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+        beneficiary:
+          $ref: '#/components/schemas/AccountAddress'
+
+    AuctionBidAction:
+      type: object
+      required:
+        - amount
+        - beneficiary
+        - bidder
+        - auction_type
+      properties:
+        auction_type:
+          type: string
+          enum:
+            - DNS.ton
+            - DNS.tg
+            - NUMBER.tg
+            - getgems
+        amount:
+          $ref: '#/components/schemas/Price'
+        nft:
+          $ref: '#/components/schemas/NftItem'
+        beneficiary:
+          $ref: '#/components/schemas/AccountAddress'
+        bidder:
+          $ref: '#/components/schemas/AccountAddress'
+
+    NftPurchaseAction:
+      type: object
+      required:
+        - amount
+        - seller
+        - buyer
+        - auction_type
+        - nft
+      properties:
+        auction_type:
+          type: string
+          enum:
+            - DNS.tg
+            - getgems
+            - basic
+        amount:
+          $ref: '#/components/schemas/Price'
+        nft:
+          $ref: '#/components/schemas/NftItem'
+        seller:
+          $ref: '#/components/schemas/AccountAddress'
+        buyer:
+          $ref: '#/components/schemas/AccountAddress'
+
+    ActionSimplePreview:
+      type: object
+      description: shortly describes what this action is about.
+      required:
+        - name
+        - description
+        - accounts
+      properties:
+        name:
+          type: string
+          example: "Ton Transfer"
+        description:
+          type: string
+          example: "Transferring 5 Ton"
+        action_image:
+          type: string
+          description: a link to an image for this particular action.
+        value:
+          type: string
+          example: "5 Ton"
+        value_image:
+          type: string
+          description: a link to an image that depicts this action's asset.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAddress'
+
+    AccountEvent:
+      type: object
+      description: An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+      required:
+        - event_id
+        - timestamp
+        - actions
+        - fee
+        - account
+        - is_scam
+        - lt
+        - in_progress
+        - extra
+      properties:
+        event_id:
+          type: string
+          example: e8b0e3fee4a26bd2317ac1f9952fcdc87dc08fdb617656b5202416323337372e
+        account:
+          $ref: '#/components/schemas/AccountAddress'
+        timestamp:
+          type: integer
+          format: int64
+          example: 1234567890
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        fee:
+          $ref: '#/components/schemas/Fee'
+          deprecated: true
+        is_scam:
+          type: boolean
+          description: scam
+          example: false
+        lt:
+          type: integer
+          format: int64
+          example: 25713146000001
+        in_progress:
+          type: boolean
+          example: false
+          description: Event is not finished yet. Transactions still happening
+        extra:
+          description: TODO
+          type: integer
+          format: int64
+          example: 3
+
+    AccountEvents:
+      type: object
+      required:
+        - events
+        - next_from
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountEvent'
+        next_from:
+          type: integer
+          format: int64
+          example: 25713146000001
+
+    TraceId:
+      type: object
+      required:
+        - id
+        - utime
+      properties:
+        id:
+          type: string
+          example: 55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122
+        utime:
+          type: integer
+          format: int64
+          example: 1645544908
+
+    TraceIds:
+      type: object
+      required:
+        - traces
+      properties:
+        traces:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceId'
+
+    Subscription:
+      type: object
+      required:
+        - address
+        - wallet_address
+        - beneficiary_address
+        - amount
+        - period
+        - start_time
+        - timeout
+        - last_payment_time
+        - last_request_time
+        - subscription_id
+        - failed_attempts
+      properties:
+        address:
+          type: string
+          example: 0:dea8f638b789172ce36d10a20318125e52c649aa84893cd77858224fe2b9b0ee
+        wallet_address:
+          type: string
+          example: 0:567DE86AF2B6A557D7085807CF7C26338124987A5179344F0D0FA2657EB710F1
+        beneficiary_address:
+          type: string
+          example: 0:c704dadfabac88eab58e340de03080df81ff76636431f48624ad6e26fb2da0a4
+        amount:
+          type: integer
+          format: int64
+          example: 1000000000
+        period:
+          type: integer
+          format: int64
+          example: 2592000
+        start_time:
+          type: integer
+          format: int64
+          example: 1653996832
+        timeout:
+          type: integer
+          format: int64
+          example: 10800
+        last_payment_time:
+          type: integer
+          format: int64
+          example: 1653996834
+        last_request_time:
+          type: integer
+          format: int64
+          example: 0
+        subscription_id:
+          type: integer
+          format: int64
+          example: 217477
+        failed_attempts:
+          type: integer
+          format: int32
+          example: 0
+
+    Subscriptions:
+      type: object
+      required:
+        - subscriptions
+      properties:
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+
+    Auction:
+      type: object
+      required:
+        - domain
+        - owner
+        - price
+        - bids
+        - date
+      properties:
+        domain:
+          type: string
+          example: wallet.ton
+        owner:
+          type: string
+          example: owner
+        price:
+          type: integer
+          format: int64
+          example: 1660050553
+        bids:
+          type: integer
+          format: int64
+          example: 1660050553
+        date:
+          type: integer
+          format: int64
+          example: 1660050553
+
+    Auctions:
+      type: object
+      required:
+        - data
+        - total
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Auction'
+        total:
+          type: integer
+          format: int64
+          example: 1660050553
+
+    WalletDNS:
+      type: object
+      required:
+        - address
+        - is_wallet
+        - has_method_pubkey
+        - has_method_seqno
+        - names
+      properties:
+        address:
+          type: string
+          example: "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+        is_wallet:
+          type: boolean
+          example: true
+        has_method_pubkey:
+          type: boolean
+          example: true
+        has_method_seqno:
+          type: boolean
+          example: true
+        names:
+          type: array
+          items:
+            type: string
+            example: "name"
+    DomainInfo:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        expiring_at:
+          type: integer
+          description: date of expiring. optional. not all domain in ton has expiration date
+        item:
+          $ref: '#/components/schemas/NftItem'
+    DnsRecord:
+      type: object
+      required:
+        - sites
+      properties:
+        wallet:
+          $ref: '#/components/schemas/WalletDNS'
+        next_resolver:
+          type: string
+          example: "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+        sites:
+          type: array
+          items:
+            type: string
+            example: "http://12234.ton"
+        storage:
+          type: string
+          description: "tonstorage bag id"
+          example: "da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+
+    NftCollection:
+      type: object
+      required:
+        - address
+        - next_item_index
+        - raw_collection_content
+      properties:
+        address:
+          type: string
+          example: 0:FD595F36B4C1535BEC8461490D38EBB9AE3C38DD6ACE17CA63ABE2C6608BE159
+        next_item_index:
+          type: integer
+          format: int64
+          example: 1
+        owner:
+          $ref: '#/components/schemas/AccountAddress'
+        raw_collection_content:
+          type: string
+          example: 697066733a2f2f516d596e437861746f5178433571584b79773971656768415853626f3544644e6a32387631487669437a47355359
+        metadata:
+          type: object
+          additionalProperties: true
+          example: { }
+
+    NftCollections:
+      type: object
+      required:
+        - nft_collections
+      properties:
+        nft_collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/NftCollection'
+
+    Trace:
+      type: object
+      required:
+        - transaction
+        - interfaces
+      properties:
+        transaction:
+          $ref: '#/components/schemas/Transaction'
+        interfaces:
+          type: array
+          items:
+            type: string
+          example: [ "wallet", "tep62_item" ]
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trace'
+
+    MessageConsequences:
+      type: object
+      required:
+        - trace
+        - risk
+        - event
+      properties:
+        trace:
+          $ref: '#/components/schemas/Trace'
+        risk:
+          $ref: '#/components/schemas/Risk'
+        event:
+          $ref: '#/components/schemas/AccountEvent'
+
+    Risk:
+      type: object
+      description: Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain.
+      required:
+        - transfer_all_remaining_balance
+        - ton
+        - jettons
+        - nfts
+      properties:
+        transfer_all_remaining_balance:
+          type: boolean
+          description: transfer all the remaining balance of the wallet.
+          example: true
+        ton:
+          type: integer
+          format: int64
+          example: 500
+        jettons:
+          type: array
+          items:
+            $ref: '#/components/schemas/JettonQuantity'
+        nfts:
+          type: array
+          items:
+            $ref: '#/components/schemas/NftItem'
+
+    JettonQuantity:
+      type: object
+      required:
+        - quantity
+        - wallet_address
+        - jetton
+      properties:
+        quantity:
+          type: string
+          example: 597968399
+        wallet_address:
+          $ref: '#/components/schemas/AccountAddress'
+        jetton:
+          $ref: '#/components/schemas/JettonPreview'
+
+    Event:
+      type: object
+      required:
+        - event_id
+        - timestamp
+        - actions
+        - fees
+        - value_flow
+        - is_scam
+        - lt
+        - in_progress
+      properties:
+        event_id:
+          type: string
+          example: e8b0e3fee4a26bd2317ac1f9952fcdc87dc08fdb617656b5202416323337372e
+        timestamp:
+          type: integer
+          format: int64
+          example: 1234567890
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fee'
+        value_flow:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValueFlow'
+        is_scam:
+          type: boolean
+          description: scam
+          example: false
+        lt:
+          type: integer
+          format: int64
+          example: 25713146000001
+        in_progress:
+          type: boolean
+          example: false
+          description: Event is not finished yet. Transactions still happening
+
+    JettonMetadata:
+      type: object
+      required:
+        - address
+        - name
+        - symbol
+        - decimals
+      properties:
+        address:
+          type: string
+          example: 0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0
+        name:
+          type: string
+          example: Wrapped TON
+        symbol:
+          type: string
+          example: WTON
+        decimals:
+          type: string
+          example: "9"
+        image:
+          type: string
+          example: "https://cache.tonapi.io/images/jetton.jpg"
+        description:
+          type: string
+          example: Wrapped Toncoin
+        social:
+          type: array
+          items:
+            type: string
+            example: [ "https://t.me/durov_coin", "https://twitter.com/durov_coin" ]
+        websites:
+          type: array
+          items:
+            type: string
+            example: [ "https://durov.coin", "ton://durov-coin.ton" ]
+        catalogs:
+          type: array
+          items:
+            type: string
+            example: [ "https://coinmarketcap.com/currencies/drv/", "https://www.coingecko.com/en/coins/durov" ]
+    JettonInfo:
+      type: object
+      required:
+        - mintable
+        - total_supply
+        - metadata
+        - verification
+      properties:
+        mintable:
+          type: boolean
+          example: true
+        total_supply:
+          type: string
+          example: 311500000000000
+        metadata:
+          $ref: '#/components/schemas/JettonMetadata'
+        verification:
+          $ref: '#/components/schemas/JettonVerificationType'
+    AccountStaking:
+      type: object
+      required:
+        - pools
+      properties:
+        pools:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountStakingInfo'
+    AccountStakingInfo:
+      type: object
+      required:
+        - pool
+        - amount
+        - pending_deposit
+        - pending_withdraw
+        - ready_withdraw
+      properties:
+        pool:
+          type: string
+          example: "EQBI-wGVp_x0VFEjd7m9cEUD3tJ_bnxMSp0Tb9qz757ATEAM"
+        amount:
+          type: integer
+          format: int64
+          example: 10050000000000
+        pending_deposit:
+          type: integer
+          format: int64
+          example: 500000000000
+        pending_withdraw:
+          type: integer
+          format: int64
+          example: 500000000000
+        ready_withdraw:
+          type: integer
+          format: int64
+          example: 500000000000
+    PoolInfo:
+      type: object
+      required:
+        - address
+        - total_amount
+        - implementation
+        - apy
+        - name
+        - min_stake
+        - cycle_start
+        - cycle_end
+        - verified
+        - current_nominators
+        - max_nominators
+      properties:
+        address:
+          type: string
+          example: "0:48fb0195a7fc7454512377b9bd704503ded27f6e7c4c4a9d136fdab3ef9ec04c"
+        name:
+          type: string
+          example: "Tonkeeper pool"
+        total_amount:
+          type: integer
+          format: int64
+        implementation:
+          type: string
+          enum:
+            - whales
+            - tf
+            - liquidTF
+        apy:
+          type: number
+          description: APY in percent
+          example: 5.31
+        min_stake:
+          type: integer
+          format: int64
+          example: 5000000000
+        cycle_start:
+          type: integer
+          description: current nomination cycle beginning timestamp
+          format: int64
+          example: 1678223064
+        cycle_end:
+          type: integer
+          description: current nomination cycle ending timestamp
+          format: int64
+          example: 1678223064
+        verified:
+          type: boolean
+          example: true
+          description: this pool has verified source code or managed by trusted company
+        current_nominators:
+          type: integer
+          example: 10
+          description: current number of nominators
+        max_nominators:
+          type: integer
+          example: 100
+          description: maximum number of nominators
+    PoolImplementation:
+      type: object
+      required:
+        - name
+        - description
+        - url
+      properties:
+        name:
+          type: string
+          example: TON Whales
+        description:
+          type: string
+          example: "Oldest pool with minimal staking amount 50 TON"
+        url:
+          type: string
+          example: "https://tonvalidators.org/"
+    StorageProvider:
+      type: object
+      required:
+        - address
+        - accept_new_contracts
+        - rate_per_mb_day
+        - max_span
+        - minimal_file_size
+        - maximal_file_size
+      properties:
+        address:
+          type: string
+          example: 0:FD595F36B4C1535BEC8461490D38EBB9AE3C38DD6ACE17CA63ABE2C6608BE159
+        accept_new_contracts:
+          type: boolean
+          example: true
+        rate_per_mb_day:
+          type: integer
+          format: int64
+          example: 50000000
+        max_span:
+          type: integer
+          format: int64
+          example: 604800
+        minimal_file_size:
+          type: integer
+          format: int64
+          example: 64
+        maximal_file_size:
+          type: integer
+          format: int64
+          example: 10485760
+    
+    FoundAccounts:
+      type: object
+      required:
+        - addresses
+      properties:
+        addresses:
+          type: array
+          items:
+            type: object
+            required:
+              - address
+              - name
+            properties:
+              address:
+                type: string
+                example: "0:010cеeac44fad23417a5c55e4071796868771082с9a61e8c195a8d57508b8471"
+              name:
+                type: string
+                example: "blah_blah.ton"
+    
+    DnsExpiring:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            required:
+              - expiring_at
+              - name
+              - dns_item
+            properties:
+              expiring_at:
+                type: integer
+                format: int64
+                example: "1678275313"
+              name:
+                type: string
+                example: "blah_blah.ton"
+              dns_item:
+                $ref: '#/components/schemas/NftItem'
+    AccountInfoByStateInit:
+      type: object
+      required:
+        - public_key
+        - address
+      properties:
+        public_key:
+          type: string
+          example: "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..."
+        address:
+          type: string
+          example: "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+  
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+    InternalError:
+      description: Something went wrong on server side
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+    BadRequest:
+      description: Something went wrong on client side
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string

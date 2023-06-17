@@ -14,19 +14,22 @@ final class URLSessionTransport: NetworkTransport {
     case notHTTPResponse(response: URLResponse)
   }
   
-  private let urlSession: URLSession
+  private let urlSession: URLSessionProtocol
   private let baseURL: URL
   private let urlRequestBuilder: URLRequestBuilder
   private let responseBuilder: ResponseBuilder
+  private let requestInterceptors: [RequestInterceptor]
   
-  init(urlSession: URLSession,
+  init(urlSession: URLSessionProtocol,
        baseURL: URL,
        urlRequestBuilder: URLRequestBuilder,
-       responseBuilder: ResponseBuilder) {
+       responseBuilder: ResponseBuilder,
+       requestInterceptors: [RequestInterceptor]) {
     self.urlSession = urlSession
     self.baseURL = baseURL
     self.urlRequestBuilder = urlRequestBuilder
     self.responseBuilder = responseBuilder
+    self.requestInterceptors = requestInterceptors
   }
   
   // MARK: - NetworkTransport
@@ -34,6 +37,7 @@ final class URLSessionTransport: NetworkTransport {
   func send(
     request: Request, baseURL: URL
   ) async throws -> Response {
+    let request = try await interceptRequest(request)
     let urlRequest = try urlRequestBuilder.build(with: request, baseURL: baseURL)
     
     do {
@@ -47,4 +51,25 @@ final class URLSessionTransport: NetworkTransport {
       throw Error.requestFailed(error: error)
     }
   }
+}
+
+private extension URLSessionTransport {
+  func interceptRequest(_ request: Request) async throws -> Request {
+    guard !requestInterceptors.isEmpty else { return request }
+    var request = request
+    try await requestInterceptors.asyncForEach { interceptor in
+      request = try await interceptor.intercept(request: request)
+    }
+    return request
+  }
+}
+
+extension Sequence {
+    func asyncForEach(
+        _ operation: (Element) async throws -> Void
+    ) async rethrows {
+        for element in self {
+            try await operation(element)
+        }
+    }
 }

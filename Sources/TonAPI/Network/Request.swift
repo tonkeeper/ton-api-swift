@@ -10,7 +10,7 @@ import Foundation
 struct Request {
   let path: String
   let method: HTTPMethod
-  let headers: [HTTPHeader]
+  var headers: [HTTPHeader]
   let queryItems: [URLQueryItem]
   let body: Data?
 }

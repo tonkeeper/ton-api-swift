@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HTTPHeader {
+struct HTTPHeader: Equatable {
   let name: String
   let value: String
   

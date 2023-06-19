@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APIResponse<Entity: Codable> {
+struct APIResponse<Entity: Decodable> {
   let response: Response
   let entity: Entity
 }

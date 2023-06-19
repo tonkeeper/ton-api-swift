@@ -77,4 +77,52 @@ final class APIRequestParametersTests: XCTestCase {
     // THEN
     XCTAssertEqual(urlRequest.httpBody, bodyString.data(using: .utf8))
   }
+  
+  func testAccountJettonsRequest() throws {
+    // GIVEN
+    let accountId = "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+    let resultURLString = "\(baseURL.absoluteString)/v2/accounts/0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621/jettons"
+    
+    // WHEN
+    let apiRequest = AccountJettons(accountId: accountId)
+    let urlRequest = try requestBuilder.build(with: apiRequest.request, baseURL: baseURL)
+    
+    // THEN
+    XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
+  }
+  
+  func testAccountJettonsHistoryRequest() throws {
+    // GIVEN
+    let accountId = "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+    let beforeLt: Int64 = 25758317000002
+    let limit = 1000
+    let startDate: Int64 = 1668436763
+    let endDate: Int64 = 1668436763
+    let resultURLString = "\(baseURL.absoluteString)/v2/accounts/0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621/jettons/history?before_lt=25758317000002&limit=1000&start_date=1668436763&end_date=1668436763"
+    
+    // WHEN
+    let apiRequest = AccountJettonsHistory(accountId: accountId, beforeLt: beforeLt, limit: limit, startDate: startDate, endDate: endDate)
+    let urlRequest = try requestBuilder.build(with: apiRequest.request, baseURL: baseURL)
+    
+    // THEN
+    XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
+  }
+  
+  func testAccountJettonHistoryRequest() throws {
+    // GIVEN
+    let accountId = "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+    let jettonId = "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+    let beforeLt: Int64 = 25758317000002
+    let limit = 1000
+    let startDate: Int64 = 1668436763
+    let endDate: Int64 = 1668436763
+    let resultURLString = "\(baseURL.absoluteString)/v2/accounts/0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621/jettons/0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621/history?before_lt=25758317000002&limit=1000&start_date=1668436763&end_date=1668436763"
+    
+    // WHEN
+    let apiRequest = AccountJettonHistory(accountId: accountId, jettonId: jettonId, beforeLt: beforeLt, limit: limit, startDate: startDate, endDate: endDate)
+    let urlRequest = try requestBuilder.build(with: apiRequest.request, baseURL: baseURL)
+    
+    // THEN
+    XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
+  }
 }

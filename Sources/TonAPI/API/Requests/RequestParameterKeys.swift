@@ -13,4 +13,7 @@ extension String {
   static let limit = "limit"
   static let offset = "offset"
   static let isIndirectOwnership = "indirect_ownership"
+  static let beforeLt = "before_lt"
+  static let startDate = "start_date"
+  static let endDate = "end_date"
 }

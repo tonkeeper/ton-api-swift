@@ -16,4 +16,6 @@ extension String {
   static let beforeLt = "before_lt"
   static let startDate = "start_date"
   static let endDate = "end_date"
+  static let name = "name"
+  static let period = "period"
 }

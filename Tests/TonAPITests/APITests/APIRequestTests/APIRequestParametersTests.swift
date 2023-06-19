@@ -182,4 +182,44 @@ final class APIRequestParametersTests: XCTestCase {
     // THEN
     XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
   }
+  
+  func testAccountSearchRequest() throws {
+    // GIVEN
+    let name = "name"
+    let resultURLString = "\(baseURL.absoluteString)/v2/accounts/search?name=\(name)"
+    
+    // WHEN
+    let apiRequest = AccountSearchRequest(name: name)
+    let urlRequest = try requestBuilder.build(with: apiRequest.request, baseURL: baseURL)
+    
+    // THEN
+    XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
+  }
+  
+  func testAccountDNSExpiringRequest() throws {
+    // GIVEN
+    let accountId = "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+    let period = 30
+    let resultURLString = "\(baseURL.absoluteString)/v2/accounts/0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621/dns/expiring?period=30"
+    
+    // WHEN
+    let apiRequest = AccountDNSExpiringRequest(accountId: accountId, period: period)
+    let urlRequest = try requestBuilder.build(with: apiRequest.request, baseURL: baseURL)
+    
+    // THEN
+    XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
+  }
+  
+  func testAccountPublicKeyRequest() throws {
+    // GIVEN
+    let accountId = "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+    let resultURLString = "\(baseURL.absoluteString)/v2/accounts/0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621/publickey"
+    
+    // WHEN
+    let apiRequest = AccountPublicKeyRequest(accountId: accountId)
+    let urlRequest = try requestBuilder.build(with: apiRequest.request, baseURL: baseURL)
+    
+    // THEN
+    XCTAssertEqual(urlRequest.url!.absoluteString, resultURLString)
+  }
 }

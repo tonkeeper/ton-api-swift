@@ -16,20 +16,25 @@ final class API {
   let transport: NetworkTransport
   let baseURL: URL
   let version: Version
+  let responseDecoder: APIResponseDecoder
   
   init(transport: NetworkTransport,
        baseURL: URL,
-       version: Version) {
+       version: Version,
+       responseDecoder: APIResponseDecoder) {
     self.transport = transport
     self.baseURL = baseURL
     self.version = version
+    self.responseDecoder = responseDecoder
   }
   
   func send<Entity: Codable>(request: APIRequest) async throws -> APIResponse<Entity> {
-    // TBD: make request with transport
-    // TBD: decode response to Entity
-    // TBD: create APIResponse and return
-    let model = try JSONDecoder().decode(Entity.self, from: Data())
-    return APIResponse(response: Response(statusCode: 0, headers: [], body: Data()), entity: model)
+    let response = try await transport.send(
+      request: request.request,
+      baseURL: baseURL
+    )
+    
+    let apiResponse: APIResponse<Entity> = try responseDecoder.decode(response: response)
+    return apiResponse
   }
 }

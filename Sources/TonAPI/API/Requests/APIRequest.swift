@@ -12,8 +12,7 @@ protocol APIRequest {
   var httpMethod: HTTPMethod { get }
   var headers: [HTTPHeader] { get }
   var queryItems: [URLQueryItem] { get }
-  var body: Data? { get }
-  
+  var bodyParameters: HTTPParameters { get }
   var request: Request { get }
 }
 
@@ -26,8 +25,8 @@ extension APIRequest {
     []
   }
   
-  var body: Data? {
-    nil
+  var bodyParameters: HTTPParameters {
+    [:]
   }
   
   var request: Request {
@@ -35,6 +34,6 @@ extension APIRequest {
           method: httpMethod,
           headers: headers,
           queryItems: queryItems,
-          body: body)
+          bodyParameter: bodyParameters)
   }
 }

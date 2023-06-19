@@ -31,7 +31,28 @@ struct URLRequestBuilder {
     request.headers.forEach {
       urlRequest.addValue($0.value, forHTTPHeaderField: $0.name)
     }
-    urlRequest.httpBody = request.body
+    
+    try? encodeJSON(parameters: request.bodyParameter, urlRequest: &urlRequest)
+    
     return urlRequest
   }
+}
+
+private extension URLRequestBuilder {
+  func encodeJSON(parameters: HTTPParameters, urlRequest: inout URLRequest) throws {
+    guard !parameters.isEmpty else { return }
+    let body = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys, .withoutEscapingSlashes])
+    urlRequest.httpBody = body
+    setJSONContentType(urlRequest: &urlRequest)
+  }
+  
+  func setJSONContentType(urlRequest: inout URLRequest) {
+    guard urlRequest.value(forHTTPHeaderField: .contentType) == nil else { return }
+    urlRequest.setValue(.applicationJSON, forHTTPHeaderField: .contentType)
+  }
+}
+
+private extension String {
+    static let contentType = "Content-Type"
+    static let applicationJSON = "application/json"
 }

@@ -19,7 +19,7 @@ final class URLRequestBuilderTests: XCTestCase {
       method: .GET,
       headers: [],
       queryItems: [],
-      body: nil
+      bodyParameter: [:]
     )
   
     let urlRequest = try requestBuilder.build(with: request, baseURL: baseURL)
@@ -35,7 +35,7 @@ final class URLRequestBuilderTests: XCTestCase {
       method: .GET,
       headers: [],
       queryItems: [.init(name: "id", value: "1"), .init(name: "id", value: "2")],
-      body: nil
+      bodyParameter: [:]
     )
     
     let urlString = "\(baseURL.absoluteString)?id=1&id=2"
@@ -53,7 +53,7 @@ final class URLRequestBuilderTests: XCTestCase {
       method: .GET,
       headers: [.init(name: "Bearer", value: "Hello"), .init(name: "Accept-Content", value: "application/json")],
       queryItems: [],
-      body: nil
+      bodyParameter: [:]
     )
     
     let headers = ["Bearer":"Hello", "Accept-Content":"application/json"]
@@ -66,7 +66,7 @@ final class URLRequestBuilderTests: XCTestCase {
   }
   
   func testBuildGetURLRequestWithBody() throws {
-    let bodyString = "{\"appName\": \"TonAPI\"}"
+    let bodyString = "{\"appName\":\"TonAPI\"}"
     let bodyData = bodyString.data(using: .utf8)
     
     let request = Request(
@@ -74,35 +74,57 @@ final class URLRequestBuilderTests: XCTestCase {
       method: .GET,
       headers: [],
       queryItems: [],
-      body: bodyData
+      bodyParameter: ["appName": "TonAPI"]
     )
     
     let urlRequest = try requestBuilder.build(with: request, baseURL: baseURL)
     XCTAssertEqual(urlRequest.url, baseURL.absoluteURL)
     XCTAssertEqual(urlRequest.httpMethod, "GET")
-    XCTAssertEqual(urlRequest.allHTTPHeaderFields, [:])
+    XCTAssertEqual(urlRequest.allHTTPHeaderFields, ["Content-Type":"application/json"])
     XCTAssertEqual(urlRequest.httpBody, bodyData)
   }
   
   func testBuildGetURLRequestWithQueyItemsAndHeadersAndBody() throws {
-    let bodyString = "{\"appName\": \"TonAPI\"}"
+    let bodyString = "{\"appName\":\"TonAPI\"}"
     let bodyData = bodyString.data(using: .utf8)
     
     let request = Request(
       path: "",
       method: .GET,
-      headers: [.init(name: "Bearer", value: "Hello"), .init(name: "Accept-Content", value: "application/json")],
+      headers: [.init(name: "Bearer", value: "Hello")],
       queryItems: [.init(name: "id", value: "1"), .init(name: "id", value: "2")],
-      body: bodyData
+      bodyParameter: ["appName": "TonAPI"]
     )
     
     let urlString = "\(baseURL.absoluteString)?id=1&id=2"
-    let headers = ["Bearer":"Hello", "Accept-Content":"application/json"]
+    let headers = ["Bearer":"Hello", "Content-Type":"application/json"]
     
     let urlRequest = try requestBuilder.build(with: request, baseURL: baseURL)
     XCTAssertEqual(urlRequest.url?.absoluteString, urlString)
     XCTAssertEqual(urlRequest.httpMethod, "GET")
     XCTAssertEqual(urlRequest.allHTTPHeaderFields, headers)
+    XCTAssertEqual(urlRequest.httpBody, bodyData)
+  }
+  
+  func testBuildPostURLRequestWithBodyParameters() throws {
+    // GIVEN
+    let bodyString = """
+    {"boc":"te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg"}
+    """
+    let bodyData = bodyString.data(using: .utf8)
+    let bodyParameters = ["boc":"te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg"]
+    let request = Request(
+      path: "",
+      method: .POST,
+      headers: [],
+      queryItems: [],
+      bodyParameter: bodyParameters
+    )
+    
+    // WHEN
+    let urlRequest = try requestBuilder.build(with: request, baseURL: baseURL)
+    
+    // THEN
     XCTAssertEqual(urlRequest.httpBody, bodyData)
   }
 }

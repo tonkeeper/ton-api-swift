@@ -39,10 +39,10 @@ final class URLSessionTransportTests: XCTestCase {
       method: .GET,
       headers: [],
       queryItems: [],
-      body: nil
+      bodyParameter: [:]
     )
     
-    try await urlSessionTransport.send(request: emptyRequest, baseURL: baseURL)
+    _ = try await urlSessionTransport.send(request: emptyRequest, baseURL: baseURL)
     
     let resultHeaders = [
       "InterceptorOneName":"InterceptorOneValue",

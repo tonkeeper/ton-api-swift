@@ -12,5 +12,5 @@ struct Request {
   let method: HTTPMethod
   var headers: [HTTPHeader]
   let queryItems: [URLQueryItem]
-  let body: Data?
+  let bodyParameter: HTTPParameters
 }

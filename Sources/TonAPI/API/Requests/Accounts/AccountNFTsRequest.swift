@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountNFTsRequest: APIRequest {
-  typealias Entity = NFTItems
+public struct AccountNFTsRequest: APIRequestAttributed {
+  public typealias Entity = NFTItems
   var path: String {
     Paths.v2.accounts.accountId(accountId).nfts.path
   }
@@ -34,17 +34,17 @@ struct AccountNFTsRequest: APIRequest {
     return items
   }
 
-  private let accountId: String
-  private let collection: String?
-  private let limit: Int?
-  private let offset: Int?
-  private let isIndirectOwnership: Bool?
+  public let accountId: String
+  public let collection: String?
+  public let limit: Int?
+  public let offset: Int?
+  public let isIndirectOwnership: Bool?
   
-  init(accountId: String,
-       collection: String?,
-       limit: Int?,
-       offset: Int?,
-       isIndirectOwnership: Bool?) {
+  public init(accountId: String,
+              collection: String?,
+              limit: Int?,
+              offset: Int?,
+              isIndirectOwnership: Bool?) {
     self.accountId = accountId
     self.collection = collection
     self.limit = limit

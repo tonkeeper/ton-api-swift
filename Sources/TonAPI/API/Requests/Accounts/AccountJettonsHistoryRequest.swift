@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountJettonsHistoryRequest: APIRequest {
-  typealias Entity = AccountEvent
+public struct AccountJettonsHistoryRequest: APIRequestAttributed {
+  public typealias Entity = AccountEvent
   var path: String {
     Paths.v2.accounts.accountId(accountId).jettons.history.path
   }
@@ -32,17 +32,17 @@ struct AccountJettonsHistoryRequest: APIRequest {
     return items
   }
   
-  private let accountId: String
-  private let beforeLt: Int64?
-  private let limit: Int
-  private let startDate: Int64?
-  private let endDate: Int64?
+  public let accountId: String
+  public let beforeLt: Int64?
+  public let limit: Int
+  public let startDate: Int64?
+  public let endDate: Int64?
   
-  init(accountId: String,
-       beforeLt: Int64?,
-       limit: Int,
-       startDate: Int64?,
-       endDate: Int64?) {
+  public init(accountId: String,
+              beforeLt: Int64?,
+              limit: Int,
+              startDate: Int64?,
+              endDate: Int64?) {
     self.accountId = accountId
     self.beforeLt = beforeLt
     self.limit = limit

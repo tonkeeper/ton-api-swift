@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Response: Equatable {
+public struct Response: Equatable {
   let statusCode: Int
   let headers: [HTTPHeader]
   let body: Data

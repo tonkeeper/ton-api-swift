@@ -7,4 +7,4 @@
 
 import Foundation
 
-typealias HTTPParameters = [String: Any]
+public typealias HTTPParameters = [String: Any]

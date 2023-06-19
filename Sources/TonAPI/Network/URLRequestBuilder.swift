@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct URLRequestBuilder {
+public struct URLRequestBuilder {
   enum Error: Swift.Error {
     case invalidURL
   }

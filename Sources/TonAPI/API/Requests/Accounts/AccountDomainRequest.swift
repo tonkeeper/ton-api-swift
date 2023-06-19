@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountDomainRequest: APIRequest {
-  typealias Entity = DomainNames
+public struct AccountDomainRequest: APIRequestAttributed {
+  public typealias Entity = DomainNames
   var path: String {
     Paths.v2.accounts.accountId(accountId).dns.backresolve.path
   }
@@ -17,9 +17,9 @@ struct AccountDomainRequest: APIRequest {
     .GET
   }
   
-  private let accountId: String
+  public let accountId: String
   
-  init(accountId: String) {
+  public init(accountId: String) {
     self.accountId = accountId
   }
 }

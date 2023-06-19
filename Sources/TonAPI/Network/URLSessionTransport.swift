@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class URLSessionTransport: NetworkTransport {
+public final class URLSessionTransport: NetworkTransport {
   
   enum Error: Swift.Error {
     case requestFailed(error: Swift.Error)
@@ -20,11 +20,11 @@ final class URLSessionTransport: NetworkTransport {
   private let responseBuilder: ResponseBuilder
   private let requestInterceptors: [RequestInterceptor]
   
-  init(urlSession: URLSessionProtocol,
-       baseURL: URL,
-       urlRequestBuilder: URLRequestBuilder,
-       responseBuilder: ResponseBuilder,
-       requestInterceptors: [RequestInterceptor]) {
+  public init(urlSession: URLSessionProtocol,
+              baseURL: URL,
+              urlRequestBuilder: URLRequestBuilder,
+              responseBuilder: ResponseBuilder,
+              requestInterceptors: [RequestInterceptor]) {
     self.urlSession = urlSession
     self.baseURL = baseURL
     self.urlRequestBuilder = urlRequestBuilder
@@ -34,7 +34,7 @@ final class URLSessionTransport: NetworkTransport {
   
   // MARK: - NetworkTransport
   
-  func send(
+  public func send(
     request: Request, baseURL: URL
   ) async throws -> Response {
     let request = try await interceptRequest(request)

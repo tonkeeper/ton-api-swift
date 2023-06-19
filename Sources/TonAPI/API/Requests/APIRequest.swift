@@ -7,17 +7,21 @@
 
 import Foundation
 
-protocol APIRequest<Entity> {
+public protocol APIRequest<Entity> {
   associatedtype Entity
+  var request: Request { get }
+}
+
+protocol APIRequestAttributed: APIRequest  {
   var path: String { get }
   var httpMethod: HTTPMethod { get }
   var headers: [HTTPHeader] { get }
   var queryItems: [URLQueryItem] { get }
   var bodyParameters: HTTPParameters { get }
-  var request: Request { get }
+  
 }
 
-extension APIRequest {
+extension APIRequestAttributed {
   var headers: [HTTPHeader] {
     []
   }
@@ -30,7 +34,7 @@ extension APIRequest {
     [:]
   }
   
-  var request: Request {
+  public var request: Request {
     .init(path: path,
           method: httpMethod,
           headers: headers,

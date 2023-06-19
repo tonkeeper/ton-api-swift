@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountSearchRequest: APIRequest {
-  typealias Entity = DomainNames
+public struct AccountSearchRequest: APIRequestAttributed {
+  public typealias Entity = DomainNames
   var path: String {
     Paths.v2.accounts.search.path
   }
@@ -23,7 +23,7 @@ struct AccountSearchRequest: APIRequest {
   
   private let name: String
   
-  init(name: String) {
+  public init(name: String) {
     self.name = name
   }
 }

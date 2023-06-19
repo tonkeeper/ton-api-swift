@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountDNSExpiringRequest: APIRequest {
-  typealias Entity = DomainNames
+public struct AccountDNSExpiringRequest: APIRequestAttributed {
+  public typealias Entity = DomainNames
   var path: String {
     Paths.v2.accounts.accountId(accountId).dns.expiring.path
   }
@@ -25,11 +25,11 @@ struct AccountDNSExpiringRequest: APIRequest {
     return items
   }
   
-  private let accountId: String
-  private let period: Int?
+  public let accountId: String
+  public let period: Int?
   
-  init(accountId: String,
-       period: Int?) {
+  public init(accountId: String,
+              period: Int?) {
     self.accountId = accountId
     self.period = period
   }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountReindexRequest: APIRequest {
-  typealias Entity = Data
+public struct AccountReindexRequest: APIRequestAttributed {
+  public typealias Entity = Data
   var path: String {
     Paths.v2.accounts.accountId(accountId).reindex.path
   }
@@ -17,9 +17,9 @@ struct AccountReindexRequest: APIRequest {
     .POST
   }
   
-  private let accountId: String
+  public let accountId: String
   
-  init(accountId: String) {
+  public init(accountId: String) {
     self.accountId = accountId
   }
 }

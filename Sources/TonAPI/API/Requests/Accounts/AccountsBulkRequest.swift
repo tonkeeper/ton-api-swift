@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountsBulkRequest: APIRequest {
-  typealias Entity =  Accounts
+public struct AccountsBulkRequest: APIRequestAttributed {
+  public typealias Entity =  Accounts
   var path: String {
     Paths.v2.accounts.bulk.path
   }
@@ -21,9 +21,9 @@ struct AccountsBulkRequest: APIRequest {
     [.accountIds: accountIds]
   }
   
-  let accountIds: [String]
+  public let accountIds: [String]
   
-  init(accountIds: [String]) {
+  public init(accountIds: [String]) {
     self.accountIds = accountIds
   }
 }

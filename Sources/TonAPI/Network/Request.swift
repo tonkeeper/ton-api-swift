@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Request {
+public struct Request {
   let path: String
   let method: HTTPMethod
   var headers: [HTTPHeader]

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NetworkTransport {
+public protocol NetworkTransport {
   func send(
     request: Request,
     baseURL: URL

@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol RequestInterceptor {
+public protocol RequestInterceptor {
   func intercept(request: Request) async throws -> Request
 }

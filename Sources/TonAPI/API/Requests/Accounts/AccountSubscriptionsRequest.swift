@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountSubscriptionsRequest: APIRequest {
-  typealias Entity = Subscriptions
+public struct AccountSubscriptionsRequest: APIRequestAttributed {
+  public typealias Entity = Subscriptions
   var path: String {
     Paths.v2.accounts.accountId(accountId).subscriptions.path
   }
@@ -17,9 +17,9 @@ struct AccountSubscriptionsRequest: APIRequest {
     .GET
   }
   
-  private let accountId: String
+  public let accountId: String
   
-  init(accountId: String) {
+  public init(accountId: String) {
     self.accountId = accountId
   }
 }

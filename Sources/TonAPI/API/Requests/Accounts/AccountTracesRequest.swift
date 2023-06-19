@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountTracesRequest: APIRequest {
-  typealias Entity = TraceIds
+public struct AccountTracesRequest: APIRequestAttributed {
+  public typealias Entity = TraceIds
   var path: String {
     Paths.v2.accounts.accountId(accountId).traces.path
   }
@@ -25,10 +25,10 @@ struct AccountTracesRequest: APIRequest {
     return items
   }
   
-  private let accountId: String
-  private let limit: Int32?
+  public let accountId: String
+  public let limit: Int32?
   
-  init(accountId: String,
+  public init(accountId: String,
        limit: Int32?) {
     self.accountId = accountId
     self.limit = limit

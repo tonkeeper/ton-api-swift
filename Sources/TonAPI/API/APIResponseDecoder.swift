@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct APIResponseDecoder {
+public struct APIResponseDecoder {
   let jsonDecoder: JSONDecoder
   
-  init(jsonDecoder: JSONDecoder) {
+  public init(jsonDecoder: JSONDecoder) {
     self.jsonDecoder = jsonDecoder
   }
   

@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class API {
+public final class API {
   
-  enum Version {
+  public enum Version {
     case v2
   }
   
@@ -18,17 +18,17 @@ final class API {
   let version: Version
   let responseDecoder: APIResponseDecoder
   
-  init(transport: NetworkTransport,
-       baseURL: URL,
-       version: Version,
-       responseDecoder: APIResponseDecoder) {
+  public init(transport: NetworkTransport,
+              baseURL: URL,
+              version: Version,
+              responseDecoder: APIResponseDecoder) {
     self.transport = transport
     self.baseURL = baseURL
     self.version = version
     self.responseDecoder = responseDecoder
   }
   
-  func send<Entity: Codable, Request: APIRequest<Entity>>(request: Request) async throws -> APIResponse<Entity> {
+  public func send<Entity: Codable, Request: APIRequest<Entity>>(request: Request) async throws -> APIResponse<Entity> {
     let response = try await transport.send(
       request: request.request,
       baseURL: baseURL

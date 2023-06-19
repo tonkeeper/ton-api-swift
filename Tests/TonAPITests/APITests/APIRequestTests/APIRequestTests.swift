@@ -24,7 +24,7 @@ final class APIRequestTests: XCTestCase {
     
     let bodyParameters: HTTPParameters = [:]
     
-    let apiRequest = MockAPIRequest(
+    let apiRequest = MockAPIRequest<String>(
       path: path,
       httpMethod: httpMethod,
       headers: headers,

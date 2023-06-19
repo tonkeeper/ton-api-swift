@@ -28,7 +28,7 @@ final class API {
     self.responseDecoder = responseDecoder
   }
   
-  func send<Entity: Codable>(request: APIRequest) async throws -> APIResponse<Entity> {
+  func send<Entity: Codable, Request: APIRequest<Entity>>(request: Request) async throws -> APIResponse<Entity> {
     let response = try await transport.send(
       request: request.request,
       baseURL: baseURL

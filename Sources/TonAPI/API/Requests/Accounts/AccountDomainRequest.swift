@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccountDomainRequest: APIRequest {
+  typealias Entity = DomainNames
   var path: String {
     Paths.v2.accounts.accountId(accountId).dns.backresolve.path
   }

@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccountRequest: APIRequest {
+  typealias Entity = Account
   var path: String {
     Paths.v2.accounts.accountId(accountId).path
   }

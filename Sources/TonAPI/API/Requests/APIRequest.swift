@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol APIRequest {
+protocol APIRequest<Entity> {
+  associatedtype Entity
   var path: String { get }
   var httpMethod: HTTPMethod { get }
   var headers: [HTTPHeader] { get }

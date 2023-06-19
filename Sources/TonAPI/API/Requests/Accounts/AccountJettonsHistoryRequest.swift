@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccountJettonsHistoryRequest: APIRequest {
+  typealias Entity = AccountEvent
   var path: String {
     Paths.v2.accounts.accountId(accountId).jettons.history.path
   }

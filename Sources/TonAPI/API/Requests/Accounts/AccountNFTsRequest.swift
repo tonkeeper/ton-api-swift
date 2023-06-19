@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccountNFTsRequest: APIRequest {
+  typealias Entity = NFTItems
   var path: String {
     Paths.v2.accounts.accountId(accountId).nfts.path
   }

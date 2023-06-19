@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccountsBulkRequest: APIRequest {
+  typealias Entity =  Accounts
   var path: String {
     Paths.v2.accounts.bulk.path
   }

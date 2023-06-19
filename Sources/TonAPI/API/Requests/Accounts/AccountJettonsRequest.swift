@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccountJettonsRequest: APIRequest {
+  typealias Entity = JettonsBalances
   var path: String {
     Paths.v2.accounts.accountId(accountId).jettons.path
   }

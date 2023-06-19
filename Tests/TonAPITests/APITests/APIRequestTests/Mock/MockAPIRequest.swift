@@ -8,7 +8,8 @@
 import Foundation
 @testable import TonAPI
 
-struct MockAPIRequest: APIRequest {
+struct MockAPIRequest<T>: APIRequest {
+  typealias Entity = T
   let path: String
   let httpMethod: HTTPMethod
   let headers: [HTTPHeader]

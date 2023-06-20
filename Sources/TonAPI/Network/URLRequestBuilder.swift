@@ -11,8 +11,10 @@ public struct URLRequestBuilder {
   enum Error: Swift.Error {
     case invalidURL
   }
+    
+  public init() {}
   
-  func build(
+  public func build(
     with request: Request,
     baseURL: URL
   ) throws -> URLRequest {

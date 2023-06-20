@@ -7,7 +7,11 @@
 
 import Foundation
 
-public final class API {
+public protocol API {
+  func send<Entity: Codable, Request: APIRequest<Entity>>(request: Request) async throws -> APIResponse<Entity>
+}
+
+public final class DefaultAPI: API {
   let transport: NetworkTransport
   let baseURL: URL
   let responseDecoder: APIResponseDecoder

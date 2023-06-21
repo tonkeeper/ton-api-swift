@@ -8,12 +8,12 @@
 import Foundation
 
 public struct Request {
-  let path: String
-  let method: HTTPMethod
-  var headers: [HTTPHeader]
-  let queryItems: [URLQueryItem]
-  let bodyParameter: HTTPParameters
-    
+  public let path: String
+  public let method: HTTPMethod
+  public var headers: [HTTPHeader]
+  public let queryItems: [URLQueryItem]
+  public let bodyParameter: HTTPParameters
+  
   public init(path: String,
               method: HTTPMethod,
               headers: [HTTPHeader],

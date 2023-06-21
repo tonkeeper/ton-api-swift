@@ -16,5 +16,3 @@ public extension URLSessionProtocol {
     try await self.data(for: request, delegate: nil)
   }
 }
-
-extension URLSession: URLSessionProtocol {}

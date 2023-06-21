@@ -28,7 +28,6 @@ final class URLSessionTransportTests: XCTestCase {
     
     let urlSessionTransport = URLSessionTransport(
       urlSession: mockURLSession,
-      baseURL: baseURL,
       urlRequestBuilder: requestBuilder,
       responseBuilder: responseBuilder,
       requestInterceptors: [interceptorOne, interceptorTwo]

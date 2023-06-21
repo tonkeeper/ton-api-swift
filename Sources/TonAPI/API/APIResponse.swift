@@ -8,6 +8,12 @@
 import Foundation
 
 public struct APIResponse<Entity: Decodable> {
-  let response: Response
-  let entity: Entity
+  public let response: Response
+  public let entity: Entity
+    
+  public init(response: Response,
+              entity: Entity) {
+    self.response = response
+    self.entity = entity
+  }
 }

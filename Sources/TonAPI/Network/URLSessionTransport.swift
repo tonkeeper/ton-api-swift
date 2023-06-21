@@ -15,18 +15,15 @@ public final class URLSessionTransport: NetworkTransport {
   }
   
   private let urlSession: URLSessionProtocol
-  private let baseURL: URL
   private let urlRequestBuilder: URLRequestBuilder
   private let responseBuilder: ResponseBuilder
   private let requestInterceptors: [RequestInterceptor]
   
   public init(urlSession: URLSessionProtocol,
-              baseURL: URL,
               urlRequestBuilder: URLRequestBuilder,
               responseBuilder: ResponseBuilder,
               requestInterceptors: [RequestInterceptor]) {
     self.urlSession = urlSession
-    self.baseURL = baseURL
     self.urlRequestBuilder = urlRequestBuilder
     self.responseBuilder = responseBuilder
     self.requestInterceptors = requestInterceptors

@@ -7,24 +7,20 @@
 
 import Foundation
 
-public final class API {
-  
-  public enum Version {
-    case v2
-  }
-  
+public protocol API {
+  func send<Entity: Codable, Request: APIRequest<Entity>>(request: Request) async throws -> APIResponse<Entity>
+}
+
+public final class DefaultAPI: API {
   let transport: NetworkTransport
   let baseURL: URL
-  let version: Version
   let responseDecoder: APIResponseDecoder
   
   public init(transport: NetworkTransport,
               baseURL: URL,
-              version: Version,
               responseDecoder: APIResponseDecoder) {
     self.transport = transport
     self.baseURL = baseURL
-    self.version = version
     self.responseDecoder = responseDecoder
   }
   

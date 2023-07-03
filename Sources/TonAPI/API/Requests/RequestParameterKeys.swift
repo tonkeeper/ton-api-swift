@@ -18,4 +18,6 @@ extension String {
   static let endDate = "end_date"
   static let name = "name"
   static let period = "period"
+  static let tokens = "tokens"
+  static let currencies = "currencies"
 }

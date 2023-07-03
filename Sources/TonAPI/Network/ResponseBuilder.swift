@@ -8,6 +8,8 @@
 import Foundation
 
 public struct ResponseBuilder {
+  public init() {}
+    
   func build(with response: HTTPURLResponse, body: Data) -> Response {
     let headers = response.allHeaderFields
       .compactMap { name, value -> (String, String)? in

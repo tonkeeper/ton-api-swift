@@ -7,8 +7,10 @@
 
 import Foundation
 
+public struct EmptyResponse: Codable {}
+
 public struct BlockchainMessageRequest: APIRequestAttributed {
-  public typealias Entity =  Data
+  public typealias Entity = EmptyResponse
   var path: String {
       Paths.v2.blockchain.message.path
   }

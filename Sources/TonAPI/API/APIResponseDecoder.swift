@@ -14,6 +14,15 @@ public struct APIResponseDecoder {
     self.jsonDecoder = jsonDecoder
   }
   
+  func decode(response: Response) throws -> APIResponse<EmptyResponse> {
+    switch response.statusCode {
+    case 200..<300:
+      return try decodeEntity(response: response)
+    default:
+      throw decodeError(response: response)
+    }
+  }
+  
   func decode<Entity: Decodable>(response: Response) throws -> APIResponse<Entity> {
     switch response.statusCode {
     case 200..<300:
@@ -25,11 +34,15 @@ public struct APIResponseDecoder {
   
   private func decodeEntity<Entity: Decodable>(response: Response) throws -> APIResponse<Entity> {
     do {
-      let entity = try jsonDecoder.decode(Entity.self, from: response.body)
+        let entity = try jsonDecoder.decode(Entity.self, from: response.body)
       return .init(response: response, entity: entity)
     } catch {
       throw APIResponseError.invalidResponse(response)
     }
+  }
+  
+  private func decodeEntity(response: Response) throws -> APIResponse<EmptyResponse> {
+    return .init(response: response, entity: EmptyResponse())
   }
   
   private func decodeError(response: Response) -> APIResponseError {

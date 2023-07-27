@@ -22,8 +22,8 @@ let package = Package(
             dependencies: ["TonAPI"]),
         .binaryTarget(
             name: "create-api",
-            url: "https://github.com/CreateAPI/CreateAPI/releases/download/0.2.0/create-api.artifactbundle.zip",
-            checksum: "6f8a3ce099f07eb2655ccaf6f66d8c9a09b74bb2307781c4adec36609ddac009"
+            url: "https://github.com/grishamsc/CreateAPI/releases/download/0.2.0-anyjsonnull/create-api.artifactbundle.zip",
+            checksum: "811d94826d11b8bc8bb98f240632f22582aab128ad775044bb54a9b3391e9d9b"
         ),
         .plugin(
             name: "TonAPIGenerator",

@@ -9,9 +9,10 @@ import Foundation
 
 public final class URLSessionTransport: NetworkTransport {
   
-  enum Error: Swift.Error {
+  public enum Error: Swift.Error {
     case requestFailed(error: Swift.Error)
     case notHTTPResponse(response: URLResponse)
+    case noConnection
   }
   
   private let urlSession: URLSessionProtocol
@@ -45,7 +46,11 @@ public final class URLSessionTransport: NetworkTransport {
       let response = responseBuilder.build(with: httpResponse, body: data)
       return response
     } catch let error {
-      throw Error.requestFailed(error: error)
+      if error.isNoConnectionError {
+        throw Error.noConnection
+      } else {
+        throw Error.requestFailed(error: error)
+      }
     }
   }
 }

@@ -13,5 +13,5 @@ enum APIResponseError: Swift.Error, Equatable {
   case notFound(error: APIError)
   case internalServerError(error: APIError)
   case undocumented(error: APIError)
-  case invalidResponse(_ response: Response)
+  case invalidResponse(_ response: HTTPResponse)
 }

@@ -27,10 +27,10 @@ final class APIResponseDecoderTests: XCTestCase {
                           getMethods: ["get_item_data"])
     let accountData = try JSONEncoder().encode(account)
     let statusCode = 200
-    let response = Response(statusCode: statusCode, headers: [], body: accountData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: accountData)
     }
     
     // WHEN
@@ -47,10 +47,10 @@ final class APIResponseDecoderTests: XCTestCase {
     """
     let entityData = entityString.data(using: .utf8)!
     let statusCode = 200
-    let response = Response(statusCode: statusCode, headers: [], body: entityData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: entityData)
     }
     
     // WHEN
@@ -65,10 +65,10 @@ final class APIResponseDecoderTests: XCTestCase {
     let apiError = APIError(error: "Bad request")
     let errorData = try JSONEncoder().encode(apiError)
     let statusCode = 400
-    let response = Response(statusCode: statusCode, headers: [], body: errorData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: errorData)
     }
     
     // WHEN
@@ -86,10 +86,10 @@ final class APIResponseDecoderTests: XCTestCase {
     """
     let errorData = try JSONEncoder().encode(apiErrorString.data(using: .utf8))
     let statusCode = 400
-    let response = Response(statusCode: statusCode, headers: [], body: errorData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: errorData)
     }
     
     // WHEN
@@ -104,10 +104,10 @@ final class APIResponseDecoderTests: XCTestCase {
     let apiError = APIError(error: "Not authorized")
     let errorData = try JSONEncoder().encode(apiError)
     let statusCode = 401
-    let response = Response(statusCode: statusCode, headers: [], body: errorData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: errorData)
     }
     
     // WHEN
@@ -122,10 +122,10 @@ final class APIResponseDecoderTests: XCTestCase {
     let apiError = APIError(error: "Not found")
     let errorData = try JSONEncoder().encode(apiError)
     let statusCode = 404
-    let response = Response(statusCode: statusCode, headers: [], body: errorData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: errorData)
     }
     
     // WHEN
@@ -140,10 +140,10 @@ final class APIResponseDecoderTests: XCTestCase {
     let apiError = APIError(error: "Internal server error")
     let errorData = try JSONEncoder().encode(apiError)
     let statusCode = 500
-    let response = Response(statusCode: statusCode, headers: [], body: errorData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: errorData)
     }
     
     // WHEN
@@ -158,10 +158,10 @@ final class APIResponseDecoderTests: XCTestCase {
     let apiError = APIError(error: "Undocumented error")
     let errorData = try JSONEncoder().encode(apiError)
     let statusCode = 420
-    let response = Response(statusCode: statusCode, headers: [], body: errorData)
+    let response = HTTPResponse(statusCode: statusCode, headers: [])
     
     func decode() throws {
-      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response)
+      let _ : APIResponse<Account> = try self.apiResponseDecoder.decode(response: response, data: errorData)
     }
     
     // WHEN

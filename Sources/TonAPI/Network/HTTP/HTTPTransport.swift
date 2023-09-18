@@ -10,7 +10,7 @@ import Foundation
 public enum HTTPTransportEvent {
   case response(HTTPResponse)
   case data(Data)
-  case complete
+  case complete(Swift.Error?)
 }
 
 public protocol HTTPTransport {
@@ -69,11 +69,12 @@ extension URLSessionHTTPTransport: URLSessionTaskDelegate {
                          task: URLSessionTask,
                          didCompleteWithError error: Swift.Error?) {
     guard let handler = taskHandlers[task] else { return }
-    if let error = error {
+    if task.response == nil, let error = error {
       handler(.failure(error))
-    } else {
-      handler(.success(.complete))
+      return
     }
+    
+    handler(.success(.complete(error)))
   }
 }
 
@@ -93,7 +94,6 @@ extension URLSessionHTTPTransport: URLSessionDataDelegate {
   public func urlSession(_ session: URLSession, 
                   dataTask: URLSessionDataTask,
                   didReceive data: Data) {
-    print("GOT DATA")
     guard let handler = taskHandlers[dataTask] else { return }
     handler(.success(.data(data)))
   }

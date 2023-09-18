@@ -37,14 +37,19 @@ public final class AsyncBytes: AsyncSequence {
     public typealias Element = UInt8
     
     var bytesProvider: BytesProvider
+    let task: HTTPTransportTask
     
     public mutating func next() async throws -> UInt8? {
-      try await bytesProvider.next()
+      return try await withTaskCancellationHandler {
+        try await bytesProvider.next()
+      } onCancel: { [task] in
+        task.cancel()
+      }
     }
   }
   
   public func makeAsyncIterator() -> Iterator {
-    Iterator(bytesProvider: bytesProvider)
+    Iterator(bytesProvider: bytesProvider, task: task)
   }
 }
 

@@ -58,29 +58,37 @@ public final class NetworkClient {
       }
       return (asyncBytes, httpResponse)
     } else {
-      return try await withUnsafeThrowingContinuation { continuation in
-        let bytesAccumulator = BytesAccumulator()
-        let task = httpTransport.send(request: urlRequest)
-        httpTransport.addTaskHandler(task: task) { result in
-          switch result {
-          case .success(let event):
-            switch event {
-            case .response(let response):
-              continuation.resume(returning: (AsyncBytes(bytesProvider: bytesAccumulator, task: task), response))
-            case .data(let data):
-              Task {
-                await bytesAccumulator.addData(data)
+      let bytesAccumulator = BytesAccumulator()
+      let task: HTTPTransportTask = httpTransport.send(request: urlRequest)
+      return try await withTaskCancellationHandler {
+        try await withCheckedThrowingContinuation { continuation in
+          httpTransport.addTaskHandler(task: task) { result in
+            switch result {
+            case .success(let event):
+              switch event {
+              case .response(let response):
+                continuation.resume(returning: (AsyncBytes(bytesProvider: bytesAccumulator, task: task), response))
+              case .data(let data):
+                Task {
+                  await bytesAccumulator.addData(data)
+                }
+              case .complete(let error):
+                Task {
+                  if let error = error {
+                    await bytesAccumulator.setResult(result: .failure(error))
+                  } else {
+                    await bytesAccumulator.setResult(result: .success(()))
+                  }
+                }
               }
-            case .complete:
-              Task {
-                await bytesAccumulator.setResult(result: .success(()))
-              }
+            case .failure(let error):
+              continuation.resume(throwing: error)
             }
-          case .failure(let error):
-            continuation.resume(throwing: error)
           }
+          task.resume()
         }
-        task.resume()
+      } onCancel: {
+        task.cancel()
       }
     }
   }

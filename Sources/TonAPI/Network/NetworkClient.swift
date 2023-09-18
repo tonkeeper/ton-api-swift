@@ -48,44 +48,39 @@ public final class NetworkClient {
     }
   }
   
-  public func send(streamRequest: Request, hostURL: URL) -> AsyncThrowingStream<HTTPTransportEvent, Swift.Error> {
-    return AsyncThrowingStream { [weak self] continuation in
-      guard let self = self else { return }
-      Task {
-        let request = try await self.interceptRequest(streamRequest)
-        let urlRequest = try self.urlRequestBuilder.build(with: request, baseURL: hostURL)
-        let task = self.httpTransport.send(request: urlRequest) { result in
+  public func bytes(request: Request, hostURL: URL) async throws -> (AsyncBytes, HTTPResponse) {
+    let request = try await interceptRequest(request)
+    let urlRequest = try urlRequestBuilder.build(with: request, baseURL: hostURL)
+    if #available(macOS 12.0, iOS 15.0, watchOS 8.0, *) {
+      let (asyncBytes, response) = try await httpTransport.bytes(request: urlRequest)
+      guard let httpResponse = HTTPResponse(urlResponse: response) else {
+        throw Error.notHTTPResponse(response: response)
+      }
+      return (asyncBytes, httpResponse)
+    } else {
+      return try await withUnsafeThrowingContinuation { continuation in
+        let bytesAccumulator = BytesAccumulator()
+        let task = httpTransport.send(request: urlRequest)
+        httpTransport.addTaskHandler(task: task) { result in
           switch result {
-          case .complete(let completion):
-            if let error = completion.error {
-              if error.isNoConnectionError {
-                continuation.finish(throwing: Error.noConnection)
-              } else {
-                continuation.finish(throwing: Error.requestFailed(error: error))
+          case .success(let event):
+            switch event {
+            case .response(let response):
+              continuation.resume(returning: (AsyncBytes(bytesProvider: bytesAccumulator, task: task), response))
+            case .data(let data):
+              Task {
+                await bytesAccumulator.addData(data)
               }
-              
-              return
+            case .complete:
+              Task {
+                await bytesAccumulator.setResult(result: .success(()))
+              }
             }
-            continuation.yield(.complete(completion))
-            continuation.finish(throwing: completion.error)
-          default:
-            continuation.yield(result)
+          case .failure(let error):
+            continuation.resume(throwing: error)
           }
         }
-        
-        continuation.onTermination = { [weak self] termination in
-          switch termination {
-          case .finished(let error):
-            continuation.yield(.complete(.init(response: task.httpResponse(), error: error)))
-            continuation.finish(throwing: error)
-          case .cancelled:
-            continuation.yield(.complete(.init(response: task.httpResponse(), error: nil)))
-            continuation.finish()
-          @unknown default:
-            return
-          }
-          self?.httpTransport.cancelTask(task)
-        }
+        task.resume()
       }
     }
   }

@@ -7,17 +7,25 @@
 
 import Foundation
 
+public enum HTTPTransportEvent {
+  case response(HTTPResponse)
+  case data(Data)
+  case complete
+}
+
 public protocol HTTPTransport {
   func send(request: URLRequest) async throws -> (Data, URLResponse)
-  func send(request: URLRequest,
-            handler: @escaping (HTTPTransportEvent) -> Void) -> HTTPTransportTask
-  func cancelTask(_ task: HTTPTransportTask)
+  func send(request: URLRequest) -> HTTPTransportTask
+  func addTaskHandler(task: HTTPTransportTask,
+                      handler: @escaping (Result<HTTPTransportEvent, Swift.Error>) -> Void)
+  @available(macOS 12.0, iOS 15.0, watchOS 8.0, *)
+  func bytes(request: URLRequest) async throws -> (AsyncBytes, URLResponse)
 }
 
 public final class URLSessionHTTPTransport: NSObject, HTTPTransport {
   
   private let rootQueue = DispatchQueue(label: "urlSessionHTTPTransport.rootQueue")
-  private var taskHandlers = [URLSessionTask: (HTTPTransportEvent) -> Void]()
+  private var taskHandlers = [URLSessionTask: (Result<HTTPTransportEvent, Swift.Error>) -> Void]()
 
   private lazy var session: URLSession = {
     let operationQueue = OperationQueue()
@@ -36,33 +44,36 @@ public final class URLSessionHTTPTransport: NSObject, HTTPTransport {
     return (data, urlResponse)
   }
   
-  public func send(request: URLRequest,
-                   handler: @escaping (HTTPTransportEvent) -> Void) -> HTTPTransportTask {
+  public func send(request: URLRequest) -> HTTPTransportTask {
     let task = session.dataTask(with: request)
-    
-    rootQueue.async {
-      self.taskHandlers[task] = handler
-      task.resume()
-    }
-    return HTTPTransportTask(identifier: task.taskIdentifier, httpResponse: { .init(urlResponse: task.response) })
+    return HTTPTransportTask(identifier: task.taskIdentifier, httpResponse: { .init(urlResponse: task.response) }, task: task)
   }
   
-  public func cancelTask(_ task: HTTPTransportTask) {
-    Task {
-      await session.allTasks
-        .filter { $0.taskIdentifier == task.identifier }
-        .forEach { $0.cancel() }
+  public func addTaskHandler(task: HTTPTransportTask, handler: @escaping (Result<HTTPTransportEvent, Swift.Error>) -> Void) {
+    guard let sessionTask = task.task else { return }
+    rootQueue.async {
+      self.taskHandlers[sessionTask] = handler
     }
+  }
+  
+  @available(macOS 12.0, iOS 15.0, watchOS 8.0, *)
+  public func bytes(request: URLRequest) async throws -> (AsyncBytes, URLResponse) {
+    let (asyncBytes, response) = try await session.bytes(for: request)
+    let task = HTTPTransportTask(identifier: asyncBytes.task.taskIdentifier, httpResponse: { .init(urlResponse: response) }, task: asyncBytes.task)
+    return (AsyncBytes(asyncBytes, task: task), response)
   }
 }
 
 extension URLSessionHTTPTransport: URLSessionTaskDelegate {
   public func urlSession(_ session: URLSession,
-                  task: URLSessionTask,
-                  didCompleteWithError error: Swift.Error?) {
+                         task: URLSessionTask,
+                         didCompleteWithError error: Swift.Error?) {
     guard let handler = taskHandlers[task] else { return }
-    handler(.complete(.init(response: HTTPResponse(urlResponse: task.response), error: error)))
-    taskHandlers[task] = nil
+    if let error = error {
+      handler(.failure(error))
+    } else {
+      handler(.success(.complete))
+    }
   }
 }
 
@@ -75,14 +86,15 @@ extension URLSessionHTTPTransport: URLSessionDataDelegate {
       completionHandler(.cancel)
       return
     }
-    handler(.recieveResponse(httpResponse))
+    handler(.success(.response(httpResponse)))
     completionHandler(.allow)
   }
   
   public func urlSession(_ session: URLSession, 
                   dataTask: URLSessionDataTask,
                   didReceive data: Data) {
+    print("GOT DATA")
     guard let handler = taskHandlers[dataTask] else { return }
-    handler(.data(data))
+    handler(.success(.data(data)))
   }
 }

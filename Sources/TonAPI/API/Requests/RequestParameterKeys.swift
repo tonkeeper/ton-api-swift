@@ -21,4 +21,5 @@ extension String {
   static let tokens = "tokens"
   static let currencies = "currencies"
   static let boc = "boc"
+  static let accounts = "accounts"
 }

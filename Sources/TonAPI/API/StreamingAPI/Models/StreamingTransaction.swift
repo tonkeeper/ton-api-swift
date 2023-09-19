@@ -8,9 +8,9 @@
 import Foundation
 
 public struct StreamingTransaction: Codable {
-  let accountId: String
-  let lt: Int64
-  let txHash: String
+  public let accountId: String
+  public let lt: Int64
+  public let txHash: String
   
   enum CodingKeys: String, CodingKey {
     case accountId = "account_id"

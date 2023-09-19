@@ -8,8 +8,8 @@
 import Foundation
 
 public struct HTTPResponse: Equatable {
-  let statusCode: Int
-  let headers: [HTTPHeader]
+  public let statusCode: Int
+  public let headers: [HTTPHeader]
 }
 
 extension HTTPResponse {

@@ -42,6 +42,7 @@ public final class DefaultStreamingAPI: StreamingAPI {
             default: continue
             }
           }
+          continuation.finish()
         } catch {
           continuation.finish(throwing: error)
         }

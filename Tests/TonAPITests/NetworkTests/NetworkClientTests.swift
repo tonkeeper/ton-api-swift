@@ -1,5 +1,5 @@
 //
-//  URLSessionTransportTests.swift
+//  NetworkClientTests.swift
 //  
 //
 //  Created by Grigory on 17.6.23..
@@ -8,12 +8,11 @@
 import XCTest
 @testable import TonAPI
 
-final class URLSessionTransportTests: XCTestCase {
+final class NetworkClientTests: XCTestCase {
   let baseURL = URL(string: "https://tonapi.io")!
   let requestBuilder = URLRequestBuilder()
-  let responseBuilder = ResponseBuilder()
   
-  let mockURLSession = MockURLSession()
+  let mockTransport = MockHTTPTransport()
   
   func testURLSessionUseInterceptorsToUpdateRequest() async throws {
     let interceptorOne = MockRequestInterceptor()
@@ -26,10 +25,9 @@ final class URLSessionTransportTests: XCTestCase {
       .init(name: "InterceptorTwoName", value: "InterceptorTwoValue")
     ]
     
-    let urlSessionTransport = URLSessionTransport(
-      urlSession: mockURLSession,
+    let networkClient = NetworkClient(
+      httpTransport: mockTransport,
       urlRequestBuilder: requestBuilder,
-      responseBuilder: responseBuilder,
       requestInterceptors: [interceptorOne, interceptorTwo]
     )
     
@@ -41,14 +39,14 @@ final class URLSessionTransportTests: XCTestCase {
       bodyParameter: [:]
     )
     
-    _ = try await urlSessionTransport.send(request: emptyRequest, baseURL: baseURL)
+    _ = try await networkClient.send(request: emptyRequest, hostURL: baseURL)
     
     let resultHeaders = [
       "InterceptorOneName":"InterceptorOneValue",
       "InterceptorTwoName":"InterceptorTwoValue"
     ]
     
-    XCTAssertEqual(mockURLSession.inputRequest?.allHTTPHeaderFields,
+    XCTAssertEqual(mockTransport.inputRequest?.allHTTPHeaderFields,
                    resultHeaders)
   }
 }

@@ -8,10 +8,10 @@
 import Foundation
 
 public struct APIResponse<Entity: Decodable> {
-  public let response: Response
+  public let response: HTTPResponse
   public let entity: Entity
     
-  public init(response: Response,
+  public init(response: HTTPResponse,
               entity: Entity) {
     self.response = response
     self.entity = entity

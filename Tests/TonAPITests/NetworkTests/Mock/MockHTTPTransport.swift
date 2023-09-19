@@ -8,7 +8,7 @@
 import Foundation
 @testable import TonAPI
 
-final class MockURLSession: URLSessionProtocol {
+final class MockHTTPTransport: HTTPTransport {
   
   var mockData: Data = {
     return "".data(using: .utf8)!
@@ -18,9 +18,14 @@ final class MockURLSession: URLSessionProtocol {
   }()
   var inputRequest: URLRequest?
   
-  func data(for request: URLRequest,
-            delegate: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
+  func send(request: URLRequest) async throws -> (Data, URLResponse) {
     inputRequest = request
     return (mockData, mockURLResponse)
   }
+  
+  func send(request: URLRequest, handler: @escaping (HTTPTransportEvent) -> Void) -> HTTPTransportTask {
+    HTTPTransportTask(identifier: 1, httpResponse: { return nil })
+  }
+  
+  func cancelTask(_ task: HTTPTransportTask) {}
 }

@@ -13,33 +13,33 @@ public protocol API {
 }
 
 public final class DefaultAPI: API {
-  let transport: NetworkTransport
+  let networkClient: NetworkClient
   let baseURL: URL
   let responseDecoder: APIResponseDecoder
   
-  public init(transport: NetworkTransport,
+  public init(networkClient: NetworkClient,
               baseURL: URL,
               responseDecoder: APIResponseDecoder) {
-    self.transport = transport
+    self.networkClient = networkClient
     self.baseURL = baseURL
     self.responseDecoder = responseDecoder
   }
   
   public func send<Entity: Codable, Request: APIRequest<Entity>>(request: Request) async throws -> APIResponse<Entity> {
-    let response = try await transport.send(
+    let response = try await networkClient.send(
       request: request.request,
-      baseURL: baseURL
-    )
-    let apiResponse: APIResponse<Entity> = try responseDecoder.decode(response: response)
+      hostURL: baseURL)
+    
+    let apiResponse: APIResponse<Entity> = try responseDecoder.decode(response: response.1, data: response.0)
     return apiResponse
   }
   
   public func send<Request: APIRequest<EmptyResponse>>(request: Request) async throws -> APIResponse<EmptyResponse> {
-    let response = try await transport.send(
+    let response = try await networkClient.send(
       request: request.request,
-      baseURL: baseURL
+      hostURL: baseURL
     )
-    let apiResponse: APIResponse<EmptyResponse> = try responseDecoder.decode(response: response)
+    let apiResponse: APIResponse<EmptyResponse> = try responseDecoder.decode(response: response.1, data: response.0)
     return apiResponse
   }
 }

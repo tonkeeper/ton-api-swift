@@ -8,6 +8,7 @@
 import Foundation
 
 public struct Request {
+  public let uuid = UUID()
   public let path: String
   public let method: HTTPMethod
   public var headers: [HTTPHeader]

@@ -13,6 +13,10 @@ public protocol StreamingAPI {
 }
 
 public final class DefaultStreamingAPI: StreamingAPI {
+  enum Error: Swift.Error {
+    case failed(statusCode: Int)
+  }
+  
   let eventSource: EventSource
   let baseURL: URL
   let decoder: StreamingAPIDecoder
@@ -32,6 +36,7 @@ public final class DefaultStreamingAPI: StreamingAPI {
     let stream = AsyncThrowingStream<Entity, Swift.Error> { continuation in
       let task = Task {
         do {
+          try validateResponse(response)
           for try await event in eventSourceStream {
             switch (event.event, event.data) {
             case ("message", .some(let dataString)):
@@ -52,6 +57,14 @@ public final class DefaultStreamingAPI: StreamingAPI {
       }
     }
     return (stream, response)
+  }
+}
+
+private extension DefaultStreamingAPI {
+  func validateResponse(_ response: HTTPResponse) throws {
+    guard (200..<300).contains(response.statusCode) else {
+      throw Error.failed(statusCode: response.statusCode)
+    }
   }
 }
 

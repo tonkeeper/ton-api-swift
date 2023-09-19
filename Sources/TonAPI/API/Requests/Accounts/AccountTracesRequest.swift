@@ -8,7 +8,7 @@
 import Foundation
 
 public struct AccountTracesRequest: APIRequestAttributed {
-  public typealias Entity = TraceIds
+  public typealias Entity = TraceIDs
   var path: String {
     Paths.v2.accounts.accountId(accountId).traces.path
   }

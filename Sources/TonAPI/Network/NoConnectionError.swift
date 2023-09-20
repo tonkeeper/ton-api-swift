@@ -10,7 +10,12 @@ import Foundation
 public extension Swift.Error {
   var isNoConnectionError: Bool {
     guard let transportError = self as? NetworkClient.Error else {
-      return (self as NSError).code == URLError.Code.notConnectedToInternet.rawValue
+        let nsError = (self as NSError)
+        guard nsError.domain == URLError.errorDomain,
+              (nsError.code == URLError.Code.notConnectedToInternet.rawValue || nsError.code == URLError.Code.networkConnectionLost.rawValue) else {
+            return false
+        }
+        return true
     }
     return transportError.isNoConnectionError
   }

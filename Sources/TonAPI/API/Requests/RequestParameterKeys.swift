@@ -19,7 +19,9 @@ extension String {
   static let name = "name"
   static let period = "period"
   static let tokens = "tokens"
+  static let token = "token"
   static let currencies = "currencies"
+  static let currency = "currency"
   static let boc = "boc"
   static let accounts = "accounts"
 }

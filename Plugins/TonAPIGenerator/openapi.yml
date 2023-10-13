@@ -560,6 +560,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/accountIDParameter'
         - $ref: '#/components/parameters/i18n'
+        - $ref: '#/components/parameters/initiatorQuery'
         - name: subject_only
           in: query
           description: "filter actions where requested account is not real subject (for example sender or receiver jettons)"
@@ -1098,6 +1099,8 @@ paths:
         - Jettons
       parameters:
         - $ref: '#/components/parameters/accountIDParameter'
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/offsetQuery'
       responses:
         '200':
           description: jetton's holders
@@ -1105,6 +1108,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JettonHolders'
+        'default':
+          $ref: '#/components/responses/Error'
+  /v2/events/{event_id}/jettons:
+    get:
+      description: "Get only jetton transfers in the event"
+      operationId: getJettonsEvents
+      tags:
+        - Jettons
+      parameters:
+        - $ref: '#/components/parameters/eventIDParameter'
+        - $ref: '#/components/parameters/i18n'
+      responses:
+        '200':
+          description: events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
         'default':
           $ref: '#/components/responses/Error'
 
@@ -2311,6 +2332,14 @@ components:
       schema:
         type: string
         example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621
+    initiatorQuery:
+      in: query
+      name: initiator
+      description: Show only events that are initiated by this account
+      explode: false
+      schema:
+        type: boolean
+        default: false
 
   requestBodies:
     MethodParameters:
@@ -2453,6 +2482,7 @@ components:
       required:
         - address
         - is_scam
+        - is_wallet
       properties:
         address:
           type: string
@@ -2468,6 +2498,9 @@ components:
         icon:
           type: string
           example: https://ton.org/logo.png
+        is_wallet:
+          type: boolean
+          example: true
     BlockchainBlock:
       type: object
       required:
@@ -3006,6 +3039,7 @@ components:
         - status
         - last_activity
         - get_methods
+        - is_wallet
       properties:
         address:
           type: string
@@ -3045,6 +3079,8 @@ components:
             type: string
           example: [ 'get_item_data' ]
         is_suspended:
+          type: boolean
+        is_wallet:
           type: boolean
     Accounts:
       type: object
@@ -3800,9 +3836,11 @@ components:
         ton_in:
           type: integer
           example: 1000000000
+          format: int64
         ton_out:
           type: integer
           example: 2000000000
+          format: int64
         user_wallet:
           $ref: '#/components/schemas/AccountAddress'
         router:
@@ -4167,6 +4205,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Trace'
+        emulated:
+          type: boolean
+          example: false
     MessageConsequences:
       type: object
       required:
@@ -4342,11 +4383,14 @@ components:
             type: object
             required:
               - address
+              - owner
               - balance
             properties:
               address:
                 type: string
                 example: 0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365
+              owner:
+                $ref: '#/components/schemas/AccountAddress'
               balance:
                 type: string
                 example: 1000000000
@@ -4459,6 +4503,9 @@ components:
           format: int64
           example: 5000000000
           description: "stake of validator"
+        cycle_length:
+          type: integer
+          format: int64
     PoolImplementation:
       type: object
       required:

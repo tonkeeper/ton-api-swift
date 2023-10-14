@@ -10,6 +10,11 @@ import Foundation
 public struct HTTPResponse: Equatable {
   public let statusCode: Int
   public let headers: [HTTPHeader]
+    
+  public init(statusCode: Int, headers: [HTTPHeader]) {
+    self.statusCode = statusCode
+    self.headers = headers
+  }
 }
 
 extension HTTPResponse {

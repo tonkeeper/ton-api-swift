@@ -91,15 +91,6 @@
       }
     },
     {
-      "identity" : "swift-openapi-urlsession",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-openapi-urlsession",
-      "state" : {
-        "revision" : "2a676df437aeb50ddf8ecb0ad327d14f078d6cb6",
-        "version" : "0.3.0"
-      }
-    },
-    {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",

@@ -10,12 +10,12 @@ let package = Package(
     ],
     products: [
         .library(name: "TonAPI", targets: ["TonAPI"]),
-        .library(name: "TonStreamingAPI", targets: ["TonStreamingAPI"])
+        .library(name: "TonStreamingAPI", targets: ["TonStreamingAPI"]),
+        .library(name: "StreamURLSessionTransport", targets: ["StreamURLSessionTransport"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "0.3.0")),
         .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMinor(from: "0.3.0")),
-        .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMinor(from: "0.3.0")),
     ],
     targets: [
         .target(name: "TonAPI",
@@ -38,6 +38,16 @@ let package = Package(
                 ],
                 path: "Packages/ton-streaming-api",
                 exclude: ["openapi_generation"],
+                sources: ["Sources"]
+               ),
+        .target(name: "StreamURLSessionTransport",
+                dependencies: [
+                    .product(
+                        name: "OpenAPIRuntime",
+                        package: "swift-openapi-runtime"
+                    )
+                ],
+                path: "Packages/StreamURLSessionTransport",
                 sources: ["Sources"]
                )
     ]

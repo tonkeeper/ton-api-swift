@@ -1,0 +1,39 @@
+openapi: 3.0.2
+info:
+  title: TonAPI V2 offers real-time updates about events in the blockchain.
+  version: 2.0.0
+  contact:
+    name: Support
+    email: support@tonkeeper.com
+servers:
+  - url: "https://tonapi.io"
+  - url: "https://testnet.tonapi.io"
+  - url: "http://localhost:8081"
+paths:
+  /v2/sse/accounts/transactions:
+    get:
+      operationId: getTransactions
+      summary: Real-time notifications about transactions.
+      parameters:
+        - $ref: '#/components/parameters/accountsParameter'
+      responses:
+        "200":
+          description: OK
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  parameters:
+    accountsParameter:
+      in: query
+      name: accounts
+      required: true
+      description: account ID
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          example: 0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621

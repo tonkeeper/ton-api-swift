@@ -133,10 +133,14 @@ extension HTTPResponse {
       headerFields[name] = value
     }
     
-    let httpBodyAsyncStream: AsyncStream<ArraySlice<UInt8>> = AsyncStream { continuation in
+    let httpBodyAsyncStream: AsyncThrowingStream<ArraySlice<UInt8>, Error> = AsyncThrowingStream { continuation in
       Task {
-        for try await byte in bytes {
-          continuation.yield(ArraySlice([byte]))
+        do {
+          for try await byte in bytes {
+            continuation.yield(ArraySlice([byte]))
+          }
+        } catch let error {
+          continuation.finish(throwing: error)
         }
         continuation.finish()
       }

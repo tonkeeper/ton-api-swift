@@ -7,22 +7,22 @@
 
 import Foundation
 
-final class EventParser {
+struct EventParser {
   private let newlineCharacters = ["\r\n", "\n", "\r"]
   private lazy var eventsDelimeters: [Data] = {
     newlineCharacters.map { "\($0)\($0)".data(using: .utf8)! }
   }()
   private var buffer = Data()
   
-  func append(byte: UInt8) {
+  mutating func append(byte: UInt8) {
     buffer.append(byte)
   }
   
-  func append(bytes: [UInt8]) {
+  mutating func append(bytes: [UInt8]) {
     buffer.append(contentsOf: bytes)
   }
   
-  func extractEvents() -> [EventSource.Event] {
+  mutating func extractEvents() -> [EventSource.Event] {
     var eventsChunks = [Data]()
     while let firstEventDelimeterRange = firstEventDeliemeterRange() {
       let eventChunkRange = buffer.startIndex..<firstEventDelimeterRange.lowerBound
@@ -33,7 +33,7 @@ final class EventParser {
     return eventsChunks.compactMap { parseEvent($0) }
   }
   
-  func firstEventDeliemeterRange() -> Range<Data.Index>? {
+  mutating func firstEventDeliemeterRange() -> Range<Data.Index>? {
     for eventDelimeter in eventsDelimeters {
       guard let range = buffer.range(of: eventDelimeter) else {
         continue
@@ -71,7 +71,7 @@ final class EventParser {
   func parseEventLine(_ line: String) -> (String?, String?) {
     let split = line.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
     guard split.count > 1 else { return (nil, nil) }
-    var key = String(split[0])
+    let key = String(split[0])
     var value = String(split[1])
     if value.hasPrefix(" ") { value = String(value.dropFirst()) }
     return (key, value)

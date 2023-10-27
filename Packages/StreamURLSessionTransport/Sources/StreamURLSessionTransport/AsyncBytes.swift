@@ -9,7 +9,7 @@ import Foundation
 
 public final class AsyncBytes: AsyncSequence {
   public typealias AsyncIterator = Iterator
-  public typealias Element = UInt8
+  public typealias Element = [UInt8]
   
   var bytesProvider: BytesProvider
   let task: URLSessionTask
@@ -19,20 +19,14 @@ public final class AsyncBytes: AsyncSequence {
     self.task = task
   }
   
-  @available(macOS 12.0, iOS 15.0, watchOS 8.0, *)
-  init(_ asyncBytes: URLSession.AsyncBytes, task: URLSessionTask) {
-      self.task = task
-      self.bytesProvider = asyncBytes.makeAsyncIterator()
-  }
-  
   public struct Iterator: AsyncIteratorProtocol {
     
-    public typealias Element = UInt8
+    public typealias Element = [UInt8]
     
     var bytesProvider: BytesProvider
     let task: URLSessionTask
     
-    public mutating func next() async throws -> UInt8? {
+    public mutating func next() async throws -> [UInt8]? {
       return try await withTaskCancellationHandler {
         try await bytesProvider.next()
       } onCancel: { [task] in

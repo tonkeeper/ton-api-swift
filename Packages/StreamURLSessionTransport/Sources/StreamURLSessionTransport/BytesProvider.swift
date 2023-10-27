@@ -8,8 +8,5 @@
 import Foundation
 
 protocol BytesProvider {
-  mutating func next() async throws -> UInt8?
+  mutating func next() async throws -> [UInt8]?
 }
-
-@available(macOS 12.0, iOS 15.0, watchOS 8.0, *)
-extension URLSession.AsyncBytes.Iterator: BytesProvider {}

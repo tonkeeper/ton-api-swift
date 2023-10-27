@@ -17,49 +17,45 @@ public final class StreamURLSessionTransport {
   }
   
   private func send(request: URLRequest) async throws -> (AsyncBytes, URLResponse) {
-    if #available(macOS 12.0, iOS 15.0, *) {
-      return try await urlSessionHandler.bytes(request: request)
-    } else {
-      let accumulator = BytesAccumulator()
-      let task = urlSessionHandler.send(request: request)
-      return try await withTaskCancellationHandler {
-        try await withCheckedThrowingContinuation { continuation in
-          urlSessionHandler.addTaskHandler(task: task) { result in
-            switch result {
-            case .success(let event):
-              switch event {
-              case .response(let response):
-                continuation.resume(
-                  returning: (
-                    AsyncBytes(
-                      bytesProvider: accumulator,
-                      task: task
-                    ), response
-                  )
+    let accumulator = BytesAccumulator()
+    let task = urlSessionHandler.send(request: request)
+    return try await withTaskCancellationHandler {
+      try await withCheckedThrowingContinuation { continuation in
+        urlSessionHandler.addTaskHandler(task: task) { result in
+          switch result {
+          case .success(let event):
+            switch event {
+            case .response(let response):
+              continuation.resume(
+                returning: (
+                  AsyncBytes(
+                    bytesProvider: accumulator,
+                    task: task
+                  ), response
                 )
-              case .data(let data):
-                Task {
-                  await accumulator.addData(data)
-                }
-              case .complete(let error):
-                Task {
-                  switch error {
-                  case .some(let error):
-                    await accumulator.setResult(result: .failure(error))
-                  case .none:
-                    await accumulator.setResult(result: .success(()))
-                  }
+              )
+            case .data(let data):
+              Task {
+                await accumulator.addData(data)
+              }
+            case .complete(let error):
+              Task {
+                switch error {
+                case .some(let error):
+                  await accumulator.setResult(result: .failure(error))
+                case .none:
+                  await accumulator.setResult(result: .success(()))
                 }
               }
-            case .failure(let error):
-              continuation.resume(throwing: error)
             }
+          case .failure(let error):
+            continuation.resume(throwing: error)
           }
-          task.resume()
         }
-      } onCancel: {
-        task.cancel()
+        task.resume()
       }
+    } onCancel: {
+      task.cancel()
     }
   }
 }
@@ -134,15 +130,19 @@ extension HTTPResponse {
     }
     
     let httpBodyAsyncStream: AsyncThrowingStream<ArraySlice<UInt8>, Error> = AsyncThrowingStream { continuation in
-      Task {
+      let task = Task {
         do {
-          for try await byte in bytes {
-            continuation.yield(ArraySlice([byte]))
+          for try await batch in bytes {
+            try Task.checkCancellation()
+            continuation.yield(ArraySlice(batch))
           }
         } catch let error {
           continuation.finish(throwing: error)
         }
         continuation.finish()
+      }
+      continuation.onTermination = { _ in
+        task.cancel()
       }
     }
     let body = HTTPBody(httpBodyAsyncStream, length: .unknown)

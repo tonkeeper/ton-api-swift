@@ -43,12 +43,6 @@ final class URLSessionHandler: NSObject, @unchecked Sendable {
       self.taskHandlers[task] = handler
     }
   }
-  
-  @available(macOS 12.0, iOS 15.0, watchOS 8.0, *)
-  func bytes(request: URLRequest) async throws -> (AsyncBytes, URLResponse) {
-    let (asyncBytes, response) = try await session.bytes(for: request)
-    return (AsyncBytes(asyncBytes, task: asyncBytes.task), response)
-  }
 }
 
 extension URLSessionHandler: URLSessionTaskDelegate {
@@ -61,7 +55,7 @@ extension URLSessionHandler: URLSessionTaskDelegate {
       handler(.failure(error))
       return
     }
-    
+    taskHandlers.removeValue(forKey: task)
     handler(.success(.complete(error)))
   }
 }

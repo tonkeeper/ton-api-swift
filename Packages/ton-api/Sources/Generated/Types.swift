@@ -17,6 +17,36 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//v2/blockchain/blocks/{block_id}/get(getBlockchainBlock)`.
     func getBlockchainBlock(_ input: Operations.getBlockchainBlock.Input) async throws
         -> Operations.getBlockchainBlock.Output
+    /// Get blockchain block shards
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/shards`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/shards/get(getBlockchainMasterchainShards)`.
+    func getBlockchainMasterchainShards(_ input: Operations.getBlockchainMasterchainShards.Input) async throws
+        -> Operations.getBlockchainMasterchainShards.Output
+    /// Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/blocks`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/blocks/get(getBlockchainMasterchainBlocks)`.
+    func getBlockchainMasterchainBlocks(_ input: Operations.getBlockchainMasterchainBlocks.Input) async throws
+        -> Operations.getBlockchainMasterchainBlocks.Output
+    /// Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/transactions`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/transactions/get(getBlockchainMasterchainTransactions)`.
+    func getBlockchainMasterchainTransactions(_ input: Operations.getBlockchainMasterchainTransactions.Input)
+        async throws -> Operations.getBlockchainMasterchainTransactions.Output
+    /// Get blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/get(getBlockchainConfigFromBlock)`.
+    func getBlockchainConfigFromBlock(_ input: Operations.getBlockchainConfigFromBlock.Input) async throws
+        -> Operations.getBlockchainConfigFromBlock.Output
+    /// Get raw blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/raw/get(getRawBlockchainConfigFromBlock)`.
+    func getRawBlockchainConfigFromBlock(_ input: Operations.getRawBlockchainConfigFromBlock.Input) async throws
+        -> Operations.getRawBlockchainConfigFromBlock.Output
     /// Get transactions from block
     ///
     /// - Remark: HTTP `GET /v2/blockchain/blocks/{block_id}/transactions`.
@@ -77,12 +107,28 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//v2/blockchain/config/get(getBlockchainConfig)`.
     func getBlockchainConfig(_ input: Operations.getBlockchainConfig.Input) async throws
         -> Operations.getBlockchainConfig.Output
+    /// Get raw blockchain config
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/config/raw/get(getRawBlockchainConfig)`.
+    func getRawBlockchainConfig(_ input: Operations.getRawBlockchainConfig.Input) async throws
+        -> Operations.getRawBlockchainConfig.Output
     /// Blockchain account inspect
     ///
     /// - Remark: HTTP `GET /v2/blockchain/accounts/{account_id}/inspect`.
     /// - Remark: Generated from `#/paths//v2/blockchain/accounts/{account_id}/inspect/get(blockchainAccountInspect)`.
     func blockchainAccountInspect(_ input: Operations.blockchainAccountInspect.Input) async throws
         -> Operations.blockchainAccountInspect.Output
+    /// Decode a given message. Only external incoming messages can be decoded currently.
+    ///
+    /// - Remark: HTTP `POST /v2/message/decode`.
+    /// - Remark: Generated from `#/paths//v2/message/decode/post(decodeMessage)`.
+    func decodeMessage(_ input: Operations.decodeMessage.Input) async throws -> Operations.decodeMessage.Output
+    /// parse address and display in all formats
+    ///
+    /// - Remark: HTTP `GET /v2/address/{account_id}/parse`.
+    /// - Remark: Generated from `#/paths//v2/address/{account_id}/parse/get(addressParse)`.
+    func addressParse(_ input: Operations.addressParse.Input) async throws -> Operations.addressParse.Output
     /// Emulate sending message to blockchain
     ///
     /// - Remark: HTTP `POST /v2/events/emulate`.
@@ -266,6 +312,18 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /v2/events/{event_id}`.
     /// - Remark: Generated from `#/paths//v2/events/{event_id}/get(getEvent)`.
     func getEvent(_ input: Operations.getEvent.Input) async throws -> Operations.getEvent.Output
+    /// Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/accounts/{account_id}/inscriptions`.
+    /// - Remark: Generated from `#/paths//v2/experimental/accounts/{account_id}/inscriptions/get(getAccountInscriptions)`.
+    func getAccountInscriptions(_ input: Operations.getAccountInscriptions.Input) async throws
+        -> Operations.getAccountInscriptions.Output
+    /// return comment for making operation with instrospection. please don't use it if you don't know what you are doing
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/inscriptions/op-template`.
+    /// - Remark: Generated from `#/paths//v2/experimental/inscriptions/op-template/get(getInscriptionOpTemplate)`.
+    func getInscriptionOpTemplate(_ input: Operations.getInscriptionOpTemplate.Input) async throws
+        -> Operations.getInscriptionOpTemplate.Output
     /// Get a list of all indexed jetton masters in the blockchain.
     ///
     /// - Remark: HTTP `GET /v2/jettons`.
@@ -461,6 +519,66 @@ extension APIProtocol {
     ) async throws -> Operations.getBlockchainBlock.Output {
         try await getBlockchainBlock(Operations.getBlockchainBlock.Input(path: path, headers: headers))
     }
+    /// Get blockchain block shards
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/shards`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/shards/get(getBlockchainMasterchainShards)`.
+    public func getBlockchainMasterchainShards(
+        path: Operations.getBlockchainMasterchainShards.Input.Path,
+        headers: Operations.getBlockchainMasterchainShards.Input.Headers = .init()
+    ) async throws -> Operations.getBlockchainMasterchainShards.Output {
+        try await getBlockchainMasterchainShards(
+            Operations.getBlockchainMasterchainShards.Input(path: path, headers: headers)
+        )
+    }
+    /// Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/blocks`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/blocks/get(getBlockchainMasterchainBlocks)`.
+    public func getBlockchainMasterchainBlocks(
+        path: Operations.getBlockchainMasterchainBlocks.Input.Path,
+        headers: Operations.getBlockchainMasterchainBlocks.Input.Headers = .init()
+    ) async throws -> Operations.getBlockchainMasterchainBlocks.Output {
+        try await getBlockchainMasterchainBlocks(
+            Operations.getBlockchainMasterchainBlocks.Input(path: path, headers: headers)
+        )
+    }
+    /// Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/transactions`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/transactions/get(getBlockchainMasterchainTransactions)`.
+    public func getBlockchainMasterchainTransactions(
+        path: Operations.getBlockchainMasterchainTransactions.Input.Path,
+        headers: Operations.getBlockchainMasterchainTransactions.Input.Headers = .init()
+    ) async throws -> Operations.getBlockchainMasterchainTransactions.Output {
+        try await getBlockchainMasterchainTransactions(
+            Operations.getBlockchainMasterchainTransactions.Input(path: path, headers: headers)
+        )
+    }
+    /// Get blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/get(getBlockchainConfigFromBlock)`.
+    public func getBlockchainConfigFromBlock(
+        path: Operations.getBlockchainConfigFromBlock.Input.Path,
+        headers: Operations.getBlockchainConfigFromBlock.Input.Headers = .init()
+    ) async throws -> Operations.getBlockchainConfigFromBlock.Output {
+        try await getBlockchainConfigFromBlock(
+            Operations.getBlockchainConfigFromBlock.Input(path: path, headers: headers)
+        )
+    }
+    /// Get raw blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/raw/get(getRawBlockchainConfigFromBlock)`.
+    public func getRawBlockchainConfigFromBlock(
+        path: Operations.getRawBlockchainConfigFromBlock.Input.Path,
+        headers: Operations.getRawBlockchainConfigFromBlock.Input.Headers = .init()
+    ) async throws -> Operations.getRawBlockchainConfigFromBlock.Output {
+        try await getRawBlockchainConfigFromBlock(
+            Operations.getRawBlockchainConfigFromBlock.Input(path: path, headers: headers)
+        )
+    }
     /// Get transactions from block
     ///
     /// - Remark: HTTP `GET /v2/blockchain/blocks/{block_id}/transactions`.
@@ -562,6 +680,13 @@ extension APIProtocol {
     public func getBlockchainConfig(headers: Operations.getBlockchainConfig.Input.Headers = .init()) async throws
         -> Operations.getBlockchainConfig.Output
     { try await getBlockchainConfig(Operations.getBlockchainConfig.Input(headers: headers)) }
+    /// Get raw blockchain config
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/config/raw/get(getRawBlockchainConfig)`.
+    public func getRawBlockchainConfig(headers: Operations.getRawBlockchainConfig.Input.Headers = .init()) async throws
+        -> Operations.getRawBlockchainConfig.Output
+    { try await getRawBlockchainConfig(Operations.getRawBlockchainConfig.Input(headers: headers)) }
     /// Blockchain account inspect
     ///
     /// - Remark: HTTP `GET /v2/blockchain/accounts/{account_id}/inspect`.
@@ -572,25 +697,51 @@ extension APIProtocol {
     ) async throws -> Operations.blockchainAccountInspect.Output {
         try await blockchainAccountInspect(Operations.blockchainAccountInspect.Input(path: path, headers: headers))
     }
+    /// Decode a given message. Only external incoming messages can be decoded currently.
+    ///
+    /// - Remark: HTTP `POST /v2/message/decode`.
+    /// - Remark: Generated from `#/paths//v2/message/decode/post(decodeMessage)`.
+    public func decodeMessage(
+        headers: Operations.decodeMessage.Input.Headers = .init(),
+        body: Components.RequestBodies.Boc
+    ) async throws -> Operations.decodeMessage.Output {
+        try await decodeMessage(Operations.decodeMessage.Input(headers: headers, body: body))
+    }
+    /// parse address and display in all formats
+    ///
+    /// - Remark: HTTP `GET /v2/address/{account_id}/parse`.
+    /// - Remark: Generated from `#/paths//v2/address/{account_id}/parse/get(addressParse)`.
+    public func addressParse(
+        path: Operations.addressParse.Input.Path,
+        headers: Operations.addressParse.Input.Headers = .init()
+    ) async throws -> Operations.addressParse.Output {
+        try await addressParse(Operations.addressParse.Input(path: path, headers: headers))
+    }
     /// Emulate sending message to blockchain
     ///
     /// - Remark: HTTP `POST /v2/events/emulate`.
     /// - Remark: Generated from `#/paths//v2/events/emulate/post(emulateMessageToEvent)`.
     public func emulateMessageToEvent(
+        query: Operations.emulateMessageToEvent.Input.Query = .init(),
         headers: Operations.emulateMessageToEvent.Input.Headers = .init(),
         body: Components.RequestBodies.Boc
     ) async throws -> Operations.emulateMessageToEvent.Output {
-        try await emulateMessageToEvent(Operations.emulateMessageToEvent.Input(headers: headers, body: body))
+        try await emulateMessageToEvent(
+            Operations.emulateMessageToEvent.Input(query: query, headers: headers, body: body)
+        )
     }
     /// Emulate sending message to blockchain
     ///
     /// - Remark: HTTP `POST /v2/traces/emulate`.
     /// - Remark: Generated from `#/paths//v2/traces/emulate/post(emulateMessageToTrace)`.
     public func emulateMessageToTrace(
+        query: Operations.emulateMessageToTrace.Input.Query = .init(),
         headers: Operations.emulateMessageToTrace.Input.Headers = .init(),
         body: Components.RequestBodies.Boc
     ) async throws -> Operations.emulateMessageToTrace.Output {
-        try await emulateMessageToTrace(Operations.emulateMessageToTrace.Input(headers: headers, body: body))
+        try await emulateMessageToTrace(
+            Operations.emulateMessageToTrace.Input(query: query, headers: headers, body: body)
+        )
     }
     /// Emulate sending message to blockchain
     ///
@@ -598,7 +749,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//v2/wallet/emulate/post(emulateMessageToWallet)`.
     public func emulateMessageToWallet(
         headers: Operations.emulateMessageToWallet.Input.Headers = .init(),
-        body: Components.RequestBodies.Boc
+        body: Components.RequestBodies.EmulationBoc
     ) async throws -> Operations.emulateMessageToWallet.Output {
         try await emulateMessageToWallet(Operations.emulateMessageToWallet.Input(headers: headers, body: body))
     }
@@ -923,6 +1074,29 @@ extension APIProtocol {
     public func getEvent(path: Operations.getEvent.Input.Path, headers: Operations.getEvent.Input.Headers = .init())
         async throws -> Operations.getEvent.Output
     { try await getEvent(Operations.getEvent.Input(path: path, headers: headers)) }
+    /// Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/accounts/{account_id}/inscriptions`.
+    /// - Remark: Generated from `#/paths//v2/experimental/accounts/{account_id}/inscriptions/get(getAccountInscriptions)`.
+    public func getAccountInscriptions(
+        path: Operations.getAccountInscriptions.Input.Path,
+        query: Operations.getAccountInscriptions.Input.Query = .init(),
+        headers: Operations.getAccountInscriptions.Input.Headers = .init()
+    ) async throws -> Operations.getAccountInscriptions.Output {
+        try await getAccountInscriptions(
+            Operations.getAccountInscriptions.Input(path: path, query: query, headers: headers)
+        )
+    }
+    /// return comment for making operation with instrospection. please don't use it if you don't know what you are doing
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/inscriptions/op-template`.
+    /// - Remark: Generated from `#/paths//v2/experimental/inscriptions/op-template/get(getInscriptionOpTemplate)`.
+    public func getInscriptionOpTemplate(
+        query: Operations.getInscriptionOpTemplate.Input.Query,
+        headers: Operations.getInscriptionOpTemplate.Input.Headers = .init()
+    ) async throws -> Operations.getInscriptionOpTemplate.Output {
+        try await getInscriptionOpTemplate(Operations.getInscriptionOpTemplate.Input(query: query, headers: headers))
+    }
     /// Get a list of all indexed jetton masters in the blockchain.
     ///
     /// - Remark: HTTP `GET /v2/jettons`.
@@ -1165,9 +1339,10 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//v2/liteserver/get_account_state/{account_id}/get(getRawAccountState)`.
     public func getRawAccountState(
         path: Operations.getRawAccountState.Input.Path,
+        query: Operations.getRawAccountState.Input.Query = .init(),
         headers: Operations.getRawAccountState.Input.Headers = .init()
     ) async throws -> Operations.getRawAccountState.Output {
-        try await getRawAccountState(Operations.getRawAccountState.Input(path: path, headers: headers))
+        try await getRawAccountState(Operations.getRawAccountState.Input(path: path, query: query, headers: headers))
     }
     /// Get raw shard info
     ///
@@ -1318,8 +1493,125 @@ public enum Components {
                 case is_wallet
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection`.
+        public struct BlockCurrencyCollection: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection/grams`.
+            public var grams: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection/otherPayload`.
+            public struct otherPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection/otherPayload/id`.
+                public var id: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection/otherPayload/value`.
+                public var value: Swift.String
+                /// Creates a new `otherPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - id:
+                ///   - value:
+                public init(id: Swift.Int64, value: Swift.String) {
+                    self.id = id
+                    self.value = value
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case id
+                    case value
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection/other`.
+            public typealias otherPayload = [Components.Schemas.BlockCurrencyCollection.otherPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/BlockCurrencyCollection/other`.
+            public var other: Components.Schemas.BlockCurrencyCollection.otherPayload
+            /// Creates a new `BlockCurrencyCollection`.
+            ///
+            /// - Parameters:
+            ///   - grams:
+            ///   - other:
+            public init(grams: Swift.Int64, other: Components.Schemas.BlockCurrencyCollection.otherPayload) {
+                self.grams = grams
+                self.other = other
+            }
+            public enum CodingKeys: String, CodingKey {
+                case grams
+                case other
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlockValueFlow`.
+        public struct BlockValueFlow: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/from_prev_blk`.
+            public var from_prev_blk: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/to_next_blk`.
+            public var to_next_blk: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/imported`.
+            public var imported: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/exported`.
+            public var exported: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/fees_collected`.
+            public var fees_collected: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/burned`.
+            public var burned: Components.Schemas.BlockCurrencyCollection?
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/fees_imported`.
+            public var fees_imported: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/recovered`.
+            public var recovered: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/created`.
+            public var created: Components.Schemas.BlockCurrencyCollection
+            /// - Remark: Generated from `#/components/schemas/BlockValueFlow/minted`.
+            public var minted: Components.Schemas.BlockCurrencyCollection
+            /// Creates a new `BlockValueFlow`.
+            ///
+            /// - Parameters:
+            ///   - from_prev_blk:
+            ///   - to_next_blk:
+            ///   - imported:
+            ///   - exported:
+            ///   - fees_collected:
+            ///   - burned:
+            ///   - fees_imported:
+            ///   - recovered:
+            ///   - created:
+            ///   - minted:
+            public init(
+                from_prev_blk: Components.Schemas.BlockCurrencyCollection,
+                to_next_blk: Components.Schemas.BlockCurrencyCollection,
+                imported: Components.Schemas.BlockCurrencyCollection,
+                exported: Components.Schemas.BlockCurrencyCollection,
+                fees_collected: Components.Schemas.BlockCurrencyCollection,
+                burned: Components.Schemas.BlockCurrencyCollection? = nil,
+                fees_imported: Components.Schemas.BlockCurrencyCollection,
+                recovered: Components.Schemas.BlockCurrencyCollection,
+                created: Components.Schemas.BlockCurrencyCollection,
+                minted: Components.Schemas.BlockCurrencyCollection
+            ) {
+                self.from_prev_blk = from_prev_blk
+                self.to_next_blk = to_next_blk
+                self.imported = imported
+                self.exported = exported
+                self.fees_collected = fees_collected
+                self.burned = burned
+                self.fees_imported = fees_imported
+                self.recovered = recovered
+                self.created = created
+                self.minted = minted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case from_prev_blk
+                case to_next_blk
+                case imported
+                case exported
+                case fees_collected
+                case burned
+                case fees_imported
+                case recovered
+                case created
+                case minted
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/BlockchainBlock`.
         public struct BlockchainBlock: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockchainBlock/tx_quantity`.
+            public var tx_quantity: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/BlockchainBlock/value_flow`.
+            public var value_flow: Components.Schemas.BlockValueFlow
             /// - Remark: Generated from `#/components/schemas/BlockchainBlock/workchain_id`.
             public var workchain_id: Swift.Int32
             /// - Remark: Generated from `#/components/schemas/BlockchainBlock/shard`.
@@ -1379,6 +1671,8 @@ public enum Components {
             /// Creates a new `BlockchainBlock`.
             ///
             /// - Parameters:
+            ///   - tx_quantity:
+            ///   - value_flow:
             ///   - workchain_id:
             ///   - shard:
             ///   - seqno:
@@ -1408,6 +1702,8 @@ public enum Components {
             ///   - rand_seed:
             ///   - created_by:
             public init(
+                tx_quantity: Swift.Int,
+                value_flow: Components.Schemas.BlockValueFlow,
                 workchain_id: Swift.Int32,
                 shard: Swift.String,
                 seqno: Swift.Int32,
@@ -1437,6 +1733,8 @@ public enum Components {
                 rand_seed: Swift.String,
                 created_by: Swift.String
             ) {
+                self.tx_quantity = tx_quantity
+                self.value_flow = value_flow
                 self.workchain_id = workchain_id
                 self.shard = shard
                 self.seqno = seqno
@@ -1467,6 +1765,8 @@ public enum Components {
                 self.created_by = created_by
             }
             public enum CodingKeys: String, CodingKey {
+                case tx_quantity
+                case value_flow
                 case workchain_id
                 case shard
                 case seqno
@@ -1497,6 +1797,41 @@ public enum Components {
                 case created_by
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlockchainBlocks`.
+        public struct BlockchainBlocks: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockchainBlocks/blocks`.
+            public var blocks: [Components.Schemas.BlockchainBlock]
+            /// Creates a new `BlockchainBlocks`.
+            ///
+            /// - Parameters:
+            ///   - blocks:
+            public init(blocks: [Components.Schemas.BlockchainBlock]) { self.blocks = blocks }
+            public enum CodingKeys: String, CodingKey { case blocks }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlockchainBlockShards`.
+        public struct BlockchainBlockShards: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockchainBlockShards/shardsPayload`.
+            public struct shardsPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainBlockShards/shardsPayload/last_known_block_id`.
+                public var last_known_block_id: Swift.String
+                /// Creates a new `shardsPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - last_known_block_id:
+                public init(last_known_block_id: Swift.String) { self.last_known_block_id = last_known_block_id }
+                public enum CodingKeys: String, CodingKey { case last_known_block_id }
+            }
+            /// - Remark: Generated from `#/components/schemas/BlockchainBlockShards/shards`.
+            public typealias shardsPayload = [Components.Schemas.BlockchainBlockShards.shardsPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/BlockchainBlockShards/shards`.
+            public var shards: Components.Schemas.BlockchainBlockShards.shardsPayload
+            /// Creates a new `BlockchainBlockShards`.
+            ///
+            /// - Parameters:
+            ///   - shards:
+            public init(shards: Components.Schemas.BlockchainBlockShards.shardsPayload) { self.shards = shards }
+            public enum CodingKeys: String, CodingKey { case shards }
+        }
         /// - Remark: Generated from `#/components/schemas/AccountStatus`.
         @frozen public enum AccountStatus: String, Codable, Hashable, Sendable {
             case nonexist = "nonexist"
@@ -1517,6 +1852,14 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/Message`.
         public struct Message: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Message/msg_type`.
+            @frozen public enum msg_typePayload: String, Codable, Hashable, Sendable {
+                case int_msg = "int_msg"
+                case ext_in_msg = "ext_in_msg"
+                case ext_out_msg = "ext_out_msg"
+            }
+            /// - Remark: Generated from `#/components/schemas/Message/msg_type`.
+            public var msg_type: Components.Schemas.Message.msg_typePayload
             /// - Remark: Generated from `#/components/schemas/Message/created_lt`.
             public var created_lt: Swift.Int64
             /// - Remark: Generated from `#/components/schemas/Message/ihr_disabled`.
@@ -1554,6 +1897,7 @@ public enum Components {
             /// Creates a new `Message`.
             ///
             /// - Parameters:
+            ///   - msg_type:
             ///   - created_lt:
             ///   - ihr_disabled:
             ///   - bounce:
@@ -1571,6 +1915,7 @@ public enum Components {
             ///   - decoded_op_name:
             ///   - decoded_body:
             public init(
+                msg_type: Components.Schemas.Message.msg_typePayload,
                 created_lt: Swift.Int64,
                 ihr_disabled: Swift.Bool,
                 bounce: Swift.Bool,
@@ -1588,6 +1933,7 @@ public enum Components {
                 decoded_op_name: Swift.String? = nil,
                 decoded_body: OpenAPIRuntime.OpenAPIValueContainer? = nil
             ) {
+                self.msg_type = msg_type
                 self.created_lt = created_lt
                 self.ihr_disabled = ihr_disabled
                 self.bounce = bounce
@@ -1606,6 +1952,7 @@ public enum Components {
                 self.decoded_body = decoded_body
             }
             public enum CodingKeys: String, CodingKey {
+                case msg_type
                 case created_lt
                 case ihr_disabled
                 case bounce
@@ -1955,6 +2302,450 @@ public enum Components {
             public init(transactions: [Components.Schemas.Transaction]) { self.transactions = transactions }
             public enum CodingKeys: String, CodingKey { case transactions }
         }
+        /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup`.
+        public struct ConfigProposalSetup: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/min_tot_rounds`.
+            public var min_tot_rounds: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/max_tot_rounds`.
+            public var max_tot_rounds: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/min_wins`.
+            public var min_wins: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/max_losses`.
+            public var max_losses: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/min_store_sec`.
+            public var min_store_sec: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/max_store_sec`.
+            public var max_store_sec: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/bit_price`.
+            public var bit_price: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/ConfigProposalSetup/cell_price`.
+            public var cell_price: Swift.Int64
+            /// Creates a new `ConfigProposalSetup`.
+            ///
+            /// - Parameters:
+            ///   - min_tot_rounds:
+            ///   - max_tot_rounds:
+            ///   - min_wins:
+            ///   - max_losses:
+            ///   - min_store_sec:
+            ///   - max_store_sec:
+            ///   - bit_price:
+            ///   - cell_price:
+            public init(
+                min_tot_rounds: Swift.Int,
+                max_tot_rounds: Swift.Int,
+                min_wins: Swift.Int,
+                max_losses: Swift.Int,
+                min_store_sec: Swift.Int64,
+                max_store_sec: Swift.Int64,
+                bit_price: Swift.Int64,
+                cell_price: Swift.Int64
+            ) {
+                self.min_tot_rounds = min_tot_rounds
+                self.max_tot_rounds = max_tot_rounds
+                self.min_wins = min_wins
+                self.max_losses = max_losses
+                self.min_store_sec = min_store_sec
+                self.max_store_sec = max_store_sec
+                self.bit_price = bit_price
+                self.cell_price = cell_price
+            }
+            public enum CodingKeys: String, CodingKey {
+                case min_tot_rounds
+                case max_tot_rounds
+                case min_wins
+                case max_losses
+                case min_store_sec
+                case max_store_sec
+                case bit_price
+                case cell_price
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/GasLimitPrices`.
+        public struct GasLimitPrices: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/special_gas_limit`.
+            public var special_gas_limit: Swift.Int64?
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/flat_gas_limit`.
+            public var flat_gas_limit: Swift.Int64?
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/flat_gas_price`.
+            public var flat_gas_price: Swift.Int64?
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/gas_price`.
+            public var gas_price: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/gas_limit`.
+            public var gas_limit: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/gas_credit`.
+            public var gas_credit: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/block_gas_limit`.
+            public var block_gas_limit: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/freeze_due_limit`.
+            public var freeze_due_limit: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/GasLimitPrices/delete_due_limit`.
+            public var delete_due_limit: Swift.Int64
+            /// Creates a new `GasLimitPrices`.
+            ///
+            /// - Parameters:
+            ///   - special_gas_limit:
+            ///   - flat_gas_limit:
+            ///   - flat_gas_price:
+            ///   - gas_price:
+            ///   - gas_limit:
+            ///   - gas_credit:
+            ///   - block_gas_limit:
+            ///   - freeze_due_limit:
+            ///   - delete_due_limit:
+            public init(
+                special_gas_limit: Swift.Int64? = nil,
+                flat_gas_limit: Swift.Int64? = nil,
+                flat_gas_price: Swift.Int64? = nil,
+                gas_price: Swift.Int64,
+                gas_limit: Swift.Int64,
+                gas_credit: Swift.Int64,
+                block_gas_limit: Swift.Int64,
+                freeze_due_limit: Swift.Int64,
+                delete_due_limit: Swift.Int64
+            ) {
+                self.special_gas_limit = special_gas_limit
+                self.flat_gas_limit = flat_gas_limit
+                self.flat_gas_price = flat_gas_price
+                self.gas_price = gas_price
+                self.gas_limit = gas_limit
+                self.gas_credit = gas_credit
+                self.block_gas_limit = block_gas_limit
+                self.freeze_due_limit = freeze_due_limit
+                self.delete_due_limit = delete_due_limit
+            }
+            public enum CodingKeys: String, CodingKey {
+                case special_gas_limit
+                case flat_gas_limit
+                case flat_gas_price
+                case gas_price
+                case gas_limit
+                case gas_credit
+                case block_gas_limit
+                case freeze_due_limit
+                case delete_due_limit
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlockParamLimits`.
+        public struct BlockParamLimits: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockParamLimits/underload`.
+            public var underload: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/BlockParamLimits/soft_limit`.
+            public var soft_limit: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/BlockParamLimits/hard_limit`.
+            public var hard_limit: Swift.Int64
+            /// Creates a new `BlockParamLimits`.
+            ///
+            /// - Parameters:
+            ///   - underload:
+            ///   - soft_limit:
+            ///   - hard_limit:
+            public init(underload: Swift.Int64, soft_limit: Swift.Int64, hard_limit: Swift.Int64) {
+                self.underload = underload
+                self.soft_limit = soft_limit
+                self.hard_limit = hard_limit
+            }
+            public enum CodingKeys: String, CodingKey {
+                case underload
+                case soft_limit
+                case hard_limit
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlockLimits`.
+        public struct BlockLimits: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlockLimits/bytes`.
+            public var bytes: Components.Schemas.BlockParamLimits
+            /// - Remark: Generated from `#/components/schemas/BlockLimits/gas`.
+            public var gas: Components.Schemas.BlockParamLimits
+            /// - Remark: Generated from `#/components/schemas/BlockLimits/lt_delta`.
+            public var lt_delta: Components.Schemas.BlockParamLimits
+            /// Creates a new `BlockLimits`.
+            ///
+            /// - Parameters:
+            ///   - bytes:
+            ///   - gas:
+            ///   - lt_delta:
+            public init(
+                bytes: Components.Schemas.BlockParamLimits,
+                gas: Components.Schemas.BlockParamLimits,
+                lt_delta: Components.Schemas.BlockParamLimits
+            ) {
+                self.bytes = bytes
+                self.gas = gas
+                self.lt_delta = lt_delta
+            }
+            public enum CodingKeys: String, CodingKey {
+                case bytes
+                case gas
+                case lt_delta
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MsgForwardPrices`.
+        public struct MsgForwardPrices: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MsgForwardPrices/lump_price`.
+            public var lump_price: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MsgForwardPrices/bit_price`.
+            public var bit_price: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MsgForwardPrices/cell_price`.
+            public var cell_price: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MsgForwardPrices/ihr_price_factor`.
+            public var ihr_price_factor: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MsgForwardPrices/first_frac`.
+            public var first_frac: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MsgForwardPrices/next_frac`.
+            public var next_frac: Swift.Int64
+            /// Creates a new `MsgForwardPrices`.
+            ///
+            /// - Parameters:
+            ///   - lump_price:
+            ///   - bit_price:
+            ///   - cell_price:
+            ///   - ihr_price_factor:
+            ///   - first_frac:
+            ///   - next_frac:
+            public init(
+                lump_price: Swift.Int64,
+                bit_price: Swift.Int64,
+                cell_price: Swift.Int64,
+                ihr_price_factor: Swift.Int64,
+                first_frac: Swift.Int64,
+                next_frac: Swift.Int64
+            ) {
+                self.lump_price = lump_price
+                self.bit_price = bit_price
+                self.cell_price = cell_price
+                self.ihr_price_factor = ihr_price_factor
+                self.first_frac = first_frac
+                self.next_frac = next_frac
+            }
+            public enum CodingKeys: String, CodingKey {
+                case lump_price
+                case bit_price
+                case cell_price
+                case ihr_price_factor
+                case first_frac
+                case next_frac
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WorkchainDescr`.
+        public struct WorkchainDescr: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/workchain`.
+            public var workchain: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/enabled_since`.
+            public var enabled_since: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/actual_min_split`.
+            public var actual_min_split: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/min_split`.
+            public var min_split: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/max_split`.
+            public var max_split: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/basic`.
+            public var basic: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/active`.
+            public var active: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/accept_msgs`.
+            public var accept_msgs: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/flags`.
+            public var flags: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/zerostate_root_hash`.
+            public var zerostate_root_hash: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/zerostate_file_hash`.
+            public var zerostate_file_hash: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WorkchainDescr/version`.
+            public var version: Swift.Int64
+            /// Creates a new `WorkchainDescr`.
+            ///
+            /// - Parameters:
+            ///   - workchain:
+            ///   - enabled_since:
+            ///   - actual_min_split:
+            ///   - min_split:
+            ///   - max_split:
+            ///   - basic:
+            ///   - active:
+            ///   - accept_msgs:
+            ///   - flags:
+            ///   - zerostate_root_hash:
+            ///   - zerostate_file_hash:
+            ///   - version:
+            public init(
+                workchain: Swift.Int,
+                enabled_since: Swift.Int64,
+                actual_min_split: Swift.Int,
+                min_split: Swift.Int,
+                max_split: Swift.Int,
+                basic: Swift.Int,
+                active: Swift.Bool,
+                accept_msgs: Swift.Bool,
+                flags: Swift.Int,
+                zerostate_root_hash: Swift.String,
+                zerostate_file_hash: Swift.String,
+                version: Swift.Int64
+            ) {
+                self.workchain = workchain
+                self.enabled_since = enabled_since
+                self.actual_min_split = actual_min_split
+                self.min_split = min_split
+                self.max_split = max_split
+                self.basic = basic
+                self.active = active
+                self.accept_msgs = accept_msgs
+                self.flags = flags
+                self.zerostate_root_hash = zerostate_root_hash
+                self.zerostate_file_hash = zerostate_file_hash
+                self.version = version
+            }
+            public enum CodingKeys: String, CodingKey {
+                case workchain
+                case enabled_since
+                case actual_min_split
+                case min_split
+                case max_split
+                case basic
+                case active
+                case accept_msgs
+                case flags
+                case zerostate_root_hash
+                case zerostate_file_hash
+                case version
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig`.
+        public struct MisbehaviourPunishmentConfig: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/default_flat_fine`.
+            public var default_flat_fine: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/default_proportional_fine`.
+            public var default_proportional_fine: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/severity_flat_mult`.
+            public var severity_flat_mult: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/severity_proportional_mult`.
+            public var severity_proportional_mult: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/unpunishable_interval`.
+            public var unpunishable_interval: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/long_interval`.
+            public var long_interval: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/long_flat_mult`.
+            public var long_flat_mult: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/long_proportional_mult`.
+            public var long_proportional_mult: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/medium_interval`.
+            public var medium_interval: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/medium_flat_mult`.
+            public var medium_flat_mult: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MisbehaviourPunishmentConfig/medium_proportional_mult`.
+            public var medium_proportional_mult: Swift.Int
+            /// Creates a new `MisbehaviourPunishmentConfig`.
+            ///
+            /// - Parameters:
+            ///   - default_flat_fine:
+            ///   - default_proportional_fine:
+            ///   - severity_flat_mult:
+            ///   - severity_proportional_mult:
+            ///   - unpunishable_interval:
+            ///   - long_interval:
+            ///   - long_flat_mult:
+            ///   - long_proportional_mult:
+            ///   - medium_interval:
+            ///   - medium_flat_mult:
+            ///   - medium_proportional_mult:
+            public init(
+                default_flat_fine: Swift.Int64,
+                default_proportional_fine: Swift.Int64,
+                severity_flat_mult: Swift.Int,
+                severity_proportional_mult: Swift.Int,
+                unpunishable_interval: Swift.Int,
+                long_interval: Swift.Int,
+                long_flat_mult: Swift.Int,
+                long_proportional_mult: Swift.Int,
+                medium_interval: Swift.Int,
+                medium_flat_mult: Swift.Int,
+                medium_proportional_mult: Swift.Int
+            ) {
+                self.default_flat_fine = default_flat_fine
+                self.default_proportional_fine = default_proportional_fine
+                self.severity_flat_mult = severity_flat_mult
+                self.severity_proportional_mult = severity_proportional_mult
+                self.unpunishable_interval = unpunishable_interval
+                self.long_interval = long_interval
+                self.long_flat_mult = long_flat_mult
+                self.long_proportional_mult = long_proportional_mult
+                self.medium_interval = medium_interval
+                self.medium_flat_mult = medium_flat_mult
+                self.medium_proportional_mult = medium_proportional_mult
+            }
+            public enum CodingKeys: String, CodingKey {
+                case default_flat_fine
+                case default_proportional_fine
+                case severity_flat_mult
+                case severity_proportional_mult
+                case unpunishable_interval
+                case long_interval
+                case long_flat_mult
+                case long_proportional_mult
+                case medium_interval
+                case medium_flat_mult
+                case medium_proportional_mult
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig`.
+        public struct SizeLimitsConfig: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_msg_bits`.
+            public var max_msg_bits: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_msg_cells`.
+            public var max_msg_cells: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_library_cells`.
+            public var max_library_cells: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_vm_data_depth`.
+            public var max_vm_data_depth: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_ext_msg_size`.
+            public var max_ext_msg_size: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_ext_msg_depth`.
+            public var max_ext_msg_depth: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_acc_state_cells`.
+            public var max_acc_state_cells: Swift.Int64?
+            /// - Remark: Generated from `#/components/schemas/SizeLimitsConfig/max_acc_state_bits`.
+            public var max_acc_state_bits: Swift.Int64?
+            /// Creates a new `SizeLimitsConfig`.
+            ///
+            /// - Parameters:
+            ///   - max_msg_bits:
+            ///   - max_msg_cells:
+            ///   - max_library_cells:
+            ///   - max_vm_data_depth:
+            ///   - max_ext_msg_size:
+            ///   - max_ext_msg_depth:
+            ///   - max_acc_state_cells:
+            ///   - max_acc_state_bits:
+            public init(
+                max_msg_bits: Swift.Int64,
+                max_msg_cells: Swift.Int64,
+                max_library_cells: Swift.Int64,
+                max_vm_data_depth: Swift.Int,
+                max_ext_msg_size: Swift.Int64,
+                max_ext_msg_depth: Swift.Int,
+                max_acc_state_cells: Swift.Int64? = nil,
+                max_acc_state_bits: Swift.Int64? = nil
+            ) {
+                self.max_msg_bits = max_msg_bits
+                self.max_msg_cells = max_msg_cells
+                self.max_library_cells = max_library_cells
+                self.max_vm_data_depth = max_vm_data_depth
+                self.max_ext_msg_size = max_ext_msg_size
+                self.max_ext_msg_depth = max_ext_msg_depth
+                self.max_acc_state_cells = max_acc_state_cells
+                self.max_acc_state_bits = max_acc_state_bits
+            }
+            public enum CodingKeys: String, CodingKey {
+                case max_msg_bits
+                case max_msg_cells
+                case max_library_cells
+                case max_vm_data_depth
+                case max_ext_msg_size
+                case max_ext_msg_depth
+                case max_acc_state_cells
+                case max_acc_state_bits
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/ValidatorsSet`.
         public struct ValidatorsSet: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/ValidatorsSet/utime_since`.
@@ -1966,17 +2757,31 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/ValidatorsSet/main`.
             public var main: Swift.Int
             /// - Remark: Generated from `#/components/schemas/ValidatorsSet/total_weight`.
-            public var total_weight: Swift.Int?
+            public var total_weight: Swift.Int64?
             /// - Remark: Generated from `#/components/schemas/ValidatorsSet/listPayload`.
             public struct listPayloadPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/ValidatorsSet/listPayload/public_key`.
                 public var public_key: Swift.String
+                /// - Remark: Generated from `#/components/schemas/ValidatorsSet/listPayload/weight`.
+                public var weight: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/ValidatorsSet/listPayload/adnl_addr`.
+                public var adnl_addr: Swift.String?
                 /// Creates a new `listPayloadPayload`.
                 ///
                 /// - Parameters:
                 ///   - public_key:
-                public init(public_key: Swift.String) { self.public_key = public_key }
-                public enum CodingKeys: String, CodingKey { case public_key }
+                ///   - weight:
+                ///   - adnl_addr:
+                public init(public_key: Swift.String, weight: Swift.Int64, adnl_addr: Swift.String? = nil) {
+                    self.public_key = public_key
+                    self.weight = weight
+                    self.adnl_addr = adnl_addr
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case public_key
+                    case weight
+                    case adnl_addr
+                }
             }
             /// - Remark: Generated from `#/components/schemas/ValidatorsSet/list`.
             public typealias listPayload = [Components.Schemas.ValidatorsSet.listPayloadPayload]
@@ -1996,7 +2801,7 @@ public enum Components {
                 utime_until: Swift.Int,
                 total: Swift.Int,
                 main: Swift.Int,
-                total_weight: Swift.Int? = nil,
+                total_weight: Swift.Int64? = nil,
                 list: Components.Schemas.ValidatorsSet.listPayload
             ) {
                 self.utime_since = utime_since
@@ -2015,27 +2820,232 @@ public enum Components {
                 case list
             }
         }
+        /// - Remark: Generated from `#/components/schemas/Oracle`.
+        public struct Oracle: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Oracle/address`.
+            public var address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Oracle/secp_pubkey`.
+            public var secp_pubkey: Swift.String
+            /// Creates a new `Oracle`.
+            ///
+            /// - Parameters:
+            ///   - address:
+            ///   - secp_pubkey:
+            public init(address: Swift.String, secp_pubkey: Swift.String) {
+                self.address = address
+                self.secp_pubkey = secp_pubkey
+            }
+            public enum CodingKeys: String, CodingKey {
+                case address
+                case secp_pubkey
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/OracleBridgeParams`.
+        public struct OracleBridgeParams: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/OracleBridgeParams/bridge_addr`.
+            public var bridge_addr: Swift.String
+            /// - Remark: Generated from `#/components/schemas/OracleBridgeParams/oracle_multisig_address`.
+            public var oracle_multisig_address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/OracleBridgeParams/external_chain_address`.
+            public var external_chain_address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/OracleBridgeParams/oracles`.
+            public var oracles: [Components.Schemas.Oracle]
+            /// Creates a new `OracleBridgeParams`.
+            ///
+            /// - Parameters:
+            ///   - bridge_addr:
+            ///   - oracle_multisig_address:
+            ///   - external_chain_address:
+            ///   - oracles:
+            public init(
+                bridge_addr: Swift.String,
+                oracle_multisig_address: Swift.String,
+                external_chain_address: Swift.String,
+                oracles: [Components.Schemas.Oracle]
+            ) {
+                self.bridge_addr = bridge_addr
+                self.oracle_multisig_address = oracle_multisig_address
+                self.external_chain_address = external_chain_address
+                self.oracles = oracles
+            }
+            public enum CodingKeys: String, CodingKey {
+                case bridge_addr
+                case oracle_multisig_address
+                case external_chain_address
+                case oracles
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/JettonBridgePrices`.
+        public struct JettonBridgePrices: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/JettonBridgePrices/bridge_burn_fee`.
+            public var bridge_burn_fee: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/JettonBridgePrices/bridge_mint_fee`.
+            public var bridge_mint_fee: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/JettonBridgePrices/wallet_min_tons_for_storage`.
+            public var wallet_min_tons_for_storage: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/JettonBridgePrices/wallet_gas_consumption`.
+            public var wallet_gas_consumption: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/JettonBridgePrices/minter_min_tons_for_storage`.
+            public var minter_min_tons_for_storage: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/JettonBridgePrices/discover_gas_consumption`.
+            public var discover_gas_consumption: Swift.Int64
+            /// Creates a new `JettonBridgePrices`.
+            ///
+            /// - Parameters:
+            ///   - bridge_burn_fee:
+            ///   - bridge_mint_fee:
+            ///   - wallet_min_tons_for_storage:
+            ///   - wallet_gas_consumption:
+            ///   - minter_min_tons_for_storage:
+            ///   - discover_gas_consumption:
+            public init(
+                bridge_burn_fee: Swift.Int64,
+                bridge_mint_fee: Swift.Int64,
+                wallet_min_tons_for_storage: Swift.Int64,
+                wallet_gas_consumption: Swift.Int64,
+                minter_min_tons_for_storage: Swift.Int64,
+                discover_gas_consumption: Swift.Int64
+            ) {
+                self.bridge_burn_fee = bridge_burn_fee
+                self.bridge_mint_fee = bridge_mint_fee
+                self.wallet_min_tons_for_storage = wallet_min_tons_for_storage
+                self.wallet_gas_consumption = wallet_gas_consumption
+                self.minter_min_tons_for_storage = minter_min_tons_for_storage
+                self.discover_gas_consumption = discover_gas_consumption
+            }
+            public enum CodingKeys: String, CodingKey {
+                case bridge_burn_fee
+                case bridge_mint_fee
+                case wallet_min_tons_for_storage
+                case wallet_gas_consumption
+                case minter_min_tons_for_storage
+                case discover_gas_consumption
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/JettonBridgeParams`.
+        public struct JettonBridgeParams: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/bridge_address`.
+            public var bridge_address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/oracles_address`.
+            public var oracles_address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/state_flags`.
+            public var state_flags: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/burn_bridge_fee`.
+            public var burn_bridge_fee: Swift.Int64?
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/oracles`.
+            public var oracles: [Components.Schemas.Oracle]
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/external_chain_address`.
+            public var external_chain_address: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/JettonBridgeParams/prices`.
+            public var prices: Components.Schemas.JettonBridgePrices?
+            /// Creates a new `JettonBridgeParams`.
+            ///
+            /// - Parameters:
+            ///   - bridge_address:
+            ///   - oracles_address:
+            ///   - state_flags:
+            ///   - burn_bridge_fee:
+            ///   - oracles:
+            ///   - external_chain_address:
+            ///   - prices:
+            public init(
+                bridge_address: Swift.String,
+                oracles_address: Swift.String,
+                state_flags: Swift.Int,
+                burn_bridge_fee: Swift.Int64? = nil,
+                oracles: [Components.Schemas.Oracle],
+                external_chain_address: Swift.String? = nil,
+                prices: Components.Schemas.JettonBridgePrices? = nil
+            ) {
+                self.bridge_address = bridge_address
+                self.oracles_address = oracles_address
+                self.state_flags = state_flags
+                self.burn_bridge_fee = burn_bridge_fee
+                self.oracles = oracles
+                self.external_chain_address = external_chain_address
+                self.prices = prices
+            }
+            public enum CodingKeys: String, CodingKey {
+                case bridge_address
+                case oracles_address
+                case state_flags
+                case burn_bridge_fee
+                case oracles
+                case external_chain_address
+                case prices
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/Validator`.
         public struct Validator: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/Validator/address`.
             public var address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Validator/adnl_address`.
+            public var adnl_address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Validator/stake`.
+            public var stake: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/Validator/max_factor`.
+            public var max_factor: Swift.Int64
             /// Creates a new `Validator`.
             ///
             /// - Parameters:
             ///   - address:
-            public init(address: Swift.String) { self.address = address }
-            public enum CodingKeys: String, CodingKey { case address }
+            ///   - adnl_address:
+            ///   - stake:
+            ///   - max_factor:
+            public init(address: Swift.String, adnl_address: Swift.String, stake: Swift.Int64, max_factor: Swift.Int64)
+            {
+                self.address = address
+                self.adnl_address = adnl_address
+                self.stake = stake
+                self.max_factor = max_factor
+            }
+            public enum CodingKeys: String, CodingKey {
+                case address
+                case adnl_address
+                case stake
+                case max_factor
+            }
         }
         /// - Remark: Generated from `#/components/schemas/Validators`.
         public struct Validators: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Validators/elect_at`.
+            public var elect_at: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/Validators/elect_close`.
+            public var elect_close: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/Validators/min_stake`.
+            public var min_stake: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/Validators/total_stake`.
+            public var total_stake: Swift.Int64
             /// - Remark: Generated from `#/components/schemas/Validators/validators`.
             public var validators: [Components.Schemas.Validator]
             /// Creates a new `Validators`.
             ///
             /// - Parameters:
+            ///   - elect_at:
+            ///   - elect_close:
+            ///   - min_stake:
+            ///   - total_stake:
             ///   - validators:
-            public init(validators: [Components.Schemas.Validator]) { self.validators = validators }
-            public enum CodingKeys: String, CodingKey { case validators }
+            public init(
+                elect_at: Swift.Int64,
+                elect_close: Swift.Int64,
+                min_stake: Swift.Int64,
+                total_stake: Swift.Int64,
+                validators: [Components.Schemas.Validator]
+            ) {
+                self.elect_at = elect_at
+                self.elect_close = elect_close
+                self.min_stake = min_stake
+                self.total_stake = total_stake
+                self.validators = validators
+            }
+            public enum CodingKeys: String, CodingKey {
+                case elect_at
+                case elect_close
+                case min_stake
+                case total_stake
+                case validators
+            }
         }
         /// - Remark: Generated from `#/components/schemas/AccountStorageInfo`.
         public struct AccountStorageInfo: Codable, Hashable, Sendable {
@@ -2384,6 +3394,35 @@ public enum Components {
                 typealias CodingKeys = Components.Schemas.TvmStackRecord.CodingKeys
             }
         }
+        /// - Remark: Generated from `#/components/schemas/RawBlockchainConfig`.
+        public struct RawBlockchainConfig: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/RawBlockchainConfig/config`.
+            public struct configPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer
+                /// Creates a new `configPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/RawBlockchainConfig/config`.
+            public var config: Components.Schemas.RawBlockchainConfig.configPayload
+            /// Creates a new `RawBlockchainConfig`.
+            ///
+            /// - Parameters:
+            ///   - config:
+            public init(config: Components.Schemas.RawBlockchainConfig.configPayload) { self.config = config }
+            public enum CodingKeys: String, CodingKey { case config }
+        }
         /// - Remark: Generated from `#/components/schemas/BlockchainConfig`.
         public struct BlockchainConfig: Codable, Hashable, Sendable {
             /// config boc in base64 format
@@ -2402,10 +3441,718 @@ public enum Components {
             ///
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/2`.
             public var _2: Swift.String
+            /// The address of the transaction fee collector.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/3`.
+            public var _3: Swift.String?
             /// dns root address
             ///
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/4`.
             public var _4: Swift.String
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/5`.
+            public struct _5Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/5/blackhole_addr`.
+                public var blackhole_addr: Swift.String?
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/5/fee_burn_nom`.
+                public var fee_burn_nom: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/5/fee_burn_denom`.
+                public var fee_burn_denom: Swift.Int64
+                /// Creates a new `_5Payload`.
+                ///
+                /// - Parameters:
+                ///   - blackhole_addr:
+                ///   - fee_burn_nom:
+                ///   - fee_burn_denom:
+                public init(blackhole_addr: Swift.String? = nil, fee_burn_nom: Swift.Int64, fee_burn_denom: Swift.Int64)
+                {
+                    self.blackhole_addr = blackhole_addr
+                    self.fee_burn_nom = fee_burn_nom
+                    self.fee_burn_denom = fee_burn_denom
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case blackhole_addr
+                    case fee_burn_nom
+                    case fee_burn_denom
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/5`.
+            public var _5: Components.Schemas.BlockchainConfig._5Payload?
+            /// Minting fees of new currencies.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/6`.
+            public struct _6Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/6/mint_new_price`.
+                public var mint_new_price: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/6/mint_add_price`.
+                public var mint_add_price: Swift.Int64
+                /// Creates a new `_6Payload`.
+                ///
+                /// - Parameters:
+                ///   - mint_new_price:
+                ///   - mint_add_price:
+                public init(mint_new_price: Swift.Int64, mint_add_price: Swift.Int64) {
+                    self.mint_new_price = mint_new_price
+                    self.mint_add_price = mint_add_price
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case mint_new_price
+                    case mint_add_price
+                }
+            }
+            /// Minting fees of new currencies.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/6`.
+            public var _6: Components.Schemas.BlockchainConfig._6Payload?
+            /// The volume of each of the additional currencies in circulation.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7`.
+            public struct _7Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7/currenciesPayload`.
+                public struct currenciesPayloadPayload: Codable, Hashable, Sendable {
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7/currenciesPayload/currency_id`.
+                    public var currency_id: Swift.Int64
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7/currenciesPayload/amount`.
+                    public var amount: Swift.String
+                    /// Creates a new `currenciesPayloadPayload`.
+                    ///
+                    /// - Parameters:
+                    ///   - currency_id:
+                    ///   - amount:
+                    public init(currency_id: Swift.Int64, amount: Swift.String) {
+                        self.currency_id = currency_id
+                        self.amount = amount
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case currency_id
+                        case amount
+                    }
+                }
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7/currencies`.
+                public typealias currenciesPayload = [Components.Schemas.BlockchainConfig._7Payload
+                    .currenciesPayloadPayload]
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7/currencies`.
+                public var currencies: Components.Schemas.BlockchainConfig._7Payload.currenciesPayload
+                /// Creates a new `_7Payload`.
+                ///
+                /// - Parameters:
+                ///   - currencies:
+                public init(currencies: Components.Schemas.BlockchainConfig._7Payload.currenciesPayload) {
+                    self.currencies = currencies
+                }
+                public enum CodingKeys: String, CodingKey { case currencies }
+            }
+            /// The volume of each of the additional currencies in circulation.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/7`.
+            public var _7: Components.Schemas.BlockchainConfig._7Payload?
+            /// The network version and additional capabilities supported by the validators.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/8`.
+            public struct _8Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/8/version`.
+                public var version: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/8/capabilities`.
+                public var capabilities: Swift.Int64
+                /// Creates a new `_8Payload`.
+                ///
+                /// - Parameters:
+                ///   - version:
+                ///   - capabilities:
+                public init(version: Swift.Int64, capabilities: Swift.Int64) {
+                    self.version = version
+                    self.capabilities = capabilities
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case version
+                    case capabilities
+                }
+            }
+            /// The network version and additional capabilities supported by the validators.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/8`.
+            public var _8: Components.Schemas.BlockchainConfig._8Payload?
+            /// List of mandatory parameters of the blockchain config.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/9`.
+            public struct _9Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/9/mandatory_params`.
+                public var mandatory_params: [Swift.Int32]
+                /// Creates a new `_9Payload`.
+                ///
+                /// - Parameters:
+                ///   - mandatory_params:
+                public init(mandatory_params: [Swift.Int32]) { self.mandatory_params = mandatory_params }
+                public enum CodingKeys: String, CodingKey { case mandatory_params }
+            }
+            /// List of mandatory parameters of the blockchain config.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/9`.
+            public var _9: Components.Schemas.BlockchainConfig._9Payload?
+            /// List of critical TON parameters, the change of which significantly affects the network, so more voting rounds are held.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/10`.
+            public struct _10Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/10/critical_params`.
+                public var critical_params: [Swift.Int32]
+                /// Creates a new `_10Payload`.
+                ///
+                /// - Parameters:
+                ///   - critical_params:
+                public init(critical_params: [Swift.Int32]) { self.critical_params = critical_params }
+                public enum CodingKeys: String, CodingKey { case critical_params }
+            }
+            /// List of critical TON parameters, the change of which significantly affects the network, so more voting rounds are held.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/10`.
+            public var _10: Components.Schemas.BlockchainConfig._10Payload?
+            /// This parameter indicates under what conditions proposals to change the TON configuration are accepted.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/11`.
+            public struct _11Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/11/normal_params`.
+                public var normal_params: Components.Schemas.ConfigProposalSetup
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/11/critical_params`.
+                public var critical_params: Components.Schemas.ConfigProposalSetup
+                /// Creates a new `_11Payload`.
+                ///
+                /// - Parameters:
+                ///   - normal_params:
+                ///   - critical_params:
+                public init(
+                    normal_params: Components.Schemas.ConfigProposalSetup,
+                    critical_params: Components.Schemas.ConfigProposalSetup
+                ) {
+                    self.normal_params = normal_params
+                    self.critical_params = critical_params
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case normal_params
+                    case critical_params
+                }
+            }
+            /// This parameter indicates under what conditions proposals to change the TON configuration are accepted.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/11`.
+            public var _11: Components.Schemas.BlockchainConfig._11Payload?
+            /// Workchains in the TON Blockchain
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/12`.
+            public struct _12Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/12/workchains`.
+                public var workchains: [Components.Schemas.WorkchainDescr]
+                /// Creates a new `_12Payload`.
+                ///
+                /// - Parameters:
+                ///   - workchains:
+                public init(workchains: [Components.Schemas.WorkchainDescr]) { self.workchains = workchains }
+                public enum CodingKeys: String, CodingKey { case workchains }
+            }
+            /// Workchains in the TON Blockchain
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/12`.
+            public var _12: Components.Schemas.BlockchainConfig._12Payload?
+            /// The cost of filing complaints about incorrect operation of validators.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/13`.
+            public struct _13Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/13/deposit`.
+                public var deposit: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/13/bit_price`.
+                public var bit_price: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/13/cell_price`.
+                public var cell_price: Swift.Int64
+                /// Creates a new `_13Payload`.
+                ///
+                /// - Parameters:
+                ///   - deposit:
+                ///   - bit_price:
+                ///   - cell_price:
+                public init(deposit: Swift.Int64, bit_price: Swift.Int64, cell_price: Swift.Int64) {
+                    self.deposit = deposit
+                    self.bit_price = bit_price
+                    self.cell_price = cell_price
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case deposit
+                    case bit_price
+                    case cell_price
+                }
+            }
+            /// The cost of filing complaints about incorrect operation of validators.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/13`.
+            public var _13: Components.Schemas.BlockchainConfig._13Payload?
+            /// The reward in nanoTons for block creation in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/14`.
+            public struct _14Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/14/masterchain_block_fee`.
+                public var masterchain_block_fee: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/14/basechain_block_fee`.
+                public var basechain_block_fee: Swift.Int64
+                /// Creates a new `_14Payload`.
+                ///
+                /// - Parameters:
+                ///   - masterchain_block_fee:
+                ///   - basechain_block_fee:
+                public init(masterchain_block_fee: Swift.Int64, basechain_block_fee: Swift.Int64) {
+                    self.masterchain_block_fee = masterchain_block_fee
+                    self.basechain_block_fee = basechain_block_fee
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case masterchain_block_fee
+                    case basechain_block_fee
+                }
+            }
+            /// The reward in nanoTons for block creation in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/14`.
+            public var _14: Components.Schemas.BlockchainConfig._14Payload?
+            /// The reward in nanoTons for block creation in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/15`.
+            public struct _15Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/15/validators_elected_for`.
+                public var validators_elected_for: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/15/elections_start_before`.
+                public var elections_start_before: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/15/elections_end_before`.
+                public var elections_end_before: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/15/stake_held_for`.
+                public var stake_held_for: Swift.Int64
+                /// Creates a new `_15Payload`.
+                ///
+                /// - Parameters:
+                ///   - validators_elected_for:
+                ///   - elections_start_before:
+                ///   - elections_end_before:
+                ///   - stake_held_for:
+                public init(
+                    validators_elected_for: Swift.Int64,
+                    elections_start_before: Swift.Int64,
+                    elections_end_before: Swift.Int64,
+                    stake_held_for: Swift.Int64
+                ) {
+                    self.validators_elected_for = validators_elected_for
+                    self.elections_start_before = elections_start_before
+                    self.elections_end_before = elections_end_before
+                    self.stake_held_for = stake_held_for
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case validators_elected_for
+                    case elections_start_before
+                    case elections_end_before
+                    case stake_held_for
+                }
+            }
+            /// The reward in nanoTons for block creation in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/15`.
+            public var _15: Components.Schemas.BlockchainConfig._15Payload?
+            /// The limits on the number of validators in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/16`.
+            public struct _16Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/16/max_validators`.
+                public var max_validators: Swift.Int
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/16/max_main_validators`.
+                public var max_main_validators: Swift.Int
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/16/min_validators`.
+                public var min_validators: Swift.Int
+                /// Creates a new `_16Payload`.
+                ///
+                /// - Parameters:
+                ///   - max_validators:
+                ///   - max_main_validators:
+                ///   - min_validators:
+                public init(max_validators: Swift.Int, max_main_validators: Swift.Int, min_validators: Swift.Int) {
+                    self.max_validators = max_validators
+                    self.max_main_validators = max_main_validators
+                    self.min_validators = min_validators
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case max_validators
+                    case max_main_validators
+                    case min_validators
+                }
+            }
+            /// The limits on the number of validators in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/16`.
+            public var _16: Components.Schemas.BlockchainConfig._16Payload?
+            /// The stake parameters configuration in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/17`.
+            public struct _17Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/17/min_stake`.
+                public var min_stake: Swift.String
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/17/max_stake`.
+                public var max_stake: Swift.String
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/17/min_total_stake`.
+                public var min_total_stake: Swift.String
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/17/max_stake_factor`.
+                public var max_stake_factor: Swift.Int64
+                /// Creates a new `_17Payload`.
+                ///
+                /// - Parameters:
+                ///   - min_stake:
+                ///   - max_stake:
+                ///   - min_total_stake:
+                ///   - max_stake_factor:
+                public init(
+                    min_stake: Swift.String,
+                    max_stake: Swift.String,
+                    min_total_stake: Swift.String,
+                    max_stake_factor: Swift.Int64
+                ) {
+                    self.min_stake = min_stake
+                    self.max_stake = max_stake
+                    self.min_total_stake = min_total_stake
+                    self.max_stake_factor = max_stake_factor
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case min_stake
+                    case max_stake
+                    case min_total_stake
+                    case max_stake_factor
+                }
+            }
+            /// The stake parameters configuration in the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/17`.
+            public var _17: Components.Schemas.BlockchainConfig._17Payload?
+            /// The prices for data storage.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18`.
+            public struct _18Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_pricesPayload`.
+                public struct storage_pricesPayloadPayload: Codable, Hashable, Sendable {
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_pricesPayload/utime_since`.
+                    public var utime_since: Swift.Int64
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_pricesPayload/bit_price_ps`.
+                    public var bit_price_ps: Swift.Int64
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_pricesPayload/cell_price_ps`.
+                    public var cell_price_ps: Swift.Int64
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_pricesPayload/mc_bit_price_ps`.
+                    public var mc_bit_price_ps: Swift.Int64
+                    /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_pricesPayload/mc_cell_price_ps`.
+                    public var mc_cell_price_ps: Swift.Int64
+                    /// Creates a new `storage_pricesPayloadPayload`.
+                    ///
+                    /// - Parameters:
+                    ///   - utime_since:
+                    ///   - bit_price_ps:
+                    ///   - cell_price_ps:
+                    ///   - mc_bit_price_ps:
+                    ///   - mc_cell_price_ps:
+                    public init(
+                        utime_since: Swift.Int64,
+                        bit_price_ps: Swift.Int64,
+                        cell_price_ps: Swift.Int64,
+                        mc_bit_price_ps: Swift.Int64,
+                        mc_cell_price_ps: Swift.Int64
+                    ) {
+                        self.utime_since = utime_since
+                        self.bit_price_ps = bit_price_ps
+                        self.cell_price_ps = cell_price_ps
+                        self.mc_bit_price_ps = mc_bit_price_ps
+                        self.mc_cell_price_ps = mc_cell_price_ps
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case utime_since
+                        case bit_price_ps
+                        case cell_price_ps
+                        case mc_bit_price_ps
+                        case mc_cell_price_ps
+                    }
+                }
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_prices`.
+                public typealias storage_pricesPayload = [Components.Schemas.BlockchainConfig._18Payload
+                    .storage_pricesPayloadPayload]
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18/storage_prices`.
+                public var storage_prices: Components.Schemas.BlockchainConfig._18Payload.storage_pricesPayload
+                /// Creates a new `_18Payload`.
+                ///
+                /// - Parameters:
+                ///   - storage_prices:
+                public init(storage_prices: Components.Schemas.BlockchainConfig._18Payload.storage_pricesPayload) {
+                    self.storage_prices = storage_prices
+                }
+                public enum CodingKeys: String, CodingKey { case storage_prices }
+            }
+            /// The prices for data storage.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/18`.
+            public var _18: Components.Schemas.BlockchainConfig._18Payload?
+            /// The cost of computations in the masterchain. The complexity of any computation is estimated in gas units.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/20`.
+            public struct _20Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/20/gas_limits_prices`.
+                public var gas_limits_prices: Components.Schemas.GasLimitPrices
+                /// Creates a new `_20Payload`.
+                ///
+                /// - Parameters:
+                ///   - gas_limits_prices:
+                public init(gas_limits_prices: Components.Schemas.GasLimitPrices) {
+                    self.gas_limits_prices = gas_limits_prices
+                }
+                public enum CodingKeys: String, CodingKey { case gas_limits_prices }
+            }
+            /// The cost of computations in the masterchain. The complexity of any computation is estimated in gas units.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/20`.
+            public var _20: Components.Schemas.BlockchainConfig._20Payload?
+            /// The cost of computations in the basechains. The complexity of any computation is estimated in gas units.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/21`.
+            public struct _21Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/21/gas_limits_prices`.
+                public var gas_limits_prices: Components.Schemas.GasLimitPrices
+                /// Creates a new `_21Payload`.
+                ///
+                /// - Parameters:
+                ///   - gas_limits_prices:
+                public init(gas_limits_prices: Components.Schemas.GasLimitPrices) {
+                    self.gas_limits_prices = gas_limits_prices
+                }
+                public enum CodingKeys: String, CodingKey { case gas_limits_prices }
+            }
+            /// The cost of computations in the basechains. The complexity of any computation is estimated in gas units.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/21`.
+            public var _21: Components.Schemas.BlockchainConfig._21Payload?
+            /// The limits on the block in the masterchain, upon reaching which the block is finalized and the callback of the remaining messages (if any) is carried over to the next block.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/22`.
+            public struct _22Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/22/block_limits`.
+                public var block_limits: Components.Schemas.BlockLimits
+                /// Creates a new `_22Payload`.
+                ///
+                /// - Parameters:
+                ///   - block_limits:
+                public init(block_limits: Components.Schemas.BlockLimits) { self.block_limits = block_limits }
+                public enum CodingKeys: String, CodingKey { case block_limits }
+            }
+            /// The limits on the block in the masterchain, upon reaching which the block is finalized and the callback of the remaining messages (if any) is carried over to the next block.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/22`.
+            public var _22: Components.Schemas.BlockchainConfig._22Payload?
+            /// The limits on the block in the basechains, upon reaching which the block is finalized and the callback of the remaining messages (if any) is carried over to the next block.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/23`.
+            public struct _23Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/23/block_limits`.
+                public var block_limits: Components.Schemas.BlockLimits
+                /// Creates a new `_23Payload`.
+                ///
+                /// - Parameters:
+                ///   - block_limits:
+                public init(block_limits: Components.Schemas.BlockLimits) { self.block_limits = block_limits }
+                public enum CodingKeys: String, CodingKey { case block_limits }
+            }
+            /// The limits on the block in the basechains, upon reaching which the block is finalized and the callback of the remaining messages (if any) is carried over to the next block.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/23`.
+            public var _23: Components.Schemas.BlockchainConfig._23Payload?
+            /// The cost of sending messages in the masterchain of the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/24`.
+            public struct _24Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/24/msg_forward_prices`.
+                public var msg_forward_prices: Components.Schemas.MsgForwardPrices
+                /// Creates a new `_24Payload`.
+                ///
+                /// - Parameters:
+                ///   - msg_forward_prices:
+                public init(msg_forward_prices: Components.Schemas.MsgForwardPrices) {
+                    self.msg_forward_prices = msg_forward_prices
+                }
+                public enum CodingKeys: String, CodingKey { case msg_forward_prices }
+            }
+            /// The cost of sending messages in the masterchain of the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/24`.
+            public var _24: Components.Schemas.BlockchainConfig._24Payload?
+            /// The cost of sending messages in the basechains of the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/25`.
+            public struct _25Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/25/msg_forward_prices`.
+                public var msg_forward_prices: Components.Schemas.MsgForwardPrices
+                /// Creates a new `_25Payload`.
+                ///
+                /// - Parameters:
+                ///   - msg_forward_prices:
+                public init(msg_forward_prices: Components.Schemas.MsgForwardPrices) {
+                    self.msg_forward_prices = msg_forward_prices
+                }
+                public enum CodingKeys: String, CodingKey { case msg_forward_prices }
+            }
+            /// The cost of sending messages in the basechains of the TON blockchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/25`.
+            public var _25: Components.Schemas.BlockchainConfig._25Payload?
+            /// The configuration for the Catchain protocol.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28`.
+            public struct _28Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28/mc_catchain_lifetime`.
+                public var mc_catchain_lifetime: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28/shard_catchain_lifetime`.
+                public var shard_catchain_lifetime: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28/shard_validators_lifetime`.
+                public var shard_validators_lifetime: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28/shard_validators_num`.
+                public var shard_validators_num: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28/flags`.
+                public var flags: Swift.Int?
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28/shuffle_mc_validators`.
+                public var shuffle_mc_validators: Swift.Bool?
+                /// Creates a new `_28Payload`.
+                ///
+                /// - Parameters:
+                ///   - mc_catchain_lifetime:
+                ///   - shard_catchain_lifetime:
+                ///   - shard_validators_lifetime:
+                ///   - shard_validators_num:
+                ///   - flags:
+                ///   - shuffle_mc_validators:
+                public init(
+                    mc_catchain_lifetime: Swift.Int64,
+                    shard_catchain_lifetime: Swift.Int64,
+                    shard_validators_lifetime: Swift.Int64,
+                    shard_validators_num: Swift.Int64,
+                    flags: Swift.Int? = nil,
+                    shuffle_mc_validators: Swift.Bool? = nil
+                ) {
+                    self.mc_catchain_lifetime = mc_catchain_lifetime
+                    self.shard_catchain_lifetime = shard_catchain_lifetime
+                    self.shard_validators_lifetime = shard_validators_lifetime
+                    self.shard_validators_num = shard_validators_num
+                    self.flags = flags
+                    self.shuffle_mc_validators = shuffle_mc_validators
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case mc_catchain_lifetime
+                    case shard_catchain_lifetime
+                    case shard_validators_lifetime
+                    case shard_validators_num
+                    case flags
+                    case shuffle_mc_validators
+                }
+            }
+            /// The configuration for the Catchain protocol.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/28`.
+            public var _28: Components.Schemas.BlockchainConfig._28Payload?
+            /// The configuration for the consensus protocol above catchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29`.
+            public struct _29Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/flags`.
+                public var flags: Swift.Int?
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/new_catchain_ids`.
+                public var new_catchain_ids: Swift.Bool?
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/round_candidates`.
+                public var round_candidates: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/next_candidate_delay_ms`.
+                public var next_candidate_delay_ms: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/consensus_timeout_ms`.
+                public var consensus_timeout_ms: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/fast_attempts`.
+                public var fast_attempts: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/attempt_duration`.
+                public var attempt_duration: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/catchain_max_deps`.
+                public var catchain_max_deps: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/max_block_bytes`.
+                public var max_block_bytes: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/max_collated_bytes`.
+                public var max_collated_bytes: Swift.Int64
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/proto_version`.
+                public var proto_version: Swift.Int64?
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29/catchain_max_blocks_coeff`.
+                public var catchain_max_blocks_coeff: Swift.Int64?
+                /// Creates a new `_29Payload`.
+                ///
+                /// - Parameters:
+                ///   - flags:
+                ///   - new_catchain_ids:
+                ///   - round_candidates:
+                ///   - next_candidate_delay_ms:
+                ///   - consensus_timeout_ms:
+                ///   - fast_attempts:
+                ///   - attempt_duration:
+                ///   - catchain_max_deps:
+                ///   - max_block_bytes:
+                ///   - max_collated_bytes:
+                ///   - proto_version:
+                ///   - catchain_max_blocks_coeff:
+                public init(
+                    flags: Swift.Int? = nil,
+                    new_catchain_ids: Swift.Bool? = nil,
+                    round_candidates: Swift.Int64,
+                    next_candidate_delay_ms: Swift.Int64,
+                    consensus_timeout_ms: Swift.Int64,
+                    fast_attempts: Swift.Int64,
+                    attempt_duration: Swift.Int64,
+                    catchain_max_deps: Swift.Int64,
+                    max_block_bytes: Swift.Int64,
+                    max_collated_bytes: Swift.Int64,
+                    proto_version: Swift.Int64? = nil,
+                    catchain_max_blocks_coeff: Swift.Int64? = nil
+                ) {
+                    self.flags = flags
+                    self.new_catchain_ids = new_catchain_ids
+                    self.round_candidates = round_candidates
+                    self.next_candidate_delay_ms = next_candidate_delay_ms
+                    self.consensus_timeout_ms = consensus_timeout_ms
+                    self.fast_attempts = fast_attempts
+                    self.attempt_duration = attempt_duration
+                    self.catchain_max_deps = catchain_max_deps
+                    self.max_block_bytes = max_block_bytes
+                    self.max_collated_bytes = max_collated_bytes
+                    self.proto_version = proto_version
+                    self.catchain_max_blocks_coeff = catchain_max_blocks_coeff
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case flags
+                    case new_catchain_ids
+                    case round_candidates
+                    case next_candidate_delay_ms
+                    case consensus_timeout_ms
+                    case fast_attempts
+                    case attempt_duration
+                    case catchain_max_deps
+                    case max_block_bytes
+                    case max_collated_bytes
+                    case proto_version
+                    case catchain_max_blocks_coeff
+                }
+            }
+            /// The configuration for the consensus protocol above catchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/29`.
+            public var _29: Components.Schemas.BlockchainConfig._29Payload?
+            /// The configuration for the consensus protocol above catchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/31`.
+            public struct _31Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/31/fundamental_smc_addr`.
+                public var fundamental_smc_addr: [Swift.String]
+                /// Creates a new `_31Payload`.
+                ///
+                /// - Parameters:
+                ///   - fundamental_smc_addr:
+                public init(fundamental_smc_addr: [Swift.String]) { self.fundamental_smc_addr = fundamental_smc_addr }
+                public enum CodingKeys: String, CodingKey { case fundamental_smc_addr }
+            }
+            /// The configuration for the consensus protocol above catchain.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/31`.
+            public var _31: Components.Schemas.BlockchainConfig._31Payload?
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/32`.
             public var _32: Components.Schemas.ValidatorsSet?
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/33`.
@@ -2418,6 +4165,44 @@ public enum Components {
             public var _36: Components.Schemas.ValidatorsSet?
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/37`.
             public var _37: Components.Schemas.ValidatorsSet?
+            /// The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 TON
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/40`.
+            public struct _40Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/40/misbehaviour_punishment_config`.
+                public var misbehaviour_punishment_config: Components.Schemas.MisbehaviourPunishmentConfig
+                /// Creates a new `_40Payload`.
+                ///
+                /// - Parameters:
+                ///   - misbehaviour_punishment_config:
+                public init(misbehaviour_punishment_config: Components.Schemas.MisbehaviourPunishmentConfig) {
+                    self.misbehaviour_punishment_config = misbehaviour_punishment_config
+                }
+                public enum CodingKeys: String, CodingKey { case misbehaviour_punishment_config }
+            }
+            /// The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 TON
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/40`.
+            public var _40: Components.Schemas.BlockchainConfig._40Payload?
+            /// The size limits and some other characteristics of accounts and messages.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/43`.
+            public struct _43Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/43/size_limits_config`.
+                public var size_limits_config: Components.Schemas.SizeLimitsConfig
+                /// Creates a new `_43Payload`.
+                ///
+                /// - Parameters:
+                ///   - size_limits_config:
+                public init(size_limits_config: Components.Schemas.SizeLimitsConfig) {
+                    self.size_limits_config = size_limits_config
+                }
+                public enum CodingKeys: String, CodingKey { case size_limits_config }
+            }
+            /// The size limits and some other characteristics of accounts and messages.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/43`.
+            public var _43: Components.Schemas.BlockchainConfig._43Payload?
             /// suspended accounts
             ///
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/44`.
@@ -2444,6 +4229,120 @@ public enum Components {
             ///
             /// - Remark: Generated from `#/components/schemas/BlockchainConfig/44`.
             public var _44: Components.Schemas.BlockchainConfig._44Payload
+            /// Bridge parameters for wrapping TON in other networks.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/71`.
+            public struct _71Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/71/oracle_bridge_params`.
+                public var oracle_bridge_params: Components.Schemas.OracleBridgeParams
+                /// Creates a new `_71Payload`.
+                ///
+                /// - Parameters:
+                ///   - oracle_bridge_params:
+                public init(oracle_bridge_params: Components.Schemas.OracleBridgeParams) {
+                    self.oracle_bridge_params = oracle_bridge_params
+                }
+                public enum CodingKeys: String, CodingKey { case oracle_bridge_params }
+            }
+            /// Bridge parameters for wrapping TON in other networks.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/71`.
+            public var _71: Components.Schemas.BlockchainConfig._71Payload?
+            /// Bridge parameters for wrapping TON in other networks.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/72`.
+            public struct _72Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/72/oracle_bridge_params`.
+                public var oracle_bridge_params: Components.Schemas.OracleBridgeParams
+                /// Creates a new `_72Payload`.
+                ///
+                /// - Parameters:
+                ///   - oracle_bridge_params:
+                public init(oracle_bridge_params: Components.Schemas.OracleBridgeParams) {
+                    self.oracle_bridge_params = oracle_bridge_params
+                }
+                public enum CodingKeys: String, CodingKey { case oracle_bridge_params }
+            }
+            /// Bridge parameters for wrapping TON in other networks.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/72`.
+            public var _72: Components.Schemas.BlockchainConfig._72Payload?
+            /// Bridge parameters for wrapping TON in other networks.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/73`.
+            public struct _73Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/73/oracle_bridge_params`.
+                public var oracle_bridge_params: Components.Schemas.OracleBridgeParams
+                /// Creates a new `_73Payload`.
+                ///
+                /// - Parameters:
+                ///   - oracle_bridge_params:
+                public init(oracle_bridge_params: Components.Schemas.OracleBridgeParams) {
+                    self.oracle_bridge_params = oracle_bridge_params
+                }
+                public enum CodingKeys: String, CodingKey { case oracle_bridge_params }
+            }
+            /// Bridge parameters for wrapping TON in other networks.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/73`.
+            public var _73: Components.Schemas.BlockchainConfig._73Payload?
+            /// Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/79`.
+            public struct _79Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/79/jetton_bridge_params`.
+                public var jetton_bridge_params: Components.Schemas.JettonBridgeParams
+                /// Creates a new `_79Payload`.
+                ///
+                /// - Parameters:
+                ///   - jetton_bridge_params:
+                public init(jetton_bridge_params: Components.Schemas.JettonBridgeParams) {
+                    self.jetton_bridge_params = jetton_bridge_params
+                }
+                public enum CodingKeys: String, CodingKey { case jetton_bridge_params }
+            }
+            /// Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/79`.
+            public var _79: Components.Schemas.BlockchainConfig._79Payload?
+            /// Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/81`.
+            public struct _81Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/81/jetton_bridge_params`.
+                public var jetton_bridge_params: Components.Schemas.JettonBridgeParams
+                /// Creates a new `_81Payload`.
+                ///
+                /// - Parameters:
+                ///   - jetton_bridge_params:
+                public init(jetton_bridge_params: Components.Schemas.JettonBridgeParams) {
+                    self.jetton_bridge_params = jetton_bridge_params
+                }
+                public enum CodingKeys: String, CodingKey { case jetton_bridge_params }
+            }
+            /// Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/81`.
+            public var _81: Components.Schemas.BlockchainConfig._81Payload?
+            /// Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/82`.
+            public struct _82Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/BlockchainConfig/82/jetton_bridge_params`.
+                public var jetton_bridge_params: Components.Schemas.JettonBridgeParams
+                /// Creates a new `_82Payload`.
+                ///
+                /// - Parameters:
+                ///   - jetton_bridge_params:
+                public init(jetton_bridge_params: Components.Schemas.JettonBridgeParams) {
+                    self.jetton_bridge_params = jetton_bridge_params
+                }
+                public enum CodingKeys: String, CodingKey { case jetton_bridge_params }
+            }
+            /// Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///
+            /// - Remark: Generated from `#/components/schemas/BlockchainConfig/82`.
+            public var _82: Components.Schemas.BlockchainConfig._82Payload?
             /// Creates a new `BlockchainConfig`.
             ///
             /// - Parameters:
@@ -2451,54 +4350,182 @@ public enum Components {
             ///   - _0: config address
             ///   - _1: elector address
             ///   - _2: minter address
+            ///   - _3: The address of the transaction fee collector.
             ///   - _4: dns root address
+            ///   - _5:
+            ///   - _6: Minting fees of new currencies.
+            ///   - _7: The volume of each of the additional currencies in circulation.
+            ///   - _8: The network version and additional capabilities supported by the validators.
+            ///   - _9: List of mandatory parameters of the blockchain config.
+            ///   - _10: List of critical TON parameters, the change of which significantly affects the network, so more voting rounds are held.
+            ///   - _11: This parameter indicates under what conditions proposals to change the TON configuration are accepted.
+            ///   - _12: Workchains in the TON Blockchain
+            ///   - _13: The cost of filing complaints about incorrect operation of validators.
+            ///   - _14: The reward in nanoTons for block creation in the TON blockchain.
+            ///   - _15: The reward in nanoTons for block creation in the TON blockchain.
+            ///   - _16: The limits on the number of validators in the TON blockchain.
+            ///   - _17: The stake parameters configuration in the TON blockchain.
+            ///   - _18: The prices for data storage.
+            ///   - _20: The cost of computations in the masterchain. The complexity of any computation is estimated in gas units.
+            ///   - _21: The cost of computations in the basechains. The complexity of any computation is estimated in gas units.
+            ///   - _22: The limits on the block in the masterchain, upon reaching which the block is finalized and the callback of the remaining messages (if any) is carried over to the next block.
+            ///   - _23: The limits on the block in the basechains, upon reaching which the block is finalized and the callback of the remaining messages (if any) is carried over to the next block.
+            ///   - _24: The cost of sending messages in the masterchain of the TON blockchain.
+            ///   - _25: The cost of sending messages in the basechains of the TON blockchain.
+            ///   - _28: The configuration for the Catchain protocol.
+            ///   - _29: The configuration for the consensus protocol above catchain.
+            ///   - _31: The configuration for the consensus protocol above catchain.
             ///   - _32:
             ///   - _33:
             ///   - _34:
             ///   - _35:
             ///   - _36:
             ///   - _37:
+            ///   - _40: The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 TON
+            ///   - _43: The size limits and some other characteristics of accounts and messages.
             ///   - _44: suspended accounts
+            ///   - _71: Bridge parameters for wrapping TON in other networks.
+            ///   - _72: Bridge parameters for wrapping TON in other networks.
+            ///   - _73: Bridge parameters for wrapping TON in other networks.
+            ///   - _79: Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///   - _81: Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
+            ///   - _82: Bridge parameters for wrapping tokens from other networks into tokens on the TON network.
             public init(
                 raw: Swift.String,
                 _0: Swift.String,
                 _1: Swift.String,
                 _2: Swift.String,
+                _3: Swift.String? = nil,
                 _4: Swift.String,
+                _5: Components.Schemas.BlockchainConfig._5Payload? = nil,
+                _6: Components.Schemas.BlockchainConfig._6Payload? = nil,
+                _7: Components.Schemas.BlockchainConfig._7Payload? = nil,
+                _8: Components.Schemas.BlockchainConfig._8Payload? = nil,
+                _9: Components.Schemas.BlockchainConfig._9Payload? = nil,
+                _10: Components.Schemas.BlockchainConfig._10Payload? = nil,
+                _11: Components.Schemas.BlockchainConfig._11Payload? = nil,
+                _12: Components.Schemas.BlockchainConfig._12Payload? = nil,
+                _13: Components.Schemas.BlockchainConfig._13Payload? = nil,
+                _14: Components.Schemas.BlockchainConfig._14Payload? = nil,
+                _15: Components.Schemas.BlockchainConfig._15Payload? = nil,
+                _16: Components.Schemas.BlockchainConfig._16Payload? = nil,
+                _17: Components.Schemas.BlockchainConfig._17Payload? = nil,
+                _18: Components.Schemas.BlockchainConfig._18Payload? = nil,
+                _20: Components.Schemas.BlockchainConfig._20Payload? = nil,
+                _21: Components.Schemas.BlockchainConfig._21Payload? = nil,
+                _22: Components.Schemas.BlockchainConfig._22Payload? = nil,
+                _23: Components.Schemas.BlockchainConfig._23Payload? = nil,
+                _24: Components.Schemas.BlockchainConfig._24Payload? = nil,
+                _25: Components.Schemas.BlockchainConfig._25Payload? = nil,
+                _28: Components.Schemas.BlockchainConfig._28Payload? = nil,
+                _29: Components.Schemas.BlockchainConfig._29Payload? = nil,
+                _31: Components.Schemas.BlockchainConfig._31Payload? = nil,
                 _32: Components.Schemas.ValidatorsSet? = nil,
                 _33: Components.Schemas.ValidatorsSet? = nil,
                 _34: Components.Schemas.ValidatorsSet? = nil,
                 _35: Components.Schemas.ValidatorsSet? = nil,
                 _36: Components.Schemas.ValidatorsSet? = nil,
                 _37: Components.Schemas.ValidatorsSet? = nil,
-                _44: Components.Schemas.BlockchainConfig._44Payload
+                _40: Components.Schemas.BlockchainConfig._40Payload? = nil,
+                _43: Components.Schemas.BlockchainConfig._43Payload? = nil,
+                _44: Components.Schemas.BlockchainConfig._44Payload,
+                _71: Components.Schemas.BlockchainConfig._71Payload? = nil,
+                _72: Components.Schemas.BlockchainConfig._72Payload? = nil,
+                _73: Components.Schemas.BlockchainConfig._73Payload? = nil,
+                _79: Components.Schemas.BlockchainConfig._79Payload? = nil,
+                _81: Components.Schemas.BlockchainConfig._81Payload? = nil,
+                _82: Components.Schemas.BlockchainConfig._82Payload? = nil
             ) {
                 self.raw = raw
                 self._0 = _0
                 self._1 = _1
                 self._2 = _2
+                self._3 = _3
                 self._4 = _4
+                self._5 = _5
+                self._6 = _6
+                self._7 = _7
+                self._8 = _8
+                self._9 = _9
+                self._10 = _10
+                self._11 = _11
+                self._12 = _12
+                self._13 = _13
+                self._14 = _14
+                self._15 = _15
+                self._16 = _16
+                self._17 = _17
+                self._18 = _18
+                self._20 = _20
+                self._21 = _21
+                self._22 = _22
+                self._23 = _23
+                self._24 = _24
+                self._25 = _25
+                self._28 = _28
+                self._29 = _29
+                self._31 = _31
                 self._32 = _32
                 self._33 = _33
                 self._34 = _34
                 self._35 = _35
                 self._36 = _36
                 self._37 = _37
+                self._40 = _40
+                self._43 = _43
                 self._44 = _44
+                self._71 = _71
+                self._72 = _72
+                self._73 = _73
+                self._79 = _79
+                self._81 = _81
+                self._82 = _82
             }
             public enum CodingKeys: String, CodingKey {
                 case raw
                 case _0 = "0"
                 case _1 = "1"
                 case _2 = "2"
+                case _3 = "3"
                 case _4 = "4"
+                case _5 = "5"
+                case _6 = "6"
+                case _7 = "7"
+                case _8 = "8"
+                case _9 = "9"
+                case _10 = "10"
+                case _11 = "11"
+                case _12 = "12"
+                case _13 = "13"
+                case _14 = "14"
+                case _15 = "15"
+                case _16 = "16"
+                case _17 = "17"
+                case _18 = "18"
+                case _20 = "20"
+                case _21 = "21"
+                case _22 = "22"
+                case _23 = "23"
+                case _24 = "24"
+                case _25 = "25"
+                case _28 = "28"
+                case _29 = "29"
+                case _31 = "31"
                 case _32 = "32"
                 case _33 = "33"
                 case _34 = "34"
                 case _35 = "35"
                 case _36 = "36"
                 case _37 = "37"
+                case _40 = "40"
+                case _43 = "43"
                 case _44 = "44"
+                case _71 = "71"
+                case _72 = "72"
+                case _73 = "73"
+                case _79 = "79"
+                case _81 = "81"
+                case _82 = "82"
             }
         }
         /// - Remark: Generated from `#/components/schemas/DomainNames`.
@@ -2622,25 +4649,7 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/JettonBalance/balance`.
             public var balance: Swift.String
             /// - Remark: Generated from `#/components/schemas/JettonBalance/price`.
-            public struct pricePayload: Codable, Hashable, Sendable {
-                /// A container of undocumented properties.
-                public var additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer
-                /// Creates a new `pricePayload`.
-                ///
-                /// - Parameters:
-                ///   - additionalProperties: A container of undocumented properties.
-                public init(additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer = .init()) {
-                    self.additionalProperties = additionalProperties
-                }
-                public init(from decoder: any Decoder) throws {
-                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
-                }
-                public func encode(to encoder: any Encoder) throws {
-                    try encoder.encodeAdditionalProperties(additionalProperties)
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/JettonBalance/price`.
-            public var price: Components.Schemas.JettonBalance.pricePayload?
+            public var price: Components.Schemas.TokenRates?
             /// - Remark: Generated from `#/components/schemas/JettonBalance/wallet_address`.
             public var wallet_address: Components.Schemas.AccountAddress
             /// - Remark: Generated from `#/components/schemas/JettonBalance/jetton`.
@@ -2654,7 +4663,7 @@ public enum Components {
             ///   - jetton:
             public init(
                 balance: Swift.String,
-                price: Components.Schemas.JettonBalance.pricePayload? = nil,
+                price: Components.Schemas.TokenRates? = nil,
                 wallet_address: Components.Schemas.AccountAddress,
                 jetton: Components.Schemas.JettonPreview
             ) {
@@ -3002,6 +5011,7 @@ public enum Components {
                 case SmartContractExec = "SmartContractExec"
                 case ElectionsRecoverStake = "ElectionsRecoverStake"
                 case ElectionsDepositStake = "ElectionsDepositStake"
+                case DomainRenew = "DomainRenew"
                 case Unknown = "Unknown"
             }
             /// - Remark: Generated from `#/components/schemas/Action/type`.
@@ -3047,6 +5057,8 @@ public enum Components {
             public var JettonSwap: Components.Schemas.JettonSwapAction?
             /// - Remark: Generated from `#/components/schemas/Action/SmartContractExec`.
             public var SmartContractExec: Components.Schemas.SmartContractAction?
+            /// - Remark: Generated from `#/components/schemas/Action/DomainRenew`.
+            public var DomainRenew: Components.Schemas.DomainRenewAction?
             /// - Remark: Generated from `#/components/schemas/Action/simple_preview`.
             public var simple_preview: Components.Schemas.ActionSimplePreview
             /// Creates a new `Action`.
@@ -3071,6 +5083,7 @@ public enum Components {
             ///   - ElectionsRecoverStake:
             ///   - JettonSwap:
             ///   - SmartContractExec:
+            ///   - DomainRenew:
             ///   - simple_preview:
             public init(
                 _type: Components.Schemas.Action._typePayload,
@@ -3092,6 +5105,7 @@ public enum Components {
                 ElectionsRecoverStake: Components.Schemas.ElectionsRecoverStakeAction? = nil,
                 JettonSwap: Components.Schemas.JettonSwapAction? = nil,
                 SmartContractExec: Components.Schemas.SmartContractAction? = nil,
+                DomainRenew: Components.Schemas.DomainRenewAction? = nil,
                 simple_preview: Components.Schemas.ActionSimplePreview
             ) {
                 self._type = _type
@@ -3113,6 +5127,7 @@ public enum Components {
                 self.ElectionsRecoverStake = ElectionsRecoverStake
                 self.JettonSwap = JettonSwap
                 self.SmartContractExec = SmartContractExec
+                self.DomainRenew = DomainRenew
                 self.simple_preview = simple_preview
             }
             public enum CodingKeys: String, CodingKey {
@@ -3135,6 +5150,7 @@ public enum Components {
                 case ElectionsRecoverStake
                 case JettonSwap
                 case SmartContractExec
+                case DomainRenew
                 case simple_preview
             }
         }
@@ -3234,6 +5250,35 @@ public enum Components {
                 case operation
                 case payload
                 case refund
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DomainRenewAction`.
+        public struct DomainRenewAction: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DomainRenewAction/domain`.
+            public var domain: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DomainRenewAction/contract_address`.
+            public var contract_address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DomainRenewAction/renewer`.
+            public var renewer: Components.Schemas.AccountAddress
+            /// Creates a new `DomainRenewAction`.
+            ///
+            /// - Parameters:
+            ///   - domain:
+            ///   - contract_address:
+            ///   - renewer:
+            public init(
+                domain: Swift.String,
+                contract_address: Swift.String,
+                renewer: Components.Schemas.AccountAddress
+            ) {
+                self.domain = domain
+                self.contract_address = contract_address
+                self.renewer = renewer
+            }
+            public enum CodingKeys: String, CodingKey {
+                case domain
+                case contract_address
+                case renewer
             }
         }
         /// - Remark: Generated from `#/components/schemas/NftItemTransferAction`.
@@ -3525,14 +5570,7 @@ public enum Components {
         /// - Remark: Generated from `#/components/schemas/AuctionBidAction`.
         public struct AuctionBidAction: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuctionBidAction/auction_type`.
-            @frozen public enum auction_typePayload: String, Codable, Hashable, Sendable {
-                case DNS_period_ton = "DNS.ton"
-                case DNS_period_tg = "DNS.tg"
-                case NUMBER_period_tg = "NUMBER.tg"
-                case getgems = "getgems"
-            }
-            /// - Remark: Generated from `#/components/schemas/AuctionBidAction/auction_type`.
-            public var auction_type: Components.Schemas.AuctionBidAction.auction_typePayload
+            public var auction_type: Swift.String
             /// - Remark: Generated from `#/components/schemas/AuctionBidAction/amount`.
             public var amount: Components.Schemas.Price
             /// - Remark: Generated from `#/components/schemas/AuctionBidAction/nft`.
@@ -3550,7 +5588,7 @@ public enum Components {
             ///   - bidder:
             ///   - auction:
             public init(
-                auction_type: Components.Schemas.AuctionBidAction.auction_typePayload,
+                auction_type: Swift.String,
                 amount: Components.Schemas.Price,
                 nft: Components.Schemas.NftItem? = nil,
                 bidder: Components.Schemas.AccountAddress,
@@ -3724,13 +5762,7 @@ public enum Components {
         /// - Remark: Generated from `#/components/schemas/JettonSwapAction`.
         public struct JettonSwapAction: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/JettonSwapAction/dex`.
-            @frozen public enum dexPayload: String, Codable, Hashable, Sendable {
-                case stonfi = "stonfi"
-                case dedust = "dedust"
-                case megatonfi = "megatonfi"
-            }
-            /// - Remark: Generated from `#/components/schemas/JettonSwapAction/dex`.
-            public var dex: Components.Schemas.JettonSwapAction.dexPayload
+            public var dex: Swift.String
             /// - Remark: Generated from `#/components/schemas/JettonSwapAction/amount_in`.
             public var amount_in: Swift.String
             /// - Remark: Generated from `#/components/schemas/JettonSwapAction/amount_out`.
@@ -3760,7 +5792,7 @@ public enum Components {
             ///   - jetton_master_in:
             ///   - jetton_master_out:
             public init(
-                dex: Components.Schemas.JettonSwapAction.dexPayload,
+                dex: Swift.String,
                 amount_in: Swift.String,
                 amount_out: Swift.String,
                 ton_in: Swift.Int64? = nil,
@@ -3795,13 +5827,7 @@ public enum Components {
         /// - Remark: Generated from `#/components/schemas/NftPurchaseAction`.
         public struct NftPurchaseAction: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NftPurchaseAction/auction_type`.
-            @frozen public enum auction_typePayload: String, Codable, Hashable, Sendable {
-                case DNS_period_tg = "DNS.tg"
-                case getgems = "getgems"
-                case basic = "basic"
-            }
-            /// - Remark: Generated from `#/components/schemas/NftPurchaseAction/auction_type`.
-            public var auction_type: Components.Schemas.NftPurchaseAction.auction_typePayload
+            public var auction_type: Swift.String
             /// - Remark: Generated from `#/components/schemas/NftPurchaseAction/amount`.
             public var amount: Components.Schemas.Price
             /// - Remark: Generated from `#/components/schemas/NftPurchaseAction/nft`.
@@ -3819,7 +5845,7 @@ public enum Components {
             ///   - seller:
             ///   - buyer:
             public init(
-                auction_type: Components.Schemas.NftPurchaseAction.auction_typePayload,
+                auction_type: Swift.String,
                 amount: Components.Schemas.Price,
                 nft: Components.Schemas.NftItem,
                 seller: Components.Schemas.AccountAddress,
@@ -4540,6 +6566,232 @@ public enum Components {
                 case jetton
             }
         }
+        /// - Remark: Generated from `#/components/schemas/DecodedMessage`.
+        public struct DecodedMessage: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DecodedMessage/destination`.
+            public var destination: Components.Schemas.AccountAddress
+            /// - Remark: Generated from `#/components/schemas/DecodedMessage/destination_wallet_version`.
+            public var destination_wallet_version: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded`.
+            public struct ext_in_msg_decodedPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3`.
+                public struct wallet_v3Payload: Codable, Hashable, Sendable {
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3/subwallet_id`.
+                    public var subwallet_id: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3/valid_until`.
+                    public var valid_until: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3/seqno`.
+                    public var seqno: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3/raw_messages`.
+                    public var raw_messages: [Components.Schemas.DecodedRawMessage]
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3/op`.
+                    public var op: OpenAPIRuntime.OpenAPIValueContainer
+                    /// Creates a new `wallet_v3Payload`.
+                    ///
+                    /// - Parameters:
+                    ///   - subwallet_id:
+                    ///   - valid_until:
+                    ///   - seqno:
+                    ///   - raw_messages:
+                    ///   - op:
+                    public init(
+                        subwallet_id: Swift.Int,
+                        valid_until: Swift.Int,
+                        seqno: Swift.Int,
+                        raw_messages: [Components.Schemas.DecodedRawMessage],
+                        op: OpenAPIRuntime.OpenAPIValueContainer
+                    ) {
+                        self.subwallet_id = subwallet_id
+                        self.valid_until = valid_until
+                        self.seqno = seqno
+                        self.raw_messages = raw_messages
+                        self.op = op
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case subwallet_id
+                        case valid_until
+                        case seqno
+                        case raw_messages
+                        case op
+                    }
+                }
+                /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v3`.
+                public var wallet_v3: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload.wallet_v3Payload?
+                /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4`.
+                public struct wallet_v4Payload: Codable, Hashable, Sendable {
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4/subwallet_id`.
+                    public var subwallet_id: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4/valid_until`.
+                    public var valid_until: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4/seqno`.
+                    public var seqno: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4/op`.
+                    public var op: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4/raw_messages`.
+                    public var raw_messages: [Components.Schemas.DecodedRawMessage]
+                    /// Creates a new `wallet_v4Payload`.
+                    ///
+                    /// - Parameters:
+                    ///   - subwallet_id:
+                    ///   - valid_until:
+                    ///   - seqno:
+                    ///   - op:
+                    ///   - raw_messages:
+                    public init(
+                        subwallet_id: Swift.Int,
+                        valid_until: Swift.Int,
+                        seqno: Swift.Int,
+                        op: Swift.Int,
+                        raw_messages: [Components.Schemas.DecodedRawMessage]
+                    ) {
+                        self.subwallet_id = subwallet_id
+                        self.valid_until = valid_until
+                        self.seqno = seqno
+                        self.op = op
+                        self.raw_messages = raw_messages
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case subwallet_id
+                        case valid_until
+                        case seqno
+                        case op
+                        case raw_messages
+                    }
+                }
+                /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_v4`.
+                public var wallet_v4: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload.wallet_v4Payload?
+                /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_highload_v2`.
+                public struct wallet_highload_v2Payload: Codable, Hashable, Sendable {
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_highload_v2/subwallet_id`.
+                    public var subwallet_id: Swift.Int
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_highload_v2/bounded_query_id`.
+                    public var bounded_query_id: Swift.String
+                    /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_highload_v2/raw_messages`.
+                    public var raw_messages: [Components.Schemas.DecodedRawMessage]
+                    /// Creates a new `wallet_highload_v2Payload`.
+                    ///
+                    /// - Parameters:
+                    ///   - subwallet_id:
+                    ///   - bounded_query_id:
+                    ///   - raw_messages:
+                    public init(
+                        subwallet_id: Swift.Int,
+                        bounded_query_id: Swift.String,
+                        raw_messages: [Components.Schemas.DecodedRawMessage]
+                    ) {
+                        self.subwallet_id = subwallet_id
+                        self.bounded_query_id = bounded_query_id
+                        self.raw_messages = raw_messages
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case subwallet_id
+                        case bounded_query_id
+                        case raw_messages
+                    }
+                }
+                /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded/wallet_highload_v2`.
+                public var wallet_highload_v2:
+                    Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload.wallet_highload_v2Payload?
+                /// Creates a new `ext_in_msg_decodedPayload`.
+                ///
+                /// - Parameters:
+                ///   - wallet_v3:
+                ///   - wallet_v4:
+                ///   - wallet_highload_v2:
+                public init(
+                    wallet_v3: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload.wallet_v3Payload? = nil,
+                    wallet_v4: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload.wallet_v4Payload? = nil,
+                    wallet_highload_v2: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload
+                        .wallet_highload_v2Payload? = nil
+                ) {
+                    self.wallet_v3 = wallet_v3
+                    self.wallet_v4 = wallet_v4
+                    self.wallet_highload_v2 = wallet_highload_v2
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case wallet_v3
+                    case wallet_v4
+                    case wallet_highload_v2
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/DecodedMessage/ext_in_msg_decoded`.
+            public var ext_in_msg_decoded: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload?
+            /// Creates a new `DecodedMessage`.
+            ///
+            /// - Parameters:
+            ///   - destination:
+            ///   - destination_wallet_version:
+            ///   - ext_in_msg_decoded:
+            public init(
+                destination: Components.Schemas.AccountAddress,
+                destination_wallet_version: Swift.String,
+                ext_in_msg_decoded: Components.Schemas.DecodedMessage.ext_in_msg_decodedPayload? = nil
+            ) {
+                self.destination = destination
+                self.destination_wallet_version = destination_wallet_version
+                self.ext_in_msg_decoded = ext_in_msg_decoded
+            }
+            public enum CodingKeys: String, CodingKey {
+                case destination
+                case destination_wallet_version
+                case ext_in_msg_decoded
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DecodedRawMessage`.
+        public struct DecodedRawMessage: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/message`.
+            public struct messagePayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/message/boc`.
+                public var boc: Swift.String
+                /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/message/decoded_op_name`.
+                public var decoded_op_name: Swift.String?
+                /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/message/op_code`.
+                public var op_code: Swift.String?
+                /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/message/decoded_body`.
+                public var decoded_body: OpenAPIRuntime.OpenAPIValueContainer?
+                /// Creates a new `messagePayload`.
+                ///
+                /// - Parameters:
+                ///   - boc:
+                ///   - decoded_op_name:
+                ///   - op_code:
+                ///   - decoded_body:
+                public init(
+                    boc: Swift.String,
+                    decoded_op_name: Swift.String? = nil,
+                    op_code: Swift.String? = nil,
+                    decoded_body: OpenAPIRuntime.OpenAPIValueContainer? = nil
+                ) {
+                    self.boc = boc
+                    self.decoded_op_name = decoded_op_name
+                    self.op_code = op_code
+                    self.decoded_body = decoded_body
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case boc
+                    case decoded_op_name
+                    case op_code
+                    case decoded_body
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/message`.
+            public var message: Components.Schemas.DecodedRawMessage.messagePayload
+            /// - Remark: Generated from `#/components/schemas/DecodedRawMessage/mode`.
+            public var mode: Swift.Int
+            /// Creates a new `DecodedRawMessage`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - mode:
+            public init(message: Components.Schemas.DecodedRawMessage.messagePayload, mode: Swift.Int) {
+                self.message = message
+                self.mode = mode
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case mode
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/Event`.
         public struct Event: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/Event/event_id`.
@@ -4666,6 +6918,47 @@ public enum Components {
                 case social
                 case websites
                 case catalogs
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/InscriptionBalances`.
+        public struct InscriptionBalances: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/InscriptionBalances/inscriptions`.
+            public var inscriptions: [Components.Schemas.InscriptionBalance]
+            /// Creates a new `InscriptionBalances`.
+            ///
+            /// - Parameters:
+            ///   - inscriptions:
+            public init(inscriptions: [Components.Schemas.InscriptionBalance]) { self.inscriptions = inscriptions }
+            public enum CodingKeys: String, CodingKey { case inscriptions }
+        }
+        /// - Remark: Generated from `#/components/schemas/InscriptionBalance`.
+        public struct InscriptionBalance: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/InscriptionBalance/type`.
+            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/InscriptionBalance/ticker`.
+            public var ticker: Swift.String
+            /// - Remark: Generated from `#/components/schemas/InscriptionBalance/balance`.
+            public var balance: Swift.String
+            /// - Remark: Generated from `#/components/schemas/InscriptionBalance/decimals`.
+            public var decimals: Swift.Int
+            /// Creates a new `InscriptionBalance`.
+            ///
+            /// - Parameters:
+            ///   - _type:
+            ///   - ticker:
+            ///   - balance:
+            ///   - decimals:
+            public init(_type: Swift.String, ticker: Swift.String, balance: Swift.String, decimals: Swift.Int) {
+                self._type = _type
+                self.ticker = ticker
+                self.balance = balance
+                self.decimals = decimals
+            }
+            public enum CodingKeys: String, CodingKey {
+                case _type = "type"
+                case ticker
+                case balance
+                case decimals
             }
         }
         /// - Remark: Generated from `#/components/schemas/Jettons`.
@@ -5230,9 +7523,7 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/BlockchainAccountInspect/methods`.
             public var methods: Components.Schemas.BlockchainAccountInspect.methodsPayload
             /// - Remark: Generated from `#/components/schemas/BlockchainAccountInspect/compiler`.
-            @frozen public enum compilerPayload: String, Codable, Hashable, Sendable { case _func = "func" }
-            /// - Remark: Generated from `#/components/schemas/BlockchainAccountInspect/compiler`.
-            public var compiler: Components.Schemas.BlockchainAccountInspect.compilerPayload?
+            public var compiler: Swift.String?
             /// Creates a new `BlockchainAccountInspect`.
             ///
             /// - Parameters:
@@ -5244,7 +7535,7 @@ public enum Components {
                 code: Swift.String,
                 code_hash: Swift.String,
                 methods: Components.Schemas.BlockchainAccountInspect.methodsPayload,
-                compiler: Components.Schemas.BlockchainAccountInspect.compilerPayload? = nil
+                compiler: Swift.String? = nil
             ) {
                 self.code = code
                 self.code_hash = code_hash
@@ -5264,9 +7555,120 @@ public enum Components {
             case tf = "tf"
             case liquidTF = "liquidTF"
         }
+        /// - Remark: Generated from `#/components/schemas/TokenRates`.
+        public struct TokenRates: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TokenRates/prices`.
+            public struct pricesPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.Double]
+                /// Creates a new `pricesPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.Double] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/TokenRates/prices`.
+            public var prices: Components.Schemas.TokenRates.pricesPayload?
+            /// - Remark: Generated from `#/components/schemas/TokenRates/diff_24h`.
+            public struct diff_24hPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `diff_24hPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/TokenRates/diff_24h`.
+            public var diff_24h: Components.Schemas.TokenRates.diff_24hPayload?
+            /// - Remark: Generated from `#/components/schemas/TokenRates/diff_7d`.
+            public struct diff_7dPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `diff_7dPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/TokenRates/diff_7d`.
+            public var diff_7d: Components.Schemas.TokenRates.diff_7dPayload?
+            /// - Remark: Generated from `#/components/schemas/TokenRates/diff_30d`.
+            public struct diff_30dPayload: Codable, Hashable, Sendable {
+                /// A container of undocumented properties.
+                public var additionalProperties: [String: Swift.String]
+                /// Creates a new `diff_30dPayload`.
+                ///
+                /// - Parameters:
+                ///   - additionalProperties: A container of undocumented properties.
+                public init(additionalProperties: [String: Swift.String] = .init()) {
+                    self.additionalProperties = additionalProperties
+                }
+                public init(from decoder: any Decoder) throws {
+                    additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
+                }
+                public func encode(to encoder: any Encoder) throws {
+                    try encoder.encodeAdditionalProperties(additionalProperties)
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/TokenRates/diff_30d`.
+            public var diff_30d: Components.Schemas.TokenRates.diff_30dPayload?
+            /// Creates a new `TokenRates`.
+            ///
+            /// - Parameters:
+            ///   - prices:
+            ///   - diff_24h:
+            ///   - diff_7d:
+            ///   - diff_30d:
+            public init(
+                prices: Components.Schemas.TokenRates.pricesPayload? = nil,
+                diff_24h: Components.Schemas.TokenRates.diff_24hPayload? = nil,
+                diff_7d: Components.Schemas.TokenRates.diff_7dPayload? = nil,
+                diff_30d: Components.Schemas.TokenRates.diff_30dPayload? = nil
+            ) {
+                self.prices = prices
+                self.diff_24h = diff_24h
+                self.diff_7d = diff_7d
+                self.diff_30d = diff_30d
+            }
+            public enum CodingKeys: String, CodingKey {
+                case prices
+                case diff_24h
+                case diff_7d
+                case diff_30d
+            }
+        }
     }
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
+        /// masterchain block seqno
+        ///
+        /// - Remark: Generated from `#/components/parameters/masterchainSeqno`.
+        public typealias masterchainSeqno = Swift.Int32
         /// block ID
         ///
         /// - Remark: Generated from `#/components/parameters/blockchainBlockIDParameter`.
@@ -5415,6 +7817,61 @@ public enum Components {
             }
             /// - Remark: Generated from `#/components/requestBodies/BatchBoc/content/application\/json`.
             case json(Components.RequestBodies.BatchBoc.jsonPayload)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/EmulationBoc`.
+        @frozen public enum EmulationBoc: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json`.
+            public struct jsonPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json/boc`.
+                public var boc: Swift.String
+                /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json/paramsPayload`.
+                public struct paramsPayloadPayload: Codable, Hashable, Sendable {
+                    /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json/paramsPayload/address`.
+                    public var address: Swift.String
+                    /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json/paramsPayload/balance`.
+                    public var balance: Swift.Int64?
+                    /// Creates a new `paramsPayloadPayload`.
+                    ///
+                    /// - Parameters:
+                    ///   - address:
+                    ///   - balance:
+                    public init(address: Swift.String, balance: Swift.Int64? = nil) {
+                        self.address = address
+                        self.balance = balance
+                    }
+                    public enum CodingKeys: String, CodingKey {
+                        case address
+                        case balance
+                    }
+                }
+                /// additional per account configuration
+                ///
+                /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json/params`.
+                public typealias paramsPayload = [Components.RequestBodies.EmulationBoc.jsonPayload
+                    .paramsPayloadPayload]
+                /// additional per account configuration
+                ///
+                /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/json/params`.
+                public var params: Components.RequestBodies.EmulationBoc.jsonPayload.paramsPayload?
+                /// Creates a new `jsonPayload`.
+                ///
+                /// - Parameters:
+                ///   - boc:
+                ///   - params: additional per account configuration
+                public init(
+                    boc: Swift.String,
+                    params: Components.RequestBodies.EmulationBoc.jsonPayload.paramsPayload? = nil
+                ) {
+                    self.boc = boc
+                    self.params = params
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case boc
+                    case params
+                }
+            }
+            /// - Remark: Generated from `#/components/requestBodies/EmulationBoc/content/application\/json`.
+            case json(Components.RequestBodies.EmulationBoc.jsonPayload)
         }
         /// - Remark: Generated from `#/components/requestBodies/Boc`.
         @frozen public enum Boc: Sendable, Hashable {
@@ -5714,6 +8171,671 @@ public enum Operations {
             /// Some error during request processing
             ///
             /// - Remark: Generated from `#/paths//v2/blockchain/blocks/{block_id}/get(getBlockchainBlock)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// Get blockchain block shards
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/shards`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/shards/get(getBlockchainMasterchainShards)`.
+    public enum getBlockchainMasterchainShards {
+        public static let id: Swift.String = "getBlockchainMasterchainShards"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/shards/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// masterchain block seqno
+                ///
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/shards/GET/path/masterchain_seqno`.
+                public var masterchain_seqno: Components.Parameters.masterchainSeqno
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - masterchain_seqno: masterchain block seqno
+                public init(masterchain_seqno: Components.Parameters.masterchainSeqno) {
+                    self.masterchain_seqno = masterchain_seqno
+                }
+            }
+            public var path: Operations.getBlockchainMasterchainShards.Input.Path
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/shards/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainMasterchainShards.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainMasterchainShards.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getBlockchainMasterchainShards.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.getBlockchainMasterchainShards.Input.Path,
+                headers: Operations.getBlockchainMasterchainShards.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/shards/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/shards/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.BlockchainBlockShards)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.BlockchainBlockShards {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getBlockchainMasterchainShards.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getBlockchainMasterchainShards.Output.Ok.Body) { self.body = body }
+            }
+            /// blockchain block shards
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/shards/get(getBlockchainMasterchainShards)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getBlockchainMasterchainShards.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getBlockchainMasterchainShards.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/shards/get(getBlockchainMasterchainShards)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/blocks`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/blocks/get(getBlockchainMasterchainBlocks)`.
+    public enum getBlockchainMasterchainBlocks {
+        public static let id: Swift.String = "getBlockchainMasterchainBlocks"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/blocks/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// masterchain block seqno
+                ///
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/blocks/GET/path/masterchain_seqno`.
+                public var masterchain_seqno: Components.Parameters.masterchainSeqno
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - masterchain_seqno: masterchain block seqno
+                public init(masterchain_seqno: Components.Parameters.masterchainSeqno) {
+                    self.masterchain_seqno = masterchain_seqno
+                }
+            }
+            public var path: Operations.getBlockchainMasterchainBlocks.Input.Path
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/blocks/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainMasterchainBlocks.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainMasterchainBlocks.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getBlockchainMasterchainBlocks.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.getBlockchainMasterchainBlocks.Input.Path,
+                headers: Operations.getBlockchainMasterchainBlocks.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/blocks/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/blocks/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.BlockchainBlocks)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.BlockchainBlocks {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getBlockchainMasterchainBlocks.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getBlockchainMasterchainBlocks.Output.Ok.Body) { self.body = body }
+            }
+            /// blockchain blocks
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/blocks/get(getBlockchainMasterchainBlocks)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getBlockchainMasterchainBlocks.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getBlockchainMasterchainBlocks.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/blocks/get(getBlockchainMasterchainBlocks)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/transactions`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/transactions/get(getBlockchainMasterchainTransactions)`.
+    public enum getBlockchainMasterchainTransactions {
+        public static let id: Swift.String = "getBlockchainMasterchainTransactions"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/transactions/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// masterchain block seqno
+                ///
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/transactions/GET/path/masterchain_seqno`.
+                public var masterchain_seqno: Components.Parameters.masterchainSeqno
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - masterchain_seqno: masterchain block seqno
+                public init(masterchain_seqno: Components.Parameters.masterchainSeqno) {
+                    self.masterchain_seqno = masterchain_seqno
+                }
+            }
+            public var path: Operations.getBlockchainMasterchainTransactions.Input.Path
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/transactions/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainMasterchainTransactions.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainMasterchainTransactions.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getBlockchainMasterchainTransactions.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.getBlockchainMasterchainTransactions.Input.Path,
+                headers: Operations.getBlockchainMasterchainTransactions.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/transactions/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/transactions/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.Transactions)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.Transactions {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getBlockchainMasterchainTransactions.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getBlockchainMasterchainTransactions.Output.Ok.Body) { self.body = body }
+            }
+            /// blockchain transactions
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/transactions/get(getBlockchainMasterchainTransactions)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getBlockchainMasterchainTransactions.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getBlockchainMasterchainTransactions.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/transactions/get(getBlockchainMasterchainTransactions)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// Get blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/get(getBlockchainConfigFromBlock)`.
+    public enum getBlockchainConfigFromBlock {
+        public static let id: Swift.String = "getBlockchainConfigFromBlock"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// masterchain block seqno
+                ///
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/GET/path/masterchain_seqno`.
+                public var masterchain_seqno: Components.Parameters.masterchainSeqno
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - masterchain_seqno: masterchain block seqno
+                public init(masterchain_seqno: Components.Parameters.masterchainSeqno) {
+                    self.masterchain_seqno = masterchain_seqno
+                }
+            }
+            public var path: Operations.getBlockchainConfigFromBlock.Input.Path
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainConfigFromBlock.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getBlockchainConfigFromBlock.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getBlockchainConfigFromBlock.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.getBlockchainConfigFromBlock.Input.Path,
+                headers: Operations.getBlockchainConfigFromBlock.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.BlockchainConfig)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.BlockchainConfig {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getBlockchainConfigFromBlock.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getBlockchainConfigFromBlock.Output.Ok.Body) { self.body = body }
+            }
+            /// blockchain config
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/get(getBlockchainConfigFromBlock)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getBlockchainConfigFromBlock.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getBlockchainConfigFromBlock.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/get(getBlockchainConfigFromBlock)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// Get raw blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/raw/get(getRawBlockchainConfigFromBlock)`.
+    public enum getRawBlockchainConfigFromBlock {
+        public static let id: Swift.String = "getRawBlockchainConfigFromBlock"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/raw/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// masterchain block seqno
+                ///
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/raw/GET/path/masterchain_seqno`.
+                public var masterchain_seqno: Components.Parameters.masterchainSeqno
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - masterchain_seqno: masterchain block seqno
+                public init(masterchain_seqno: Components.Parameters.masterchainSeqno) {
+                    self.masterchain_seqno = masterchain_seqno
+                }
+            }
+            public var path: Operations.getRawBlockchainConfigFromBlock.Input.Path
+            /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/raw/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getRawBlockchainConfigFromBlock.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getRawBlockchainConfigFromBlock.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getRawBlockchainConfigFromBlock.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.getRawBlockchainConfigFromBlock.Input.Path,
+                headers: Operations.getRawBlockchainConfigFromBlock.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/raw/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/blockchain/masterchain/{masterchain_seqno}/config/raw/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.RawBlockchainConfig)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.RawBlockchainConfig {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getRawBlockchainConfigFromBlock.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getRawBlockchainConfigFromBlock.Output.Ok.Body) { self.body = body }
+            }
+            /// blockchain config
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/raw/get(getRawBlockchainConfigFromBlock)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getRawBlockchainConfigFromBlock.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getRawBlockchainConfigFromBlock.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/raw/get(getRawBlockchainConfigFromBlock)/responses/default`.
             ///
             /// HTTP response code: `default`.
             case `default`(statusCode: Swift.Int, Components.Responses._Error)
@@ -7012,6 +10134,115 @@ public enum Operations {
             public static var allCases: [Self] { [.json] }
         }
     }
+    /// Get raw blockchain config
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/config/raw/get(getRawBlockchainConfig)`.
+    public enum getRawBlockchainConfig {
+        public static let id: Swift.String = "getRawBlockchainConfig"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/blockchain/config/raw/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<Operations.getRawBlockchainConfig.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getRawBlockchainConfig.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getRawBlockchainConfig.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.getRawBlockchainConfig.Input.Headers = .init()) { self.headers = headers }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/blockchain/config/raw/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/blockchain/config/raw/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.RawBlockchainConfig)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.RawBlockchainConfig {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getRawBlockchainConfig.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getRawBlockchainConfig.Output.Ok.Body) { self.body = body }
+            }
+            /// blockchain config
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/config/raw/get(getRawBlockchainConfig)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getRawBlockchainConfig.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getRawBlockchainConfig.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/blockchain/config/raw/get(getRawBlockchainConfig)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
     /// Blockchain account inspect
     ///
     /// - Remark: HTTP `GET /v2/blockchain/accounts/{account_id}/inspect`.
@@ -7141,6 +10372,329 @@ public enum Operations {
             public static var allCases: [Self] { [.json] }
         }
     }
+    /// Decode a given message. Only external incoming messages can be decoded currently.
+    ///
+    /// - Remark: HTTP `POST /v2/message/decode`.
+    /// - Remark: Generated from `#/paths//v2/message/decode/post(decodeMessage)`.
+    public enum decodeMessage {
+        public static let id: Swift.String = "decodeMessage"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/message/decode/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<Operations.decodeMessage.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.decodeMessage.AcceptableContentType>] =
+                        .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.decodeMessage.Input.Headers
+            public var body: Components.RequestBodies.Boc
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(headers: Operations.decodeMessage.Input.Headers = .init(), body: Components.RequestBodies.Boc) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/message/decode/POST/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/message/decode/POST/responses/200/content/application\/json`.
+                    case json(Components.Schemas.DecodedMessage)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DecodedMessage {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.decodeMessage.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.decodeMessage.Output.Ok.Body) { self.body = body }
+            }
+            /// decoded message
+            ///
+            /// - Remark: Generated from `#/paths//v2/message/decode/post(decodeMessage)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.decodeMessage.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.decodeMessage.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/message/decode/post(decodeMessage)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// parse address and display in all formats
+    ///
+    /// - Remark: HTTP `GET /v2/address/{account_id}/parse`.
+    /// - Remark: Generated from `#/paths//v2/address/{account_id}/parse/get(addressParse)`.
+    public enum addressParse {
+        public static let id: Swift.String = "addressParse"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// account ID
+                ///
+                /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/path/account_id`.
+                public var account_id: Components.Parameters.accountIDParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - account_id: account ID
+                public init(account_id: Components.Parameters.accountIDParameter) { self.account_id = account_id }
+            }
+            public var path: Operations.addressParse.Input.Path
+            /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<Operations.addressParse.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.addressParse.AcceptableContentType>] =
+                        .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.addressParse.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.addressParse.Input.Path,
+                headers: Operations.addressParse.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json`.
+                    public struct jsonPayload: Codable, Hashable, Sendable {
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/raw_form`.
+                        public var raw_form: Swift.String
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/bounceable`.
+                        public struct bounceablePayload: Codable, Hashable, Sendable {
+                            /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/bounceable/b64`.
+                            public var b64: Swift.String
+                            /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/bounceable/b64url`.
+                            public var b64url: Swift.String
+                            /// Creates a new `bounceablePayload`.
+                            ///
+                            /// - Parameters:
+                            ///   - b64:
+                            ///   - b64url:
+                            public init(b64: Swift.String, b64url: Swift.String) {
+                                self.b64 = b64
+                                self.b64url = b64url
+                            }
+                            public enum CodingKeys: String, CodingKey {
+                                case b64
+                                case b64url
+                            }
+                        }
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/bounceable`.
+                        public var bounceable: Operations.addressParse.Output.Ok.Body.jsonPayload.bounceablePayload
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/non_bounceable`.
+                        public struct non_bounceablePayload: Codable, Hashable, Sendable {
+                            /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/non_bounceable/b64`.
+                            public var b64: Swift.String
+                            /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/non_bounceable/b64url`.
+                            public var b64url: Swift.String
+                            /// Creates a new `non_bounceablePayload`.
+                            ///
+                            /// - Parameters:
+                            ///   - b64:
+                            ///   - b64url:
+                            public init(b64: Swift.String, b64url: Swift.String) {
+                                self.b64 = b64
+                                self.b64url = b64url
+                            }
+                            public enum CodingKeys: String, CodingKey {
+                                case b64
+                                case b64url
+                            }
+                        }
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/non_bounceable`.
+                        public var non_bounceable:
+                            Operations.addressParse.Output.Ok.Body.jsonPayload.non_bounceablePayload
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/given_type`.
+                        public var given_type: Swift.String
+                        /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/json/test_only`.
+                        public var test_only: Swift.Bool
+                        /// Creates a new `jsonPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - raw_form:
+                        ///   - bounceable:
+                        ///   - non_bounceable:
+                        ///   - given_type:
+                        ///   - test_only:
+                        public init(
+                            raw_form: Swift.String,
+                            bounceable: Operations.addressParse.Output.Ok.Body.jsonPayload.bounceablePayload,
+                            non_bounceable: Operations.addressParse.Output.Ok.Body.jsonPayload.non_bounceablePayload,
+                            given_type: Swift.String,
+                            test_only: Swift.Bool
+                        ) {
+                            self.raw_form = raw_form
+                            self.bounceable = bounceable
+                            self.non_bounceable = non_bounceable
+                            self.given_type = given_type
+                            self.test_only = test_only
+                        }
+                        public enum CodingKeys: String, CodingKey {
+                            case raw_form
+                            case bounceable
+                            case non_bounceable
+                            case given_type
+                            case test_only
+                        }
+                    }
+                    /// - Remark: Generated from `#/paths/v2/address/{account_id}/parse/GET/responses/200/content/application\/json`.
+                    case json(Operations.addressParse.Output.Ok.Body.jsonPayload)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Operations.addressParse.Output.Ok.Body.jsonPayload {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.addressParse.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.addressParse.Output.Ok.Body) { self.body = body }
+            }
+            /// all forms and info
+            ///
+            /// - Remark: Generated from `#/paths//v2/address/{account_id}/parse/get(addressParse)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.addressParse.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.addressParse.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/address/{account_id}/parse/get(addressParse)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
     /// Emulate sending message to blockchain
     ///
     /// - Remark: HTTP `POST /v2/events/emulate`.
@@ -7148,6 +10702,19 @@ public enum Operations {
     public enum emulateMessageToEvent {
         public static let id: Swift.String = "emulateMessageToEvent"
         public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/events/emulate/POST/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/events/emulate/POST/query/ignore_signature_check`.
+                public var ignore_signature_check: Swift.Bool?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - ignore_signature_check:
+                public init(ignore_signature_check: Swift.Bool? = nil) {
+                    self.ignore_signature_check = ignore_signature_check
+                }
+            }
+            public var query: Operations.emulateMessageToEvent.Input.Query
             /// - Remark: Generated from `#/paths/v2/events/emulate/POST/header`.
             public struct Headers: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/v2/events/emulate/POST/header/Accept-Language`.
@@ -7174,12 +10741,15 @@ public enum Operations {
             /// Creates a new `Input`.
             ///
             /// - Parameters:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
+                query: Operations.emulateMessageToEvent.Input.Query = .init(),
                 headers: Operations.emulateMessageToEvent.Input.Headers = .init(),
                 body: Components.RequestBodies.Boc
             ) {
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -7272,6 +10842,19 @@ public enum Operations {
     public enum emulateMessageToTrace {
         public static let id: Swift.String = "emulateMessageToTrace"
         public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/traces/emulate/POST/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/traces/emulate/POST/query/ignore_signature_check`.
+                public var ignore_signature_check: Swift.Bool?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - ignore_signature_check:
+                public init(ignore_signature_check: Swift.Bool? = nil) {
+                    self.ignore_signature_check = ignore_signature_check
+                }
+            }
+            public var query: Operations.emulateMessageToTrace.Input.Query
             /// - Remark: Generated from `#/paths/v2/traces/emulate/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
@@ -7291,12 +10874,15 @@ public enum Operations {
             /// Creates a new `Input`.
             ///
             /// - Parameters:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
+                query: Operations.emulateMessageToTrace.Input.Query = .init(),
                 headers: Operations.emulateMessageToTrace.Input.Headers = .init(),
                 body: Components.RequestBodies.Boc
             ) {
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -7411,7 +10997,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.emulateMessageToWallet.Input.Headers
-            public var body: Components.RequestBodies.Boc
+            public var body: Components.RequestBodies.EmulationBoc
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -7419,7 +11005,7 @@ public enum Operations {
             ///   - body:
             public init(
                 headers: Operations.emulateMessageToWallet.Input.Headers = .init(),
-                body: Components.RequestBodies.Boc
+                body: Components.RequestBodies.EmulationBoc
             ) {
                 self.headers = headers
                 self.body = body
@@ -11743,6 +15329,346 @@ public enum Operations {
             public static var allCases: [Self] { [.json] }
         }
     }
+    /// Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/accounts/{account_id}/inscriptions`.
+    /// - Remark: Generated from `#/paths//v2/experimental/accounts/{account_id}/inscriptions/get(getAccountInscriptions)`.
+    public enum getAccountInscriptions {
+        public static let id: Swift.String = "getAccountInscriptions"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// account ID
+                ///
+                /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/path/account_id`.
+                public var account_id: Components.Parameters.accountIDParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - account_id: account ID
+                public init(account_id: Components.Parameters.accountIDParameter) { self.account_id = account_id }
+            }
+            public var path: Operations.getAccountInscriptions.Input.Path
+            /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/query/limit`.
+                public var limit: Components.Parameters.limitQuery?
+                /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/query/offset`.
+                public var offset: Components.Parameters.offsetQuery?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - limit:
+                ///   - offset:
+                public init(
+                    limit: Components.Parameters.limitQuery? = nil,
+                    offset: Components.Parameters.offsetQuery? = nil
+                ) {
+                    self.limit = limit
+                    self.offset = offset
+                }
+            }
+            public var query: Operations.getAccountInscriptions.Input.Query
+            /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<Operations.getAccountInscriptions.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getAccountInscriptions.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getAccountInscriptions.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - query:
+            ///   - headers:
+            public init(
+                path: Operations.getAccountInscriptions.Input.Path,
+                query: Operations.getAccountInscriptions.Input.Query = .init(),
+                headers: Operations.getAccountInscriptions.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/experimental/accounts/{account_id}/inscriptions/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.InscriptionBalances)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.InscriptionBalances {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getAccountInscriptions.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getAccountInscriptions.Output.Ok.Body) { self.body = body }
+            }
+            /// account inscriptions
+            ///
+            /// - Remark: Generated from `#/paths//v2/experimental/accounts/{account_id}/inscriptions/get(getAccountInscriptions)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getAccountInscriptions.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getAccountInscriptions.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/experimental/accounts/{account_id}/inscriptions/get(getAccountInscriptions)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// return comment for making operation with instrospection. please don't use it if you don't know what you are doing
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/inscriptions/op-template`.
+    /// - Remark: Generated from `#/paths//v2/experimental/inscriptions/op-template/get(getInscriptionOpTemplate)`.
+    public enum getInscriptionOpTemplate {
+        public static let id: Swift.String = "getInscriptionOpTemplate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/type`.
+                @frozen public enum _typePayload: String, Codable, Hashable, Sendable {
+                    case ton20 = "ton20"
+                    case gram20 = "gram20"
+                }
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/type`.
+                public var _type: Operations.getInscriptionOpTemplate.Input.Query._typePayload
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/destination`.
+                public var destination: Swift.String?
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/comment`.
+                public var comment: Swift.String?
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/operation`.
+                @frozen public enum operationPayload: String, Codable, Hashable, Sendable { case transfer = "transfer" }
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/operation`.
+                public var operation: Operations.getInscriptionOpTemplate.Input.Query.operationPayload
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/amount`.
+                public var amount: Swift.String
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/ticker`.
+                public var ticker: Swift.String
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/query/who`.
+                public var who: Swift.String
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - _type:
+                ///   - destination:
+                ///   - comment:
+                ///   - operation:
+                ///   - amount:
+                ///   - ticker:
+                ///   - who:
+                public init(
+                    _type: Operations.getInscriptionOpTemplate.Input.Query._typePayload,
+                    destination: Swift.String? = nil,
+                    comment: Swift.String? = nil,
+                    operation: Operations.getInscriptionOpTemplate.Input.Query.operationPayload,
+                    amount: Swift.String,
+                    ticker: Swift.String,
+                    who: Swift.String
+                ) {
+                    self._type = _type
+                    self.destination = destination
+                    self.comment = comment
+                    self.operation = operation
+                    self.amount = amount
+                    self.ticker = ticker
+                    self.who = who
+                }
+            }
+            public var query: Operations.getInscriptionOpTemplate.Input.Query
+            /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<Operations.getInscriptionOpTemplate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getInscriptionOpTemplate.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getInscriptionOpTemplate.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.getInscriptionOpTemplate.Input.Query,
+                headers: Operations.getInscriptionOpTemplate.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/responses/200/content/json`.
+                    public struct jsonPayload: Codable, Hashable, Sendable {
+                        /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/responses/200/content/json/comment`.
+                        public var comment: Swift.String
+                        /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/responses/200/content/json/destination`.
+                        public var destination: Swift.String
+                        /// Creates a new `jsonPayload`.
+                        ///
+                        /// - Parameters:
+                        ///   - comment:
+                        ///   - destination:
+                        public init(comment: Swift.String, destination: Swift.String) {
+                            self.comment = comment
+                            self.destination = destination
+                        }
+                        public enum CodingKeys: String, CodingKey {
+                            case comment
+                            case destination
+                        }
+                    }
+                    /// - Remark: Generated from `#/paths/v2/experimental/inscriptions/op-template/GET/responses/200/content/application\/json`.
+                    case json(Operations.getInscriptionOpTemplate.Output.Ok.Body.jsonPayload)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Operations.getInscriptionOpTemplate.Output.Ok.Body.jsonPayload {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getInscriptionOpTemplate.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getInscriptionOpTemplate.Output.Ok.Body) { self.body = body }
+            }
+            /// inscription op template
+            ///
+            /// - Remark: Generated from `#/paths//v2/experimental/inscriptions/op-template/get(getInscriptionOpTemplate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getInscriptionOpTemplate.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getInscriptionOpTemplate.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/experimental/inscriptions/op-template/get(getInscriptionOpTemplate)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
     /// Get a list of all indexed jetton masters in the blockchain.
     ///
     /// - Remark: HTTP `GET /v2/jettons`.
@@ -13083,12 +17009,12 @@ public enum Operations {
                         /// - Remark: Generated from `#/paths/v2/rates/GET/responses/200/content/json/rates`.
                         public struct ratesPayload: Codable, Hashable, Sendable {
                             /// A container of undocumented properties.
-                            public var additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer
+                            public var additionalProperties: [String: Components.Schemas.TokenRates]
                             /// Creates a new `ratesPayload`.
                             ///
                             /// - Parameters:
                             ///   - additionalProperties: A container of undocumented properties.
-                            public init(additionalProperties: OpenAPIRuntime.OpenAPIObjectContainer = .init()) {
+                            public init(additionalProperties: [String: Components.Schemas.TokenRates] = .init()) {
                                 self.additionalProperties = additionalProperties
                             }
                             public init(from decoder: any Decoder) throws {
@@ -15286,6 +19212,21 @@ public enum Operations {
                 public init(account_id: Components.Parameters.accountIDParameter) { self.account_id = account_id }
             }
             public var path: Operations.getRawAccountState.Input.Path
+            /// - Remark: Generated from `#/paths/v2/liteserver/get_account_state/{account_id}/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// target block: (workchain,shard,seqno,root_hash,file_hash)
+                ///
+                /// - Remark: Generated from `#/paths/v2/liteserver/get_account_state/{account_id}/GET/query/target_block`.
+                public var target_block: Components.Parameters.targetBlockIDExtQuery?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - target_block: target block: (workchain,shard,seqno,root_hash,file_hash)
+                public init(target_block: Components.Parameters.targetBlockIDExtQuery? = nil) {
+                    self.target_block = target_block
+                }
+            }
+            public var query: Operations.getRawAccountState.Input.Query
             /// - Remark: Generated from `#/paths/v2/liteserver/get_account_state/{account_id}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
@@ -15305,12 +19246,15 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             public init(
                 path: Operations.getRawAccountState.Input.Path,
+                query: Operations.getRawAccountState.Input.Query = .init(),
                 headers: Operations.getRawAccountState.Input.Headers = .init()
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
             }
         }

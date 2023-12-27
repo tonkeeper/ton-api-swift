@@ -92,6 +92,286 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// Get blockchain block shards
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/shards`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/shards/get(getBlockchainMasterchainShards)`.
+    public func getBlockchainMasterchainShards(_ input: Operations.getBlockchainMasterchainShards.Input) async throws
+        -> Operations.getBlockchainMasterchainShards.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getBlockchainMasterchainShards.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/blockchain/masterchain/{}/shards",
+                    parameters: [input.path.masterchain_seqno]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getBlockchainMasterchainShards.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.BlockchainBlockShards.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
+    /// Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/blocks`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/blocks/get(getBlockchainMasterchainBlocks)`.
+    public func getBlockchainMasterchainBlocks(_ input: Operations.getBlockchainMasterchainBlocks.Input) async throws
+        -> Operations.getBlockchainMasterchainBlocks.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getBlockchainMasterchainBlocks.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/blockchain/masterchain/{}/blocks",
+                    parameters: [input.path.masterchain_seqno]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getBlockchainMasterchainBlocks.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.BlockchainBlocks.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
+    /// Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/transactions`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/transactions/get(getBlockchainMasterchainTransactions)`.
+    public func getBlockchainMasterchainTransactions(_ input: Operations.getBlockchainMasterchainTransactions.Input)
+        async throws -> Operations.getBlockchainMasterchainTransactions.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getBlockchainMasterchainTransactions.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/blockchain/masterchain/{}/transactions",
+                    parameters: [input.path.masterchain_seqno]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getBlockchainMasterchainTransactions.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.Transactions.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
+    /// Get blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/get(getBlockchainConfigFromBlock)`.
+    public func getBlockchainConfigFromBlock(_ input: Operations.getBlockchainConfigFromBlock.Input) async throws
+        -> Operations.getBlockchainConfigFromBlock.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getBlockchainConfigFromBlock.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/blockchain/masterchain/{}/config",
+                    parameters: [input.path.masterchain_seqno]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getBlockchainConfigFromBlock.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.BlockchainConfig.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
+    /// Get raw blockchain config from a specific block, if present.
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/masterchain/{masterchain_seqno}/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/masterchain/{masterchain_seqno}/config/raw/get(getRawBlockchainConfigFromBlock)`.
+    public func getRawBlockchainConfigFromBlock(_ input: Operations.getRawBlockchainConfigFromBlock.Input) async throws
+        -> Operations.getRawBlockchainConfigFromBlock.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getRawBlockchainConfigFromBlock.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/blockchain/masterchain/{}/config/raw",
+                    parameters: [input.path.masterchain_seqno]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getRawBlockchainConfigFromBlock.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.RawBlockchainConfig.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
     /// Get transactions from block
     ///
     /// - Remark: HTTP `GET /v2/blockchain/blocks/{block_id}/transactions`.
@@ -663,6 +943,59 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// Get raw blockchain config
+    ///
+    /// - Remark: HTTP `GET /v2/blockchain/config/raw`.
+    /// - Remark: Generated from `#/paths//v2/blockchain/config/raw/get(getRawBlockchainConfig)`.
+    public func getRawBlockchainConfig(_ input: Operations.getRawBlockchainConfig.Input) async throws
+        -> Operations.getRawBlockchainConfig.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getRawBlockchainConfig.id,
+            serializer: { input in
+                let path = try converter.renderedPath(template: "/v2/blockchain/config/raw", parameters: [])
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getRawBlockchainConfig.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.RawBlockchainConfig.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
     /// Blockchain account inspect
     ///
     /// - Remark: HTTP `GET /v2/blockchain/accounts/{account_id}/inspect`.
@@ -719,6 +1052,120 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// Decode a given message. Only external incoming messages can be decoded currently.
+    ///
+    /// - Remark: HTTP `POST /v2/message/decode`.
+    /// - Remark: Generated from `#/paths//v2/message/decode/post(decodeMessage)`.
+    public func decodeMessage(_ input: Operations.decodeMessage.Input) async throws -> Operations.decodeMessage.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.decodeMessage.id,
+            serializer: { input in
+                let path = try converter.renderedPath(template: "/v2/message/decode", parameters: [])
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .post)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case let .json(value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.decodeMessage.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DecodedMessage.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
+    /// parse address and display in all formats
+    ///
+    /// - Remark: HTTP `GET /v2/address/{account_id}/parse`.
+    /// - Remark: Generated from `#/paths//v2/address/{account_id}/parse/get(addressParse)`.
+    public func addressParse(_ input: Operations.addressParse.Input) async throws -> Operations.addressParse.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.addressParse.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/address/{}/parse",
+                    parameters: [input.path.account_id]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.addressParse.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Operations.addressParse.Output.Ok.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
     /// Emulate sending message to blockchain
     ///
     /// - Remark: HTTP `POST /v2/events/emulate`.
@@ -737,6 +1184,13 @@ public struct Client: APIProtocol {
                     in: &request.headerFields,
                     name: "Accept-Language",
                     value: input.headers.Accept_hyphen_Language
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "ignore_signature_check",
+                    value: input.query.ignore_signature_check
                 )
                 converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
                 let body: OpenAPIRuntime.HTTPBody?
@@ -800,6 +1254,13 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(template: "/v2/traces/emulate", parameters: [])
                 var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .post)
                 suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "ignore_signature_check",
+                    value: input.query.ignore_signature_check
+                )
                 converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
                 let body: OpenAPIRuntime.HTTPBody?
                 switch input.body {
@@ -2869,6 +3330,181 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/accounts/{account_id}/inscriptions`.
+    /// - Remark: Generated from `#/paths//v2/experimental/accounts/{account_id}/inscriptions/get(getAccountInscriptions)`.
+    public func getAccountInscriptions(_ input: Operations.getAccountInscriptions.Input) async throws
+        -> Operations.getAccountInscriptions.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getAccountInscriptions.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/experimental/accounts/{}/inscriptions",
+                    parameters: [input.path.account_id]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "limit",
+                    value: input.query.limit
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "offset",
+                    value: input.query.offset
+                )
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getAccountInscriptions.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.InscriptionBalances.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
+    /// return comment for making operation with instrospection. please don't use it if you don't know what you are doing
+    ///
+    /// - Remark: HTTP `GET /v2/experimental/inscriptions/op-template`.
+    /// - Remark: Generated from `#/paths//v2/experimental/inscriptions/op-template/get(getInscriptionOpTemplate)`.
+    public func getInscriptionOpTemplate(_ input: Operations.getInscriptionOpTemplate.Input) async throws
+        -> Operations.getInscriptionOpTemplate.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.getInscriptionOpTemplate.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/v2/experimental/inscriptions/op-template",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "type",
+                    value: input.query._type
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "destination",
+                    value: input.query.destination
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "comment",
+                    value: input.query.comment
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "operation",
+                    value: input.query.operation
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "amount",
+                    value: input.query.amount
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "ticker",
+                    value: input.query.ticker
+                )
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "who",
+                    value: input.query.who
+                )
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.getInscriptionOpTemplate.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Operations.getInscriptionOpTemplate.Output.Ok.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
     /// Get a list of all indexed jetton masters in the blockchain.
     ///
     /// - Remark: HTTP `GET /v2/jettons`.
@@ -4379,6 +5015,13 @@ public struct Client: APIProtocol {
                 )
                 var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
                 suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "target_block",
+                    value: input.query.target_block
+                )
                 converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
                 return (request, nil)
             },

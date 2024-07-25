@@ -6203,6 +6203,8 @@ public enum Components {
         public struct WalletDNS: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/WalletDNS/address`.
             public var address: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WalletDNS/account`.
+            public var account: Components.Schemas.AccountAddress
             /// - Remark: Generated from `#/components/schemas/WalletDNS/is_wallet`.
             public var is_wallet: Swift.Bool
             /// - Remark: Generated from `#/components/schemas/WalletDNS/has_method_pubkey`.
@@ -6215,18 +6217,21 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - address:
+            ///   - account:
             ///   - is_wallet:
             ///   - has_method_pubkey:
             ///   - has_method_seqno:
             ///   - names:
             public init(
                 address: Swift.String,
+                account: Components.Schemas.AccountAddress,
                 is_wallet: Swift.Bool,
                 has_method_pubkey: Swift.Bool,
                 has_method_seqno: Swift.Bool,
                 names: [Swift.String]
             ) {
                 self.address = address
+                self.account = account
                 self.is_wallet = is_wallet
                 self.has_method_pubkey = has_method_pubkey
                 self.has_method_seqno = has_method_seqno
@@ -6234,6 +6239,7 @@ public enum Components {
             }
             public enum CodingKeys: String, CodingKey {
                 case address
+                case account
                 case is_wallet
                 case has_method_pubkey
                 case has_method_seqno

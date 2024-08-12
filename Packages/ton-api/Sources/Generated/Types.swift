@@ -339,6 +339,12 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /v2/jettons/{account_id}/holders`.
     /// - Remark: Generated from `#/paths//v2/jettons/{account_id}/holders/get(getJettonHolders)`.
     func getJettonHolders(_ input: Operations.getJettonHolders.Input) async throws -> Operations.getJettonHolders.Output
+    /// Get jetton's custom payload and state init required for transfer
+    ///
+    /// - Remark: HTTP `GET /v2/jettons/{jetton_id}/transfer/{account_id}/payload`.
+    /// - Remark: Generated from `#/paths//v2/jettons/{jetton_id}/transfer/{account_id}/payload/get(getJettonTransferPayload)`.
+    func getJettonTransferPayload(_ input: Operations.getJettonTransferPayload.Input) async throws
+        -> Operations.getJettonTransferPayload.Output
     /// Get only jetton transfers in the event
     ///
     /// - Remark: HTTP `GET /v2/events/{event_id}/jettons`.
@@ -1127,6 +1133,16 @@ extension APIProtocol {
         headers: Operations.getJettonHolders.Input.Headers = .init()
     ) async throws -> Operations.getJettonHolders.Output {
         try await getJettonHolders(Operations.getJettonHolders.Input(path: path, query: query, headers: headers))
+    }
+    /// Get jetton's custom payload and state init required for transfer
+    ///
+    /// - Remark: HTTP `GET /v2/jettons/{jetton_id}/transfer/{account_id}/payload`.
+    /// - Remark: Generated from `#/paths//v2/jettons/{jetton_id}/transfer/{account_id}/payload/get(getJettonTransferPayload)`.
+    public func getJettonTransferPayload(
+        path: Operations.getJettonTransferPayload.Input.Path,
+        headers: Operations.getJettonTransferPayload.Input.Headers = .init()
+    ) async throws -> Operations.getJettonTransferPayload.Output {
+        try await getJettonTransferPayload(Operations.getJettonTransferPayload.Input(path: path, headers: headers))
     }
     /// Get only jetton transfers in the event
     ///
@@ -4654,6 +4670,30 @@ public enum Components {
             public var wallet_address: Components.Schemas.AccountAddress
             /// - Remark: Generated from `#/components/schemas/JettonBalance/jetton`.
             public var jetton: Components.Schemas.JettonPreview
+            /// - Remark: Generated from `#/components/schemas/JettonBalance/extensions`.
+            public var extensions: [Swift.String]?
+            /// - Remark: Generated from `#/components/schemas/JettonBalance/lock`.
+            public struct lockPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/JettonBalance/lock/amount`.
+                public var amount: Swift.String
+                /// - Remark: Generated from `#/components/schemas/JettonBalance/lock/till`.
+                public var till: Swift.Int64
+                /// Creates a new `lockPayload`.
+                ///
+                /// - Parameters:
+                ///   - amount:
+                ///   - till:
+                public init(amount: Swift.String, till: Swift.Int64) {
+                    self.amount = amount
+                    self.till = till
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case amount
+                    case till
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/JettonBalance/lock`.
+            public var lock: Components.Schemas.JettonBalance.lockPayload?
             /// Creates a new `JettonBalance`.
             ///
             /// - Parameters:
@@ -4661,22 +4701,30 @@ public enum Components {
             ///   - price:
             ///   - wallet_address:
             ///   - jetton:
+            ///   - extensions:
+            ///   - lock:
             public init(
                 balance: Swift.String,
                 price: Components.Schemas.TokenRates? = nil,
                 wallet_address: Components.Schemas.AccountAddress,
-                jetton: Components.Schemas.JettonPreview
+                jetton: Components.Schemas.JettonPreview,
+                extensions: [Swift.String]? = nil,
+                lock: Components.Schemas.JettonBalance.lockPayload? = nil
             ) {
                 self.balance = balance
                 self.price = price
                 self.wallet_address = wallet_address
                 self.jetton = jetton
+                self.extensions = extensions
+                self.lock = lock
             }
             public enum CodingKeys: String, CodingKey {
                 case balance
                 case price
                 case wallet_address
                 case jetton
+                case extensions
+                case lock
             }
         }
         /// - Remark: Generated from `#/components/schemas/JettonsBalances`.
@@ -5014,6 +5062,8 @@ public enum Components {
                 case DomainRenew = "DomainRenew"
                 case Unknown = "Unknown"
             }
+            /// - Remark: Generated from `#/components/schemas/Action/type`.
+            public var _type: Components.Schemas.Action._typePayload
             /// - Remark: Generated from `#/components/schemas/Action/status`.
             @frozen public enum statusPayload: String, Codable, Hashable, Sendable {
                 case ok = "ok"
@@ -5062,6 +5112,7 @@ public enum Components {
             /// Creates a new `Action`.
             ///
             /// - Parameters:
+            ///   - _type:
             ///   - status:
             ///   - TonTransfer:
             ///   - ContractDeploy:
@@ -5083,6 +5134,7 @@ public enum Components {
             ///   - DomainRenew:
             ///   - simple_preview:
             public init(
+                _type: Components.Schemas.Action._typePayload,
                 status: Components.Schemas.Action.statusPayload,
                 TonTransfer: Components.Schemas.TonTransferAction? = nil,
                 ContractDeploy: Components.Schemas.ContractDeployAction? = nil,
@@ -5104,6 +5156,7 @@ public enum Components {
                 DomainRenew: Components.Schemas.DomainRenewAction? = nil,
                 simple_preview: Components.Schemas.ActionSimplePreview
             ) {
+                self._type = _type
                 self.status = status
                 self.TonTransfer = TonTransfer
                 self.ContractDeploy = ContractDeploy
@@ -5126,6 +5179,7 @@ public enum Components {
                 self.simple_preview = simple_preview
             }
             public enum CodingKeys: String, CodingKey {
+                case _type = "type"
                 case status
                 case TonTransfer
                 case ContractDeploy
@@ -7050,6 +7104,39 @@ public enum Components {
             ///   - addresses:
             public init(addresses: Components.Schemas.JettonHolders.addressesPayload) { self.addresses = addresses }
             public enum CodingKeys: String, CodingKey { case addresses }
+        }
+        /// - Remark: Generated from `#/components/schemas/JettonTransferPayload`.
+        public struct JettonTransferPayload: Codable, Hashable, Sendable {
+            /// hex-encoded BoC
+            ///
+            /// - Remark: Generated from `#/components/schemas/JettonTransferPayload/custom_payload`.
+            public var custom_payload: Swift.String?
+            /// hex-encoded BoC
+            ///
+            /// - Remark: Generated from `#/components/schemas/JettonTransferPayload/state_init`.
+            public var state_init: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/JettonTransferPayload/payload`.
+            public var payload: OpenAPIRuntime.OpenAPIValueContainer
+            /// Creates a new `JettonTransferPayload`.
+            ///
+            /// - Parameters:
+            ///   - custom_payload: hex-encoded BoC
+            ///   - state_init: hex-encoded BoC
+            ///   - payload:
+            public init(
+                custom_payload: Swift.String? = nil,
+                state_init: Swift.String? = nil,
+                payload: OpenAPIRuntime.OpenAPIValueContainer
+            ) {
+                self.custom_payload = custom_payload
+                self.state_init = state_init
+                self.payload = payload
+            }
+            public enum CodingKeys: String, CodingKey {
+                case custom_payload
+                case state_init
+                case payload
+            }
         }
         /// - Remark: Generated from `#/components/schemas/AccountStaking`.
         public struct AccountStaking: Codable, Hashable, Sendable {
@@ -16046,6 +16133,146 @@ public enum Operations {
             /// Some error during request processing
             ///
             /// - Remark: Generated from `#/paths//v2/jettons/{account_id}/holders/get(getJettonHolders)/responses/default`.
+            ///
+            /// HTTP response code: `default`.
+            case `default`(statusCode: Swift.Int, Components.Responses._Error)
+            /// The associated value of the enum case if `self` is `.`default``.
+            ///
+            /// - Throws: An error if `self` is not `.`default``.
+            /// - SeeAlso: `.`default``.
+            public var `default`: Components.Responses._Error {
+                get throws {
+                    switch self {
+                    case let .`default`(_, response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "default", response: self)
+                    }
+                }
+            }
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json": self = .json
+                default: self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string): return string
+                case .json: return "application/json"
+                }
+            }
+            public static var allCases: [Self] { [.json] }
+        }
+    }
+    /// Get jetton's custom payload and state init required for transfer
+    ///
+    /// - Remark: HTTP `GET /v2/jettons/{jetton_id}/transfer/{account_id}/payload`.
+    /// - Remark: Generated from `#/paths//v2/jettons/{jetton_id}/transfer/{account_id}/payload/get(getJettonTransferPayload)`.
+    public enum getJettonTransferPayload {
+        public static let id: Swift.String = "getJettonTransferPayload"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/v2/jettons/{jetton_id}/transfer/{account_id}/payload/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// account ID
+                ///
+                /// - Remark: Generated from `#/paths/v2/jettons/{jetton_id}/transfer/{account_id}/payload/GET/path/account_id`.
+                public var account_id: Components.Parameters.accountIDParameter
+                /// jetton ID
+                ///
+                /// - Remark: Generated from `#/paths/v2/jettons/{jetton_id}/transfer/{account_id}/payload/GET/path/jetton_id`.
+                public var jetton_id: Components.Parameters.jettonIDParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - account_id: account ID
+                ///   - jetton_id: jetton ID
+                public init(
+                    account_id: Components.Parameters.accountIDParameter,
+                    jetton_id: Components.Parameters.jettonIDParameter
+                ) {
+                    self.account_id = account_id
+                    self.jetton_id = jetton_id
+                }
+            }
+            public var path: Operations.getJettonTransferPayload.Input.Path
+            /// - Remark: Generated from `#/paths/v2/jettons/{jetton_id}/transfer/{account_id}/payload/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<Operations.getJettonTransferPayload.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.getJettonTransferPayload.AcceptableContentType
+                    >] = .defaultValues()
+                ) { self.accept = accept }
+            }
+            public var headers: Operations.getJettonTransferPayload.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.getJettonTransferPayload.Input.Path,
+                headers: Operations.getJettonTransferPayload.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/v2/jettons/{jetton_id}/transfer/{account_id}/payload/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/v2/jettons/{jetton_id}/transfer/{account_id}/payload/GET/responses/200/content/application\/json`.
+                    case json(Components.Schemas.JettonTransferPayload)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.JettonTransferPayload {
+                        get throws {
+                            switch self {
+                            case let .json(body): return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.getJettonTransferPayload.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.getJettonTransferPayload.Output.Ok.Body) { self.body = body }
+            }
+            /// jetton's custom payload
+            ///
+            /// - Remark: Generated from `#/paths//v2/jettons/{jetton_id}/transfer/{account_id}/payload/get(getJettonTransferPayload)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.getJettonTransferPayload.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.getJettonTransferPayload.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response): return response
+                    default: try throwUnexpectedResponseStatus(expectedStatus: "ok", response: self)
+                    }
+                }
+            }
+            /// Some error during request processing
+            ///
+            /// - Remark: Generated from `#/paths//v2/jettons/{jetton_id}/transfer/{account_id}/payload/get(getJettonTransferPayload)/responses/default`.
             ///
             /// HTTP response code: `default`.
             case `default`(statusCode: Swift.Int, Components.Responses._Error)

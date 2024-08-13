@@ -5153,8 +5153,6 @@ public enum Components {
                 case DomainRenew = "DomainRenew"
                 case Unknown = "Unknown"
             }
-            /// - Remark: Generated from `#/components/schemas/Action/type`.
-            public var _type: Components.Schemas.Action._typePayload
             /// - Remark: Generated from `#/components/schemas/Action/status`.
             @frozen public enum statusPayload: String, Codable, Hashable, Sendable {
                 case ok = "ok"
@@ -5225,7 +5223,6 @@ public enum Components {
             ///   - DomainRenew:
             ///   - simple_preview:
             public init(
-                _type: Components.Schemas.Action._typePayload,
                 status: Components.Schemas.Action.statusPayload,
                 TonTransfer: Components.Schemas.TonTransferAction? = nil,
                 ContractDeploy: Components.Schemas.ContractDeployAction? = nil,
@@ -5247,7 +5244,6 @@ public enum Components {
                 DomainRenew: Components.Schemas.DomainRenewAction? = nil,
                 simple_preview: Components.Schemas.ActionSimplePreview
             ) {
-                self._type = _type
                 self.status = status
                 self.TonTransfer = TonTransfer
                 self.ContractDeploy = ContractDeploy
@@ -5270,7 +5266,6 @@ public enum Components {
                 self.simple_preview = simple_preview
             }
             public enum CodingKeys: String, CodingKey {
-                case _type = "type"
                 case status
                 case TonTransfer
                 case ContractDeploy

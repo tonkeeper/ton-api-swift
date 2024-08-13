@@ -36,6 +36,57 @@ public struct Client: APIProtocol {
         )
     }
     private var converter: Converter { client.converter }
+    /// Status
+    ///
+    /// - Remark: HTTP `GET /v2/status`.
+    /// - Remark: Generated from `#/paths//v2/status/get(status)`.
+    public func status(_ input: Operations.status.Input) async throws -> Operations.status.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.status.id,
+            serializer: { input in
+                let path = try converter.renderedPath(template: "/v2/status", parameters: [])
+                var request: HTTPTypes.HTTPRequest = .init(soar_path: path, method: .get)
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(in: &request.headerFields, contentTypes: input.headers.accept)
+                return (request, nil)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.status.Output.Ok.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.ServiceStatus.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .ok(.init(body: body))
+                default:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses._Error.Body
+                    if try contentType == nil
+                        || converter.isMatchingContentType(received: contentType, expectedRaw: "application/json")
+                    {
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Responses._Error.Body.jsonPayload.self,
+                            from: responseBody,
+                            transforming: { value in .json(value) }
+                        )
+                    } else {
+                        throw converter.makeUnexpectedContentTypeError(contentType: contentType)
+                    }
+                    return .`default`(statusCode: response.status.code, .init(body: body))
+                }
+            }
+        )
+    }
     /// Get blockchain block data
     ///
     /// - Remark: HTTP `GET /v2/blockchain/blocks/{block_id}`.

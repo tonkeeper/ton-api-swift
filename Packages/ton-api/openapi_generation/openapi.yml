@@ -11,6 +11,21 @@ servers:
   - url: "https://testnet.tonapi.io"
   - url: "http://localhost:8081"
 paths:
+  /v2/status:
+    get:
+      description: Status
+      operationId: status
+      tags:
+        - Blockchain
+      responses:
+        '200':
+          description: status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceStatus'
+        'default':
+          $ref: '#/components/responses/Error'
   /v2/blockchain/blocks/{block_id}:
     get:
       description: Get blockchain block data
@@ -1378,6 +1393,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JettonHolders'
+        'default':
+          $ref: '#/components/responses/Error'
+  /v2/jettons/{jetton_id}/transfer/{account_id}/payload:
+    get:
+      description: Get jetton's custom payload and state init required for transfer
+      operationId: getJettonTransferPayload
+      tags:
+        - Jettons
+      parameters:
+        - $ref: '#/components/parameters/accountIDParameter'
+        - $ref: '#/components/parameters/jettonIDParameter'
+      responses:
+        '200':
+          description: jetton's custom payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JettonTransferPayload'
         'default':
           $ref: '#/components/responses/Error'
   /v2/events/{event_id}/jettons:
@@ -2876,7 +2909,60 @@ components:
           $ref: '#/components/schemas/BlockCurrencyCollection'
         minted:
           $ref: '#/components/schemas/BlockCurrencyCollection'
-
+    ServiceStatus:
+      type: object
+      required:
+        - indexing_latency
+        - rest_online
+      properties:
+        rest_online:
+          type: boolean
+          default: true
+        indexing_latency:
+          type: integer
+          example: 100
+    ReducedBlock:
+      type: object
+      required:
+        - workchain_id
+        - shard
+        - seqno
+        - tx_quantity
+        - utime
+        - shards_blocks
+        - parent
+      properties:
+        workchain_id:
+          type: integer
+          example: 0
+          format: int32
+        shard:
+          type: string
+          example: 8000000000000000
+        seqno:
+          type: integer
+          example: 21734019
+          format: int32
+        master_ref:
+          type: string
+          example: (-1,4234234,8000000000000000)
+        tx_quantity:
+          type: integer
+          example: 130
+        utime:
+          type: integer
+          format: int64
+          example: 23814011000000
+        shards_blocks:
+          type: array
+          items:
+            type: string
+            example: [ (0,4234235,8000000000000000) ]
+        parent:
+          type: array
+          items:
+            type: string
+            example: [ (0,21734018,8000000000000000) ]
     BlockchainBlock:
       type: object
       required:
@@ -4578,6 +4664,26 @@ components:
           $ref: '#/components/schemas/AccountAddress'
         jetton:
           $ref: '#/components/schemas/JettonPreview'
+        extensions:
+          type: array
+          items:
+            type: string
+          example:
+            - custom_payload
+            - non_transferable
+        lock:
+          type: object
+          required:
+            - amount
+            - till
+          properties:
+            amount:
+              type: string
+              example: 597968399
+            till:
+              type: integer
+              format: int64
+              example: 1678223064
     JettonsBalances:
       type: object
       required:
@@ -5845,6 +5951,19 @@ components:
               balance:
                 type: string
                 example: 1000000000
+    JettonTransferPayload:
+      type: object
+      required:
+          - payload
+      properties:
+        custom_payload:
+          type: string
+          description: "hex-encoded BoC"
+          example: "b5ee9c72410212010001b40009460395b521c9251151ae7987e03c544bd275d6cd42c2d157f840beb14d5454b96718000d012205817002020328480101fd7f6a648d4f771d7f0abc1707e4e806b19de1801f65eb8c133a4cfb0c33d847000b22012004052848010147da975b922d89192f4c9b68a640daa6764ec398c93cec025e17f0c1852a711a0009220120061122012007082848010170d9fb0423cbef6c2cf1f3811a2f640daf8c9a326b6f8816c1b993e90d88e2100006220120090a28480101f6df1d75f6b9e45f224b2cb4fc2286d927d47b468b6dbf1fedc4316290ec2ae900042201200b102201200c0f2201200d"
+        state_init:
+          type: string
+          description: "hex-encoded BoC"
+          example: "b5ee9c72410212010001b40009460395b521c9251151ae7987e03c544bd275d6cd42c2d157f840beb14d5454b96718000d012205817002020328480101fd7f6a648d4f771d7f0abc1707e4e806b19de1801f65eb8c133a4cfb0c33d847000b22012004052848010147da975b922d89192f4c9b68a640daa6764ec398c93cec025e17f0c1852a711a0009220120061122012007082848010170d9fb0423cbef6c2cf1f3811a2f640daf8c9a326b6f8816c1b993e90d88e2100006220120090a28480101f6df1d75f6b9e45f224b2cb4fc2286d927d47b468b6dbf1fedc4316290ec2ae900042201200b102201200c0f2201200d"
     AccountStaking:
       type: object
       required:

@@ -29,10 +29,8 @@ let package = Package(
                ),
         .target(name: "TonStreamingAPI",
                 dependencies: [
-                    .product(
-                        name: "OpenAPIRuntime",
-                        package: "swift-openapi-runtime"
-                    )
+                  .target(name: "StreamURLSessionTransport"),
+                  .target(name: "EventSource")
                 ],
                 path: "Packages/ton-streaming-api",
                 exclude: ["openapi_generation"],

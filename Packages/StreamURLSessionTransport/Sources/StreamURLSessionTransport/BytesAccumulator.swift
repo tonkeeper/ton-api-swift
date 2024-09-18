@@ -23,7 +23,7 @@ actor BytesAccumulator: BytesProvider {
     }
   }
   
-  var continuation: CheckedContinuation<[UInt8]?, Swift.Error>?
+  var continuation: CheckedContinuation<ArraySlice<UInt8>?, Swift.Error>?
 
   func setResult(result: Result<Void, Swift.Error>?) {
     self.result = result
@@ -32,7 +32,7 @@ actor BytesAccumulator: BytesProvider {
   func addData(_ data: Data) {
     guard !data.isEmpty else { return }
     if let continuation = continuation {
-      continuation.resume(returning: [UInt8](data))
+      continuation.resume(returning: ArraySlice<UInt8>(data))
       self.continuation = nil
       return
     }
@@ -41,10 +41,10 @@ actor BytesAccumulator: BytesProvider {
   }
   
   @usableFromInline
-  func next() async throws -> [UInt8]? {
+  func next() async throws -> ArraySlice<UInt8>? {
     if let first = dataBuffers.first {
       dataBuffers.removeFirst()
-      return [UInt8](first)
+      return ArraySlice<UInt8>(first)
     }
     
     if let result = result {

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol BytesProvider {
-  mutating func next() async throws -> [UInt8]?
+  mutating func next() async throws -> ArraySlice<UInt8>?
 }

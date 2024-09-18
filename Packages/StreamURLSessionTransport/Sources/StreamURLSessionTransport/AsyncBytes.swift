@@ -9,7 +9,7 @@ import Foundation
 
 public final class AsyncBytes: AsyncSequence {
   public typealias AsyncIterator = Iterator
-  public typealias Element = [UInt8]
+  public typealias Element = ArraySlice<UInt8>
   
   var bytesProvider: BytesProvider
   let task: URLSessionTask
@@ -21,12 +21,12 @@ public final class AsyncBytes: AsyncSequence {
   
   public struct Iterator: AsyncIteratorProtocol {
     
-    public typealias Element = [UInt8]
+    public typealias Element = ArraySlice<UInt8>
     
     var bytesProvider: BytesProvider
     let task: URLSessionTask
     
-    public mutating func next() async throws -> [UInt8]? {
+    public mutating func next() async throws -> ArraySlice<UInt8>? {
       return try await withTaskCancellationHandler {
         try await bytesProvider.next()
       } onCancel: { [task] in

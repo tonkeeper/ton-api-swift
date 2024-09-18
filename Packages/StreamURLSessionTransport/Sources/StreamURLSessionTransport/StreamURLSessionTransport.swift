@@ -16,7 +16,7 @@ public final class StreamURLSessionTransport {
     self.urlSessionHandler = URLSessionHandler(urlSessionConfiguration: urlSessionConfiguration)
   }
   
-  private func send(request: URLRequest) async throws -> (AsyncBytes, URLResponse) {
+  public func send(request: URLRequest) async throws -> (AsyncBytes, URLResponse) {
     let accumulator = BytesAccumulator()
     let task = urlSessionHandler.send(request: request)
     return try await withTaskCancellationHandler {

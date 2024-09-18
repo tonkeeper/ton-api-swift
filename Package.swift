@@ -33,7 +33,6 @@ let package = Package(
                   .target(name: "EventSource")
                 ],
                 path: "Packages/ton-streaming-api",
-                exclude: ["openapi_generation"],
                 sources: ["Sources"]
                ),
         .target(name: "StreamURLSessionTransport",

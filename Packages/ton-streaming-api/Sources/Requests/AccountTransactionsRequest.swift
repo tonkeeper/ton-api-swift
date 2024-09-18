@@ -1,17 +1,17 @@
 import Foundation
 
-public struct AccountTransactionsRequest {
+public struct AccountTransactionsRequest: Request {
   private let account: String
   
   init(account: String) {
     self.account = account
   }
   
-  var path: String {
+  public var path: String {
     "/sse/transactions"
   }
   
-  var queryItems: [URLQueryItem] {
+  public var queryItems: [URLQueryItem] {
     [URLQueryItem(name: "account",
                   value: account)]
   }

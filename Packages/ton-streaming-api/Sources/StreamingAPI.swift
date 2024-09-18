@@ -9,20 +9,41 @@ public struct StreamingAPI {
   
   private let transport: StreamURLSessionTransport
   
-  private let host: URL
+  private let hostProvider: () async throws -> URL
   private let tokenProvider: () async throws -> String
   
   public init(configuration: URLSessionConfiguration,
-              host: URL,
+              hostProvider: @escaping () async throws -> URL,
               tokenProvider: @escaping () async throws -> String) {
     self.transport = StreamURLSessionTransport(urlSessionConfiguration: configuration)
-    self.host = host
+    self.hostProvider = hostProvider
     self.tokenProvider = tokenProvider
   }
   
   public func accountTransactionsStream(account: String) async throws -> AsyncThrowingStream<[EventSource.Event], Swift.Error>{
     let request = AccountTransactionsRequest(account: account)
+    let urlRequest = try await urlRequest(request: request)
     
+    let stream = try await EventSource.eventSource {
+      let (bytes, _) = try await self.transport.send(request: urlRequest)
+      return bytes
+    }
+    return stream
+  }
+  
+  public func accountsTransactionsStream(accounts: [String]) async throws -> AsyncThrowingStream<[EventSource.Event], Swift.Error>{
+    let request = AccountsTransactionsRequest(accounts: accounts)
+    let urlRequest = try await urlRequest(request: request)
+    
+    let stream = try await EventSource.eventSource {
+      let (bytes, _) = try await self.transport.send(request: urlRequest)
+      return bytes
+    }
+    return stream
+  }
+  
+  private func urlRequest(request: Request) async throws -> URLRequest {
+    let host = try await hostProvider()
     var urlComponents = URLComponents(url: host, resolvingAgainstBaseURL: true)
     urlComponents?.path = request.path
     urlComponents?.queryItems = request.queryItems
@@ -40,10 +61,6 @@ public struct StreamingAPI {
     }
     urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
     
-    let stream = try await EventSource.eventSource {
-      let (bytes, _) = try await self.transport.send(request: urlRequest)
-      return bytes
-    }
-    return stream
+    return urlRequest
   }
 }

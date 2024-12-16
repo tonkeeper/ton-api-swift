@@ -15,7 +15,6 @@ public struct NftCollection: Codable, JSONEncodable, Hashable {
     public enum ApprovedBy: String, Codable, CaseIterable, CaseIterableDefaultsLast {
         case getgems = "getgems"
         case tonkeeper = "tonkeeper"
-        case tonPeriodDiamonds = "ton.diamonds"
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var address: String

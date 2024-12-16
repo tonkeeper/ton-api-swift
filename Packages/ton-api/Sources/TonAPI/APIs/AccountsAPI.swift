@@ -52,38 +52,48 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - returns: AddressParse200Response
+     - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter acceptLanguage: (header)  (optional, default to "en")
+     - parameter ignoreSignatureCheck: (query)  (optional)
+     - returns: AccountEvent
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func addressParse(accountId: String) async throws -> AddressParse200Response {
-        return try await addressParseWithRequestBuilder(accountId: accountId).execute().body
+    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> AccountEvent {
+        return try await emulateMessageToAccountEventWithRequestBuilder(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
-     - GET /v2/address/{account_id}/parse
-     - parse address and display in all formats
+     - POST /v2/accounts/{account_id}/events/emulate
+     - Emulate sending message to blockchain
      - parameter accountId: (path) account ID 
-     - returns: RequestBuilder<AddressParse200Response> 
+     - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter acceptLanguage: (header)  (optional, default to "en")
+     - parameter ignoreSignatureCheck: (query)  (optional)
+     - returns: RequestBuilder<AccountEvent> 
      */
-    open class func addressParseWithRequestBuilder(accountId: String) -> RequestBuilder<AddressParse200Response> {
-        var localVariablePath = "/v2/address/{account_id}/parse"
+    open class func emulateMessageToAccountEventWithRequestBuilder(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<AccountEvent> {
+        var localVariablePath = "/v2/accounts/{account_id}/events/emulate"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "ignore_signature_check": (wrappedValue: ignoreSignatureCheck?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
+            "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<AddressParse200Response>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AccountEvent>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
@@ -323,11 +333,12 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
+     - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: JettonBalance
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonBalance(accountId: String, jettonId: String, currencies: [String]? = nil) async throws -> JettonBalance {
-        return try await getAccountJettonBalanceWithRequestBuilder(accountId: accountId, jettonId: jettonId, currencies: currencies).execute().body
+    open class func getAccountJettonBalance(accountId: String, jettonId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil) async throws -> JettonBalance {
+        return try await getAccountJettonBalanceWithRequestBuilder(accountId: accountId, jettonId: jettonId, currencies: currencies, supportedExtensions: supportedExtensions).execute().body
     }
 
     /**
@@ -336,9 +347,10 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
+     - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: RequestBuilder<JettonBalance> 
      */
-    open class func getAccountJettonBalanceWithRequestBuilder(accountId: String, jettonId: String, currencies: [String]? = nil) -> RequestBuilder<JettonBalance> {
+    open class func getAccountJettonBalanceWithRequestBuilder(accountId: String, jettonId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil) -> RequestBuilder<JettonBalance> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons/{jetton_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -352,6 +364,7 @@ open class AccountsAPI {
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "currencies": (wrappedValue: currencies?.encodeToJSON(), isExplode: false),
+            "supported_extensions": (wrappedValue: supportedExtensions?.encodeToJSON(), isExplode: false),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [

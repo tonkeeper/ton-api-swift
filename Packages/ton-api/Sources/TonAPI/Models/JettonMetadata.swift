@@ -16,13 +16,15 @@ public struct JettonMetadata: Codable, JSONEncodable, Hashable {
     public var name: String
     public var symbol: String
     public var decimals: String
+    /** this field currently returns a cached image URL (e.g., \"https://cache.tonapi.io/images/jetton.jpg\"). In the future, this will be replaced with the original URL from the metadata. The cached image is already available in the `preview` field of `JettonInfo` and will remain there. */
     public var image: String?
     public var description: String?
     public var social: [String]?
     public var websites: [String]?
     public var catalogs: [String]?
+    public var customPayloadApiUri: String?
 
-    public init(address: String, name: String, symbol: String, decimals: String, image: String? = nil, description: String? = nil, social: [String]? = nil, websites: [String]? = nil, catalogs: [String]? = nil) {
+    public init(address: String, name: String, symbol: String, decimals: String, image: String? = nil, description: String? = nil, social: [String]? = nil, websites: [String]? = nil, catalogs: [String]? = nil, customPayloadApiUri: String? = nil) {
         self.address = address
         self.name = name
         self.symbol = symbol
@@ -32,6 +34,7 @@ public struct JettonMetadata: Codable, JSONEncodable, Hashable {
         self.social = social
         self.websites = websites
         self.catalogs = catalogs
+        self.customPayloadApiUri = customPayloadApiUri
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -44,6 +47,7 @@ public struct JettonMetadata: Codable, JSONEncodable, Hashable {
         case social
         case websites
         case catalogs
+        case customPayloadApiUri = "custom_payload_api_uri"
     }
 
     // Encodable protocol methods
@@ -59,6 +63,7 @@ public struct JettonMetadata: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(social, forKey: .social)
         try container.encodeIfPresent(websites, forKey: .websites)
         try container.encodeIfPresent(catalogs, forKey: .catalogs)
+        try container.encodeIfPresent(customPayloadApiUri, forKey: .customPayloadApiUri)
     }
 }
 

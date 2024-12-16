@@ -5,7 +5,7 @@ All URIs are relative to *https://tonapi.io*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**accountDnsBackResolve**](AccountsAPI.md#accountdnsbackresolve) | **GET** /v2/accounts/{account_id}/dns/backresolve | 
-[**addressParse**](AccountsAPI.md#addressparse) | **GET** /v2/address/{account_id}/parse | 
+[**emulateMessageToAccountEvent**](AccountsAPI.md#emulatemessagetoaccountevent) | **POST** /v2/accounts/{account_id}/events/emulate | 
 [**getAccount**](AccountsAPI.md#getaccount) | **GET** /v2/accounts/{account_id} | 
 [**getAccountDiff**](AccountsAPI.md#getaccountdiff) | **GET** /v2/accounts/{account_id}/diff | 
 [**getAccountDnsExpiring**](AccountsAPI.md#getaccountdnsexpiring) | **GET** /v2/accounts/{account_id}/dns/expiring | 
@@ -74,14 +74,14 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **addressParse**
+# **emulateMessageToAccountEvent**
 ```swift
-    open class func addressParse(accountId: String, completion: @escaping (_ data: AddressParse200Response?, _ error: Error?) -> Void)
+    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: AccountEvent?, _ error: Error?) -> Void)
 ```
 
 
 
-parse address and display in all formats
+Emulate sending message to blockchain
 
 ### Example
 ```swift
@@ -89,8 +89,11 @@ parse address and display in all formats
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
+let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
+let ignoreSignatureCheck = true // Bool |  (optional)
 
-AccountsAPI.addressParse(accountId: accountId) { (response, error) in
+AccountsAPI.emulateMessageToAccountEvent(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -107,10 +110,13 @@ AccountsAPI.addressParse(accountId: accountId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
+ **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
+ **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
 ### Return type
 
-[**AddressParse200Response**](AddressParse200Response.md)
+[**AccountEvent**](AccountEvent.md)
 
 ### Authorization
 
@@ -118,7 +124,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -396,7 +402,7 @@ No authorization required
 
 # **getAccountJettonBalance**
 ```swift
-    open class func getAccountJettonBalance(accountId: String, jettonId: String, currencies: [String]? = nil, completion: @escaping (_ data: JettonBalance?, _ error: Error?) -> Void)
+    open class func getAccountJettonBalance(accountId: String, jettonId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil, completion: @escaping (_ data: JettonBalance?, _ error: Error?) -> Void)
 ```
 
 
@@ -411,8 +417,9 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let jettonId = "jettonId_example" // String | jetton ID
 let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas (optional)
+let supportedExtensions = ["inner_example"] // [String] | comma separated list supported extensions (optional)
 
-AccountsAPI.getAccountJettonBalance(accountId: accountId, jettonId: jettonId, currencies: currencies) { (response, error) in
+AccountsAPI.getAccountJettonBalance(accountId: accountId, jettonId: jettonId, currencies: currencies, supportedExtensions: supportedExtensions) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -431,6 +438,7 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **jettonId** | **String** | jetton ID | 
  **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | [optional] 
+ **supportedExtensions** | [**[String]**](String.md) | comma separated list supported extensions | [optional] 
 
 ### Return type
 

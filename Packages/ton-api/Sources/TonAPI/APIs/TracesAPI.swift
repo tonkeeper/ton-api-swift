@@ -14,6 +14,45 @@ open class TracesAPI {
 
     /**
 
+     - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter ignoreSignatureCheck: (query)  (optional)
+     - returns: Trace
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil) async throws -> Trace {
+        return try await emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    }
+
+    /**
+     - POST /v2/traces/emulate
+     - Emulate sending message to blockchain
+     - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter ignoreSignatureCheck: (query)  (optional)
+     - returns: RequestBuilder<Trace> 
+     */
+    open class func emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Trace> {
+        let localVariablePath = "/v2/traces/emulate"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "ignore_signature_check": (wrappedValue: ignoreSignatureCheck?.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Trace>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
      - parameter traceId: (path) trace ID or transaction hash in hex (without 0x) or base64url format 
      - returns: Trace
      */

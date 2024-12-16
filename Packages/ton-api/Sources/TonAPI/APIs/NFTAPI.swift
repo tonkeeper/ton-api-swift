@@ -149,6 +149,40 @@ open class NFTAPI {
 
     /**
 
+     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - returns: NftCollections
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getNftCollectionItemsByAddresses(getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftCollections {
+        return try await getNftCollectionItemsByAddressesWithRequestBuilder(getAccountsRequest: getAccountsRequest).execute().body
+    }
+
+    /**
+     - POST /v2/nfts/collections/_bulk
+     - Get NFT collection items by their addresses
+     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - returns: RequestBuilder<NftCollections> 
+     */
+    open class func getNftCollectionItemsByAddressesWithRequestBuilder(getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftCollections> {
+        let localVariablePath = "/v2/nfts/collections/_bulk"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<NftCollections>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: NftCollections

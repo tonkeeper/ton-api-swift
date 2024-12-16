@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **approvalsNum** | **Int** |  | 
 **expirationDate** | **Int64** |  | 
 **risk** | [**Risk**](Risk.md) |  | 
+**creationDate** | **Int64** |  | 
+**signedBy** | **[String]** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

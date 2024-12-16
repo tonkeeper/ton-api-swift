@@ -24,6 +24,7 @@ public struct Message: Codable, JSONEncodable, Hashable {
     public var bounce: Bool
     public var bounced: Bool
     public var value: Int64
+    public var valueExtra: [ExtraCurrency]?
     public var fwdFee: Int64
     public var ihrFee: Int64
     public var destination: AccountAddress?
@@ -38,13 +39,14 @@ public struct Message: Codable, JSONEncodable, Hashable {
     public var decodedOpName: String?
     public var decodedBody: AnyCodable?
 
-    public init(msgType: MsgType, createdLt: Int64, ihrDisabled: Bool, bounce: Bool, bounced: Bool, value: Int64, fwdFee: Int64, ihrFee: Int64, destination: AccountAddress? = nil, source: AccountAddress? = nil, importFee: Int64, createdAt: Int64, opCode: String? = nil, _init: StateInit? = nil, hash: String, rawBody: String? = nil, decodedOpName: String? = nil, decodedBody: AnyCodable? = nil) {
+    public init(msgType: MsgType, createdLt: Int64, ihrDisabled: Bool, bounce: Bool, bounced: Bool, value: Int64, valueExtra: [ExtraCurrency]? = nil, fwdFee: Int64, ihrFee: Int64, destination: AccountAddress? = nil, source: AccountAddress? = nil, importFee: Int64, createdAt: Int64, opCode: String? = nil, _init: StateInit? = nil, hash: String, rawBody: String? = nil, decodedOpName: String? = nil, decodedBody: AnyCodable? = nil) {
         self.msgType = msgType
         self.createdLt = createdLt
         self.ihrDisabled = ihrDisabled
         self.bounce = bounce
         self.bounced = bounced
         self.value = value
+        self.valueExtra = valueExtra
         self.fwdFee = fwdFee
         self.ihrFee = ihrFee
         self.destination = destination
@@ -66,6 +68,7 @@ public struct Message: Codable, JSONEncodable, Hashable {
         case bounce
         case bounced
         case value
+        case valueExtra = "value_extra"
         case fwdFee = "fwd_fee"
         case ihrFee = "ihr_fee"
         case destination
@@ -90,6 +93,7 @@ public struct Message: Codable, JSONEncodable, Hashable {
         try container.encode(bounce, forKey: .bounce)
         try container.encode(bounced, forKey: .bounced)
         try container.encode(value, forKey: .value)
+        try container.encodeIfPresent(valueExtra, forKey: .valueExtra)
         try container.encode(fwdFee, forKey: .fwdFee)
         try container.encode(ihrFee, forKey: .ihrFee)
         try container.encodeIfPresent(destination, forKey: .destination)

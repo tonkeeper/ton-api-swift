@@ -18,14 +18,18 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
     public var decimals: Int
     public var image: String
     public var verification: JettonVerificationType
+    public var customPayloadApiUri: String?
+    public var score: Int?
 
-    public init(address: String, name: String, symbol: String, decimals: Int, image: String, verification: JettonVerificationType) {
+    public init(address: String, name: String, symbol: String, decimals: Int, image: String, verification: JettonVerificationType, customPayloadApiUri: String? = nil, score: Int? = nil) {
         self.address = address
         self.name = name
         self.symbol = symbol
         self.decimals = decimals
         self.image = image
         self.verification = verification
+        self.customPayloadApiUri = customPayloadApiUri
+        self.score = score
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -35,6 +39,8 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
         case decimals
         case image
         case verification
+        case customPayloadApiUri = "custom_payload_api_uri"
+        case score
     }
 
     // Encodable protocol methods
@@ -47,6 +53,8 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
         try container.encode(decimals, forKey: .decimals)
         try container.encode(image, forKey: .image)
         try container.encode(verification, forKey: .verification)
+        try container.encodeIfPresent(customPayloadApiUri, forKey: .customPayloadApiUri)
+        try container.encodeIfPresent(score, forKey: .score)
     }
 }
 

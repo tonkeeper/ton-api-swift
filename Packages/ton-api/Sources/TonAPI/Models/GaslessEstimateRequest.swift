@@ -14,9 +14,9 @@ public struct GaslessEstimateRequest: Codable, JSONEncodable, Hashable {
 
     public var walletAddress: String
     public var walletPublicKey: String
-    public var messages: [DecodeMessageRequest]
+    public var messages: [GaslessEstimateRequestMessagesInner]
 
-    public init(walletAddress: String, walletPublicKey: String, messages: [DecodeMessageRequest]) {
+    public init(walletAddress: String, walletPublicKey: String, messages: [GaslessEstimateRequestMessagesInner]) {
         self.walletAddress = walletAddress
         self.walletPublicKey = walletPublicKey
         self.messages = messages

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **type** | **String** |  | 
 **status** | **String** |  | 
 **tonTransfer** | [**TonTransferAction**](TonTransferAction.md) |  | [optional] 
+**extraCurrencyTransfer** | [**ExtraCurrencyTransferAction**](ExtraCurrencyTransferAction.md) |  | [optional] 
 **contractDeploy** | [**ContractDeployAction**](ContractDeployAction.md) |  | [optional] 
 **jettonTransfer** | [**JettonTransferAction**](JettonTransferAction.md) |  | [optional] 
 **jettonBurn** | [**JettonBurnAction**](JettonBurnAction.md) |  | [optional] 

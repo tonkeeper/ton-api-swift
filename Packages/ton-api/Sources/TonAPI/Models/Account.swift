@@ -14,6 +14,7 @@ public struct Account: Codable, JSONEncodable, Hashable {
 
     public var address: String
     public var balance: Int64
+    public var extraBalance: [ExtraCurrency]?
     /** {'USD': 1, 'IDR': 1000} */
     public var currenciesBalance: [String: AnyCodable]?
     /** unix timestamp */
@@ -28,9 +29,10 @@ public struct Account: Codable, JSONEncodable, Hashable {
     public var isSuspended: Bool?
     public var isWallet: Bool
 
-    public init(address: String, balance: Int64, currenciesBalance: [String: AnyCodable]? = nil, lastActivity: Int64, status: AccountStatus, interfaces: [String]? = nil, name: String? = nil, isScam: Bool? = nil, icon: String? = nil, memoRequired: Bool? = nil, getMethods: [String], isSuspended: Bool? = nil, isWallet: Bool) {
+    public init(address: String, balance: Int64, extraBalance: [ExtraCurrency]? = nil, currenciesBalance: [String: AnyCodable]? = nil, lastActivity: Int64, status: AccountStatus, interfaces: [String]? = nil, name: String? = nil, isScam: Bool? = nil, icon: String? = nil, memoRequired: Bool? = nil, getMethods: [String], isSuspended: Bool? = nil, isWallet: Bool) {
         self.address = address
         self.balance = balance
+        self.extraBalance = extraBalance
         self.currenciesBalance = currenciesBalance
         self.lastActivity = lastActivity
         self.status = status
@@ -47,6 +49,7 @@ public struct Account: Codable, JSONEncodable, Hashable {
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case address
         case balance
+        case extraBalance = "extra_balance"
         case currenciesBalance = "currencies_balance"
         case lastActivity = "last_activity"
         case status
@@ -66,6 +69,7 @@ public struct Account: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(address, forKey: .address)
         try container.encode(balance, forKey: .balance)
+        try container.encodeIfPresent(extraBalance, forKey: .extraBalance)
         try container.encodeIfPresent(currenciesBalance, forKey: .currenciesBalance)
         try container.encode(lastActivity, forKey: .lastActivity)
         try container.encode(status, forKey: .status)

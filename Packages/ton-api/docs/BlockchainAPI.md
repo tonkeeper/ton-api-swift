@@ -23,7 +23,6 @@ Method | HTTP request | Description
 [**getRawBlockchainConfigFromBlock**](BlockchainAPI.md#getrawblockchainconfigfromblock) | **GET** /v2/blockchain/masterchain/{masterchain_seqno}/config/raw | 
 [**getReducedBlockchainBlocks**](BlockchainAPI.md#getreducedblockchainblocks) | **GET** /v2/blockchain/reduced/blocks | 
 [**sendBlockchainMessage**](BlockchainAPI.md#sendblockchainmessage) | **POST** /v2/blockchain/message | 
-[**status**](BlockchainAPI.md#status) | **GET** /v2/status | 
 
 
 # **blockchainAccountInspect**
@@ -77,7 +76,7 @@ No authorization required
 
 # **execGetMethodForBlockchainAccount**
 ```swift
-    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
+    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, fixOrder: Bool? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
 ```
 
 
@@ -92,8 +91,9 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let methodName = "methodName_example" // String | contract get method name
 let args = ["inner_example"] // [String] |  (optional)
+let fixOrder = true // Bool |  (optional) (default to true)
 
-BlockchainAPI.execGetMethodForBlockchainAccount(accountId: accountId, methodName: methodName, args: args) { (response, error) in
+BlockchainAPI.execGetMethodForBlockchainAccount(accountId: accountId, methodName: methodName, args: args, fixOrder: fixOrder) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -112,6 +112,7 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **methodName** | **String** | contract get method name | 
  **args** | [**[String]**](String.md) |  | [optional] 
+ **fixOrder** | **Bool** |  | [optional] [default to true]
 
 ### Return type
 
@@ -920,7 +921,7 @@ Send message to blockchain
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let sendBlockchainMessageRequest = sendBlockchainMessage_request(boc: "boc_example", batch: ["batch_example"]) // SendBlockchainMessageRequest | both a single boc and a batch of boc serialized in base64/hex are accepted
+let sendBlockchainMessageRequest = sendBlockchainMessage_request(boc: "boc_example", batch: ["batch_example"], meta: "TODO") // SendBlockchainMessageRequest | both a single boc and a batch of boc serialized in base64/hex are accepted
 
 BlockchainAPI.sendBlockchainMessage(sendBlockchainMessageRequest: sendBlockchainMessageRequest) { (response, error) in
     guard error == nil else {
@@ -951,51 +952,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **status**
-```swift
-    open class func status(completion: @escaping (_ data: ServiceStatus?, _ error: Error?) -> Void)
-```
-
-
-
-Status
-
-### Example
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import TonAPI
-
-
-BlockchainAPI.status() { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**ServiceStatus**](ServiceStatus.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

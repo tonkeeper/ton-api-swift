@@ -14,6 +14,43 @@ open class WalletAPI {
 
     /**
 
+     - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
+     - parameter acceptLanguage: (header)  (optional, default to "en")
+     - returns: MessageConsequences
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil) async throws -> MessageConsequences {
+        return try await emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage).execute().body
+    }
+
+    /**
+     - POST /v2/wallet/emulate
+     - Emulate sending message to blockchain
+     - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
+     - parameter acceptLanguage: (header)  (optional, default to "en")
+     - returns: RequestBuilder<MessageConsequences> 
+     */
+    open class func emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil) -> RequestBuilder<MessageConsequences> {
+        let localVariablePath = "/v2/wallet/emulate"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: emulateMessageToWalletRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+            "Accept-Language": acceptLanguage?.encodeToJSON(),
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<MessageConsequences>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
      - parameter accountId: (path) account ID 
      - returns: Seqno
      */
@@ -45,40 +82,6 @@ open class WalletAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<Seqno>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
-    }
-
-    /**
-
-     - parameter xTonConnectAuth: (header)  
-     - returns: GetWalletBackup200Response
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getWalletBackup(xTonConnectAuth: String) async throws -> GetWalletBackup200Response {
-        return try await getWalletBackupWithRequestBuilder(xTonConnectAuth: xTonConnectAuth).execute().body
-    }
-
-    /**
-     - GET /v2/wallet/backup
-     - Get backup info
-     - parameter xTonConnectAuth: (header)  
-     - returns: RequestBuilder<GetWalletBackup200Response> 
-     */
-    open class func getWalletBackupWithRequestBuilder(xTonConnectAuth: String) -> RequestBuilder<GetWalletBackup200Response> {
-        let localVariablePath = "/v2/wallet/backup"
-        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            "X-TonConnect-Auth": xTonConnectAuth.encodeToJSON(),
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<GetWalletBackup200Response>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
@@ -118,43 +121,6 @@ open class WalletAPI {
         let localVariableRequestBuilder: RequestBuilder<Accounts>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
-    }
-
-    /**
-
-     - parameter xTonConnectAuth: (header)  
-     - parameter body: (body) Information for saving backup 
-     - returns: Void
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func setWalletBackup(xTonConnectAuth: String, body: URL) async throws {
-        return try await setWalletBackupWithRequestBuilder(xTonConnectAuth: xTonConnectAuth, body: body).execute().body
-    }
-
-    /**
-     - PUT /v2/wallet/backup
-     - Set backup info
-     - parameter xTonConnectAuth: (header)  
-     - parameter body: (body) Information for saving backup 
-     - returns: RequestBuilder<Void> 
-     */
-    open class func setWalletBackupWithRequestBuilder(xTonConnectAuth: String, body: URL) -> RequestBuilder<Void> {
-        let localVariablePath = "/v2/wallet/backup"
-        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters = ["body": body]
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            "Content-Type": "application/octet-stream",
-            "X-TonConnect-Auth": xTonConnectAuth.encodeToJSON(),
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = TonAPIAPI.requestBuilderFactory.getNonDecodableBuilder()
-
-        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**

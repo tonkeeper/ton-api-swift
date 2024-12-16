@@ -106,7 +106,7 @@ open class RatesAPI {
 
     /**
      - GET /v2/rates
-     - Get the token price to the currency
+     - Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
      - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
      - returns: RequestBuilder<GetRates200Response> 

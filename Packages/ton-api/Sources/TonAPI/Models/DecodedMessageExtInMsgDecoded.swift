@@ -14,17 +14,20 @@ public struct DecodedMessageExtInMsgDecoded: Codable, JSONEncodable, Hashable {
 
     public var walletV3: DecodedMessageExtInMsgDecodedWalletV3?
     public var walletV4: DecodedMessageExtInMsgDecodedWalletV4?
+    public var walletV5: DecodedMessageExtInMsgDecodedWalletV5?
     public var walletHighloadV2: DecodedMessageExtInMsgDecodedWalletHighloadV2?
 
-    public init(walletV3: DecodedMessageExtInMsgDecodedWalletV3? = nil, walletV4: DecodedMessageExtInMsgDecodedWalletV4? = nil, walletHighloadV2: DecodedMessageExtInMsgDecodedWalletHighloadV2? = nil) {
+    public init(walletV3: DecodedMessageExtInMsgDecodedWalletV3? = nil, walletV4: DecodedMessageExtInMsgDecodedWalletV4? = nil, walletV5: DecodedMessageExtInMsgDecodedWalletV5? = nil, walletHighloadV2: DecodedMessageExtInMsgDecodedWalletHighloadV2? = nil) {
         self.walletV3 = walletV3
         self.walletV4 = walletV4
+        self.walletV5 = walletV5
         self.walletHighloadV2 = walletHighloadV2
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case walletV3 = "wallet_v3"
         case walletV4 = "wallet_v4"
+        case walletV5 = "wallet_v5"
         case walletHighloadV2 = "wallet_highload_v2"
     }
 
@@ -34,6 +37,7 @@ public struct DecodedMessageExtInMsgDecoded: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(walletV3, forKey: .walletV3)
         try container.encodeIfPresent(walletV4, forKey: .walletV4)
+        try container.encodeIfPresent(walletV5, forKey: .walletV5)
         try container.encodeIfPresent(walletHighloadV2, forKey: .walletHighloadV2)
     }
 }

@@ -56,6 +56,7 @@ public struct BlockchainConfig: Codable, JSONEncodable, Hashable {
     public var _40: BlockchainConfig40?
     public var _43: BlockchainConfig43?
     public var _44: BlockchainConfig44
+    public var _45: BlockchainConfig45?
     public var _71: BlockchainConfig71?
     public var _72: BlockchainConfig71?
     public var _73: BlockchainConfig71?
@@ -63,7 +64,7 @@ public struct BlockchainConfig: Codable, JSONEncodable, Hashable {
     public var _81: BlockchainConfig79?
     public var _82: BlockchainConfig79?
 
-    public init(raw: String, _0: String, _1: String, _2: String, _3: String? = nil, _4: String, _5: BlockchainConfig5? = nil, _6: BlockchainConfig6? = nil, _7: BlockchainConfig7? = nil, _8: BlockchainConfig8? = nil, _9: BlockchainConfig9? = nil, _10: BlockchainConfig10? = nil, _11: BlockchainConfig11? = nil, _12: BlockchainConfig12? = nil, _13: BlockchainConfig13? = nil, _14: BlockchainConfig14? = nil, _15: BlockchainConfig15? = nil, _16: BlockchainConfig16? = nil, _17: BlockchainConfig17? = nil, _18: BlockchainConfig18? = nil, _20: BlockchainConfig20? = nil, _21: BlockchainConfig21? = nil, _22: BlockchainConfig22? = nil, _23: BlockchainConfig23? = nil, _24: BlockchainConfig24? = nil, _25: BlockchainConfig25? = nil, _28: BlockchainConfig28? = nil, _29: BlockchainConfig29? = nil, _31: BlockchainConfig31? = nil, _32: ValidatorsSet? = nil, _33: ValidatorsSet? = nil, _34: ValidatorsSet? = nil, _35: ValidatorsSet? = nil, _36: ValidatorsSet? = nil, _37: ValidatorsSet? = nil, _40: BlockchainConfig40? = nil, _43: BlockchainConfig43? = nil, _44: BlockchainConfig44, _71: BlockchainConfig71? = nil, _72: BlockchainConfig71? = nil, _73: BlockchainConfig71? = nil, _79: BlockchainConfig79? = nil, _81: BlockchainConfig79? = nil, _82: BlockchainConfig79? = nil) {
+    public init(raw: String, _0: String, _1: String, _2: String, _3: String? = nil, _4: String, _5: BlockchainConfig5? = nil, _6: BlockchainConfig6? = nil, _7: BlockchainConfig7? = nil, _8: BlockchainConfig8? = nil, _9: BlockchainConfig9? = nil, _10: BlockchainConfig10? = nil, _11: BlockchainConfig11? = nil, _12: BlockchainConfig12? = nil, _13: BlockchainConfig13? = nil, _14: BlockchainConfig14? = nil, _15: BlockchainConfig15? = nil, _16: BlockchainConfig16? = nil, _17: BlockchainConfig17? = nil, _18: BlockchainConfig18? = nil, _20: BlockchainConfig20? = nil, _21: BlockchainConfig21? = nil, _22: BlockchainConfig22? = nil, _23: BlockchainConfig23? = nil, _24: BlockchainConfig24? = nil, _25: BlockchainConfig25? = nil, _28: BlockchainConfig28? = nil, _29: BlockchainConfig29? = nil, _31: BlockchainConfig31? = nil, _32: ValidatorsSet? = nil, _33: ValidatorsSet? = nil, _34: ValidatorsSet? = nil, _35: ValidatorsSet? = nil, _36: ValidatorsSet? = nil, _37: ValidatorsSet? = nil, _40: BlockchainConfig40? = nil, _43: BlockchainConfig43? = nil, _44: BlockchainConfig44, _45: BlockchainConfig45? = nil, _71: BlockchainConfig71? = nil, _72: BlockchainConfig71? = nil, _73: BlockchainConfig71? = nil, _79: BlockchainConfig79? = nil, _81: BlockchainConfig79? = nil, _82: BlockchainConfig79? = nil) {
         self.raw = raw
         self._0 = _0
         self._1 = _1
@@ -102,6 +103,7 @@ public struct BlockchainConfig: Codable, JSONEncodable, Hashable {
         self._40 = _40
         self._43 = _43
         self._44 = _44
+        self._45 = _45
         self._71 = _71
         self._72 = _72
         self._73 = _73
@@ -149,6 +151,7 @@ public struct BlockchainConfig: Codable, JSONEncodable, Hashable {
         case _40 = "40"
         case _43 = "43"
         case _44 = "44"
+        case _45 = "45"
         case _71 = "71"
         case _72 = "72"
         case _73 = "73"
@@ -199,6 +202,7 @@ public struct BlockchainConfig: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(_40, forKey: ._40)
         try container.encodeIfPresent(_43, forKey: ._43)
         try container.encode(_44, forKey: ._44)
+        try container.encodeIfPresent(_45, forKey: ._45)
         try container.encodeIfPresent(_71, forKey: ._71)
         try container.encodeIfPresent(_72, forKey: ._72)
         try container.encodeIfPresent(_73, forKey: ._73)

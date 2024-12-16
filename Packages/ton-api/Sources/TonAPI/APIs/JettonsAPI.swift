@@ -96,6 +96,40 @@ open class JettonsAPI {
 
     /**
 
+     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - returns: Jettons
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getJettonInfosByAddresses(getAccountsRequest: GetAccountsRequest? = nil) async throws -> Jettons {
+        return try await getJettonInfosByAddressesWithRequestBuilder(getAccountsRequest: getAccountsRequest).execute().body
+    }
+
+    /**
+     - POST /v2/jettons/_bulk
+     - Get jetton metadata items by jetton master addresses
+     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - returns: RequestBuilder<Jettons> 
+     */
+    open class func getJettonInfosByAddressesWithRequestBuilder(getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<Jettons> {
+        let localVariablePath = "/v2/jettons/_bulk"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Jettons>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - returns: JettonTransferPayload

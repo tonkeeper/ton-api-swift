@@ -15,13 +15,13 @@ public struct NftItem: Codable, JSONEncodable, Hashable {
     public enum ApprovedBy: String, Codable, CaseIterable, CaseIterableDefaultsLast {
         case getgems = "getgems"
         case tonkeeper = "tonkeeper"
-        case tonPeriodDiamonds = "ton.diamonds"
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var address: String
     public var index: Int64
     public var owner: AccountAddress?
     public var collection: NftItemCollection?
+    /** Collection master contract confirmed that this item is part of collection */
     public var verified: Bool
     public var metadata: [String: AnyCodable]
     public var sale: Sale?

@@ -54,11 +54,12 @@ open class BlockchainAPI {
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
      - parameter args: (query)  (optional)
+     - parameter fixOrder: (query)  (optional, default to true)
      - returns: MethodExecutionResult
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil) async throws -> MethodExecutionResult {
-        return try await execGetMethodForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, args: args).execute().body
+    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, fixOrder: Bool? = nil) async throws -> MethodExecutionResult {
+        return try await execGetMethodForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, args: args, fixOrder: fixOrder).execute().body
     }
 
     /**
@@ -67,9 +68,10 @@ open class BlockchainAPI {
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
      - parameter args: (query)  (optional)
+     - parameter fixOrder: (query)  (optional, default to true)
      - returns: RequestBuilder<MethodExecutionResult> 
      */
-    open class func execGetMethodForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, args: [String]? = nil) -> RequestBuilder<MethodExecutionResult> {
+    open class func execGetMethodForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, args: [String]? = nil, fixOrder: Bool? = nil) -> RequestBuilder<MethodExecutionResult> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}/methods/{method_name}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -83,6 +85,7 @@ open class BlockchainAPI {
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "args": (wrappedValue: args?.encodeToJSON(), isExplode: true),
+            "fix_order": (wrappedValue: fixOrder?.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -725,37 +728,5 @@ open class BlockchainAPI {
         let localVariableRequestBuilder: RequestBuilder<Void>.Type = TonAPIAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
-    }
-
-    /**
-
-     - returns: ServiceStatus
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func status() async throws -> ServiceStatus {
-        return try await statusWithRequestBuilder().execute().body
-    }
-
-    /**
-     - GET /v2/status
-     - Status
-     - returns: RequestBuilder<ServiceStatus> 
-     */
-    open class func statusWithRequestBuilder() -> RequestBuilder<ServiceStatus> {
-        let localVariablePath = "/v2/status"
-        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<ServiceStatus>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 }

@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | **String** |  | 
 **balance** | **Int64** |  | 
+**extraBalance** | [ExtraCurrency] |  | [optional] 
 **currenciesBalance** | **[String: AnyCodable]** | {&#39;USD&#39;: 1, &#39;IDR&#39;: 1000} | [optional] 
 **lastActivity** | **Int64** | unix timestamp | 
 **status** | [**AccountStatus**](AccountStatus.md) |  | 

@@ -41,6 +41,7 @@ Name | Type | Description | Notes
 **_40** | [**BlockchainConfig40**](BlockchainConfig40.md) |  | [optional] 
 **_43** | [**BlockchainConfig43**](BlockchainConfig43.md) |  | [optional] 
 **_44** | [**BlockchainConfig44**](BlockchainConfig44.md) |  | 
+**_45** | [**BlockchainConfig45**](BlockchainConfig45.md) |  | [optional] 
 **_71** | [**BlockchainConfig71**](BlockchainConfig71.md) |  | [optional] 
 **_72** | [**BlockchainConfig71**](BlockchainConfig71.md) |  | [optional] 
 **_73** | [**BlockchainConfig71**](BlockchainConfig71.md) |  | [optional] 

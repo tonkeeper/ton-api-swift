@@ -57,7 +57,7 @@ open class GaslessAPI {
 
     /**
      - POST /v2/gasless/estimate/{master_id}
-     - Estimates the cost of the given messages and returns a payload to sign.
+     - Estimates the cost of the given messages and returns a payload to sign
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
      - returns: RequestBuilder<SignRawParams> 
@@ -95,6 +95,7 @@ open class GaslessAPI {
 
     /**
      - POST /v2/gasless/send
+     - Submits the signed gasless transaction message to the network
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
      - returns: RequestBuilder<Void> 
      */

@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**getAccountNftHistory**](NFTAPI.md#getaccountnfthistory) | **GET** /v2/accounts/{account_id}/nfts/history | 
 [**getItemsFromCollection**](NFTAPI.md#getitemsfromcollection) | **GET** /v2/nfts/collections/{account_id}/items | 
 [**getNftCollection**](NFTAPI.md#getnftcollection) | **GET** /v2/nfts/collections/{account_id} | 
+[**getNftCollectionItemsByAddresses**](NFTAPI.md#getnftcollectionitemsbyaddresses) | **POST** /v2/nfts/collections/_bulk | 
 [**getNftCollections**](NFTAPI.md#getnftcollections) | **GET** /v2/nfts/collections | 
 [**getNftHistoryByID**](NFTAPI.md#getnfthistorybyid) | **GET** /v2/nfts/{account_id}/history | 
 [**getNftItemByAddress**](NFTAPI.md#getnftitembyaddress) | **GET** /v2/nfts/{account_id} | 
@@ -170,6 +171,55 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getNftCollectionItemsByAddresses**
+```swift
+    open class func getNftCollectionItemsByAddresses(getAccountsRequest: GetAccountsRequest? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
+```
+
+
+
+Get NFT collection items by their addresses
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
+
+NFTAPI.getNftCollectionItemsByAddresses(getAccountsRequest: getAccountsRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
+
+### Return type
+
+[**NftCollections**](NftCollections.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

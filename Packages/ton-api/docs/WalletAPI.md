@@ -4,12 +4,62 @@ All URIs are relative to *https://tonapi.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**emulateMessageToWallet**](WalletAPI.md#emulatemessagetowallet) | **POST** /v2/wallet/emulate | 
 [**getAccountSeqno**](WalletAPI.md#getaccountseqno) | **GET** /v2/wallet/{account_id}/seqno | 
-[**getWalletBackup**](WalletAPI.md#getwalletbackup) | **GET** /v2/wallet/backup | 
 [**getWalletsByPublicKey**](WalletAPI.md#getwalletsbypublickey) | **GET** /v2/pubkeys/{public_key}/wallets | 
-[**setWalletBackup**](WalletAPI.md#setwalletbackup) | **PUT** /v2/wallet/backup | 
 [**tonConnectProof**](WalletAPI.md#tonconnectproof) | **POST** /v2/wallet/auth/proof | 
 
+
+# **emulateMessageToWallet**
+```swift
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
+```
+
+
+
+Emulate sending message to blockchain
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let emulateMessageToWalletRequest = emulateMessageToWallet_request(boc: "boc_example", params: [emulateMessageToWallet_request_params_inner(address: "address_example", balance: 123)]) // EmulateMessageToWalletRequest | bag-of-cells serialized to base64/hex and additional parameters to configure emulation
+let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
+
+WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **emulateMessageToWalletRequest** | [**EmulateMessageToWalletRequest**](EmulateMessageToWalletRequest.md) | bag-of-cells serialized to base64/hex and additional parameters to configure emulation | 
+ **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
+
+### Return type
+
+[**MessageConsequences**](MessageConsequences.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAccountSeqno**
 ```swift
@@ -48,55 +98,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Seqno**](Seqno.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getWalletBackup**
-```swift
-    open class func getWalletBackup(xTonConnectAuth: String, completion: @escaping (_ data: GetWalletBackup200Response?, _ error: Error?) -> Void)
-```
-
-
-
-Get backup info
-
-### Example
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import TonAPI
-
-let xTonConnectAuth = "xTonConnectAuth_example" // String | 
-
-WalletAPI.getWalletBackup(xTonConnectAuth: xTonConnectAuth) { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xTonConnectAuth** | **String** |  | 
-
-### Return type
-
-[**GetWalletBackup200Response**](GetWalletBackup200Response.md)
 
 ### Authorization
 
@@ -154,57 +155,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **setWalletBackup**
-```swift
-    open class func setWalletBackup(xTonConnectAuth: String, body: URL, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
-```
-
-
-
-Set backup info
-
-### Example
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import TonAPI
-
-let xTonConnectAuth = "xTonConnectAuth_example" // String | 
-let body = URL(string: "https://example.com")! // URL | Information for saving backup
-
-WalletAPI.setWalletBackup(xTonConnectAuth: xTonConnectAuth, body: body) { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xTonConnectAuth** | **String** |  | 
- **body** | **URL** | Information for saving backup | 
-
-### Return type
-
-Void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/octet-stream
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

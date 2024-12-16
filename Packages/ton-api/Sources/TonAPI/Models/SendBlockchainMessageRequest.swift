@@ -14,15 +14,18 @@ public struct SendBlockchainMessageRequest: Codable, JSONEncodable, Hashable {
 
     public var boc: String?
     public var batch: [String]?
+    public var meta: [String: String]?
 
-    public init(boc: String? = nil, batch: [String]? = nil) {
+    public init(boc: String? = nil, batch: [String]? = nil, meta: [String: String]? = nil) {
         self.boc = boc
         self.batch = batch
+        self.meta = meta
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case boc
         case batch
+        case meta
     }
 
     // Encodable protocol methods
@@ -31,6 +34,7 @@ public struct SendBlockchainMessageRequest: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(boc, forKey: .boc)
         try container.encodeIfPresent(batch, forKey: .batch)
+        try container.encodeIfPresent(meta, forKey: .meta)
     }
 }
 

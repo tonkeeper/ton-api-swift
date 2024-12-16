@@ -61,7 +61,7 @@ No authorization required
 
 
 
-Estimates the cost of the given messages and returns a payload to sign.
+Estimates the cost of the given messages and returns a payload to sign
 
 ### Example
 ```swift
@@ -69,7 +69,7 @@ Estimates the cost of the given messages and returns a payload to sign.
 import TonAPI
 
 let masterId = "masterId_example" // String | jetton to pay commission
-let gaslessEstimateRequest = gaslessEstimate_request(walletAddress: "walletAddress_example", walletPublicKey: "walletPublicKey_example", messages: [decodeMessage_request(boc: "boc_example")]) // GaslessEstimateRequest | bag-of-cells serialized to hex
+let gaslessEstimateRequest = gaslessEstimate_request(walletAddress: "walletAddress_example", walletPublicKey: "walletPublicKey_example", messages: [gaslessEstimate_request_messages_inner(boc: "boc_example")]) // GaslessEstimateRequest | bag-of-cells serialized to hex
 
 GaslessAPI.gaslessEstimate(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest) { (response, error) in
     guard error == nil else {
@@ -111,6 +111,8 @@ No authorization required
 ```
 
 
+
+Submits the signed gasless transaction message to the network
 
 ### Example
 ```swift

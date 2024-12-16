@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 # **decodeMessage**
 ```swift
-    open class func decodeMessage(decodeMessageRequest: DecodeMessageRequest, completion: @escaping (_ data: DecodedMessage?, _ error: Error?) -> Void)
+    open class func decodeMessage(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, completion: @escaping (_ data: DecodedMessage?, _ error: Error?) -> Void)
 ```
 
 
@@ -25,9 +25,9 @@ Decode a given message. Only external incoming messages can be decoded currently
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let decodeMessageRequest = decodeMessage_request(boc: "boc_example") // DecodeMessageRequest | bag-of-cells serialized to hex
+let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
 
-EmulationAPI.decodeMessage(decodeMessageRequest: decodeMessageRequest) { (response, error) in
+EmulationAPI.decodeMessage(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,7 +43,7 @@ EmulationAPI.decodeMessage(decodeMessageRequest: decodeMessageRequest) { (respon
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **decodeMessageRequest** | [**DecodeMessageRequest**](DecodeMessageRequest.md) | bag-of-cells serialized to hex | 
+ **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
 
 ### Return type
 
@@ -62,7 +62,7 @@ No authorization required
 
 # **emulateMessageToAccountEvent**
 ```swift
-    open class func emulateMessageToAccountEvent(accountId: String, decodeMessageRequest: DecodeMessageRequest, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: AccountEvent?, _ error: Error?) -> Void)
+    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: AccountEvent?, _ error: Error?) -> Void)
 ```
 
 
@@ -75,11 +75,11 @@ Emulate sending message to blockchain
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let decodeMessageRequest = decodeMessage_request(boc: "boc_example") // DecodeMessageRequest | bag-of-cells serialized to hex
+let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EmulationAPI.emulateMessageToAccountEvent(accountId: accountId, decodeMessageRequest: decodeMessageRequest, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EmulationAPI.emulateMessageToAccountEvent(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -96,7 +96,7 @@ EmulationAPI.emulateMessageToAccountEvent(accountId: accountId, decodeMessageReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **decodeMessageRequest** | [**DecodeMessageRequest**](DecodeMessageRequest.md) | bag-of-cells serialized to hex | 
+ **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -117,7 +117,7 @@ No authorization required
 
 # **emulateMessageToEvent**
 ```swift
-    open class func emulateMessageToEvent(decodeMessageRequest: DecodeMessageRequest, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
+    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
 ```
 
 
@@ -129,11 +129,11 @@ Emulate sending message to blockchain
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let decodeMessageRequest = decodeMessage_request(boc: "boc_example") // DecodeMessageRequest | bag-of-cells serialized to hex
+let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EmulationAPI.emulateMessageToEvent(decodeMessageRequest: decodeMessageRequest, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EmulationAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -149,7 +149,7 @@ EmulationAPI.emulateMessageToEvent(decodeMessageRequest: decodeMessageRequest, a
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **decodeMessageRequest** | [**DecodeMessageRequest**](DecodeMessageRequest.md) | bag-of-cells serialized to hex | 
+ **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -170,7 +170,7 @@ No authorization required
 
 # **emulateMessageToTrace**
 ```swift
-    open class func emulateMessageToTrace(decodeMessageRequest: DecodeMessageRequest, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
+    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
 ```
 
 
@@ -182,10 +182,10 @@ Emulate sending message to blockchain
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let decodeMessageRequest = decodeMessage_request(boc: "boc_example") // DecodeMessageRequest | bag-of-cells serialized to hex
+let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EmulationAPI.emulateMessageToTrace(decodeMessageRequest: decodeMessageRequest, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EmulationAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -201,7 +201,7 @@ EmulationAPI.emulateMessageToTrace(decodeMessageRequest: decodeMessageRequest, i
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **decodeMessageRequest** | [**DecodeMessageRequest**](DecodeMessageRequest.md) | bag-of-cells serialized to hex | 
+ **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
 ### Return type

@@ -14,18 +14,22 @@ public struct BlockchainAccountInspect: Codable, JSONEncodable, Hashable {
 
     public enum Compiler: String, Codable, CaseIterable, CaseIterableDefaultsLast {
         case _func = "func"
+        case fift = "fift"
+        case tact = "tact"
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var code: String
     public var codeHash: String
-    public var methods: [BlockchainAccountInspectMethodsInner]
-    public var compiler: Compiler?
+    public var methods: [Method]
+    public var compiler: Compiler
+    public var source: Source
 
-    public init(code: String, codeHash: String, methods: [BlockchainAccountInspectMethodsInner], compiler: Compiler? = nil) {
+    public init(code: String, codeHash: String, methods: [Method], compiler: Compiler, source: Source) {
         self.code = code
         self.codeHash = codeHash
         self.methods = methods
         self.compiler = compiler
+        self.source = source
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -33,6 +37,7 @@ public struct BlockchainAccountInspect: Codable, JSONEncodable, Hashable {
         case codeHash = "code_hash"
         case methods
         case compiler
+        case source
     }
 
     // Encodable protocol methods
@@ -42,7 +47,8 @@ public struct BlockchainAccountInspect: Codable, JSONEncodable, Hashable {
         try container.encode(code, forKey: .code)
         try container.encode(codeHash, forKey: .codeHash)
         try container.encode(methods, forKey: .methods)
-        try container.encodeIfPresent(compiler, forKey: .compiler)
+        try container.encode(compiler, forKey: .compiler)
+        try container.encode(source, forKey: .source)
     }
 }
 

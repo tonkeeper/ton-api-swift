@@ -14,6 +14,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
 
     public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
         case tonTransfer = "TonTransfer"
+        case extraCurrencyTransfer = "ExtraCurrencyTransfer"
         case jettonTransfer = "JettonTransfer"
         case jettonBurn = "JettonBurn"
         case jettonMint = "JettonMint"
@@ -44,6 +45,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var type: ModelType
     public var status: Status
     public var tonTransfer: TonTransferAction?
+    public var extraCurrencyTransfer: ExtraCurrencyTransferAction?
     public var contractDeploy: ContractDeployAction?
     public var jettonTransfer: JettonTransferAction?
     public var jettonBurn: JettonBurnAction?
@@ -66,10 +68,11 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var simplePreview: ActionSimplePreview
     public var baseTransactions: [String]
 
-    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, inscriptionTransfer: InscriptionTransferAction? = nil, inscriptionMint: InscriptionMintAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
+    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, inscriptionTransfer: InscriptionTransferAction? = nil, inscriptionMint: InscriptionMintAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
         self.type = type
         self.status = status
         self.tonTransfer = tonTransfer
+        self.extraCurrencyTransfer = extraCurrencyTransfer
         self.contractDeploy = contractDeploy
         self.jettonTransfer = jettonTransfer
         self.jettonBurn = jettonBurn
@@ -97,6 +100,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case type
         case status
         case tonTransfer = "TonTransfer"
+        case extraCurrencyTransfer = "ExtraCurrencyTransfer"
         case contractDeploy = "ContractDeploy"
         case jettonTransfer = "JettonTransfer"
         case jettonBurn = "JettonBurn"
@@ -127,6 +131,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         try container.encode(type, forKey: .type)
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(tonTransfer, forKey: .tonTransfer)
+        try container.encodeIfPresent(extraCurrencyTransfer, forKey: .extraCurrencyTransfer)
         try container.encodeIfPresent(contractDeploy, forKey: .contractDeploy)
         try container.encodeIfPresent(jettonTransfer, forKey: .jettonTransfer)
         try container.encodeIfPresent(jettonBurn, forKey: .jettonBurn)

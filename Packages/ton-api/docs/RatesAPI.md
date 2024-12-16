@@ -118,7 +118,7 @@ No authorization required
 
 
 
-Get the token price to the currency
+Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
 
 ### Example
 ```swift

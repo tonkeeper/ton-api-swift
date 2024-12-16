@@ -4,8 +4,62 @@ All URIs are relative to *https://tonapi.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**emulateMessageToEvent**](EventsAPI.md#emulatemessagetoevent) | **POST** /v2/events/emulate | 
 [**getEvent**](EventsAPI.md#getevent) | **GET** /v2/events/{event_id} | 
 
+
+# **emulateMessageToEvent**
+```swift
+    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
+```
+
+
+
+Emulate sending message to blockchain
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
+let ignoreSignatureCheck = true // Bool |  (optional)
+
+EventsAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
+ **ignoreSignatureCheck** | **Bool** |  | [optional] 
+
+### Return type
+
+[**Event**](Event.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getEvent**
 ```swift

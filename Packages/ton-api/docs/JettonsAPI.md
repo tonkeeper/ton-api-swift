@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getJettonHolders**](JettonsAPI.md#getjettonholders) | **GET** /v2/jettons/{account_id}/holders | 
 [**getJettonInfo**](JettonsAPI.md#getjettoninfo) | **GET** /v2/jettons/{account_id} | 
+[**getJettonInfosByAddresses**](JettonsAPI.md#getjettoninfosbyaddresses) | **POST** /v2/jettons/_bulk | 
 [**getJettonTransferPayload**](JettonsAPI.md#getjettontransferpayload) | **GET** /v2/jettons/{jetton_id}/transfer/{account_id}/payload | 
 [**getJettons**](JettonsAPI.md#getjettons) | **GET** /v2/jettons | 
 [**getJettonsEvents**](JettonsAPI.md#getjettonsevents) | **GET** /v2/events/{event_id}/jettons | 
@@ -109,6 +110,55 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getJettonInfosByAddresses**
+```swift
+    open class func getJettonInfosByAddresses(getAccountsRequest: GetAccountsRequest? = nil, completion: @escaping (_ data: Jettons?, _ error: Error?) -> Void)
+```
+
+
+
+Get jetton metadata items by jetton master addresses
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
+
+JettonsAPI.getJettonInfosByAddresses(getAccountsRequest: getAccountsRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
+
+### Return type
+
+[**Jettons**](Jettons.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

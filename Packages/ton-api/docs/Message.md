@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **bounce** | **Bool** |  | 
 **bounced** | **Bool** |  | 
 **value** | **Int64** |  | 
+**valueExtra** | [ExtraCurrency] |  | [optional] 
 **fwdFee** | **Int64** |  | 
 **ihrFee** | **Int64** |  | 
 **destination** | [**AccountAddress**](AccountAddress.md) |  | [optional] 

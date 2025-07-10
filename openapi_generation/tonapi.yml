@@ -94,9 +94,10 @@ paths:
         - Openapi
       responses:
         '200':
+          description: OpenAPI JSON specification
           content:
             application/json:
-              schema: { } # Free-form JSON value
+              schema: { }
         'default':
           $ref: '#/components/responses/Error'
   /v2/openapi.yml:
@@ -107,6 +108,7 @@ paths:
         - Openapi
       responses:
         '200':
+          description: OpenAPI YAML specification
           content:
             application/x-yaml:
               schema:
@@ -1805,7 +1807,7 @@ paths:
   
   /v2/rates:
     get:
-      description: Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
+      description: Get the token price in the chosen currency for display only. Don't use this for financial transactions.
       operationId: getRates
       tags:
         - Rates
@@ -1904,9 +1906,7 @@ paths:
                   - points
                 properties:
                   points:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ChartPoints'
+                    $ref: '#/components/schemas/ChartPoints'
         'default':
           $ref: '#/components/responses/Error'
   /v2/rates/markets:
@@ -6422,6 +6422,11 @@ components:
           type: boolean
           example: false
           description: Event is not finished yet. Transactions still happening
+        progress:
+          type: number
+          format: double
+          example: 0.5
+          description: Progress of the event (0.0 - 1.0)
         extra:
           description: TODO
           type: integer
@@ -7319,13 +7324,21 @@ components:
     ChartPoints:
       type: array
       items:
-        - type: integer
-          format: int64
-          description: Unix timestamp of the data point
-        - type: number
-          description: Decimal price of the token in the requested currency
-      additionalItems: false
-      example: [ 1668436763, 97.21323234 ]
+        type: object
+        properties:
+          timestamp:
+            type: integer
+            format: int64
+            description: Unix timestamp of the data point
+          price:
+            type: number
+            description: Decimal price of the token in the requested currency
+        required:
+          - timestamp
+          - price
+      example:
+        - timestamp: 1668436763
+          price: 97.21323234
     AccountInfoByStateInit:
       type: object
       required:

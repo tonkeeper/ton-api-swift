@@ -22,10 +22,12 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
     public var lt: Int64
     /** Event is not finished yet. Transactions still happening */
     public var inProgress: Bool
+    /** Progress of the event (0.0 - 1.0) */
+    public var progress: Double?
     /** TODO */
     public var extra: Int64
 
-    public init(eventId: String, account: AccountAddress, timestamp: Int64, actions: [Action], isScam: Bool, lt: Int64, inProgress: Bool, extra: Int64) {
+    public init(eventId: String, account: AccountAddress, timestamp: Int64, actions: [Action], isScam: Bool, lt: Int64, inProgress: Bool, progress: Double? = nil, extra: Int64) {
         self.eventId = eventId
         self.account = account
         self.timestamp = timestamp
@@ -33,6 +35,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         self.isScam = isScam
         self.lt = lt
         self.inProgress = inProgress
+        self.progress = progress
         self.extra = extra
     }
 
@@ -44,6 +47,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         case isScam = "is_scam"
         case lt
         case inProgress = "in_progress"
+        case progress
         case extra
     }
 
@@ -58,6 +62,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         try container.encode(isScam, forKey: .isScam)
         try container.encode(lt, forKey: .lt)
         try container.encode(inProgress, forKey: .inProgress)
+        try container.encodeIfPresent(progress, forKey: .progress)
         try container.encode(extra, forKey: .extra)
     }
 }

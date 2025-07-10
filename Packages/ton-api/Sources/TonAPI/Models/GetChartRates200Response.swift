@@ -12,9 +12,9 @@ import AnyCodable
 
 public struct GetChartRates200Response: Codable, JSONEncodable, Hashable {
 
-    public var points: [String: AnyCodable]
+    public var points: [ChartPointsInner]
 
-    public init(points: [String: AnyCodable]) {
+    public init(points: [ChartPointsInner]) {
         self.points = points
     }
 

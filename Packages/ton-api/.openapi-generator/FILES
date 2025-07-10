@@ -97,6 +97,7 @@ Sources/TonAPI/Models/BlockchainConfig9.swift
 Sources/TonAPI/Models/BlockchainRawAccount.swift
 Sources/TonAPI/Models/BlockchainRawAccountLibrariesInner.swift
 Sources/TonAPI/Models/BouncePhaseType.swift
+Sources/TonAPI/Models/ChartPointsInner.swift
 Sources/TonAPI/Models/ComputePhase.swift
 Sources/TonAPI/Models/ComputeSkipReason.swift
 Sources/TonAPI/Models/ConfigProposalSetup.swift
@@ -342,6 +343,7 @@ docs/BlockchainConfig9.md
 docs/BlockchainRawAccount.md
 docs/BlockchainRawAccountLibrariesInner.md
 docs/BouncePhaseType.md
+docs/ChartPointsInner.md
 docs/ComputePhase.md
 docs/ComputeSkipReason.md
 docs/ConfigProposalSetup.md

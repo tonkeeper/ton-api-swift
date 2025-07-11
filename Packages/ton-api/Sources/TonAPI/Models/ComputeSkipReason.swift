@@ -11,8 +11,8 @@ import AnyCodable
 #endif
 
 public enum ComputeSkipReason: String, Codable, CaseIterable, CaseIterableDefaultsLast {
-    case noState = "cskip_no_state"
-    case badState = "cskip_bad_state"
-    case noGas = "cskip_no_gas"
+    case cskipNoState = "cskip_no_state"
+    case cskipBadState = "cskip_bad_state"
+    case cskipNoGas = "cskip_no_gas"
     case unknownDefaultOpenApi = "unknown_default_open_api"
 }

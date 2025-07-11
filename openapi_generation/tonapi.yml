@@ -86,7 +86,7 @@ tags:
       url: https://docs.tonconsole.com/tonapi/rest-api/utilities
 
 paths:
-  /v2/openapi.json:
+  '/v2/openapi.json':
     get:
       description: Get the openapi.json file
       operationId: getOpenapiJson
@@ -96,7 +96,8 @@ paths:
         '200':
           content:
             application/json:
-              schema: { } # Free-form JSON value
+              schema: { }
+          description: OpenAPI JSON
         'default':
           $ref: '#/components/responses/Error'
   /v2/openapi.yml:
@@ -112,6 +113,7 @@ paths:
               schema:
                 type: string
                 format: binary
+          description: OpenAPI YML
         'default':
           $ref: '#/components/responses/Error'
   /v2/status:
@@ -5789,6 +5791,7 @@ components:
             - UnSubscribe
             - AuctionBid
             - NftPurchase
+            - PurchaseAction
             - DepositStake
             - WithdrawStake
             - WithdrawStakeRequest
@@ -5828,6 +5831,8 @@ components:
           $ref: '#/components/schemas/AuctionBidAction'
         NftPurchase:
           $ref: '#/components/schemas/NftPurchaseAction'
+        PurchaseAction:
+          $ref: '#/components/schemas/PurchaseAction'
         DepositStake:
           $ref: '#/components/schemas/DepositStakeAction'
         WithdrawStake:
@@ -6356,6 +6361,26 @@ components:
           $ref: '#/components/schemas/AccountAddress'
         buyer:
           $ref: '#/components/schemas/AccountAddress'
+    PurchaseAction:
+      type: object
+      required:
+        - source
+        - destination
+        - invoice_id
+        - amount
+        - metadata
+      properties:
+        source:
+          $ref: '#/components/schemas/AccountAddress'
+        destination:
+          $ref: '#/components/schemas/AccountAddress'
+        invoice_id:
+          type: string
+          example: 03cfc582-b1c3-410a-a9a7-1f3afe326b3b
+        amount:
+          $ref: '#/components/schemas/Price'
+        #metadata:
+          #$ref: '#/components/schemas/Metadata'
     ActionSimplePreview:
       type: object
       description: shortly describes what this action is about.
@@ -7318,13 +7343,13 @@ components:
                 $ref: '#/components/schemas/NftItem'
     ChartPoints:
       type: array
-      items:
+      prefixItems:
         - type: integer
           format: int64
           description: Unix timestamp of the data point
         - type: number
           description: Decimal price of the token in the requested currency
-      additionalItems: false
+      items: false
       example: [ 1668436763, 97.21323234 ]
     AccountInfoByStateInit:
       type: object

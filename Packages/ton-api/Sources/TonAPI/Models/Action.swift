@@ -24,6 +24,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case unSubscribe = "UnSubscribe"
         case auctionBid = "AuctionBid"
         case nftPurchase = "NftPurchase"
+        case purchaseAction = "PurchaseAction"
         case depositStake = "DepositStake"
         case withdrawStake = "WithdrawStake"
         case withdrawStakeRequest = "WithdrawStakeRequest"
@@ -55,6 +56,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var unSubscribe: UnSubscriptionAction?
     public var auctionBid: AuctionBidAction?
     public var nftPurchase: NftPurchaseAction?
+    public var purchaseAction: PurchaseAction?
     public var depositStake: DepositStakeAction?
     public var withdrawStake: WithdrawStakeAction?
     public var withdrawStakeRequest: WithdrawStakeRequestAction?
@@ -68,7 +70,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var simplePreview: ActionSimplePreview
     public var baseTransactions: [String]
 
-    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, inscriptionTransfer: InscriptionTransferAction? = nil, inscriptionMint: InscriptionMintAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
+    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, purchaseAction: PurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, inscriptionTransfer: InscriptionTransferAction? = nil, inscriptionMint: InscriptionMintAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
         self.type = type
         self.status = status
         self.tonTransfer = tonTransfer
@@ -82,6 +84,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         self.unSubscribe = unSubscribe
         self.auctionBid = auctionBid
         self.nftPurchase = nftPurchase
+        self.purchaseAction = purchaseAction
         self.depositStake = depositStake
         self.withdrawStake = withdrawStake
         self.withdrawStakeRequest = withdrawStakeRequest
@@ -110,6 +113,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case unSubscribe = "UnSubscribe"
         case auctionBid = "AuctionBid"
         case nftPurchase = "NftPurchase"
+        case purchaseAction = "PurchaseAction"
         case depositStake = "DepositStake"
         case withdrawStake = "WithdrawStake"
         case withdrawStakeRequest = "WithdrawStakeRequest"
@@ -141,6 +145,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(unSubscribe, forKey: .unSubscribe)
         try container.encodeIfPresent(auctionBid, forKey: .auctionBid)
         try container.encodeIfPresent(nftPurchase, forKey: .nftPurchase)
+        try container.encodeIfPresent(purchaseAction, forKey: .purchaseAction)
         try container.encodeIfPresent(depositStake, forKey: .depositStake)
         try container.encodeIfPresent(withdrawStake, forKey: .withdrawStake)
         try container.encodeIfPresent(withdrawStakeRequest, forKey: .withdrawStakeRequest)

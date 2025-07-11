@@ -221,6 +221,7 @@ Sources/TonAPI/Models/PoolImplementation.swift
 Sources/TonAPI/Models/PoolImplementationType.swift
 Sources/TonAPI/Models/PoolInfo.swift
 Sources/TonAPI/Models/Price.swift
+Sources/TonAPI/Models/PurchaseAction.swift
 Sources/TonAPI/Models/RawBlockchainConfig.swift
 Sources/TonAPI/Models/ReducedBlock.swift
 Sources/TonAPI/Models/ReducedBlocks.swift
@@ -477,6 +478,7 @@ docs/PoolImplementation.md
 docs/PoolImplementationType.md
 docs/PoolInfo.md
 docs/Price.md
+docs/PurchaseAction.md
 docs/RatesAPI.md
 docs/RawBlockchainConfig.md
 docs/ReducedBlock.md

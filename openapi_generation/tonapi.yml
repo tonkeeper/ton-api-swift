@@ -5828,6 +5828,8 @@ components:
           $ref: '#/components/schemas/AuctionBidAction'
         NftPurchase:
           $ref: '#/components/schemas/NftPurchaseAction'
+        PurchaseAction:
+          $ref: '#/components/schemas/PurchaseAction'
         DepositStake:
           $ref: '#/components/schemas/DepositStakeAction'
         WithdrawStake:

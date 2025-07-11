@@ -204,6 +204,7 @@ Class | Method | HTTP request | Description
  - [BlockchainRawAccount](docs/BlockchainRawAccount.md)
  - [BlockchainRawAccountLibrariesInner](docs/BlockchainRawAccountLibrariesInner.md)
  - [BouncePhaseType](docs/BouncePhaseType.md)
+ - [ChartPoint](docs/ChartPoint.md)
  - [ComputePhase](docs/ComputePhase.md)
  - [ComputeSkipReason](docs/ComputeSkipReason.md)
  - [ConfigProposalSetup](docs/ConfigProposalSetup.md)

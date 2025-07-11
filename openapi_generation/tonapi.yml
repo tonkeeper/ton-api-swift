@@ -7346,16 +7346,26 @@ components:
                 example: "blah_blah.ton"
               dns_item:
                 $ref: '#/components/schemas/NftItem'
-    ChartPoints:
-      type: array
-      prefixItems:
-        - type: integer
+    ChartPoint:
+      type: object
+      required:
+        - timestamp
+        - value
+      properties:
+        timestamp:
+          type: integer
           format: int64
           description: Unix timestamp of the data point
-        - type: number
+        value:
+          type: number
           description: Decimal price of the token in the requested currency
-      items: false
-      example: [ 1668436763, 97.21323234 ]
+    ChartPoints:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChartPoint'
+      example:
+        - timestamp: 1668436763
+          value: 97.21323234
     AccountInfoByStateInit:
       type: object
       required:

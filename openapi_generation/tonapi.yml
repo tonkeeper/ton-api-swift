@@ -6356,6 +6356,31 @@ components:
           $ref: '#/components/schemas/AccountAddress'
         buyer:
           $ref: '#/components/schemas/AccountAddress'
+    PurchaseAction:
+      type: object
+      required:
+        - source
+        - destination
+        - invoice_id
+        - amount
+        - metadata
+      properties:
+        source:
+          $ref: '#/components/schemas/AccountAddress'
+        destination:
+          $ref: '#/components/schemas/AccountAddress'
+        invoice_id:
+          type: string
+          example: 03cfc582-b1c3-410a-a9a7-1f3afe326b3b
+        amount:
+          $ref: '#/components/schemas/Price'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    Metadata:
+      type: object
+      properties:
+        encrypted_binary:
+          type: string
     ActionSimplePreview:
       type: object
       description: shortly describes what this action is about.

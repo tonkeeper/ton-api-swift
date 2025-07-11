@@ -201,6 +201,7 @@ Sources/TonAPI/Models/JettonsBalances.swift
 Sources/TonAPI/Models/MarketTonRates.swift
 Sources/TonAPI/Models/Message.swift
 Sources/TonAPI/Models/MessageConsequences.swift
+Sources/TonAPI/Models/Metadata.swift
 Sources/TonAPI/Models/Method.swift
 Sources/TonAPI/Models/MethodExecutionResult.swift
 Sources/TonAPI/Models/MisbehaviourPunishmentConfig.swift
@@ -222,6 +223,7 @@ Sources/TonAPI/Models/PoolImplementation.swift
 Sources/TonAPI/Models/PoolImplementationType.swift
 Sources/TonAPI/Models/PoolInfo.swift
 Sources/TonAPI/Models/Price.swift
+Sources/TonAPI/Models/PurchaseAction.swift
 Sources/TonAPI/Models/RawBlockchainConfig.swift
 Sources/TonAPI/Models/ReducedBlock.swift
 Sources/TonAPI/Models/ReducedBlocks.swift
@@ -455,6 +457,7 @@ docs/LiteServerAPI.md
 docs/MarketTonRates.md
 docs/Message.md
 docs/MessageConsequences.md
+docs/Metadata.md
 docs/Method.md
 docs/MethodExecutionResult.md
 docs/MisbehaviourPunishmentConfig.md
@@ -479,6 +482,7 @@ docs/PoolImplementation.md
 docs/PoolImplementationType.md
 docs/PoolInfo.md
 docs/Price.md
+docs/PurchaseAction.md
 docs/RatesAPI.md
 docs/RawBlockchainConfig.md
 docs/ReducedBlock.md

@@ -4253,6 +4253,11 @@ components:
           type: integer
           format: int64
           example: 1000000
+    Metadata:
+      type: object
+      properties:
+        encrypted_binary:
+          type: string
     MisbehaviourPunishmentConfig:
       type: object
       required:
@@ -6379,8 +6384,8 @@ components:
           example: 03cfc582-b1c3-410a-a9a7-1f3afe326b3b
         amount:
           $ref: '#/components/schemas/Price'
-        #metadata:
-          #$ref: '#/components/schemas/Metadata'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
     ActionSimplePreview:
       type: object
       description: shortly describes what this action is about.

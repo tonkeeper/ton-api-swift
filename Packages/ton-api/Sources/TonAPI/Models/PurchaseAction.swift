@@ -16,12 +16,14 @@ public struct PurchaseAction: Codable, JSONEncodable, Hashable {
     public var destination: AccountAddress
     public var invoiceId: String
     public var amount: Price
+    public var metadata: Metadata
 
-    public init(source: AccountAddress, destination: AccountAddress, invoiceId: String, amount: Price) {
+    public init(source: AccountAddress, destination: AccountAddress, invoiceId: String, amount: Price, metadata: Metadata) {
         self.source = source
         self.destination = destination
         self.invoiceId = invoiceId
         self.amount = amount
+        self.metadata = metadata
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -29,6 +31,7 @@ public struct PurchaseAction: Codable, JSONEncodable, Hashable {
         case destination
         case invoiceId = "invoice_id"
         case amount
+        case metadata
     }
 
     // Encodable protocol methods
@@ -39,6 +42,7 @@ public struct PurchaseAction: Codable, JSONEncodable, Hashable {
         try container.encode(destination, forKey: .destination)
         try container.encode(invoiceId, forKey: .invoiceId)
         try container.encode(amount, forKey: .amount)
+        try container.encode(metadata, forKey: .metadata)
     }
 }
 

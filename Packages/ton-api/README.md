@@ -307,6 +307,7 @@ Class | Method | HTTP request | Description
  - [MarketTonRates](docs/MarketTonRates.md)
  - [Message](docs/Message.md)
  - [MessageConsequences](docs/MessageConsequences.md)
+ - [Metadata](docs/Metadata.md)
  - [Method](docs/Method.md)
  - [MethodExecutionResult](docs/MethodExecutionResult.md)
  - [MisbehaviourPunishmentConfig](docs/MisbehaviourPunishmentConfig.md)

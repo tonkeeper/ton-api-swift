@@ -200,6 +200,7 @@ Sources/TonAPI/Models/JettonsBalances.swift
 Sources/TonAPI/Models/MarketTonRates.swift
 Sources/TonAPI/Models/Message.swift
 Sources/TonAPI/Models/MessageConsequences.swift
+Sources/TonAPI/Models/Metadata.swift
 Sources/TonAPI/Models/Method.swift
 Sources/TonAPI/Models/MethodExecutionResult.swift
 Sources/TonAPI/Models/MisbehaviourPunishmentConfig.swift
@@ -454,6 +455,7 @@ docs/LiteServerAPI.md
 docs/MarketTonRates.md
 docs/Message.md
 docs/MessageConsequences.md
+docs/Metadata.md
 docs/Method.md
 docs/MethodExecutionResult.md
 docs/MisbehaviourPunishmentConfig.md

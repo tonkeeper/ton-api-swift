@@ -5789,6 +5789,7 @@ components:
             - UnSubscribe
             - AuctionBid
             - NftPurchase
+            - Purchase
             - DepositStake
             - WithdrawStake
             - WithdrawStakeRequest
@@ -5828,7 +5829,7 @@ components:
           $ref: '#/components/schemas/AuctionBidAction'
         NftPurchase:
           $ref: '#/components/schemas/NftPurchaseAction'
-        PurchaseAction:
+        Purchase:
           $ref: '#/components/schemas/PurchaseAction'
         DepositStake:
           $ref: '#/components/schemas/DepositStakeAction'

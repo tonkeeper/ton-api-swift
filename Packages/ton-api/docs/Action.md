@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **unSubscribe** | [**UnSubscriptionAction**](UnSubscriptionAction.md) |  | [optional] 
 **auctionBid** | [**AuctionBidAction**](AuctionBidAction.md) |  | [optional] 
 **nftPurchase** | [**NftPurchaseAction**](NftPurchaseAction.md) |  | [optional] 
-**purchaseAction** | [**PurchaseAction**](PurchaseAction.md) |  | [optional] 
+**purchase** | [**PurchaseAction**](PurchaseAction.md) |  | [optional] 
 **depositStake** | [**DepositStakeAction**](DepositStakeAction.md) |  | [optional] 
 **withdrawStake** | [**WithdrawStakeAction**](WithdrawStakeAction.md) |  | [optional] 
 **withdrawStakeRequest** | [**WithdrawStakeRequestAction**](WithdrawStakeRequestAction.md) |  | [optional] 

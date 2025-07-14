@@ -12,21 +12,27 @@ import AnyCodable
 
 public struct Metadata: Codable, JSONEncodable, Hashable {
 
-    public var encryptedBinary: String?
+    /** hex encoded bytes */
+    public var encryptedBinary: String
+    /** hex encoded bytes */
+    public var decryptionKey: String?
 
-    public init(encryptedBinary: String? = nil) {
+    public init(encryptedBinary: String, decryptionKey: String? = nil) {
         self.encryptedBinary = encryptedBinary
+        self.decryptionKey = decryptionKey
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case encryptedBinary = "encrypted_binary"
+        case decryptionKey = "decryption_key"
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(encryptedBinary, forKey: .encryptedBinary)
+        try container.encode(encryptedBinary, forKey: .encryptedBinary)
+        try container.encodeIfPresent(decryptionKey, forKey: .decryptionKey)
     }
 }
 

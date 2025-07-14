@@ -12,17 +12,47 @@ import AnyCodable
 
 public struct Price: Codable, JSONEncodable, Hashable {
 
+    public enum CurrencyType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+        case native = "native"
+        case extraCurrency = "extra_currency"
+        case jetton = "jetton"
+        case fiat = "fiat"
+        case unknownDefaultOpenApi = "unknown_default_open_api"
+    }
+    public enum Verification: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+        case whitelist = "whitelist"
+        case graylist = "graylist"
+        case blacklist = "blacklist"
+        case _none = "none"
+        case unknownDefaultOpenApi = "unknown_default_open_api"
+    }
     public var value: String
     public var tokenName: String
+    public var currencyType: CurrencyType
+    public var decimals: Int
+    public var verification: Verification
+    public var image: String
+    /** Address of jetton master contract */
+    public var jetton: String?
 
-    public init(value: String, tokenName: String) {
+    public init(value: String, tokenName: String, currencyType: CurrencyType, decimals: Int, verification: Verification, image: String, jetton: String? = nil) {
         self.value = value
         self.tokenName = tokenName
+        self.currencyType = currencyType
+        self.decimals = decimals
+        self.verification = verification
+        self.image = image
+        self.jetton = jetton
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case value
         case tokenName = "token_name"
+        case currencyType = "currency_type"
+        case decimals
+        case verification
+        case image
+        case jetton
     }
 
     // Encodable protocol methods
@@ -31,6 +61,11 @@ public struct Price: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)
         try container.encode(tokenName, forKey: .tokenName)
+        try container.encode(currencyType, forKey: .currencyType)
+        try container.encode(decimals, forKey: .decimals)
+        try container.encode(verification, forKey: .verification)
+        try container.encode(image, forKey: .image)
+        try container.encodeIfPresent(jetton, forKey: .jetton)
     }
 }
 

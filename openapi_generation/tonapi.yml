@@ -5499,6 +5499,24 @@ components:
         token_name:
           type: string
           example: TON
+        currency_type:
+          type: string
+          enum: [native, extra_currency, jetton, fiat]
+          example: jetton
+        decimals:
+          type: integer
+          example: 9
+        verification:
+          type: string
+          enum: [whitelist, graylist, blacklist, none]
+          example: whitelist
+        image:
+          type: string
+          example: "https://cache.tonapi.io/images/jetton.jpg"
+        jetton:
+          type: string
+          description: Address of jetton master contract
+          example: "0:0BB5A9F69043EEBDDA5AD2E946EB953242BDF603FE795D90698CEEC6BFC60A0"
     ImagePreview:
       type: object
       required:
@@ -6381,9 +6399,16 @@ components:
           $ref: '#/components/schemas/Metadata'
     Metadata:
       type: object
+      required:
+        - encrypted_binary
       properties:
         encrypted_binary:
           type: string
+          description: hex encoded bytes
+        decryption_key:
+          type: string
+          description: hex encoded bytes
+          example: "deadbeef"
     ActionSimplePreview:
       type: object
       description: shortly describes what this action is about.

@@ -5491,6 +5491,10 @@ components:
       required:
         - value
         - token_name
+        - currency_type
+        - decimals
+        - verification
+        - image
       properties:
         value:
           type: string

@@ -22,8 +22,10 @@ public struct MultisigOrder: Codable, JSONEncodable, Hashable {
     public var risk: Risk
     public var creationDate: Int64
     public var signedBy: [String]
+    public var multisigAddress: String
+    public var changingParameters: MultisigOrderChangingParameters?
 
-    public init(address: String, orderSeqno: Int64, threshold: Int, sentForExecution: Bool, signers: [String], approvalsNum: Int, expirationDate: Int64, risk: Risk, creationDate: Int64, signedBy: [String]) {
+    public init(address: String, orderSeqno: Int64, threshold: Int, sentForExecution: Bool, signers: [String], approvalsNum: Int, expirationDate: Int64, risk: Risk, creationDate: Int64, signedBy: [String], multisigAddress: String, changingParameters: MultisigOrderChangingParameters? = nil) {
         self.address = address
         self.orderSeqno = orderSeqno
         self.threshold = threshold
@@ -34,6 +36,8 @@ public struct MultisigOrder: Codable, JSONEncodable, Hashable {
         self.risk = risk
         self.creationDate = creationDate
         self.signedBy = signedBy
+        self.multisigAddress = multisigAddress
+        self.changingParameters = changingParameters
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -47,6 +51,8 @@ public struct MultisigOrder: Codable, JSONEncodable, Hashable {
         case risk
         case creationDate = "creation_date"
         case signedBy = "signed_by"
+        case multisigAddress = "multisig_address"
+        case changingParameters = "changing_parameters"
     }
 
     // Encodable protocol methods
@@ -63,6 +69,8 @@ public struct MultisigOrder: Codable, JSONEncodable, Hashable {
         try container.encode(risk, forKey: .risk)
         try container.encode(creationDate, forKey: .creationDate)
         try container.encode(signedBy, forKey: .signedBy)
+        try container.encode(multisigAddress, forKey: .multisigAddress)
+        try container.encodeIfPresent(changingParameters, forKey: .changingParameters)
     }
 }
 

@@ -14,7 +14,7 @@ public struct BlockchainRawAccount: Codable, JSONEncodable, Hashable {
 
     public var address: String
     public var balance: Int64
-    public var extraBalance: [String: String]?
+    public var extraBalance: [ExtraCurrency]?
     public var code: String?
     public var data: String?
     public var lastTransactionLt: Int64
@@ -24,7 +24,7 @@ public struct BlockchainRawAccount: Codable, JSONEncodable, Hashable {
     public var storage: AccountStorageInfo
     public var libraries: [BlockchainRawAccountLibrariesInner]?
 
-    public init(address: String, balance: Int64, extraBalance: [String: String]? = nil, code: String? = nil, data: String? = nil, lastTransactionLt: Int64, lastTransactionHash: String? = nil, frozenHash: String? = nil, status: AccountStatus, storage: AccountStorageInfo, libraries: [BlockchainRawAccountLibrariesInner]? = nil) {
+    public init(address: String, balance: Int64, extraBalance: [ExtraCurrency]? = nil, code: String? = nil, data: String? = nil, lastTransactionLt: Int64, lastTransactionHash: String? = nil, frozenHash: String? = nil, status: AccountStatus, storage: AccountStorageInfo, libraries: [BlockchainRawAccountLibrariesInner]? = nil) {
         self.address = address
         self.balance = balance
         self.extraBalance = extraBalance

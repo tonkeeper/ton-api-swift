@@ -26,7 +26,7 @@ open class EventsAPI {
 
     /**
      - POST /v2/events/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve general blockchain events
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)

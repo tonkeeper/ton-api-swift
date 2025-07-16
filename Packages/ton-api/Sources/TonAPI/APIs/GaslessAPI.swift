@@ -48,11 +48,12 @@ open class GaslessAPI {
 
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
+     - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: SignRawParams
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func gaslessEstimate(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest) async throws -> SignRawParams {
-        return try await gaslessEstimateWithRequestBuilder(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest).execute().body
+    open class func gaslessEstimate(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, acceptLanguage: String? = nil) async throws -> SignRawParams {
+        return try await gaslessEstimateWithRequestBuilder(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest, acceptLanguage: acceptLanguage).execute().body
     }
 
     /**
@@ -60,9 +61,10 @@ open class GaslessAPI {
      - Estimates the cost of the given messages and returns a payload to sign
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
+     - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<SignRawParams> 
      */
-    open class func gaslessEstimateWithRequestBuilder(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest) -> RequestBuilder<SignRawParams> {
+    open class func gaslessEstimateWithRequestBuilder(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, acceptLanguage: String? = nil) -> RequestBuilder<SignRawParams> {
         var localVariablePath = "/v2/gasless/estimate/{master_id}"
         let masterIdPreEscape = "\(APIHelper.mapValueToPathItem(masterId))"
         let masterIdPostEscape = masterIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -74,6 +76,7 @@ open class GaslessAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -86,10 +89,10 @@ open class GaslessAPI {
     /**
 
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
-     - returns: Void
+     - returns: GaslessTx
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func gaslessSend(gaslessSendRequest: GaslessSendRequest) async throws {
+    open class func gaslessSend(gaslessSendRequest: GaslessSendRequest) async throws -> GaslessTx {
         return try await gaslessSendWithRequestBuilder(gaslessSendRequest: gaslessSendRequest).execute().body
     }
 
@@ -97,9 +100,9 @@ open class GaslessAPI {
      - POST /v2/gasless/send
      - Submits the signed gasless transaction message to the network
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<GaslessTx> 
      */
-    open class func gaslessSendWithRequestBuilder(gaslessSendRequest: GaslessSendRequest) -> RequestBuilder<Void> {
+    open class func gaslessSendWithRequestBuilder(gaslessSendRequest: GaslessSendRequest) -> RequestBuilder<GaslessTx> {
         let localVariablePath = "/v2/gasless/send"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessSendRequest)
@@ -112,7 +115,7 @@ open class GaslessAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = TonAPIAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GaslessTx>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }

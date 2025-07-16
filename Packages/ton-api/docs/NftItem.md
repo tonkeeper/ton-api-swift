@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **sale** | [**Sale**](Sale.md) |  | [optional] 
 **previews** | [ImagePreview] |  | [optional] 
 **dns** | **String** |  | [optional] 
-**approvedBy** | **[String]** |  | 
+**approvedBy** | **[String]** | Please use trust field | 
 **includeCnft** | **Bool** |  | [optional] 
 **trust** | [**TrustType**](TrustType.md) |  | 
 

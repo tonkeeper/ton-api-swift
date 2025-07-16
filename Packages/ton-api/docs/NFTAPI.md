@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 # **getAccountNftHistory**
 ```swift
-    open class func getAccountNftHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
+    open class func getAccountNftHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, completion: @escaping (_ data: NftOperations?, _ error: Error?) -> Void)
 ```
 
 
@@ -32,10 +32,8 @@ let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
-let startDate = 987 // Int64 |  (optional)
-let endDate = 987 // Int64 |  (optional)
 
-NFTAPI.getAccountNftHistory(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
+NFTAPI.getAccountNftHistory(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -55,12 +53,10 @@ Name | Type | Description  | Notes
  **limit** | **Int** |  | 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
- **startDate** | **Int64** |  | [optional] 
- **endDate** | **Int64** |  | [optional] 
 
 ### Return type
 
-[**AccountEvents**](AccountEvents.md)
+[**NftOperations**](NftOperations.md)
 
 ### Authorization
 
@@ -282,7 +278,7 @@ No authorization required
 
 
 
-Get the transfer nfts history for account
+Please use `getAccountNftHistory`` instead
 
 ### Example
 ```swift

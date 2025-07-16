@@ -12,17 +12,24 @@ import AnyCodable
 
 public struct GaslessEstimateRequest: Codable, JSONEncodable, Hashable {
 
+    /** TONAPI verifies that the account has enough jettons to pay the commission and make a transfer. */
+    public var throwErrorIfNotEnoughJettons: Bool? = false
+    public var returnEmulation: Bool? = false
     public var walletAddress: String
     public var walletPublicKey: String
     public var messages: [GaslessEstimateRequestMessagesInner]
 
-    public init(walletAddress: String, walletPublicKey: String, messages: [GaslessEstimateRequestMessagesInner]) {
+    public init(throwErrorIfNotEnoughJettons: Bool? = false, returnEmulation: Bool? = false, walletAddress: String, walletPublicKey: String, messages: [GaslessEstimateRequestMessagesInner]) {
+        self.throwErrorIfNotEnoughJettons = throwErrorIfNotEnoughJettons
+        self.returnEmulation = returnEmulation
         self.walletAddress = walletAddress
         self.walletPublicKey = walletPublicKey
         self.messages = messages
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case throwErrorIfNotEnoughJettons = "throw_error_if_not_enough_jettons"
+        case returnEmulation = "return_emulation"
         case walletAddress = "wallet_address"
         case walletPublicKey = "wallet_public_key"
         case messages
@@ -32,6 +39,8 @@ public struct GaslessEstimateRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(throwErrorIfNotEnoughJettons, forKey: .throwErrorIfNotEnoughJettons)
+        try container.encodeIfPresent(returnEmulation, forKey: .returnEmulation)
         try container.encode(walletAddress, forKey: .walletAddress)
         try container.encode(walletPublicKey, forKey: .walletPublicKey)
         try container.encode(messages, forKey: .messages)

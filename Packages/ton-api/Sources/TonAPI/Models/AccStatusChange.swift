@@ -11,8 +11,8 @@ import AnyCodable
 #endif
 
 public enum AccStatusChange: String, Codable, CaseIterable, CaseIterableDefaultsLast {
-    case unchanged = "acst_unchanged"
-    case frozen = "acst_frozen"
-    case deleted = "acst_deleted"
+    case acstUnchanged = "acst_unchanged"
+    case acstFrozen = "acst_frozen"
+    case acstDeleted = "acst_deleted"
     case unknownDefaultOpenApi = "unknown_default_open_api"
 }

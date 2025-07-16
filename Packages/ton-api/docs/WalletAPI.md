@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**emulateMessageToWallet**](WalletAPI.md#emulatemessagetowallet) | **POST** /v2/wallet/emulate | 
 [**getAccountSeqno**](WalletAPI.md#getaccountseqno) | **GET** /v2/wallet/{account_id}/seqno | 
+[**getWalletInfo**](WalletAPI.md#getwalletinfo) | **GET** /v2/wallet/{account_id} | 
 [**getWalletsByPublicKey**](WalletAPI.md#getwalletsbypublickey) | **GET** /v2/pubkeys/{public_key}/wallets | 
 [**tonConnectProof**](WalletAPI.md#tonconnectproof) | **POST** /v2/wallet/auth/proof | 
 
@@ -17,7 +18,7 @@ Method | HTTP request | Description
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve the resulting wallet state
 
 ### Example
 ```swift
@@ -110,9 +111,58 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getWalletInfo**
+```swift
+    open class func getWalletInfo(accountId: String, completion: @escaping (_ data: Wallet?, _ error: Error?) -> Void)
+```
+
+
+
+Get human-friendly information about a wallet without low-level details.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let accountId = "accountId_example" // String | account ID
+
+WalletAPI.getWalletInfo(accountId: accountId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountId** | **String** | account ID | 
+
+### Return type
+
+[**Wallet**](Wallet.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **getWalletsByPublicKey**
 ```swift
-    open class func getWalletsByPublicKey(publicKey: String, completion: @escaping (_ data: Accounts?, _ error: Error?) -> Void)
+    open class func getWalletsByPublicKey(publicKey: String, completion: @escaping (_ data: Wallets?, _ error: Error?) -> Void)
 ```
 
 
@@ -146,7 +196,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Accounts**](Accounts.md)
+[**Wallets**](Wallets.md)
 
 ### Authorization
 

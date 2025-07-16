@@ -12,25 +12,45 @@ import AnyCodable
 
 public struct Price: Codable, JSONEncodable, Hashable {
 
+    public var currencyType: CurrencyType
     public var value: String
+    public var decimals: Int
     public var tokenName: String
+    public var verification: TrustType
+    public var image: String
+    public var jetton: String?
 
-    public init(value: String, tokenName: String) {
+    public init(currencyType: CurrencyType, value: String, decimals: Int, tokenName: String, verification: TrustType, image: String, jetton: String? = nil) {
+        self.currencyType = currencyType
         self.value = value
+        self.decimals = decimals
         self.tokenName = tokenName
+        self.verification = verification
+        self.image = image
+        self.jetton = jetton
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case currencyType = "currency_type"
         case value
+        case decimals
         case tokenName = "token_name"
+        case verification
+        case image
+        case jetton
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(currencyType, forKey: .currencyType)
         try container.encode(value, forKey: .value)
+        try container.encode(decimals, forKey: .decimals)
         try container.encode(tokenName, forKey: .tokenName)
+        try container.encode(verification, forKey: .verification)
+        try container.encode(image, forKey: .image)
+        try container.encodeIfPresent(jetton, forKey: .jetton)
     }
 }
 

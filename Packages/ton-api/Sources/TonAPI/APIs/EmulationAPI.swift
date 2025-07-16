@@ -61,7 +61,7 @@ open class EmulationAPI {
 
     /**
      - POST /v2/accounts/{account_id}/events/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve account-specific events
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
      - parameter acceptLanguage: (header)  (optional, default to "en")
@@ -107,7 +107,7 @@ open class EmulationAPI {
 
     /**
      - POST /v2/events/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve general blockchain events
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
@@ -148,7 +148,7 @@ open class EmulationAPI {
 
     /**
      - POST /v2/traces/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve with a detailed execution trace
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Trace> 
@@ -187,7 +187,7 @@ open class EmulationAPI {
 
     /**
      - POST /v2/wallet/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve the resulting wallet state
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<MessageConsequences> 

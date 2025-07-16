@@ -64,7 +64,7 @@ open class AccountsAPI {
 
     /**
      - POST /v2/accounts/{account_id}/events/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve account-specific events
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
      - parameter acceptLanguage: (header)  (optional, default to "en")
@@ -331,6 +331,64 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
+     - parameter id: (path) extra currency id 
+     - parameter limit: (query)  
+     - parameter acceptLanguage: (header)  (optional, default to "en")
+     - parameter beforeLt: (query) omit this parameter to get last events (optional)
+     - parameter startDate: (query)  (optional)
+     - parameter endDate: (query)  (optional)
+     - returns: AccountEvents
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getAccountExtraCurrencyHistoryByID(accountId: String, id: Int, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
+        return try await getAccountExtraCurrencyHistoryByIDWithRequestBuilder(accountId: accountId, id: id, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    }
+
+    /**
+     - GET /v2/accounts/{account_id}/extra-currency/{id}/history
+     - Get the transfer history of extra currencies for an account.
+     - parameter accountId: (path) account ID 
+     - parameter id: (path) extra currency id 
+     - parameter limit: (query)  
+     - parameter acceptLanguage: (header)  (optional, default to "en")
+     - parameter beforeLt: (query) omit this parameter to get last events (optional)
+     - parameter startDate: (query)  (optional)
+     - parameter endDate: (query)  (optional)
+     - returns: RequestBuilder<AccountEvents> 
+     */
+    open class func getAccountExtraCurrencyHistoryByIDWithRequestBuilder(accountId: String, id: Int, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+        var localVariablePath = "/v2/accounts/{account_id}/extra-currency/{id}/history"
+        let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
+        let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
+        let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
+        let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit.encodeToJSON(), isExplode: true),
+            "start_date": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
+            "end_date": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Accept-Language": acceptLanguage?.encodeToJSON(),
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AccountEvents>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
+     - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
@@ -389,6 +447,7 @@ open class AccountsAPI {
      - parameter endDate: (query)  (optional)
      - returns: AccountEvents
      */
+    @available(*, deprecated, message: "This operation is deprecated.")
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getAccountJettonHistoryByID(accountId: String, jettonId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
         return try await getAccountJettonHistoryByIDWithRequestBuilder(accountId: accountId, jettonId: jettonId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
@@ -396,7 +455,7 @@ open class AccountsAPI {
 
     /**
      - GET /v2/accounts/{account_id}/jettons/{jetton_id}/history
-     - Get the transfer jetton history for account and jetton
+     - Please use `getJettonAccountHistoryByID`` instead
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
@@ -406,6 +465,7 @@ open class AccountsAPI {
      - parameter endDate: (query)  (optional)
      - returns: RequestBuilder<AccountEvents> 
      */
+    @available(*, deprecated, message: "This operation is deprecated.")
     open class func getAccountJettonHistoryByIDWithRequestBuilder(accountId: String, jettonId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons/{jetton_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
@@ -485,15 +545,12 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
-     - parameter startDate: (query)  (optional)
-     - parameter endDate: (query)  (optional)
-     - returns: AccountEvents
+     - returns: JettonOperations
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonsHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getAccountJettonsHistoryWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountJettonsHistory(accountId: String, limit: Int, beforeLt: Int64? = nil) async throws -> JettonOperations {
+        return try await getAccountJettonsHistoryWithRequestBuilder(accountId: accountId, limit: limit, beforeLt: beforeLt).execute().body
     }
 
     /**
@@ -501,13 +558,10 @@ open class AccountsAPI {
      - Get the transfer jettons history for account
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
-     - parameter startDate: (query)  (optional)
-     - parameter endDate: (query)  (optional)
-     - returns: RequestBuilder<AccountEvents> 
+     - returns: RequestBuilder<JettonOperations> 
      */
-    open class func getAccountJettonsHistoryWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getAccountJettonsHistoryWithRequestBuilder(accountId: String, limit: Int, beforeLt: Int64? = nil) -> RequestBuilder<JettonOperations> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -519,17 +573,15 @@ open class AccountsAPI {
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
             "limit": (wrappedValue: limit.encodeToJSON(), isExplode: true),
-            "start_date": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-            "end_date": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "Accept-Language": acceptLanguage?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<AccountEvents>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<JettonOperations>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
@@ -778,6 +830,62 @@ open class AccountsAPI {
         let localVariableRequestBuilder: RequestBuilder<Accounts>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
+     - parameter accountId: (path) account ID 
+     - parameter jettonId: (path) jetton ID 
+     - parameter limit: (query)  
+     - parameter beforeLt: (query) omit this parameter to get last events (optional)
+     - parameter startDate: (query)  (optional)
+     - parameter endDate: (query)  (optional)
+     - returns: JettonOperations
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getJettonAccountHistoryByID(accountId: String, jettonId: String, limit: Int, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> JettonOperations {
+        return try await getJettonAccountHistoryByIDWithRequestBuilder(accountId: accountId, jettonId: jettonId, limit: limit, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    }
+
+    /**
+     - GET /v2/jettons/{jetton_id}/accounts/{account_id}/history
+     - Get the transfer jetton history for account and jetton
+     - parameter accountId: (path) account ID 
+     - parameter jettonId: (path) jetton ID 
+     - parameter limit: (query)  
+     - parameter beforeLt: (query) omit this parameter to get last events (optional)
+     - parameter startDate: (query)  (optional)
+     - parameter endDate: (query)  (optional)
+     - returns: RequestBuilder<JettonOperations> 
+     */
+    open class func getJettonAccountHistoryByIDWithRequestBuilder(accountId: String, jettonId: String, limit: Int, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<JettonOperations> {
+        var localVariablePath = "/v2/jettons/{jetton_id}/accounts/{account_id}/history"
+        let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
+        let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
+        let jettonIdPreEscape = "\(APIHelper.mapValueToPathItem(jettonId))"
+        let jettonIdPostEscape = jettonIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{jetton_id}", with: jettonIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit.encodeToJSON(), isExplode: true),
+            "start_date": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
+            "end_date": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<JettonOperations>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**

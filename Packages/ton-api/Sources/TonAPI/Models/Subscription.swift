@@ -12,61 +12,67 @@ import AnyCodable
 
 public struct Subscription: Codable, JSONEncodable, Hashable {
 
-    public var address: String
-    public var walletAddress: String
-    public var beneficiaryAddress: String
-    public var amount: Int64
+    public enum Status: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+        case notReady = "not_ready"
+        case active = "active"
+        case suspended = "suspended"
+        case cancelled = "cancelled"
+        case unknownDefaultOpenApi = "unknown_default_open_api"
+    }
+    /** type of subscription */
+    public var type: String
+    public var status: Status
+    /** payment period in seconds */
     public var period: Int64
-    public var startTime: Int64
-    public var timeout: Int64
-    public var lastPaymentTime: Int64
-    public var lastRequestTime: Int64
-    public var subscriptionId: Int64
-    public var failedAttempts: Int
+    /** common identifier */
+    public var subscriptionId: String
+    public var paymentPerPeriod: Price
+    public var wallet: AccountAddress
+    public var nextChargeAt: Int64
+    public var metadata: Metadata
+    public var address: String?
+    public var beneficiary: AccountAddress?
 
-    public init(address: String, walletAddress: String, beneficiaryAddress: String, amount: Int64, period: Int64, startTime: Int64, timeout: Int64, lastPaymentTime: Int64, lastRequestTime: Int64, subscriptionId: Int64, failedAttempts: Int) {
-        self.address = address
-        self.walletAddress = walletAddress
-        self.beneficiaryAddress = beneficiaryAddress
-        self.amount = amount
+    public init(type: String, status: Status, period: Int64, subscriptionId: String, paymentPerPeriod: Price, wallet: AccountAddress, nextChargeAt: Int64, metadata: Metadata, address: String? = nil, beneficiary: AccountAddress? = nil) {
+        self.type = type
+        self.status = status
         self.period = period
-        self.startTime = startTime
-        self.timeout = timeout
-        self.lastPaymentTime = lastPaymentTime
-        self.lastRequestTime = lastRequestTime
         self.subscriptionId = subscriptionId
-        self.failedAttempts = failedAttempts
+        self.paymentPerPeriod = paymentPerPeriod
+        self.wallet = wallet
+        self.nextChargeAt = nextChargeAt
+        self.metadata = metadata
+        self.address = address
+        self.beneficiary = beneficiary
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case address
-        case walletAddress = "wallet_address"
-        case beneficiaryAddress = "beneficiary_address"
-        case amount
+        case type
+        case status
         case period
-        case startTime = "start_time"
-        case timeout
-        case lastPaymentTime = "last_payment_time"
-        case lastRequestTime = "last_request_time"
         case subscriptionId = "subscription_id"
-        case failedAttempts = "failed_attempts"
+        case paymentPerPeriod = "payment_per_period"
+        case wallet
+        case nextChargeAt = "next_charge_at"
+        case metadata
+        case address
+        case beneficiary
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(address, forKey: .address)
-        try container.encode(walletAddress, forKey: .walletAddress)
-        try container.encode(beneficiaryAddress, forKey: .beneficiaryAddress)
-        try container.encode(amount, forKey: .amount)
+        try container.encode(type, forKey: .type)
+        try container.encode(status, forKey: .status)
         try container.encode(period, forKey: .period)
-        try container.encode(startTime, forKey: .startTime)
-        try container.encode(timeout, forKey: .timeout)
-        try container.encode(lastPaymentTime, forKey: .lastPaymentTime)
-        try container.encode(lastRequestTime, forKey: .lastRequestTime)
         try container.encode(subscriptionId, forKey: .subscriptionId)
-        try container.encode(failedAttempts, forKey: .failedAttempts)
+        try container.encode(paymentPerPeriod, forKey: .paymentPerPeriod)
+        try container.encode(wallet, forKey: .wallet)
+        try container.encode(nextChargeAt, forKey: .nextChargeAt)
+        try container.encode(metadata, forKey: .metadata)
+        try container.encodeIfPresent(address, forKey: .address)
+        try container.encodeIfPresent(beneficiary, forKey: .beneficiary)
     }
 }
 

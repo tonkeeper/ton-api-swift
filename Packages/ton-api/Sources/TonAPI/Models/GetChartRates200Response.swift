@@ -12,9 +12,10 @@ import AnyCodable
 
 public struct GetChartRates200Response: Codable, JSONEncodable, Hashable {
 
-    public var points: [String: AnyCodable]
+    /** Each inner array is a pair [timestamp, price]:   • index 0 — Unix timestamp (int64)     • index 1 — token price (decimal) in the requested currency.  */
+    public var points: [[Double]]
 
-    public init(points: [String: AnyCodable]) {
+    public init(points: [[Double]]) {
         self.points = points
     }
 

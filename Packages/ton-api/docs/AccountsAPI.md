@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**getAccountDnsExpiring**](AccountsAPI.md#getaccountdnsexpiring) | **GET** /v2/accounts/{account_id}/dns/expiring | 
 [**getAccountEvent**](AccountsAPI.md#getaccountevent) | **GET** /v2/accounts/{account_id}/events/{event_id} | 
 [**getAccountEvents**](AccountsAPI.md#getaccountevents) | **GET** /v2/accounts/{account_id}/events | 
+[**getAccountExtraCurrencyHistoryByID**](AccountsAPI.md#getaccountextracurrencyhistorybyid) | **GET** /v2/accounts/{account_id}/extra-currency/{id}/history | 
 [**getAccountJettonBalance**](AccountsAPI.md#getaccountjettonbalance) | **GET** /v2/accounts/{account_id}/jettons/{jetton_id} | 
 [**getAccountJettonHistoryByID**](AccountsAPI.md#getaccountjettonhistorybyid) | **GET** /v2/accounts/{account_id}/jettons/{jetton_id}/history | 
 [**getAccountJettonsBalances**](AccountsAPI.md#getaccountjettonsbalances) | **GET** /v2/accounts/{account_id}/jettons | 
@@ -21,6 +22,7 @@ Method | HTTP request | Description
 [**getAccountSubscriptions**](AccountsAPI.md#getaccountsubscriptions) | **GET** /v2/accounts/{account_id}/subscriptions | 
 [**getAccountTraces**](AccountsAPI.md#getaccounttraces) | **GET** /v2/accounts/{account_id}/traces | 
 [**getAccounts**](AccountsAPI.md#getaccounts) | **POST** /v2/accounts/_bulk | 
+[**getJettonAccountHistoryByID**](AccountsAPI.md#getjettonaccounthistorybyid) | **GET** /v2/jettons/{jetton_id}/accounts/{account_id}/history | 
 [**reindexAccount**](AccountsAPI.md#reindexaccount) | **POST** /v2/accounts/{account_id}/reindex | 
 [**searchAccounts**](AccountsAPI.md#searchaccounts) | **GET** /v2/accounts/search | 
 
@@ -81,7 +83,7 @@ No authorization required
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve account-specific events
 
 ### Example
 ```swift
@@ -400,6 +402,67 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getAccountExtraCurrencyHistoryByID**
+```swift
+    open class func getAccountExtraCurrencyHistoryByID(accountId: String, id: Int, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
+```
+
+
+
+Get the transfer history of extra currencies for an account.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let accountId = "accountId_example" // String | account ID
+let id = 987 // Int | extra currency id
+let limit = 987 // Int | 
+let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
+let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
+let startDate = 987 // Int64 |  (optional)
+let endDate = 987 // Int64 |  (optional)
+
+AccountsAPI.getAccountExtraCurrencyHistoryByID(accountId: accountId, id: id, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountId** | **String** | account ID | 
+ **id** | **Int** | extra currency id | 
+ **limit** | **Int** |  | 
+ **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
+ **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
+ **startDate** | **Int64** |  | [optional] 
+ **endDate** | **Int64** |  | [optional] 
+
+### Return type
+
+[**AccountEvents**](AccountEvents.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **getAccountJettonBalance**
 ```swift
     open class func getAccountJettonBalance(accountId: String, jettonId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil, completion: @escaping (_ data: JettonBalance?, _ error: Error?) -> Void)
@@ -462,7 +525,7 @@ No authorization required
 
 
 
-Get the transfer jetton history for account and jetton
+Please use `getJettonAccountHistoryByID`` instead
 
 ### Example
 ```swift
@@ -571,7 +634,7 @@ No authorization required
 
 # **getAccountJettonsHistory**
 ```swift
-    open class func getAccountJettonsHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
+    open class func getAccountJettonsHistory(accountId: String, limit: Int, beforeLt: Int64? = nil, completion: @escaping (_ data: JettonOperations?, _ error: Error?) -> Void)
 ```
 
 
@@ -585,12 +648,9 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
-let startDate = 987 // Int64 |  (optional)
-let endDate = 987 // Int64 |  (optional)
 
-AccountsAPI.getAccountJettonsHistory(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
+AccountsAPI.getAccountJettonsHistory(accountId: accountId, limit: limit, beforeLt: beforeLt) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -608,14 +668,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
- **startDate** | **Int64** |  | [optional] 
- **endDate** | **Int64** |  | [optional] 
 
 ### Return type
 
-[**AccountEvents**](AccountEvents.md)
+[**JettonOperations**](JettonOperations.md)
 
 ### Authorization
 
@@ -932,6 +989,65 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getJettonAccountHistoryByID**
+```swift
+    open class func getJettonAccountHistoryByID(accountId: String, jettonId: String, limit: Int, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: JettonOperations?, _ error: Error?) -> Void)
+```
+
+
+
+Get the transfer jetton history for account and jetton
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let accountId = "accountId_example" // String | account ID
+let jettonId = "jettonId_example" // String | jetton ID
+let limit = 987 // Int | 
+let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
+let startDate = 987 // Int64 |  (optional)
+let endDate = 987 // Int64 |  (optional)
+
+AccountsAPI.getJettonAccountHistoryByID(accountId: accountId, jettonId: jettonId, limit: limit, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountId** | **String** | account ID | 
+ **jettonId** | **String** | jetton ID | 
+ **limit** | **Int** |  | 
+ **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
+ **startDate** | **Int64** |  | [optional] 
+ **endDate** | **Int64** |  | [optional] 
+
+### Return type
+
+[**JettonOperations**](JettonOperations.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

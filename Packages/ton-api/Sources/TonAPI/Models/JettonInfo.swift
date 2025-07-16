@@ -19,9 +19,8 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
     public var preview: String
     public var verification: JettonVerificationType
     public var holdersCount: Int
-    public var score: Int?
 
-    public init(mintable: Bool, totalSupply: String, admin: AccountAddress? = nil, metadata: JettonMetadata, preview: String, verification: JettonVerificationType, holdersCount: Int, score: Int? = nil) {
+    public init(mintable: Bool, totalSupply: String, admin: AccountAddress? = nil, metadata: JettonMetadata, preview: String, verification: JettonVerificationType, holdersCount: Int) {
         self.mintable = mintable
         self.totalSupply = totalSupply
         self.admin = admin
@@ -29,7 +28,6 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
         self.preview = preview
         self.verification = verification
         self.holdersCount = holdersCount
-        self.score = score
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -40,7 +38,6 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
         case preview
         case verification
         case holdersCount = "holders_count"
-        case score
     }
 
     // Encodable protocol methods
@@ -54,7 +51,6 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
         try container.encode(preview, forKey: .preview)
         try container.encode(verification, forKey: .verification)
         try container.encode(holdersCount, forKey: .holdersCount)
-        try container.encodeIfPresent(score, forKey: .score)
     }
 }
 

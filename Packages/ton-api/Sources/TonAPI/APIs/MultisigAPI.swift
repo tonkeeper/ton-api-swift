@@ -48,4 +48,41 @@ open class MultisigAPI {
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
+
+    /**
+
+     - parameter accountId: (path) account ID 
+     - returns: MultisigOrder
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getMultisigOrder(accountId: String) async throws -> MultisigOrder {
+        return try await getMultisigOrderWithRequestBuilder(accountId: accountId).execute().body
+    }
+
+    /**
+     - GET /v2/multisig/order/{account_id}
+     - Get multisig order
+     - parameter accountId: (path) account ID 
+     - returns: RequestBuilder<MultisigOrder> 
+     */
+    open class func getMultisigOrderWithRequestBuilder(accountId: String) -> RequestBuilder<MultisigOrder> {
+        var localVariablePath = "/v2/multisig/order/{account_id}"
+        let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
+        let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<MultisigOrder>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
 }

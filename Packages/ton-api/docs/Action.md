@@ -24,8 +24,8 @@ Name | Type | Description | Notes
 **jettonSwap** | [**JettonSwapAction**](JettonSwapAction.md) |  | [optional] 
 **smartContractExec** | [**SmartContractAction**](SmartContractAction.md) |  | [optional] 
 **domainRenew** | [**DomainRenewAction**](DomainRenewAction.md) |  | [optional] 
-**inscriptionTransfer** | [**InscriptionTransferAction**](InscriptionTransferAction.md) |  | [optional] 
-**inscriptionMint** | [**InscriptionMintAction**](InscriptionMintAction.md) |  | [optional] 
+**purchase** | [**PurchaseAction**](PurchaseAction.md) |  | [optional] 
+**gasRelay** | [**GasRelayAction**](GasRelayAction.md) |  | [optional] 
 **simplePreview** | [**ActionSimplePreview**](ActionSimplePreview.md) |  | 
 **baseTransactions** | **[String]** |  | 
 

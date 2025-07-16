@@ -5,7 +5,9 @@ All URIs are relative to *https://tonapi.io*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**blockchainAccountInspect**](BlockchainAPI.md#blockchainaccountinspect) | **GET** /v2/blockchain/accounts/{account_id}/inspect | 
+[**downloadBlockchainBlockBoc**](BlockchainAPI.md#downloadblockchainblockboc) | **GET** /v2/blockchain/blocks/{block_id}/boc | 
 [**execGetMethodForBlockchainAccount**](BlockchainAPI.md#execgetmethodforblockchainaccount) | **GET** /v2/blockchain/accounts/{account_id}/methods/{method_name} | 
+[**execGetMethodWithBodyForBlockchainAccount**](BlockchainAPI.md#execgetmethodwithbodyforblockchainaccount) | **POST** /v2/blockchain/accounts/{account_id}/methods/{method_name} | 
 [**getBlockchainAccountTransactions**](BlockchainAPI.md#getblockchainaccounttransactions) | **GET** /v2/blockchain/accounts/{account_id}/transactions | 
 [**getBlockchainBlock**](BlockchainAPI.md#getblockchainblock) | **GET** /v2/blockchain/blocks/{block_id} | 
 [**getBlockchainBlockTransactions**](BlockchainAPI.md#getblockchainblocktransactions) | **GET** /v2/blockchain/blocks/{block_id}/transactions | 
@@ -19,6 +21,7 @@ Method | HTTP request | Description
 [**getBlockchainTransaction**](BlockchainAPI.md#getblockchaintransaction) | **GET** /v2/blockchain/transactions/{transaction_id} | 
 [**getBlockchainTransactionByMessageHash**](BlockchainAPI.md#getblockchaintransactionbymessagehash) | **GET** /v2/blockchain/messages/{msg_id}/transaction | 
 [**getBlockchainValidators**](BlockchainAPI.md#getblockchainvalidators) | **GET** /v2/blockchain/validators | 
+[**getLibraryByHash**](BlockchainAPI.md#getlibrarybyhash) | **GET** /v2/blockchain/libraries/{hash} | 
 [**getRawBlockchainConfig**](BlockchainAPI.md#getrawblockchainconfig) | **GET** /v2/blockchain/config/raw | 
 [**getRawBlockchainConfigFromBlock**](BlockchainAPI.md#getrawblockchainconfigfromblock) | **GET** /v2/blockchain/masterchain/{masterchain_seqno}/config/raw | 
 [**getReducedBlockchainBlocks**](BlockchainAPI.md#getreducedblockchainblocks) | **GET** /v2/blockchain/reduced/blocks | 
@@ -74,9 +77,58 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **downloadBlockchainBlockBoc**
+```swift
+    open class func downloadBlockchainBlockBoc(blockId: String, completion: @escaping (_ data: URL?, _ error: Error?) -> Void)
+```
+
+
+
+Download blockchain block BOC
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let blockId = "blockId_example" // String | block ID
+
+BlockchainAPI.downloadBlockchainBlockBoc(blockId: blockId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **blockId** | **String** | block ID | 
+
+### Return type
+
+**URL**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **execGetMethodForBlockchainAccount**
 ```swift
-    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, fixOrder: Bool? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
+    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
 ```
 
 
@@ -91,9 +143,8 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let methodName = "methodName_example" // String | contract get method name
 let args = ["inner_example"] // [String] |  (optional)
-let fixOrder = true // Bool |  (optional) (default to true)
 
-BlockchainAPI.execGetMethodForBlockchainAccount(accountId: accountId, methodName: methodName, args: args, fixOrder: fixOrder) { (response, error) in
+BlockchainAPI.execGetMethodForBlockchainAccount(accountId: accountId, methodName: methodName, args: args) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -112,7 +163,6 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **methodName** | **String** | contract get method name | 
  **args** | [**[String]**](String.md) |  | [optional] 
- **fixOrder** | **Bool** |  | [optional] [default to true]
 
 ### Return type
 
@@ -125,6 +175,59 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **execGetMethodWithBodyForBlockchainAccount**
+```swift
+    open class func execGetMethodWithBodyForBlockchainAccount(accountId: String, methodName: String, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
+```
+
+
+
+Execute get method for account
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let accountId = "accountId_example" // String | account ID
+let methodName = "methodName_example" // String | contract get method name
+let execGetMethodWithBodyForBlockchainAccountRequest = execGetMethodWithBodyForBlockchainAccount_request(args: [ExecGetMethodArg(type: ExecGetMethodArgType(), value: "value_example")]) // ExecGetMethodWithBodyForBlockchainAccountRequest | Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
+
+BlockchainAPI.execGetMethodWithBodyForBlockchainAccount(accountId: accountId, methodName: methodName, execGetMethodWithBodyForBlockchainAccountRequest: execGetMethodWithBodyForBlockchainAccountRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountId** | **String** | account ID | 
+ **methodName** | **String** | contract get method name | 
+ **execGetMethodWithBodyForBlockchainAccountRequest** | [**ExecGetMethodWithBodyForBlockchainAccountRequest**](ExecGetMethodWithBodyForBlockchainAccountRequest.md) | Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  | [optional] 
+
+### Return type
+
+[**MethodExecutionResult**](MethodExecutionResult.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -750,6 +853,55 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**Validators**](Validators.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getLibraryByHash**
+```swift
+    open class func getLibraryByHash(hash: String, completion: @escaping (_ data: BlockchainLibrary?, _ error: Error?) -> Void)
+```
+
+
+
+Get library cell
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let hash = "hash_example" // String | hash in hex (without 0x) format
+
+BlockchainAPI.getLibraryByHash(hash: hash) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hash** | **String** | hash in hex (without 0x) format | 
+
+### Return type
+
+[**BlockchainLibrary**](BlockchainLibrary.md)
 
 ### Authorization
 

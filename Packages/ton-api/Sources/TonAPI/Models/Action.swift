@@ -15,11 +15,11 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
         case tonTransfer = "TonTransfer"
         case extraCurrencyTransfer = "ExtraCurrencyTransfer"
+        case contractDeploy = "ContractDeploy"
         case jettonTransfer = "JettonTransfer"
         case jettonBurn = "JettonBurn"
         case jettonMint = "JettonMint"
         case nftItemTransfer = "NftItemTransfer"
-        case contractDeploy = "ContractDeploy"
         case subscribe = "Subscribe"
         case unSubscribe = "UnSubscribe"
         case auctionBid = "AuctionBid"
@@ -27,13 +27,12 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case depositStake = "DepositStake"
         case withdrawStake = "WithdrawStake"
         case withdrawStakeRequest = "WithdrawStakeRequest"
+        case electionsDepositStake = "ElectionsDepositStake"
+        case electionsRecoverStake = "ElectionsRecoverStake"
         case jettonSwap = "JettonSwap"
         case smartContractExec = "SmartContractExec"
-        case electionsRecoverStake = "ElectionsRecoverStake"
-        case electionsDepositStake = "ElectionsDepositStake"
         case domainRenew = "DomainRenew"
-        case inscriptionTransfer = "InscriptionTransfer"
-        case inscriptionMint = "InscriptionMint"
+        case purchase = "Purchase"
         case unknown = "Unknown"
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
@@ -63,12 +62,12 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var jettonSwap: JettonSwapAction?
     public var smartContractExec: SmartContractAction?
     public var domainRenew: DomainRenewAction?
-    public var inscriptionTransfer: InscriptionTransferAction?
-    public var inscriptionMint: InscriptionMintAction?
+    public var purchase: PurchaseAction?
+    public var gasRelay: GasRelayAction?
     public var simplePreview: ActionSimplePreview
     public var baseTransactions: [String]
 
-    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, inscriptionTransfer: InscriptionTransferAction? = nil, inscriptionMint: InscriptionMintAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
+    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, purchase: PurchaseAction? = nil, gasRelay: GasRelayAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
         self.type = type
         self.status = status
         self.tonTransfer = tonTransfer
@@ -90,8 +89,8 @@ public struct Action: Codable, JSONEncodable, Hashable {
         self.jettonSwap = jettonSwap
         self.smartContractExec = smartContractExec
         self.domainRenew = domainRenew
-        self.inscriptionTransfer = inscriptionTransfer
-        self.inscriptionMint = inscriptionMint
+        self.purchase = purchase
+        self.gasRelay = gasRelay
         self.simplePreview = simplePreview
         self.baseTransactions = baseTransactions
     }
@@ -118,8 +117,8 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case jettonSwap = "JettonSwap"
         case smartContractExec = "SmartContractExec"
         case domainRenew = "DomainRenew"
-        case inscriptionTransfer = "InscriptionTransfer"
-        case inscriptionMint = "InscriptionMint"
+        case purchase = "Purchase"
+        case gasRelay = "GasRelay"
         case simplePreview = "simple_preview"
         case baseTransactions = "base_transactions"
     }
@@ -149,8 +148,8 @@ public struct Action: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(jettonSwap, forKey: .jettonSwap)
         try container.encodeIfPresent(smartContractExec, forKey: .smartContractExec)
         try container.encodeIfPresent(domainRenew, forKey: .domainRenew)
-        try container.encodeIfPresent(inscriptionTransfer, forKey: .inscriptionTransfer)
-        try container.encodeIfPresent(inscriptionMint, forKey: .inscriptionMint)
+        try container.encodeIfPresent(purchase, forKey: .purchase)
+        try container.encodeIfPresent(gasRelay, forKey: .gasRelay)
         try container.encode(simplePreview, forKey: .simplePreview)
         try container.encode(baseTransactions, forKey: .baseTransactions)
     }

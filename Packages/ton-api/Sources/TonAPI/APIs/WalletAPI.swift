@@ -25,7 +25,7 @@ open class WalletAPI {
 
     /**
      - POST /v2/wallet/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve the resulting wallet state
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<MessageConsequences> 
@@ -88,11 +88,48 @@ open class WalletAPI {
 
     /**
 
-     - parameter publicKey: (path)  
-     - returns: Accounts
+     - parameter accountId: (path) account ID 
+     - returns: Wallet
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getWalletsByPublicKey(publicKey: String) async throws -> Accounts {
+    open class func getWalletInfo(accountId: String) async throws -> Wallet {
+        return try await getWalletInfoWithRequestBuilder(accountId: accountId).execute().body
+    }
+
+    /**
+     - GET /v2/wallet/{account_id}
+     - Get human-friendly information about a wallet without low-level details.
+     - parameter accountId: (path) account ID 
+     - returns: RequestBuilder<Wallet> 
+     */
+    open class func getWalletInfoWithRequestBuilder(accountId: String) -> RequestBuilder<Wallet> {
+        var localVariablePath = "/v2/wallet/{account_id}"
+        let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
+        let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Wallet>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
+     - parameter publicKey: (path)  
+     - returns: Wallets
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getWalletsByPublicKey(publicKey: String) async throws -> Wallets {
         return try await getWalletsByPublicKeyWithRequestBuilder(publicKey: publicKey).execute().body
     }
 
@@ -100,9 +137,9 @@ open class WalletAPI {
      - GET /v2/pubkeys/{public_key}/wallets
      - Get wallets by public key
      - parameter publicKey: (path)  
-     - returns: RequestBuilder<Accounts> 
+     - returns: RequestBuilder<Wallets> 
      */
-    open class func getWalletsByPublicKeyWithRequestBuilder(publicKey: String) -> RequestBuilder<Accounts> {
+    open class func getWalletsByPublicKeyWithRequestBuilder(publicKey: String) -> RequestBuilder<Wallets> {
         var localVariablePath = "/v2/pubkeys/{public_key}/wallets"
         let publicKeyPreEscape = "\(APIHelper.mapValueToPathItem(publicKey))"
         let publicKeyPostEscape = publicKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -118,7 +155,7 @@ open class WalletAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Accounts>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Wallets>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }

@@ -51,15 +51,52 @@ open class BlockchainAPI {
 
     /**
 
+     - parameter blockId: (path) block ID 
+     - returns: URL
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func downloadBlockchainBlockBoc(blockId: String) async throws -> URL {
+        return try await downloadBlockchainBlockBocWithRequestBuilder(blockId: blockId).execute().body
+    }
+
+    /**
+     - GET /v2/blockchain/blocks/{block_id}/boc
+     - Download blockchain block BOC
+     - responseHeaders: [Content-Disposition(String)]
+     - parameter blockId: (path) block ID 
+     - returns: RequestBuilder<URL> 
+     */
+    open class func downloadBlockchainBlockBocWithRequestBuilder(blockId: String) -> RequestBuilder<URL> {
+        var localVariablePath = "/v2/blockchain/blocks/{block_id}/boc"
+        let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
+        let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{block_id}", with: blockIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<URL>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
      - parameter args: (query)  (optional)
-     - parameter fixOrder: (query)  (optional, default to true)
      - returns: MethodExecutionResult
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, fixOrder: Bool? = nil) async throws -> MethodExecutionResult {
-        return try await execGetMethodForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, args: args, fixOrder: fixOrder).execute().body
+    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil) async throws -> MethodExecutionResult {
+        return try await execGetMethodForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, args: args).execute().body
     }
 
     /**
@@ -68,10 +105,9 @@ open class BlockchainAPI {
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
      - parameter args: (query)  (optional)
-     - parameter fixOrder: (query)  (optional, default to true)
      - returns: RequestBuilder<MethodExecutionResult> 
      */
-    open class func execGetMethodForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, args: [String]? = nil, fixOrder: Bool? = nil) -> RequestBuilder<MethodExecutionResult> {
+    open class func execGetMethodForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, args: [String]? = nil) -> RequestBuilder<MethodExecutionResult> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}/methods/{method_name}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -85,7 +121,6 @@ open class BlockchainAPI {
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "args": (wrappedValue: args?.encodeToJSON(), isExplode: true),
-            "fix_order": (wrappedValue: fixOrder?.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -97,6 +132,50 @@ open class BlockchainAPI {
         let localVariableRequestBuilder: RequestBuilder<MethodExecutionResult>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
+     - parameter accountId: (path) account ID 
+     - parameter methodName: (path) contract get method name 
+     - parameter execGetMethodWithBodyForBlockchainAccountRequest: (body) Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
+     - returns: MethodExecutionResult
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func execGetMethodWithBodyForBlockchainAccount(accountId: String, methodName: String, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil) async throws -> MethodExecutionResult {
+        return try await execGetMethodWithBodyForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, execGetMethodWithBodyForBlockchainAccountRequest: execGetMethodWithBodyForBlockchainAccountRequest).execute().body
+    }
+
+    /**
+     - POST /v2/blockchain/accounts/{account_id}/methods/{method_name}
+     - Execute get method for account
+     - parameter accountId: (path) account ID 
+     - parameter methodName: (path) contract get method name 
+     - parameter execGetMethodWithBodyForBlockchainAccountRequest: (body) Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
+     - returns: RequestBuilder<MethodExecutionResult> 
+     */
+    open class func execGetMethodWithBodyForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil) -> RequestBuilder<MethodExecutionResult> {
+        var localVariablePath = "/v2/blockchain/accounts/{account_id}/methods/{method_name}"
+        let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
+        let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
+        let methodNamePreEscape = "\(APIHelper.mapValueToPathItem(methodName))"
+        let methodNamePostEscape = methodNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{method_name}", with: methodNamePostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: execGetMethodWithBodyForBlockchainAccountRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<MethodExecutionResult>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
@@ -583,6 +662,43 @@ open class BlockchainAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<Validators>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
+     - parameter hash: (path) hash in hex (without 0x) format 
+     - returns: BlockchainLibrary
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getLibraryByHash(hash: String) async throws -> BlockchainLibrary {
+        return try await getLibraryByHashWithRequestBuilder(hash: hash).execute().body
+    }
+
+    /**
+     - GET /v2/blockchain/libraries/{hash}
+     - Get library cell
+     - parameter hash: (path) hash in hex (without 0x) format 
+     - returns: RequestBuilder<BlockchainLibrary> 
+     */
+    open class func getLibraryByHashWithRequestBuilder(hash: String) -> RequestBuilder<BlockchainLibrary> {
+        var localVariablePath = "/v2/blockchain/libraries/{hash}"
+        let hashPreEscape = "\(APIHelper.mapValueToPathItem(hash))"
+        let hashPostEscape = hashPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{hash}", with: hashPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<BlockchainLibrary>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }

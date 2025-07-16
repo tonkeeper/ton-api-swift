@@ -19,13 +19,15 @@ public struct BlockchainAccountInspect: Codable, JSONEncodable, Hashable {
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var code: String
+    public var disassembledCode: String?
     public var codeHash: String
     public var methods: [Method]
     public var compiler: Compiler
-    public var source: Source
+    public var source: Source?
 
-    public init(code: String, codeHash: String, methods: [Method], compiler: Compiler, source: Source) {
+    public init(code: String, disassembledCode: String? = nil, codeHash: String, methods: [Method], compiler: Compiler, source: Source? = nil) {
         self.code = code
+        self.disassembledCode = disassembledCode
         self.codeHash = codeHash
         self.methods = methods
         self.compiler = compiler
@@ -34,6 +36,7 @@ public struct BlockchainAccountInspect: Codable, JSONEncodable, Hashable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case code
+        case disassembledCode = "disassembled_code"
         case codeHash = "code_hash"
         case methods
         case compiler
@@ -45,10 +48,11 @@ public struct BlockchainAccountInspect: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(code, forKey: .code)
+        try container.encodeIfPresent(disassembledCode, forKey: .disassembledCode)
         try container.encode(codeHash, forKey: .codeHash)
         try container.encode(methods, forKey: .methods)
         try container.encode(compiler, forKey: .compiler)
-        try container.encode(source, forKey: .source)
+        try container.encodeIfPresent(source, forKey: .source)
     }
 }
 

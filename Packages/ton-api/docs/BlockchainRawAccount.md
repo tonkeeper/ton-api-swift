@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | **String** |  | 
 **balance** | **Int64** |  | 
-**extraBalance** | **[String: String]** |  | [optional] 
+**extraBalance** | [ExtraCurrency] |  | [optional] 
 **code** | **String** |  | [optional] 
 **data** | **String** |  | [optional] 
 **lastTransactionLt** | **Int64** |  | 

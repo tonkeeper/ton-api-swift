@@ -3,6 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**throwErrorIfNotEnoughJettons** | **Bool** | TONAPI verifies that the account has enough jettons to pay the commission and make a transfer. | [optional] [default to false]
+**returnEmulation** | **Bool** |  | [optional] [default to false]
 **walletAddress** | **String** |  | 
 **walletPublicKey** | **String** |  | 
 **messages** | [GaslessEstimateRequestMessagesInner] |  | 

@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve general blockchain events
 
 ### Example
 ```swift

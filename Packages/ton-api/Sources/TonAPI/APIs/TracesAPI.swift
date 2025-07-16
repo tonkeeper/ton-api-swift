@@ -25,7 +25,7 @@ open class TracesAPI {
 
     /**
      - POST /v2/traces/emulate
-     - Emulate sending message to blockchain
+     - Emulate sending message to retrieve with a detailed execution trace
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Trace> 

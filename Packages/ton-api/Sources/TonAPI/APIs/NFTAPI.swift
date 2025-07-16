@@ -18,13 +18,11 @@ open class NFTAPI {
      - parameter limit: (query)  
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
-     - parameter startDate: (query)  (optional)
-     - parameter endDate: (query)  (optional)
-     - returns: AccountEvents
+     - returns: NftOperations
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountNftHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getAccountNftHistoryWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountNftHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil) async throws -> NftOperations {
+        return try await getAccountNftHistoryWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt).execute().body
     }
 
     /**
@@ -34,11 +32,9 @@ open class NFTAPI {
      - parameter limit: (query)  
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
-     - parameter startDate: (query)  (optional)
-     - parameter endDate: (query)  (optional)
-     - returns: RequestBuilder<AccountEvents> 
+     - returns: RequestBuilder<NftOperations> 
      */
-    open class func getAccountNftHistoryWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getAccountNftHistoryWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil) -> RequestBuilder<NftOperations> {
         var localVariablePath = "/v2/accounts/{account_id}/nfts/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -50,8 +46,6 @@ open class NFTAPI {
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
             "limit": (wrappedValue: limit.encodeToJSON(), isExplode: true),
-            "start_date": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
-            "end_date": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -60,7 +54,7 @@ open class NFTAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<AccountEvents>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<NftOperations>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
@@ -231,6 +225,7 @@ open class NFTAPI {
      - parameter endDate: (query)  (optional)
      - returns: AccountEvents
      */
+    @available(*, deprecated, message: "This operation is deprecated.")
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getNftHistoryByID(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
         return try await getNftHistoryByIDWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
@@ -238,7 +233,7 @@ open class NFTAPI {
 
     /**
      - GET /v2/nfts/{account_id}/history
-     - Get the transfer nfts history for account
+     - Please use `getAccountNftHistory`` instead
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
      - parameter acceptLanguage: (header)  (optional, default to "en")
@@ -247,6 +242,7 @@ open class NFTAPI {
      - parameter endDate: (query)  (optional)
      - returns: RequestBuilder<AccountEvents> 
      */
+    @available(*, deprecated, message: "This operation is deprecated.")
     open class func getNftHistoryByIDWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/nfts/{account_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"

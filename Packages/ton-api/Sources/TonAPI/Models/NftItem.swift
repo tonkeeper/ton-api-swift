@@ -27,6 +27,8 @@ public struct NftItem: Codable, JSONEncodable, Hashable {
     public var sale: Sale?
     public var previews: [ImagePreview]?
     public var dns: String?
+    /** Please use trust field */
+    @available(*, deprecated, message: "This property is deprecated.")
     public var approvedBy: [ApprovedBy]
     public var includeCnft: Bool?
     public var trust: TrustType

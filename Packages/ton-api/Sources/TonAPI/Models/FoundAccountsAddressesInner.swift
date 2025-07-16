@@ -15,17 +15,20 @@ public struct FoundAccountsAddressesInner: Codable, JSONEncodable, Hashable {
     public var address: String
     public var name: String
     public var preview: String
+    public var trust: TrustType
 
-    public init(address: String, name: String, preview: String) {
+    public init(address: String, name: String, preview: String, trust: TrustType) {
         self.address = address
         self.name = name
         self.preview = preview
+        self.trust = trust
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case address
         case name
         case preview
+        case trust
     }
 
     // Encodable protocol methods
@@ -35,6 +38,7 @@ public struct FoundAccountsAddressesInner: Codable, JSONEncodable, Hashable {
         try container.encode(address, forKey: .address)
         try container.encode(name, forKey: .name)
         try container.encode(preview, forKey: .preview)
+        try container.encode(trust, forKey: .trust)
     }
 }
 

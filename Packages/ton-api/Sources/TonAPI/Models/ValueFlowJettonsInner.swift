@@ -14,17 +14,21 @@ public struct ValueFlowJettonsInner: Codable, JSONEncodable, Hashable {
 
     public var account: AccountAddress
     public var jetton: JettonPreview
+    public var qty: String
+    @available(*, deprecated, message: "This property is deprecated.")
     public var quantity: Int64
 
-    public init(account: AccountAddress, jetton: JettonPreview, quantity: Int64) {
+    public init(account: AccountAddress, jetton: JettonPreview, qty: String, quantity: Int64) {
         self.account = account
         self.jetton = jetton
+        self.qty = qty
         self.quantity = quantity
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case account
         case jetton
+        case qty
         case quantity
     }
 
@@ -34,6 +38,7 @@ public struct ValueFlowJettonsInner: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(account, forKey: .account)
         try container.encode(jetton, forKey: .jetton)
+        try container.encode(qty, forKey: .qty)
         try container.encode(quantity, forKey: .quantity)
     }
 }

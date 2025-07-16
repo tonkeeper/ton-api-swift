@@ -56,7 +56,7 @@ No authorization required
 
 # **gaslessEstimate**
 ```swift
-    open class func gaslessEstimate(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, completion: @escaping (_ data: SignRawParams?, _ error: Error?) -> Void)
+    open class func gaslessEstimate(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, acceptLanguage: String? = nil, completion: @escaping (_ data: SignRawParams?, _ error: Error?) -> Void)
 ```
 
 
@@ -69,9 +69,10 @@ Estimates the cost of the given messages and returns a payload to sign
 import TonAPI
 
 let masterId = "masterId_example" // String | jetton to pay commission
-let gaslessEstimateRequest = gaslessEstimate_request(walletAddress: "walletAddress_example", walletPublicKey: "walletPublicKey_example", messages: [gaslessEstimate_request_messages_inner(boc: "boc_example")]) // GaslessEstimateRequest | bag-of-cells serialized to hex
+let gaslessEstimateRequest = gaslessEstimate_request(throwErrorIfNotEnoughJettons: false, returnEmulation: false, walletAddress: "walletAddress_example", walletPublicKey: "walletPublicKey_example", messages: [gaslessEstimate_request_messages_inner(boc: "boc_example")]) // GaslessEstimateRequest | bag-of-cells serialized to hex
+let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
-GaslessAPI.gaslessEstimate(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest) { (response, error) in
+GaslessAPI.gaslessEstimate(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest, acceptLanguage: acceptLanguage) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -89,6 +90,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterId** | **String** | jetton to pay commission | 
  **gaslessEstimateRequest** | [**GaslessEstimateRequest**](GaslessEstimateRequest.md) | bag-of-cells serialized to hex | 
+ **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type
 
@@ -107,7 +109,7 @@ No authorization required
 
 # **gaslessSend**
 ```swift
-    open class func gaslessSend(gaslessSendRequest: GaslessSendRequest, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func gaslessSend(gaslessSendRequest: GaslessSendRequest, completion: @escaping (_ data: GaslessTx?, _ error: Error?) -> Void)
 ```
 
 
@@ -141,7 +143,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**GaslessTx**](GaslessTx.md)
 
 ### Authorization
 

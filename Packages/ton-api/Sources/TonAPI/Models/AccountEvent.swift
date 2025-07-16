@@ -24,8 +24,9 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
     public var inProgress: Bool
     /** TODO */
     public var extra: Int64
+    public var progress: Float
 
-    public init(eventId: String, account: AccountAddress, timestamp: Int64, actions: [Action], isScam: Bool, lt: Int64, inProgress: Bool, extra: Int64) {
+    public init(eventId: String, account: AccountAddress, timestamp: Int64, actions: [Action], isScam: Bool, lt: Int64, inProgress: Bool, extra: Int64, progress: Float) {
         self.eventId = eventId
         self.account = account
         self.timestamp = timestamp
@@ -34,6 +35,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         self.lt = lt
         self.inProgress = inProgress
         self.extra = extra
+        self.progress = progress
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -45,6 +47,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         case lt
         case inProgress = "in_progress"
         case extra
+        case progress
     }
 
     // Encodable protocol methods
@@ -59,6 +62,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         try container.encode(lt, forKey: .lt)
         try container.encode(inProgress, forKey: .inProgress)
         try container.encode(extra, forKey: .extra)
+        try container.encode(progress, forKey: .progress)
     }
 }
 

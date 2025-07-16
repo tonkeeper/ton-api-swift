@@ -67,7 +67,7 @@ No authorization required
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve account-specific events
 
 ### Example
 ```swift
@@ -122,7 +122,7 @@ No authorization required
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve general blockchain events
 
 ### Example
 ```swift
@@ -175,7 +175,7 @@ No authorization required
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve with a detailed execution trace
 
 ### Example
 ```swift
@@ -226,7 +226,7 @@ No authorization required
 
 
 
-Emulate sending message to blockchain
+Emulate sending message to retrieve the resulting wallet state
 
 ### Example
 ```swift

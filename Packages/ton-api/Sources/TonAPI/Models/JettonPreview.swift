@@ -19,9 +19,9 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
     public var image: String
     public var verification: JettonVerificationType
     public var customPayloadApiUri: String?
-    public var score: Int?
+    public var score: Int
 
-    public init(address: String, name: String, symbol: String, decimals: Int, image: String, verification: JettonVerificationType, customPayloadApiUri: String? = nil, score: Int? = nil) {
+    public init(address: String, name: String, symbol: String, decimals: Int, image: String, verification: JettonVerificationType, customPayloadApiUri: String? = nil, score: Int) {
         self.address = address
         self.name = name
         self.symbol = symbol
@@ -54,7 +54,7 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
         try container.encode(image, forKey: .image)
         try container.encode(verification, forKey: .verification)
         try container.encodeIfPresent(customPayloadApiUri, forKey: .customPayloadApiUri)
-        try container.encodeIfPresent(score, forKey: .score)
+        try container.encode(score, forKey: .score)
     }
 }
 

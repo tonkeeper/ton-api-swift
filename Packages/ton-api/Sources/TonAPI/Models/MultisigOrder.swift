@@ -13,7 +13,7 @@ import AnyCodable
 public struct MultisigOrder: Codable, JSONEncodable, Hashable {
 
     public var address: String
-    public var orderSeqno: Int64
+    public var orderSeqno: String
     public var threshold: Int
     public var sentForExecution: Bool
     public var signers: [String]
@@ -25,7 +25,7 @@ public struct MultisigOrder: Codable, JSONEncodable, Hashable {
     public var multisigAddress: String
     public var changingParameters: MultisigOrderChangingParameters?
 
-    public init(address: String, orderSeqno: Int64, threshold: Int, sentForExecution: Bool, signers: [String], approvalsNum: Int, expirationDate: Int64, risk: Risk, creationDate: Int64, signedBy: [String], multisigAddress: String, changingParameters: MultisigOrderChangingParameters? = nil) {
+    public init(address: String, orderSeqno: String, threshold: Int, sentForExecution: Bool, signers: [String], approvalsNum: Int, expirationDate: Int64, risk: Risk, creationDate: Int64, signedBy: [String], multisigAddress: String, changingParameters: MultisigOrderChangingParameters? = nil) {
         self.address = address
         self.orderSeqno = orderSeqno
         self.threshold = threshold

@@ -1,12 +1,11 @@
-# UnSubscriptionAction
+# LiquidityDepositAction
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**subscriber** | [**AccountAddress**](AccountAddress.md) |  | 
-**subscription** | **String** |  | 
-**beneficiary** | [**AccountAddress**](AccountAddress.md) |  | 
-**admin** | [**AccountAddress**](AccountAddress.md) |  | 
+**_protocol** | [**ModelProtocol**](ModelProtocol.md) |  | 
+**from** | [**AccountAddress**](AccountAddress.md) |  | 
+**tokens** | [VaultDepositInfo] |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

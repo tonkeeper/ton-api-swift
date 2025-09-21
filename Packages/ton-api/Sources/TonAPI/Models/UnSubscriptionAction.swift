@@ -15,17 +15,20 @@ public struct UnSubscriptionAction: Codable, JSONEncodable, Hashable {
     public var subscriber: AccountAddress
     public var subscription: String
     public var beneficiary: AccountAddress
+    public var admin: AccountAddress
 
-    public init(subscriber: AccountAddress, subscription: String, beneficiary: AccountAddress) {
+    public init(subscriber: AccountAddress, subscription: String, beneficiary: AccountAddress, admin: AccountAddress) {
         self.subscriber = subscriber
         self.subscription = subscription
         self.beneficiary = beneficiary
+        self.admin = admin
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case subscriber
         case subscription
         case beneficiary
+        case admin
     }
 
     // Encodable protocol methods
@@ -35,6 +38,7 @@ public struct UnSubscriptionAction: Codable, JSONEncodable, Hashable {
         try container.encode(subscriber, forKey: .subscriber)
         try container.encode(subscription, forKey: .subscription)
         try container.encode(beneficiary, forKey: .beneficiary)
+        try container.encode(admin, forKey: .admin)
     }
 }
 

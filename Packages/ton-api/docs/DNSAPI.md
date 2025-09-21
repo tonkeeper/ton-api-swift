@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **dnsResolve**
 ```swift
-    open class func dnsResolve(domainName: String, completion: @escaping (_ data: DnsRecord?, _ error: Error?) -> Void)
+    open class func dnsResolve(domainName: String, filter: Bool? = nil, completion: @escaping (_ data: DnsRecord?, _ error: Error?) -> Void)
 ```
 
 
@@ -25,8 +25,9 @@ DNS resolve for domain name
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
+let filter = true // Bool |  (optional) (default to false)
 
-DNSAPI.dnsResolve(domainName: domainName) { (response, error) in
+DNSAPI.dnsResolve(domainName: domainName, filter: filter) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,6 +44,7 @@ DNSAPI.dnsResolve(domainName: domainName) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
+ **filter** | **Bool** |  | [optional] [default to false]
 
 ### Return type
 

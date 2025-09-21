@@ -13,13 +13,13 @@ import AnyCodable
 public struct Multisig: Codable, JSONEncodable, Hashable {
 
     public var address: String
-    public var seqno: Int64
+    public var seqno: String
     public var threshold: Int
     public var signers: [String]
     public var proposers: [String]
     public var orders: [MultisigOrder]
 
-    public init(address: String, seqno: Int64, threshold: Int, signers: [String], proposers: [String], orders: [MultisigOrder]) {
+    public init(address: String, seqno: String, threshold: Int, signers: [String], proposers: [String], orders: [MultisigOrder]) {
         self.address = address
         self.seqno = seqno
         self.threshold = threshold

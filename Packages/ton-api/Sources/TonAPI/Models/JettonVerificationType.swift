@@ -12,6 +12,7 @@ import AnyCodable
 
 public enum JettonVerificationType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
     case whitelist = "whitelist"
+    case graylist = "graylist"
     case blacklist = "blacklist"
     case _none = "none"
     case unknownDefaultOpenApi = "unknown_default_open_api"

@@ -18,12 +18,15 @@ public struct Risk: Codable, JSONEncodable, Hashable {
     public var ton: Int64
     public var jettons: [JettonQuantity]
     public var nfts: [NftItem]
+    /** Estimated equivalent value of all assets at risk in selected currency (for example USD) */
+    public var totalEquivalent: Float?
 
-    public init(transferAllRemainingBalance: Bool, ton: Int64, jettons: [JettonQuantity], nfts: [NftItem]) {
+    public init(transferAllRemainingBalance: Bool, ton: Int64, jettons: [JettonQuantity], nfts: [NftItem], totalEquivalent: Float? = nil) {
         self.transferAllRemainingBalance = transferAllRemainingBalance
         self.ton = ton
         self.jettons = jettons
         self.nfts = nfts
+        self.totalEquivalent = totalEquivalent
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -31,6 +34,7 @@ public struct Risk: Codable, JSONEncodable, Hashable {
         case ton
         case jettons
         case nfts
+        case totalEquivalent = "total_equivalent"
     }
 
     // Encodable protocol methods
@@ -41,6 +45,7 @@ public struct Risk: Codable, JSONEncodable, Hashable {
         try container.encode(ton, forKey: .ton)
         try container.encode(jettons, forKey: .jettons)
         try container.encode(nfts, forKey: .nfts)
+        try container.encodeIfPresent(totalEquivalent, forKey: .totalEquivalent)
     }
 }
 

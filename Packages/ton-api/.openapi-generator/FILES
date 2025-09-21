@@ -45,6 +45,7 @@ Sources/TonAPI/Models/Accounts.swift
 Sources/TonAPI/Models/Action.swift
 Sources/TonAPI/Models/ActionPhase.swift
 Sources/TonAPI/Models/ActionSimplePreview.swift
+Sources/TonAPI/Models/AddExtensionAction.swift
 Sources/TonAPI/Models/AddressParse200Response.swift
 Sources/TonAPI/Models/AddressParse200ResponseBounceable.swift
 Sources/TonAPI/Models/ApyHistory.swift
@@ -114,6 +115,7 @@ Sources/TonAPI/Models/DecodedMessageExtInMsgDecodedWalletV5.swift
 Sources/TonAPI/Models/DecodedRawMessage.swift
 Sources/TonAPI/Models/DecodedRawMessageMessage.swift
 Sources/TonAPI/Models/DepositStakeAction.swift
+Sources/TonAPI/Models/DepositTokenStakeAction.swift
 Sources/TonAPI/Models/DnsExpiring.swift
 Sources/TonAPI/Models/DnsExpiringItemsInner.swift
 Sources/TonAPI/Models/DnsRecord.swift
@@ -152,6 +154,7 @@ Sources/TonAPI/Models/GetAccountsRequest.swift
 Sources/TonAPI/Models/GetAllRawShardsInfo200Response.swift
 Sources/TonAPI/Models/GetChartRates200Response.swift
 Sources/TonAPI/Models/GetMarketsRates200Response.swift
+Sources/TonAPI/Models/GetOpenapiJsonDefaultResponse.swift
 Sources/TonAPI/Models/GetOutMsgQueueSizes200Response.swift
 Sources/TonAPI/Models/GetOutMsgQueueSizes200ResponseShardsInner.swift
 Sources/TonAPI/Models/GetRates200Response.swift
@@ -182,7 +185,6 @@ Sources/TonAPI/Models/GetStorageProviders200Response.swift
 Sources/TonAPI/Models/GetTonConnectPayload200Response.swift
 Sources/TonAPI/Models/ImagePreview.swift
 Sources/TonAPI/Models/InitStateRaw.swift
-Sources/TonAPI/Models/InlineObject.swift
 Sources/TonAPI/Models/JettonBalance.swift
 Sources/TonAPI/Models/JettonBalanceLock.swift
 Sources/TonAPI/Models/JettonBridgeParams.swift
@@ -203,6 +205,7 @@ Sources/TonAPI/Models/JettonTransferPayload.swift
 Sources/TonAPI/Models/JettonVerificationType.swift
 Sources/TonAPI/Models/Jettons.swift
 Sources/TonAPI/Models/JettonsBalances.swift
+Sources/TonAPI/Models/LiquidityDepositAction.swift
 Sources/TonAPI/Models/MarketTonRates.swift
 Sources/TonAPI/Models/Message.swift
 Sources/TonAPI/Models/MessageConsequences.swift
@@ -211,6 +214,7 @@ Sources/TonAPI/Models/Method.swift
 Sources/TonAPI/Models/MethodExecutionResult.swift
 Sources/TonAPI/Models/MisbehaviourPunishmentConfig.swift
 Sources/TonAPI/Models/ModelError.swift
+Sources/TonAPI/Models/ModelProtocol.swift
 Sources/TonAPI/Models/MsgForwardPrices.swift
 Sources/TonAPI/Models/Multisig.swift
 Sources/TonAPI/Models/MultisigOrder.swift
@@ -237,6 +241,7 @@ Sources/TonAPI/Models/RawBlockchainConfig.swift
 Sources/TonAPI/Models/ReducedBlock.swift
 Sources/TonAPI/Models/ReducedBlocks.swift
 Sources/TonAPI/Models/Refund.swift
+Sources/TonAPI/Models/RemoveExtensionAction.swift
 Sources/TonAPI/Models/Risk.swift
 Sources/TonAPI/Models/Sale.swift
 Sources/TonAPI/Models/SendBlockchainMessageRequest.swift
@@ -244,6 +249,7 @@ Sources/TonAPI/Models/SendRawMessage200Response.swift
 Sources/TonAPI/Models/SendRawMessageRequest.swift
 Sources/TonAPI/Models/Seqno.swift
 Sources/TonAPI/Models/ServiceStatus.swift
+Sources/TonAPI/Models/SetSignatureAllowedAction.swift
 Sources/TonAPI/Models/SignRawMessage.swift
 Sources/TonAPI/Models/SignRawParams.swift
 Sources/TonAPI/Models/SizeLimitsConfig.swift
@@ -277,6 +283,7 @@ Sources/TonAPI/Models/ValidatorsSet.swift
 Sources/TonAPI/Models/ValidatorsSetListInner.swift
 Sources/TonAPI/Models/ValueFlow.swift
 Sources/TonAPI/Models/ValueFlowJettonsInner.swift
+Sources/TonAPI/Models/VaultDepositInfo.swift
 Sources/TonAPI/Models/Wallet.swift
 Sources/TonAPI/Models/WalletDNS.swift
 Sources/TonAPI/Models/WalletPlugin.swift
@@ -284,6 +291,7 @@ Sources/TonAPI/Models/WalletStats.swift
 Sources/TonAPI/Models/Wallets.swift
 Sources/TonAPI/Models/WithdrawStakeAction.swift
 Sources/TonAPI/Models/WithdrawStakeRequestAction.swift
+Sources/TonAPI/Models/WithdrawTokenStakeRequestAction.swift
 Sources/TonAPI/Models/WorkchainDescr.swift
 Sources/TonAPI/OpenISO8601DateFormatter.swift
 Sources/TonAPI/SynchronizedDictionary.swift
@@ -305,6 +313,7 @@ docs/AccountsAPI.md
 docs/Action.md
 docs/ActionPhase.md
 docs/ActionSimplePreview.md
+docs/AddExtensionAction.md
 docs/AddressParse200Response.md
 docs/AddressParse200ResponseBounceable.md
 docs/ApyHistory.md
@@ -377,6 +386,7 @@ docs/DecodedMessageExtInMsgDecodedWalletV5.md
 docs/DecodedRawMessage.md
 docs/DecodedRawMessageMessage.md
 docs/DepositStakeAction.md
+docs/DepositTokenStakeAction.md
 docs/DnsExpiring.md
 docs/DnsExpiringItemsInner.md
 docs/DnsRecord.md
@@ -419,6 +429,7 @@ docs/GetAccountsRequest.md
 docs/GetAllRawShardsInfo200Response.md
 docs/GetChartRates200Response.md
 docs/GetMarketsRates200Response.md
+docs/GetOpenapiJsonDefaultResponse.md
 docs/GetOutMsgQueueSizes200Response.md
 docs/GetOutMsgQueueSizes200ResponseShardsInner.md
 docs/GetRates200Response.md
@@ -449,7 +460,6 @@ docs/GetStorageProviders200Response.md
 docs/GetTonConnectPayload200Response.md
 docs/ImagePreview.md
 docs/InitStateRaw.md
-docs/InlineObject.md
 docs/JettonBalance.md
 docs/JettonBalanceLock.md
 docs/JettonBridgeParams.md
@@ -471,6 +481,7 @@ docs/JettonVerificationType.md
 docs/Jettons.md
 docs/JettonsAPI.md
 docs/JettonsBalances.md
+docs/LiquidityDepositAction.md
 docs/LiteServerAPI.md
 docs/MarketTonRates.md
 docs/Message.md
@@ -480,6 +491,7 @@ docs/Method.md
 docs/MethodExecutionResult.md
 docs/MisbehaviourPunishmentConfig.md
 docs/ModelError.md
+docs/ModelProtocol.md
 docs/MsgForwardPrices.md
 docs/Multisig.md
 docs/MultisigAPI.md
@@ -510,6 +522,7 @@ docs/RawBlockchainConfig.md
 docs/ReducedBlock.md
 docs/ReducedBlocks.md
 docs/Refund.md
+docs/RemoveExtensionAction.md
 docs/Risk.md
 docs/Sale.md
 docs/SendBlockchainMessageRequest.md
@@ -517,6 +530,7 @@ docs/SendRawMessage200Response.md
 docs/SendRawMessageRequest.md
 docs/Seqno.md
 docs/ServiceStatus.md
+docs/SetSignatureAllowedAction.md
 docs/SignRawMessage.md
 docs/SignRawParams.md
 docs/SizeLimitsConfig.md
@@ -554,6 +568,7 @@ docs/ValidatorsSet.md
 docs/ValidatorsSetListInner.md
 docs/ValueFlow.md
 docs/ValueFlowJettonsInner.md
+docs/VaultDepositInfo.md
 docs/Wallet.md
 docs/WalletAPI.md
 docs/WalletDNS.md
@@ -562,6 +577,7 @@ docs/WalletStats.md
 docs/Wallets.md
 docs/WithdrawStakeAction.md
 docs/WithdrawStakeRequestAction.md
+docs/WithdrawTokenStakeRequestAction.md
 docs/WorkchainDescr.md
 git_push.sh
 project.yml

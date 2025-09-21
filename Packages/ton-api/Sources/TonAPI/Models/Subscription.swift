@@ -32,8 +32,9 @@ public struct Subscription: Codable, JSONEncodable, Hashable {
     public var metadata: Metadata
     public var address: String?
     public var beneficiary: AccountAddress?
+    public var admin: AccountAddress?
 
-    public init(type: String, status: Status, period: Int64, subscriptionId: String, paymentPerPeriod: Price, wallet: AccountAddress, nextChargeAt: Int64, metadata: Metadata, address: String? = nil, beneficiary: AccountAddress? = nil) {
+    public init(type: String, status: Status, period: Int64, subscriptionId: String, paymentPerPeriod: Price, wallet: AccountAddress, nextChargeAt: Int64, metadata: Metadata, address: String? = nil, beneficiary: AccountAddress? = nil, admin: AccountAddress? = nil) {
         self.type = type
         self.status = status
         self.period = period
@@ -44,6 +45,7 @@ public struct Subscription: Codable, JSONEncodable, Hashable {
         self.metadata = metadata
         self.address = address
         self.beneficiary = beneficiary
+        self.admin = admin
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -57,6 +59,7 @@ public struct Subscription: Codable, JSONEncodable, Hashable {
         case metadata
         case address
         case beneficiary
+        case admin
     }
 
     // Encodable protocol methods
@@ -73,6 +76,7 @@ public struct Subscription: Codable, JSONEncodable, Hashable {
         try container.encode(metadata, forKey: .metadata)
         try container.encodeIfPresent(address, forKey: .address)
         try container.encodeIfPresent(beneficiary, forKey: .beneficiary)
+        try container.encodeIfPresent(admin, forKey: .admin)
     }
 }
 

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 # **emulateMessageToWallet**
 ```swift
-    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
 ```
 
 
@@ -27,8 +27,9 @@ import TonAPI
 
 let emulateMessageToWalletRequest = emulateMessageToWallet_request(boc: "boc_example", params: [emulateMessageToWallet_request_params_inner(address: "address_example", balance: 123)]) // EmulateMessageToWalletRequest | bag-of-cells serialized to base64/hex and additional parameters to configure emulation
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
+let currency = "currency_example" // String |  (optional)
 
-WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage) { (response, error) in
+WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage, currency: currency) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -46,6 +47,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **emulateMessageToWalletRequest** | [**EmulateMessageToWalletRequest**](EmulateMessageToWalletRequest.md) | bag-of-cells serialized to base64/hex and additional parameters to configure emulation | 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
+ **currency** | **String** |  | [optional] 
 
 ### Return type
 

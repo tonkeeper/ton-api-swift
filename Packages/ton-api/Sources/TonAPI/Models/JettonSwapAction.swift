@@ -12,13 +12,7 @@ import AnyCodable
 
 public struct JettonSwapAction: Codable, JSONEncodable, Hashable {
 
-    public enum Dex: String, Codable, CaseIterable, CaseIterableDefaultsLast {
-        case stonfi = "stonfi"
-        case dedust = "dedust"
-        case megatonfi = "megatonfi"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
-    }
-    public var dex: Dex
+    public var dex: String
     public var amountIn: String
     public var amountOut: String
     public var tonIn: Int64?
@@ -28,7 +22,7 @@ public struct JettonSwapAction: Codable, JSONEncodable, Hashable {
     public var jettonMasterIn: JettonPreview?
     public var jettonMasterOut: JettonPreview?
 
-    public init(dex: Dex, amountIn: String, amountOut: String, tonIn: Int64? = nil, tonOut: Int64? = nil, userWallet: AccountAddress, router: AccountAddress, jettonMasterIn: JettonPreview? = nil, jettonMasterOut: JettonPreview? = nil) {
+    public init(dex: String, amountIn: String, amountOut: String, tonIn: Int64? = nil, tonOut: Int64? = nil, userWallet: AccountAddress, router: AccountAddress, jettonMasterIn: JettonPreview? = nil, jettonMasterOut: JettonPreview? = nil) {
         self.dex = dex
         self.amountIn = amountIn
         self.amountOut = amountOut

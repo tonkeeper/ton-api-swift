@@ -15,20 +15,22 @@ open class DNSAPI {
     /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
+     - parameter filter: (query)  (optional, default to false)
      - returns: DnsRecord
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func dnsResolve(domainName: String) async throws -> DnsRecord {
-        return try await dnsResolveWithRequestBuilder(domainName: domainName).execute().body
+    open class func dnsResolve(domainName: String, filter: Bool? = nil) async throws -> DnsRecord {
+        return try await dnsResolveWithRequestBuilder(domainName: domainName, filter: filter).execute().body
     }
 
     /**
      - GET /v2/dns/{domain_name}/resolve
      - DNS resolve for domain name
      - parameter domainName: (path) domain name with .ton or .t.me 
+     - parameter filter: (query)  (optional, default to false)
      - returns: RequestBuilder<DnsRecord> 
      */
-    open class func dnsResolveWithRequestBuilder(domainName: String) -> RequestBuilder<DnsRecord> {
+    open class func dnsResolveWithRequestBuilder(domainName: String, filter: Bool? = nil) -> RequestBuilder<DnsRecord> {
         var localVariablePath = "/v2/dns/{domain_name}/resolve"
         let domainNamePreEscape = "\(APIHelper.mapValueToPathItem(domainName))"
         let domainNamePostEscape = domainNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -36,7 +38,10 @@ open class DNSAPI {
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "filter": (wrappedValue: filter?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :

@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | **String** |  | 
-**orderSeqno** | **Int64** |  | 
+**orderSeqno** | **String** |  | 
 **threshold** | **Int** |  | 
 **sentForExecution** | **Bool** |  | 
 **signers** | **[String]** |  | 

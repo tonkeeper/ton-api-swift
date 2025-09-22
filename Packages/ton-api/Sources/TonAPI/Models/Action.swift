@@ -33,6 +33,13 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case smartContractExec = "SmartContractExec"
         case domainRenew = "DomainRenew"
         case purchase = "Purchase"
+        case addExtension = "AddExtension"
+        case removeExtension = "RemoveExtension"
+        case setSignatureAllowedAction = "SetSignatureAllowedAction"
+        case gasRelay = "GasRelay"
+        case depositTokenStake = "DepositTokenStake"
+        case withdrawTokenStakeRequest = "WithdrawTokenStakeRequest"
+        case liquidityDeposit = "LiquidityDeposit"
         case unknown = "Unknown"
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
@@ -63,11 +70,17 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var smartContractExec: SmartContractAction?
     public var domainRenew: DomainRenewAction?
     public var purchase: PurchaseAction?
+    public var addExtension: AddExtensionAction?
+    public var removeExtension: RemoveExtensionAction?
+    public var setSignatureAllowedAction: SetSignatureAllowedAction?
     public var gasRelay: GasRelayAction?
+    public var depositTokenStake: DepositTokenStakeAction?
+    public var withdrawTokenStakeRequest: WithdrawTokenStakeRequestAction?
+    public var liquidityDeposit: LiquidityDepositAction?
     public var simplePreview: ActionSimplePreview
     public var baseTransactions: [String]
 
-    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, purchase: PurchaseAction? = nil, gasRelay: GasRelayAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
+    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, purchase: PurchaseAction? = nil, addExtension: AddExtensionAction? = nil, removeExtension: RemoveExtensionAction? = nil, setSignatureAllowedAction: SetSignatureAllowedAction? = nil, gasRelay: GasRelayAction? = nil, depositTokenStake: DepositTokenStakeAction? = nil, withdrawTokenStakeRequest: WithdrawTokenStakeRequestAction? = nil, liquidityDeposit: LiquidityDepositAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
         self.type = type
         self.status = status
         self.tonTransfer = tonTransfer
@@ -90,7 +103,13 @@ public struct Action: Codable, JSONEncodable, Hashable {
         self.smartContractExec = smartContractExec
         self.domainRenew = domainRenew
         self.purchase = purchase
+        self.addExtension = addExtension
+        self.removeExtension = removeExtension
+        self.setSignatureAllowedAction = setSignatureAllowedAction
         self.gasRelay = gasRelay
+        self.depositTokenStake = depositTokenStake
+        self.withdrawTokenStakeRequest = withdrawTokenStakeRequest
+        self.liquidityDeposit = liquidityDeposit
         self.simplePreview = simplePreview
         self.baseTransactions = baseTransactions
     }
@@ -118,7 +137,13 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case smartContractExec = "SmartContractExec"
         case domainRenew = "DomainRenew"
         case purchase = "Purchase"
+        case addExtension = "AddExtension"
+        case removeExtension = "RemoveExtension"
+        case setSignatureAllowedAction = "SetSignatureAllowedAction"
         case gasRelay = "GasRelay"
+        case depositTokenStake = "DepositTokenStake"
+        case withdrawTokenStakeRequest = "WithdrawTokenStakeRequest"
+        case liquidityDeposit = "LiquidityDeposit"
         case simplePreview = "simple_preview"
         case baseTransactions = "base_transactions"
     }
@@ -149,7 +174,13 @@ public struct Action: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(smartContractExec, forKey: .smartContractExec)
         try container.encodeIfPresent(domainRenew, forKey: .domainRenew)
         try container.encodeIfPresent(purchase, forKey: .purchase)
+        try container.encodeIfPresent(addExtension, forKey: .addExtension)
+        try container.encodeIfPresent(removeExtension, forKey: .removeExtension)
+        try container.encodeIfPresent(setSignatureAllowedAction, forKey: .setSignatureAllowedAction)
         try container.encodeIfPresent(gasRelay, forKey: .gasRelay)
+        try container.encodeIfPresent(depositTokenStake, forKey: .depositTokenStake)
+        try container.encodeIfPresent(withdrawTokenStakeRequest, forKey: .withdrawTokenStakeRequest)
+        try container.encodeIfPresent(liquidityDeposit, forKey: .liquidityDeposit)
         try container.encode(simplePreview, forKey: .simplePreview)
         try container.encode(baseTransactions, forKey: .baseTransactions)
     }

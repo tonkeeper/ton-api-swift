@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | **String** |  | 
-**seqno** | **Int64** |  | 
+**seqno** | **String** |  | 
 **threshold** | **Int** |  | 
 **signers** | **[String]** |  | 
 **proposers** | **[String]** |  | 

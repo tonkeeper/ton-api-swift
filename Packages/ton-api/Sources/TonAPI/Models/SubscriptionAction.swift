@@ -15,14 +15,19 @@ public struct SubscriptionAction: Codable, JSONEncodable, Hashable {
     public var subscriber: AccountAddress
     public var subscription: String
     public var beneficiary: AccountAddress
-    public var amount: Int64
+    public var admin: AccountAddress
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var amount: Int64?
+    public var price: Price
     public var initial: Bool
 
-    public init(subscriber: AccountAddress, subscription: String, beneficiary: AccountAddress, amount: Int64, initial: Bool) {
+    public init(subscriber: AccountAddress, subscription: String, beneficiary: AccountAddress, admin: AccountAddress, amount: Int64? = nil, price: Price, initial: Bool) {
         self.subscriber = subscriber
         self.subscription = subscription
         self.beneficiary = beneficiary
+        self.admin = admin
         self.amount = amount
+        self.price = price
         self.initial = initial
     }
 
@@ -30,7 +35,9 @@ public struct SubscriptionAction: Codable, JSONEncodable, Hashable {
         case subscriber
         case subscription
         case beneficiary
+        case admin
         case amount
+        case price
         case initial
     }
 
@@ -41,7 +48,9 @@ public struct SubscriptionAction: Codable, JSONEncodable, Hashable {
         try container.encode(subscriber, forKey: .subscriber)
         try container.encode(subscription, forKey: .subscription)
         try container.encode(beneficiary, forKey: .beneficiary)
-        try container.encode(amount, forKey: .amount)
+        try container.encode(admin, forKey: .admin)
+        try container.encodeIfPresent(amount, forKey: .amount)
+        try container.encode(price, forKey: .price)
         try container.encode(initial, forKey: .initial)
     }
 }

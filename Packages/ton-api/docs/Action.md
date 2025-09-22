@@ -25,7 +25,13 @@ Name | Type | Description | Notes
 **smartContractExec** | [**SmartContractAction**](SmartContractAction.md) |  | [optional] 
 **domainRenew** | [**DomainRenewAction**](DomainRenewAction.md) |  | [optional] 
 **purchase** | [**PurchaseAction**](PurchaseAction.md) |  | [optional] 
+**addExtension** | [**AddExtensionAction**](AddExtensionAction.md) |  | [optional] 
+**removeExtension** | [**RemoveExtensionAction**](RemoveExtensionAction.md) |  | [optional] 
+**setSignatureAllowedAction** | [**SetSignatureAllowedAction**](SetSignatureAllowedAction.md) |  | [optional] 
 **gasRelay** | [**GasRelayAction**](GasRelayAction.md) |  | [optional] 
+**depositTokenStake** | [**DepositTokenStakeAction**](DepositTokenStakeAction.md) |  | [optional] 
+**withdrawTokenStakeRequest** | [**WithdrawTokenStakeRequestAction**](WithdrawTokenStakeRequestAction.md) |  | [optional] 
+**liquidityDeposit** | [**LiquidityDepositAction**](LiquidityDepositAction.md) |  | [optional] 
 **simplePreview** | [**ActionSimplePreview**](ActionSimplePreview.md) |  | 
 **baseTransactions** | **[String]** |  | 
 

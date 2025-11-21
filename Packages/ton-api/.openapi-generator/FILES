@@ -244,6 +244,7 @@ Sources/TonAPI/Models/Refund.swift
 Sources/TonAPI/Models/RemoveExtensionAction.swift
 Sources/TonAPI/Models/Risk.swift
 Sources/TonAPI/Models/Sale.swift
+Sources/TonAPI/Models/ScaledUI.swift
 Sources/TonAPI/Models/SendBlockchainMessageRequest.swift
 Sources/TonAPI/Models/SendRawMessage200Response.swift
 Sources/TonAPI/Models/SendRawMessageRequest.swift
@@ -525,6 +526,7 @@ docs/Refund.md
 docs/RemoveExtensionAction.md
 docs/Risk.md
 docs/Sale.md
+docs/ScaledUI.md
 docs/SendBlockchainMessageRequest.md
 docs/SendRawMessage200Response.md
 docs/SendRawMessageRequest.md

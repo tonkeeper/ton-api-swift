@@ -356,6 +356,7 @@ Class | Method | HTTP request | Description
  - [RemoveExtensionAction](docs/RemoveExtensionAction.md)
  - [Risk](docs/Risk.md)
  - [Sale](docs/Sale.md)
+ - [ScaledUI](docs/ScaledUI.md)
  - [SendBlockchainMessageRequest](docs/SendBlockchainMessageRequest.md)
  - [SendRawMessage200Response](docs/SendRawMessage200Response.md)
  - [SendRawMessageRequest](docs/SendRawMessageRequest.md)

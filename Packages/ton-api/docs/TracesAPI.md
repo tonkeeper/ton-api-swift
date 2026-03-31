@@ -23,7 +23,7 @@ Emulate sending message to retrieve with a detailed execution trace
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let ignoreSignatureCheck = true // Bool |  (optional)
 
 TracesAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
@@ -43,7 +43,7 @@ TracesAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEsti
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
 ### Return type
@@ -76,7 +76,7 @@ Get the trace by trace ID or hash of any transaction in trace
 import TonAPI
 
 let traceId = "traceId_example" // String | trace ID or transaction hash in hex (without 0x) or base64url format
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 TracesAPI.getTrace(traceId: traceId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -95,7 +95,7 @@ TracesAPI.getTrace(traceId: traceId, xCapability: xCapability) { (response, erro
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **traceId** | **String** | trace ID or transaction hash in hex (without 0x) or base64url format | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

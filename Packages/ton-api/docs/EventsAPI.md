@@ -23,7 +23,7 @@ Emulate sending message to retrieve general blockchain events
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
@@ -44,7 +44,7 @@ EventsAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEsti
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -78,7 +78,7 @@ Get an event either by event ID or a hash of any transaction in a trace. An even
 import TonAPI
 
 let eventId = "eventId_example" // String | event ID or transaction hash in hex (without 0x) or base64url format
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
 EventsAPI.getEvent(eventId: eventId, xCapability: xCapability, acceptLanguage: acceptLanguage) { (response, error) in
@@ -98,7 +98,7 @@ EventsAPI.getEvent(eventId: eventId, xCapability: xCapability, acceptLanguage: a
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **eventId** | **String** | event ID or transaction hash in hex (without 0x) or base64url format | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type

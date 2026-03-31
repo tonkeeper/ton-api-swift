@@ -22,7 +22,7 @@ open class EmulationAPI {
     /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: DecodedMessage
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class EmulationAPI {
      - POST /v2/message/decode
      - Decode a given message. Only external incoming messages can be decoded currently.
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<DecodedMessage> 
      */
     open class func decodeMessageWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_decodeMessage? = nil) -> RequestBuilder<DecodedMessage> {
@@ -67,7 +67,7 @@ open class EmulationAPI {
 
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: AccountEvent
@@ -82,7 +82,7 @@ open class EmulationAPI {
      - Emulate sending message to retrieve account-specific events
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<AccountEvent> 
@@ -123,7 +123,7 @@ open class EmulationAPI {
     /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Event
@@ -137,7 +137,7 @@ open class EmulationAPI {
      - POST /v2/events/emulate
      - Emulate sending message to retrieve general blockchain events
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Event> 
@@ -175,7 +175,7 @@ open class EmulationAPI {
     /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Trace
      */
@@ -188,7 +188,7 @@ open class EmulationAPI {
      - POST /v2/traces/emulate
      - Emulate sending message to retrieve with a detailed execution trace
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Trace> 
      */
@@ -224,7 +224,7 @@ open class EmulationAPI {
     /**
 
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: MessageConsequences
@@ -238,7 +238,7 @@ open class EmulationAPI {
      - POST /v2/wallet/emulate
      - Emulate sending message to retrieve the resulting wallet state
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: RequestBuilder<MessageConsequences> 

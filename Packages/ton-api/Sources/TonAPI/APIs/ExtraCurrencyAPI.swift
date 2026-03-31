@@ -22,7 +22,7 @@ open class ExtraCurrencyAPI {
     /**
 
      - parameter id: (path) extra currency id 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: EcPreview
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class ExtraCurrencyAPI {
      - GET /v2/extra-currency/{id}
      - Get extra currency info by id
      - parameter id: (path) extra currency id 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<EcPreview> 
      */
     open class func getExtraCurrencyInfoWithRequestBuilder(id: Int, xCapability: XCapability_getExtraCurrencyInfo? = nil) -> RequestBuilder<EcPreview> {

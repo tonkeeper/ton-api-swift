@@ -22,7 +22,7 @@ open class BlockchainAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainAccountInspect
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/accounts/{account_id}/inspect
      - Blockchain account inspect
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainAccountInspect> 
      */
     open class func blockchainAccountInspectWithRequestBuilder(accountId: String, xCapability: XCapability_blockchainAccountInspect? = nil) -> RequestBuilder<BlockchainAccountInspect> {
@@ -68,7 +68,7 @@ open class BlockchainAPI {
     /**
 
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: URL
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -81,7 +81,7 @@ open class BlockchainAPI {
      - Download blockchain block BOC
      - responseHeaders: [Content-Disposition(String)]
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<URL> 
      */
     open class func downloadBlockchainBlockBocWithRequestBuilder(blockId: String, xCapability: XCapability_downloadBlockchainBlockBoc? = nil) -> RequestBuilder<URL> {
@@ -116,7 +116,7 @@ open class BlockchainAPI {
 
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter args: (query)  (optional)
      - returns: MethodExecutionResult
      */
@@ -130,7 +130,7 @@ open class BlockchainAPI {
      - Execute get method for account
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter args: (query)  (optional)
      - returns: RequestBuilder<MethodExecutionResult> 
      */
@@ -172,7 +172,7 @@ open class BlockchainAPI {
 
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter execGetMethodWithBodyForBlockchainAccountRequest: (body) Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
      - returns: MethodExecutionResult
      */
@@ -186,7 +186,7 @@ open class BlockchainAPI {
      - Execute get method for account
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter execGetMethodWithBodyForBlockchainAccountRequest: (body) Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
      - returns: RequestBuilder<MethodExecutionResult> 
      */
@@ -233,7 +233,7 @@ open class BlockchainAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter afterLt: (query) omit this parameter to get last transactions (optional)
      - parameter beforeLt: (query) omit this parameter to get last transactions (optional)
      - parameter limit: (query)  (optional, default to 100)
@@ -249,7 +249,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/accounts/{account_id}/transactions
      - Get account transactions
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter afterLt: (query) omit this parameter to get last transactions (optional)
      - parameter beforeLt: (query) omit this parameter to get last transactions (optional)
      - parameter limit: (query)  (optional, default to 100)
@@ -293,7 +293,7 @@ open class BlockchainAPI {
     /**
 
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlock
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -305,7 +305,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/blocks/{block_id}
      - Get blockchain block data
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlock> 
      */
     open class func getBlockchainBlockWithRequestBuilder(blockId: String, xCapability: XCapability_getBlockchainBlock? = nil) -> RequestBuilder<BlockchainBlock> {
@@ -339,7 +339,7 @@ open class BlockchainAPI {
     /**
 
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transactions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -351,7 +351,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/blocks/{block_id}/transactions
      - Get transactions from block
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transactions> 
      */
     open class func getBlockchainBlockTransactionsWithRequestBuilder(blockId: String, xCapability: XCapability_getBlockchainBlockTransactions? = nil) -> RequestBuilder<Transactions> {
@@ -384,7 +384,7 @@ open class BlockchainAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -395,7 +395,7 @@ open class BlockchainAPI {
     /**
      - GET /v2/blockchain/config
      - Get blockchain config
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainConfig> 
      */
     open class func getBlockchainConfigWithRequestBuilder(xCapability: XCapability_getBlockchainConfig? = nil) -> RequestBuilder<BlockchainConfig> {
@@ -426,7 +426,7 @@ open class BlockchainAPI {
     /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -438,7 +438,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/config
      - Get blockchain config from a specific block, if present.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainConfig> 
      */
     open class func getBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainConfigFromBlock? = nil) -> RequestBuilder<BlockchainConfig> {
@@ -472,7 +472,7 @@ open class BlockchainAPI {
     /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlocks
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -484,7 +484,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/blocks
      - Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlocks> 
      */
     open class func getBlockchainMasterchainBlocksWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainBlocks? = nil) -> RequestBuilder<BlockchainBlocks> {
@@ -517,7 +517,7 @@ open class BlockchainAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlock
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -528,7 +528,7 @@ open class BlockchainAPI {
     /**
      - GET /v2/blockchain/masterchain-head
      - Get last known masterchain block
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlock> 
      */
     open class func getBlockchainMasterchainHeadWithRequestBuilder(xCapability: XCapability_getBlockchainMasterchainHead? = nil) -> RequestBuilder<BlockchainBlock> {
@@ -559,7 +559,7 @@ open class BlockchainAPI {
     /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlockShards
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -571,7 +571,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/shards
      - Get blockchain block shards
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlockShards> 
      */
     open class func getBlockchainMasterchainShardsWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainShards? = nil) -> RequestBuilder<BlockchainBlockShards> {
@@ -605,7 +605,7 @@ open class BlockchainAPI {
     /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transactions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -617,7 +617,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/transactions
      - Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transactions> 
      */
     open class func getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil) -> RequestBuilder<Transactions> {
@@ -651,7 +651,7 @@ open class BlockchainAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainRawAccount
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -663,7 +663,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/accounts/{account_id}
      - Get low-level information about an account taken directly from the blockchain.
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainRawAccount> 
      */
     open class func getBlockchainRawAccountWithRequestBuilder(accountId: String, xCapability: XCapability_getBlockchainRawAccount? = nil) -> RequestBuilder<BlockchainRawAccount> {
@@ -697,7 +697,7 @@ open class BlockchainAPI {
     /**
 
      - parameter transactionId: (path) transaction ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transaction
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -709,7 +709,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/transactions/{transaction_id}
      - Get transaction data
      - parameter transactionId: (path) transaction ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transaction> 
      */
     open class func getBlockchainTransactionWithRequestBuilder(transactionId: String, xCapability: XCapability_getBlockchainTransaction? = nil) -> RequestBuilder<Transaction> {
@@ -743,7 +743,7 @@ open class BlockchainAPI {
     /**
 
      - parameter msgId: (path) message ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transaction
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -755,7 +755,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/messages/{msg_id}/transaction
      - Get transaction data by message hash
      - parameter msgId: (path) message ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transaction> 
      */
     open class func getBlockchainTransactionByMessageHashWithRequestBuilder(msgId: String, xCapability: XCapability_getBlockchainTransactionByMessageHash? = nil) -> RequestBuilder<Transaction> {
@@ -788,7 +788,7 @@ open class BlockchainAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Validators
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -799,7 +799,7 @@ open class BlockchainAPI {
     /**
      - GET /v2/blockchain/validators
      - Get blockchain validators
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Validators> 
      */
     open class func getBlockchainValidatorsWithRequestBuilder(xCapability: XCapability_getBlockchainValidators? = nil) -> RequestBuilder<Validators> {
@@ -830,7 +830,7 @@ open class BlockchainAPI {
     /**
 
      - parameter hash: (path) hash in hex (without 0x) format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainLibrary
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -842,7 +842,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/libraries/{hash}
      - Get library cell
      - parameter hash: (path) hash in hex (without 0x) format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainLibrary> 
      */
     open class func getLibraryByHashWithRequestBuilder(hash: String, xCapability: XCapability_getLibraryByHash? = nil) -> RequestBuilder<BlockchainLibrary> {
@@ -875,7 +875,7 @@ open class BlockchainAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RawBlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -886,7 +886,7 @@ open class BlockchainAPI {
     /**
      - GET /v2/blockchain/config/raw
      - Get raw blockchain config
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<RawBlockchainConfig> 
      */
     open class func getRawBlockchainConfigWithRequestBuilder(xCapability: XCapability_getRawBlockchainConfig? = nil) -> RequestBuilder<RawBlockchainConfig> {
@@ -917,7 +917,7 @@ open class BlockchainAPI {
     /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RawBlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -929,7 +929,7 @@ open class BlockchainAPI {
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/config/raw
      - Get raw blockchain config from a specific block, if present.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<RawBlockchainConfig> 
      */
     open class func getRawBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getRawBlockchainConfigFromBlock? = nil) -> RequestBuilder<RawBlockchainConfig> {
@@ -964,7 +964,7 @@ open class BlockchainAPI {
 
      - parameter from: (query)  
      - parameter to: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: ReducedBlocks
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -977,7 +977,7 @@ open class BlockchainAPI {
      - Get reduced blockchain blocks data
      - parameter from: (query)  
      - parameter to: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<ReducedBlocks> 
      */
     open class func getReducedBlockchainBlocksWithRequestBuilder(from: Int64, to: Int64, xCapability: XCapability_getReducedBlockchainBlocks? = nil) -> RequestBuilder<ReducedBlocks> {
@@ -1012,7 +1012,7 @@ open class BlockchainAPI {
     /**
 
      - parameter sendBlockchainMessageRequest: (body) both a single boc and a batch of boc serialized in base64/hex are accepted 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1024,7 +1024,7 @@ open class BlockchainAPI {
      - POST /v2/blockchain/message
      - Send message to blockchain
      - parameter sendBlockchainMessageRequest: (body) both a single boc and a batch of boc serialized in base64/hex are accepted 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Void> 
      */
     open class func sendBlockchainMessageWithRequestBuilder(sendBlockchainMessageRequest: SendBlockchainMessageRequest, xCapability: XCapability_sendBlockchainMessage? = nil) -> RequestBuilder<Void> {

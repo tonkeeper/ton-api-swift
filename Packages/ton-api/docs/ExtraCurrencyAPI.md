@@ -22,7 +22,7 @@ Get extra currency info by id
 import TonAPI
 
 let id = 987 // Int | extra currency id
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 ExtraCurrencyAPI.getExtraCurrencyInfo(id: id, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -41,7 +41,7 @@ ExtraCurrencyAPI.getExtraCurrencyInfo(id: id, xCapability: xCapability) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Int** | extra currency id | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

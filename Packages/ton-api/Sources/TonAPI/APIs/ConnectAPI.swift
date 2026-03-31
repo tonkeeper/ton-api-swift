@@ -22,7 +22,7 @@ open class ConnectAPI {
     /**
 
      - parameter getAccountInfoByStateInitRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: AccountInfoByStateInit
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class ConnectAPI {
      - POST /v2/tonconnect/stateinit
      - Get account info by state init
      - parameter getAccountInfoByStateInitRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<AccountInfoByStateInit> 
      */
     open class func getAccountInfoByStateInitWithRequestBuilder(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest, xCapability: XCapability_getAccountInfoByStateInit? = nil) -> RequestBuilder<AccountInfoByStateInit> {
@@ -65,7 +65,7 @@ open class ConnectAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetTonConnectPayload200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -76,7 +76,7 @@ open class ConnectAPI {
     /**
      - GET /v2/tonconnect/payload
      - Get a payload for further token receipt
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetTonConnectPayload200Response> 
      */
     open class func getTonConnectPayloadWithRequestBuilder(xCapability: XCapability_getTonConnectPayload? = nil) -> RequestBuilder<GetTonConnectPayload200Response> {

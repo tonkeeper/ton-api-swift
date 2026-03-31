@@ -23,7 +23,7 @@ Get account info by state init
 import TonAPI
 
 let getAccountInfoByStateInitRequest = getAccountInfoByStateInit_request(stateInit: "stateInit_example") // GetAccountInfoByStateInitRequest | Data that is expected
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 ConnectAPI.getAccountInfoByStateInit(getAccountInfoByStateInitRequest: getAccountInfoByStateInitRequest, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -42,7 +42,7 @@ ConnectAPI.getAccountInfoByStateInit(getAccountInfoByStateInitRequest: getAccoun
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **getAccountInfoByStateInitRequest** | [**GetAccountInfoByStateInitRequest**](GetAccountInfoByStateInitRequest.md) | Data that is expected | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -73,7 +73,7 @@ Get a payload for further token receipt
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 ConnectAPI.getTonConnectPayload(xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -91,7 +91,7 @@ ConnectAPI.getTonConnectPayload(xCapability: xCapability) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

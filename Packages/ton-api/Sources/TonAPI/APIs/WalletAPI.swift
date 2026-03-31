@@ -22,7 +22,7 @@ open class WalletAPI {
     /**
 
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: MessageConsequences
@@ -36,7 +36,7 @@ open class WalletAPI {
      - POST /v2/wallet/emulate
      - Emulate sending message to retrieve the resulting wallet state
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: RequestBuilder<MessageConsequences> 
@@ -74,7 +74,7 @@ open class WalletAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Seqno
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -86,7 +86,7 @@ open class WalletAPI {
      - GET /v2/wallet/{account_id}/seqno
      - Get account seqno
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Seqno> 
      */
     open class func getAccountSeqnoWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountSeqno? = nil) -> RequestBuilder<Seqno> {
@@ -120,7 +120,7 @@ open class WalletAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Wallet
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -132,7 +132,7 @@ open class WalletAPI {
      - GET /v2/wallet/{account_id}
      - Get human-friendly information about a wallet without low-level details.
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Wallet> 
      */
     open class func getWalletInfoWithRequestBuilder(accountId: String, xCapability: XCapability_getWalletInfo? = nil) -> RequestBuilder<Wallet> {
@@ -166,7 +166,7 @@ open class WalletAPI {
     /**
 
      - parameter publicKey: (path)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Wallets
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -178,7 +178,7 @@ open class WalletAPI {
      - GET /v2/pubkeys/{public_key}/wallets
      - Get wallets by public key
      - parameter publicKey: (path)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Wallets> 
      */
     open class func getWalletsByPublicKeyWithRequestBuilder(publicKey: String, xCapability: XCapability_getWalletsByPublicKey? = nil) -> RequestBuilder<Wallets> {
@@ -212,7 +212,7 @@ open class WalletAPI {
     /**
 
      - parameter tonConnectProofRequest: (body) Data that is expected from TON Connect 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: TonConnectProof200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -224,7 +224,7 @@ open class WalletAPI {
      - POST /v2/wallet/auth/proof
      - Account verification and token issuance
      - parameter tonConnectProofRequest: (body) Data that is expected from TON Connect 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<TonConnectProof200Response> 
      */
     open class func tonConnectProofWithRequestBuilder(tonConnectProofRequest: TonConnectProofRequest, xCapability: XCapability_tonConnectProof? = nil) -> RequestBuilder<TonConnectProof200Response> {

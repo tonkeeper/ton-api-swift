@@ -21,7 +21,7 @@ open class GaslessAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GaslessConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -32,7 +32,7 @@ open class GaslessAPI {
     /**
      - GET /v2/gasless/config
      - Returns configuration of gasless transfers
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GaslessConfig> 
      */
     open class func gaslessConfigWithRequestBuilder(xCapability: XCapability_gaslessConfig? = nil) -> RequestBuilder<GaslessConfig> {
@@ -64,7 +64,7 @@ open class GaslessAPI {
 
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: SignRawParams
      */
@@ -78,7 +78,7 @@ open class GaslessAPI {
      - Estimates the cost of the given messages and returns a payload to sign
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<SignRawParams> 
      */
@@ -115,7 +115,7 @@ open class GaslessAPI {
     /**
 
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GaslessTx
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -127,7 +127,7 @@ open class GaslessAPI {
      - POST /v2/gasless/send
      - Submits the signed gasless transaction message to the network
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GaslessTx> 
      */
     open class func gaslessSendWithRequestBuilder(gaslessSendRequest: GaslessSendRequest, xCapability: XCapability_gaslessSend? = nil) -> RequestBuilder<GaslessTx> {

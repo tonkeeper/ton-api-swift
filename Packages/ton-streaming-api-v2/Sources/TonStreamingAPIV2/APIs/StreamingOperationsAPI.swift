@@ -25,13 +25,13 @@ open class StreamingOperationsAPI {
 
     /**
      Open an SSE subscription
-     - POST /api/streaming/v2/sse
+     - POST /streaming/v2/sse
      - Creates a Server-Sent Events stream for the requested subscription.  The request body is sent once. No additional client messages are sent on the same connection.  Stream behavior from the source document: - The first payload is `{\"status\":\"subscribed\"}`. - Subsequent payloads are streamed as SSE `data:` frames containing JSON. - The server emits `: keepalive` comments every 15 seconds. - SSE comments must be ignored by clients. 
      - parameter sseSubscriptionRequest: (body)  
      - returns: RequestBuilder<String> 
      */
     open class func subscribeSseWithRequestBuilder(sseSubscriptionRequest: SseSubscriptionRequest) -> RequestBuilder<String> {
-        let localVariablePath = "/api/streaming/v2/sse"
+        let localVariablePath = "/streaming/v2/sse"
         let localVariableURLString = TonStreamingAPIV2API.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: sseSubscriptionRequest)
 

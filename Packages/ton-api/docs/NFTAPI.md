@@ -30,7 +30,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 
@@ -52,7 +52,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
 
@@ -86,7 +86,7 @@ Get NFT items from collection by collection address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let limit = 987 // Int |  (optional) (default to 1000)
 let offset = 987 // Int |  (optional) (default to 0)
 
@@ -107,7 +107,7 @@ NFTAPI.getItemsFromCollection(accountId: accountId, xCapability: xCapability, li
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **limit** | **Int** |  | [optional] [default to 1000]
  **offset** | **Int** |  | [optional] [default to 0]
 
@@ -141,7 +141,7 @@ Get NFT collection by collection address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 NFTAPI.getNftCollection(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -160,7 +160,7 @@ NFTAPI.getNftCollection(accountId: accountId, xCapability: xCapability) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -191,7 +191,7 @@ Get NFT collection items by their addresses
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
 
 NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getAccountsRequest: getAccountsRequest) { (response, error) in
@@ -210,7 +210,7 @@ NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getAccountsReq
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
@@ -242,7 +242,7 @@ Get NFT collections
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 let offset = 987 // Int |  (optional) (default to 0)
 
@@ -262,7 +262,7 @@ NFTAPI.getNftCollections(xCapability: xCapability, limit: limit, offset: offset)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
  **offset** | **Int** |  | [optional] [default to 0]
 
@@ -297,7 +297,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let startDate = 987 // Int64 |  (optional)
@@ -321,7 +321,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **startDate** | **Int64** |  | [optional] 
@@ -357,7 +357,7 @@ Get NFT item by its address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 NFTAPI.getNftItemByAddress(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -376,7 +376,7 @@ NFTAPI.getNftItemByAddress(accountId: accountId, xCapability: xCapability) { (re
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -407,7 +407,7 @@ Get NFT items by their addresses
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
 
 NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getAccountsRequest: getAccountsRequest) { (response, error) in
@@ -426,7 +426,7 @@ NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getAccountsRequest: getA
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type

@@ -27,7 +27,7 @@ Get jetton's holders
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let limit = 987 // Int |  (optional) (default to 1000)
 let offset = 987 // Int |  (optional) (default to 0)
 
@@ -48,7 +48,7 @@ JettonsAPI.getJettonHolders(accountId: accountId, xCapability: xCapability, limi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **limit** | **Int** |  | [optional] [default to 1000]
  **offset** | **Int** |  | [optional] [default to 0]
 
@@ -82,7 +82,7 @@ Get jetton metadata by jetton master address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 JettonsAPI.getJettonInfo(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -101,7 +101,7 @@ JettonsAPI.getJettonInfo(accountId: accountId, xCapability: xCapability) { (resp
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -132,7 +132,7 @@ Get jetton metadata items by jetton master addresses
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
 
 JettonsAPI.getJettonInfosByAddresses(xCapability: xCapability, getAccountsRequest: getAccountsRequest) { (response, error) in
@@ -151,7 +151,7 @@ JettonsAPI.getJettonInfosByAddresses(xCapability: xCapability, getAccountsReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
@@ -185,7 +185,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let jettonId = "jettonId_example" // String | jetton ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 JettonsAPI.getJettonTransferPayload(accountId: accountId, jettonId: jettonId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -205,7 +205,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **jettonId** | **String** | jetton ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -236,7 +236,7 @@ Get a list of all indexed jetton masters in the blockchain.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 let offset = 987 // Int |  (optional) (default to 0)
 
@@ -256,7 +256,7 @@ JettonsAPI.getJettons(xCapability: xCapability, limit: limit, offset: offset) { 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
  **offset** | **Int** |  | [optional] [default to 0]
 
@@ -290,7 +290,7 @@ Get only jetton transfers in the event
 import TonAPI
 
 let eventId = "eventId_example" // String | event ID or transaction hash in hex (without 0x) or base64url format
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
 JettonsAPI.getJettonsEvents(eventId: eventId, xCapability: xCapability, acceptLanguage: acceptLanguage) { (response, error) in
@@ -310,7 +310,7 @@ JettonsAPI.getJettonsEvents(eventId: eventId, xCapability: xCapability, acceptLa
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **eventId** | **String** | event ID or transaction hash in hex (without 0x) or base64url format | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type

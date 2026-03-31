@@ -22,7 +22,7 @@ open class EventsAPI {
     /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Event
@@ -36,7 +36,7 @@ open class EventsAPI {
      - POST /v2/events/emulate
      - Emulate sending message to retrieve general blockchain events
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Event> 
@@ -74,7 +74,7 @@ open class EventsAPI {
     /**
 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: Event
      */
@@ -87,7 +87,7 @@ open class EventsAPI {
      - GET /v2/events/{event_id}
      - Get an event either by event ID or a hash of any transaction in a trace. An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<Event> 
      */

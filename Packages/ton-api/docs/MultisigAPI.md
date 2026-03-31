@@ -23,7 +23,7 @@ Get multisig account info
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 MultisigAPI.getMultisigAccount(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -42,7 +42,7 @@ MultisigAPI.getMultisigAccount(accountId: accountId, xCapability: xCapability) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -74,7 +74,7 @@ Get multisig order
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 MultisigAPI.getMultisigOrder(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -93,7 +93,7 @@ MultisigAPI.getMultisigOrder(accountId: accountId, xCapability: xCapability) { (
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

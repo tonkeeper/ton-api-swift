@@ -22,7 +22,7 @@ open class PurchasesAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last invoices (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: AccountPurchases
@@ -36,7 +36,7 @@ open class PurchasesAPI {
      - GET /v2/purchases/{account_id}/history
      - Get history of purchases
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last invoices (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: RequestBuilder<AccountPurchases> 

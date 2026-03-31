@@ -22,7 +22,7 @@ open class StakingAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: AccountStaking
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class StakingAPI {
      - GET /v2/staking/nominator/{account_id}/pools
      - All pools where account participates
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<AccountStaking> 
      */
     open class func getAccountNominatorsPoolsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountNominatorsPools? = nil) -> RequestBuilder<AccountStaking> {
@@ -68,7 +68,7 @@ open class StakingAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetStakingPoolHistory200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -80,7 +80,7 @@ open class StakingAPI {
      - GET /v2/staking/pool/{account_id}/history
      - Pool history
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetStakingPoolHistory200Response> 
      */
     open class func getStakingPoolHistoryWithRequestBuilder(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil) -> RequestBuilder<GetStakingPoolHistory200Response> {
@@ -114,7 +114,7 @@ open class StakingAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: GetStakingPoolInfo200Response
      */
@@ -127,7 +127,7 @@ open class StakingAPI {
      - GET /v2/staking/pool/{account_id}
      - Stacking pool info
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<GetStakingPoolInfo200Response> 
      */
@@ -162,7 +162,7 @@ open class StakingAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter availableFor: (query) account ID (optional)
      - parameter includeUnverified: (query) return also pools not from white list - just compatible by interfaces (maybe dangerous!) (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
@@ -176,7 +176,7 @@ open class StakingAPI {
     /**
      - GET /v2/staking/pools
      - All pools available in network
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter availableFor: (query) account ID (optional)
      - parameter includeUnverified: (query) return also pools not from white list - just compatible by interfaces (maybe dangerous!) (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")

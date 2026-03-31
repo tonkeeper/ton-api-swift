@@ -22,7 +22,7 @@ open class UtilitiesAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: AddressParse200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class UtilitiesAPI {
      - GET /v2/address/{account_id}/parse
      - parse address and display in all formats
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<AddressParse200Response> 
      */
     open class func addressParseWithRequestBuilder(accountId: String, xCapability: XCapability_addressParse? = nil) -> RequestBuilder<AddressParse200Response> {
@@ -67,7 +67,7 @@ open class UtilitiesAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: AnyCodable
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -78,7 +78,7 @@ open class UtilitiesAPI {
     /**
      - GET /v2/openapi.json
      - Get the openapi.json file
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<AnyCodable> 
      */
     open class func getOpenapiJsonWithRequestBuilder(xCapability: XCapability_getOpenapiJson? = nil) -> RequestBuilder<AnyCodable> {
@@ -108,7 +108,7 @@ open class UtilitiesAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: URL
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -119,7 +119,7 @@ open class UtilitiesAPI {
     /**
      - GET /v2/openapi.yml
      - Get the openapi.yml file
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<URL> 
      */
     open class func getOpenapiYmlWithRequestBuilder(xCapability: XCapability_getOpenapiYml? = nil) -> RequestBuilder<URL> {
@@ -149,7 +149,7 @@ open class UtilitiesAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: ServiceStatus
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -160,7 +160,7 @@ open class UtilitiesAPI {
     /**
      - GET /v2/status
      - Status
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<ServiceStatus> 
      */
     open class func statusWithRequestBuilder(xCapability: XCapability_status? = nil) -> RequestBuilder<ServiceStatus> {

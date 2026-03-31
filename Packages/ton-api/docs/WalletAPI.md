@@ -26,7 +26,7 @@ Emulate sending message to retrieve the resulting wallet state
 import TonAPI
 
 let emulateMessageToWalletRequest = emulateMessageToWallet_request(boc: "boc_example", params: [emulateMessageToWallet_request_params_inner(address: "address_example", balance: 123)]) // EmulateMessageToWalletRequest | bag-of-cells serialized to base64/hex and additional parameters to configure emulation
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let currency = "currency_example" // String |  (optional)
 
@@ -47,7 +47,7 @@ WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageTo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **emulateMessageToWalletRequest** | [**EmulateMessageToWalletRequest**](EmulateMessageToWalletRequest.md) | bag-of-cells serialized to base64/hex and additional parameters to configure emulation | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **currency** | **String** |  | [optional] 
 
@@ -81,7 +81,7 @@ Get account seqno
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 WalletAPI.getAccountSeqno(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -100,7 +100,7 @@ WalletAPI.getAccountSeqno(accountId: accountId, xCapability: xCapability) { (res
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -132,7 +132,7 @@ Get human-friendly information about a wallet without low-level details.
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 WalletAPI.getWalletInfo(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -151,7 +151,7 @@ WalletAPI.getWalletInfo(accountId: accountId, xCapability: xCapability) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -183,7 +183,7 @@ Get wallets by public key
 import TonAPI
 
 let publicKey = "publicKey_example" // String | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 WalletAPI.getWalletsByPublicKey(publicKey: publicKey, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -202,7 +202,7 @@ WalletAPI.getWalletsByPublicKey(publicKey: publicKey, xCapability: xCapability) 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **publicKey** | **String** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -234,7 +234,7 @@ Account verification and token issuance
 import TonAPI
 
 let tonConnectProofRequest = tonConnectProof_request(address: "address_example", proof: tonConnectProof_request_proof(timestamp: 123, domain: tonConnectProof_request_proof_domain(lengthBytes: 123, value: "value_example"), signature: "signature_example", payload: "payload_example", stateInit: "stateInit_example")) // TonConnectProofRequest | Data that is expected from TON Connect
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 WalletAPI.tonConnectProof(tonConnectProofRequest: tonConnectProofRequest, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -253,7 +253,7 @@ WalletAPI.tonConnectProof(tonConnectProofRequest: tonConnectProofRequest, xCapab
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tonConnectProofRequest** | [**TonConnectProofRequest**](TonConnectProofRequest.md) | Data that is expected from TON Connect | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

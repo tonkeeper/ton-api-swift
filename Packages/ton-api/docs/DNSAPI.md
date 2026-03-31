@@ -25,7 +25,7 @@ DNS resolve for domain name
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let filter = true // Bool |  (optional) (default to false)
 
 DNSAPI.dnsResolve(domainName: domainName, xCapability: xCapability, filter: filter) { (response, error) in
@@ -45,7 +45,7 @@ DNSAPI.dnsResolve(domainName: domainName, xCapability: xCapability, filter: filt
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **filter** | **Bool** |  | [optional] [default to false]
 
 ### Return type
@@ -77,7 +77,7 @@ Get all auctions
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let tld = "tld_example" // String | domain filter for current auctions \"ton\" or \"t.me\" (optional)
 
 DNSAPI.getAllAuctions(xCapability: xCapability, tld: tld) { (response, error) in
@@ -96,7 +96,7 @@ DNSAPI.getAllAuctions(xCapability: xCapability, tld: tld) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **tld** | **String** | domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot; | [optional] 
 
 ### Return type
@@ -129,7 +129,7 @@ Get full information about domain name
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 DNSAPI.getDnsInfo(domainName: domainName, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -148,7 +148,7 @@ DNSAPI.getDnsInfo(domainName: domainName, xCapability: xCapability) { (response,
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -180,7 +180,7 @@ Get domain bids
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 DNSAPI.getDomainBids(domainName: domainName, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -199,7 +199,7 @@ DNSAPI.getDomainBids(domainName: domainName, xCapability: xCapability) { (respon
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

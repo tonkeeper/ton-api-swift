@@ -22,7 +22,7 @@ open class LiteServerAPI {
     /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetAllRawShardsInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class LiteServerAPI {
      - GET /v2/liteserver/get_all_shards_info/{block_id}
      - Get all raw shards info
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetAllRawShardsInfo200Response> 
      */
     open class func getAllRawShardsInfoWithRequestBuilder(blockId: String, xCapability: XCapability_getAllRawShardsInfo? = nil) -> RequestBuilder<GetAllRawShardsInfo200Response> {
@@ -67,7 +67,7 @@ open class LiteServerAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetOutMsgQueueSizes200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -78,7 +78,7 @@ open class LiteServerAPI {
     /**
      - GET /v2/liteserver/get_out_msg_queue_sizes
      - Get out msg queue sizes
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetOutMsgQueueSizes200Response> 
      */
     open class func getOutMsgQueueSizesWithRequestBuilder(xCapability: XCapability_getOutMsgQueueSizes? = nil) -> RequestBuilder<GetOutMsgQueueSizes200Response> {
@@ -109,7 +109,7 @@ open class LiteServerAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: GetRawAccountState200Response
      */
@@ -122,7 +122,7 @@ open class LiteServerAPI {
      - GET /v2/liteserver/get_account_state/{account_id}
      - Get raw account state
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: RequestBuilder<GetRawAccountState200Response> 
      */
@@ -161,7 +161,7 @@ open class LiteServerAPI {
 
      - parameter knownBlock: (query) known block: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: GetRawBlockProof200Response
      */
@@ -175,7 +175,7 @@ open class LiteServerAPI {
      - Get raw block proof
      - parameter knownBlock: (query) known block: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: RequestBuilder<GetRawBlockProof200Response> 
      */
@@ -212,7 +212,7 @@ open class LiteServerAPI {
     /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawBlockchainBlock200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -224,7 +224,7 @@ open class LiteServerAPI {
      - GET /v2/liteserver/get_block/{block_id}
      - Get raw blockchain block
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawBlockchainBlock200Response> 
      */
     open class func getRawBlockchainBlockWithRequestBuilder(blockId: String, xCapability: XCapability_getRawBlockchainBlock? = nil) -> RequestBuilder<GetRawBlockchainBlock200Response> {
@@ -259,7 +259,7 @@ open class LiteServerAPI {
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawBlockchainBlockHeader200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -272,7 +272,7 @@ open class LiteServerAPI {
      - Get raw blockchain block header
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawBlockchainBlockHeader200Response> 
      */
     open class func getRawBlockchainBlockHeaderWithRequestBuilder(blockId: String, mode: Int, xCapability: XCapability_getRawBlockchainBlockHeader? = nil) -> RequestBuilder<GetRawBlockchainBlockHeader200Response> {
@@ -309,7 +309,7 @@ open class LiteServerAPI {
     /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawBlockchainBlockState200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -321,7 +321,7 @@ open class LiteServerAPI {
      - GET /v2/liteserver/get_state/{block_id}
      - Get raw blockchain block state
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawBlockchainBlockState200Response> 
      */
     open class func getRawBlockchainBlockStateWithRequestBuilder(blockId: String, xCapability: XCapability_getRawBlockchainBlockState? = nil) -> RequestBuilder<GetRawBlockchainBlockState200Response> {
@@ -356,7 +356,7 @@ open class LiteServerAPI {
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawConfig200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -369,7 +369,7 @@ open class LiteServerAPI {
      - Get raw config
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawConfig200Response> 
      */
     open class func getRawConfigWithRequestBuilder(blockId: String, mode: Int, xCapability: XCapability_getRawConfig? = nil) -> RequestBuilder<GetRawConfig200Response> {
@@ -408,7 +408,7 @@ open class LiteServerAPI {
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
      - parameter count: (query) count 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter accountId: (query) account ID (optional)
      - parameter lt: (query) lt (optional)
      - returns: GetRawListBlockTransactions200Response
@@ -424,7 +424,7 @@ open class LiteServerAPI {
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
      - parameter count: (query) count 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter accountId: (query) account ID (optional)
      - parameter lt: (query) lt (optional)
      - returns: RequestBuilder<GetRawListBlockTransactions200Response> 
@@ -465,7 +465,7 @@ open class LiteServerAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawMasterchainInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -476,7 +476,7 @@ open class LiteServerAPI {
     /**
      - GET /v2/liteserver/get_masterchain_info
      - Get raw masterchain info
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawMasterchainInfo200Response> 
      */
     open class func getRawMasterchainInfoWithRequestBuilder(xCapability: XCapability_getRawMasterchainInfo? = nil) -> RequestBuilder<GetRawMasterchainInfo200Response> {
@@ -507,7 +507,7 @@ open class LiteServerAPI {
     /**
 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawMasterchainInfoExt200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -519,7 +519,7 @@ open class LiteServerAPI {
      - GET /v2/liteserver/get_masterchain_info_ext
      - Get raw masterchain info ext
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawMasterchainInfoExt200Response> 
      */
     open class func getRawMasterchainInfoExtWithRequestBuilder(mode: Int, xCapability: XCapability_getRawMasterchainInfoExt? = nil) -> RequestBuilder<GetRawMasterchainInfoExt200Response> {
@@ -553,7 +553,7 @@ open class LiteServerAPI {
     /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawShardBlockProof200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -565,7 +565,7 @@ open class LiteServerAPI {
      - GET /v2/liteserver/get_shard_block_proof/{block_id}
      - Get raw shard block proof
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawShardBlockProof200Response> 
      */
     open class func getRawShardBlockProofWithRequestBuilder(blockId: String, xCapability: XCapability_getRawShardBlockProof? = nil) -> RequestBuilder<GetRawShardBlockProof200Response> {
@@ -602,7 +602,7 @@ open class LiteServerAPI {
      - parameter workchain: (query) workchain 
      - parameter shard: (query) shard 
      - parameter exact: (query) exact 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawShardInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -617,7 +617,7 @@ open class LiteServerAPI {
      - parameter workchain: (query) workchain 
      - parameter shard: (query) shard 
      - parameter exact: (query) exact 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawShardInfo200Response> 
      */
     open class func getRawShardInfoWithRequestBuilder(blockId: String, workchain: Int, shard: Int64, exact: Bool, xCapability: XCapability_getRawShardInfo? = nil) -> RequestBuilder<GetRawShardInfo200Response> {
@@ -655,7 +655,7 @@ open class LiteServerAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawTime200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -666,7 +666,7 @@ open class LiteServerAPI {
     /**
      - GET /v2/liteserver/get_time
      - Get raw time
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawTime200Response> 
      */
     open class func getRawTimeWithRequestBuilder(xCapability: XCapability_getRawTime? = nil) -> RequestBuilder<GetRawTime200Response> {
@@ -700,7 +700,7 @@ open class LiteServerAPI {
      - parameter count: (query) count 
      - parameter lt: (query) lt 
      - parameter hash: (query) hash 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawTransactions200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -715,7 +715,7 @@ open class LiteServerAPI {
      - parameter count: (query) count 
      - parameter lt: (query) lt 
      - parameter hash: (query) hash 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawTransactions200Response> 
      */
     open class func getRawTransactionsWithRequestBuilder(accountId: String, count: Int, lt: Int64, hash: String, xCapability: XCapability_getRawTransactions? = nil) -> RequestBuilder<GetRawTransactions200Response> {
@@ -754,7 +754,7 @@ open class LiteServerAPI {
     /**
 
      - parameter sendRawMessageRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: SendRawMessage200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -766,7 +766,7 @@ open class LiteServerAPI {
      - POST /v2/liteserver/send_message
      - Send raw message to blockchain
      - parameter sendRawMessageRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<SendRawMessage200Response> 
      */
     open class func sendRawMessageWithRequestBuilder(sendRawMessageRequest: SendRawMessageRequest, xCapability: XCapability_sendRawMessage? = nil) -> RequestBuilder<SendRawMessage200Response> {

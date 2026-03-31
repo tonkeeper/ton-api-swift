@@ -22,7 +22,7 @@ open class JettonsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: JettonHolders
@@ -36,7 +36,7 @@ open class JettonsAPI {
      - GET /v2/jettons/{account_id}/holders
      - Get jetton's holders
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<JettonHolders> 
@@ -76,7 +76,7 @@ open class JettonsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: JettonInfo
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -88,7 +88,7 @@ open class JettonsAPI {
      - GET /v2/jettons/{account_id}
      - Get jetton metadata by jetton master address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<JettonInfo> 
      */
     open class func getJettonInfoWithRequestBuilder(accountId: String, xCapability: XCapability_getJettonInfo? = nil) -> RequestBuilder<JettonInfo> {
@@ -121,7 +121,7 @@ open class JettonsAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: Jettons
      */
@@ -133,7 +133,7 @@ open class JettonsAPI {
     /**
      - POST /v2/jettons/_bulk
      - Get jetton metadata items by jetton master addresses
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<Jettons> 
      */
@@ -167,7 +167,7 @@ open class JettonsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: JettonTransferPayload
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -180,7 +180,7 @@ open class JettonsAPI {
      - Get jetton's custom payload and state init required for transfer
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<JettonTransferPayload> 
      */
     open class func getJettonTransferPayloadWithRequestBuilder(accountId: String, jettonId: String, xCapability: XCapability_getJettonTransferPayload? = nil) -> RequestBuilder<JettonTransferPayload> {
@@ -216,7 +216,7 @@ open class JettonsAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: Jettons
@@ -229,7 +229,7 @@ open class JettonsAPI {
     /**
      - GET /v2/jettons
      - Get a list of all indexed jetton masters in the blockchain.
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<Jettons> 
@@ -266,7 +266,7 @@ open class JettonsAPI {
     /**
 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: Event
      */
@@ -279,7 +279,7 @@ open class JettonsAPI {
      - GET /v2/events/{event_id}/jettons
      - Get only jetton transfers in the event
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<Event> 
      */

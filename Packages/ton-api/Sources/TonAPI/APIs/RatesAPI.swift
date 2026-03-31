@@ -22,7 +22,7 @@ open class RatesAPI {
     /**
 
      - parameter token: (query) accept jetton master address 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currency: (query)  (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
@@ -38,7 +38,7 @@ open class RatesAPI {
      - GET /v2/rates/chart
      - Get chart by token
      - parameter token: (query) accept jetton master address 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currency: (query)  (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
@@ -79,7 +79,7 @@ open class RatesAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetMarketsRates200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -90,7 +90,7 @@ open class RatesAPI {
     /**
      - GET /v2/rates/markets
      - Get the TON price from markets
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetMarketsRates200Response> 
      */
     open class func getMarketsRatesWithRequestBuilder(xCapability: XCapability_getMarketsRates? = nil) -> RequestBuilder<GetMarketsRates200Response> {
@@ -122,7 +122,7 @@ open class RatesAPI {
 
      - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRates200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -135,7 +135,7 @@ open class RatesAPI {
      - Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
      - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRates200Response> 
      */
     open class func getRatesWithRequestBuilder(tokens: [String], currencies: [String], xCapability: XCapability_getRates? = nil) -> RequestBuilder<GetRates200Response> {

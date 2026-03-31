@@ -42,7 +42,7 @@ Get account's domains
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.accountDnsBackResolve(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -61,7 +61,7 @@ AccountsAPI.accountDnsBackResolve(accountId: accountId, xCapability: xCapability
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -94,7 +94,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
@@ -116,7 +116,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -150,7 +150,7 @@ Get human-friendly information about an account without low-level details.
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.getAccount(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -169,7 +169,7 @@ AccountsAPI.getAccount(accountId: accountId, xCapability: xCapability) { (respon
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -203,7 +203,7 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let startDate = 987 // Int64 | 
 let endDate = 987 // Int64 | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.getAccountDiff(accountId: accountId, startDate: startDate, endDate: endDate, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -224,7 +224,7 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **startDate** | **Int64** |  | 
  **endDate** | **Int64** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -256,7 +256,7 @@ Get expiring account .ton dns
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let period = 987 // Int | number of days before expiration (optional)
 
 AccountsAPI.getAccountDnsExpiring(accountId: accountId, xCapability: xCapability, period: period) { (response, error) in
@@ -276,7 +276,7 @@ AccountsAPI.getAccountDnsExpiring(accountId: accountId, xCapability: xCapability
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **period** | **Int** | number of days before expiration | [optional] 
 
 ### Return type
@@ -310,7 +310,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let eventId = "eventId_example" // String | event ID or transaction hash in hex (without 0x) or base64url format
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let subjectOnly = true // Bool | filter actions where requested account is not real subject (for example sender or receiver jettons) (optional) (default to false)
 
@@ -332,7 +332,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **eventId** | **String** | event ID or transaction hash in hex (without 0x) or base64url format | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **subjectOnly** | **Bool** | filter actions where requested account is not real subject (for example sender or receiver jettons) | [optional] [default to false]
 
@@ -367,7 +367,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let initiator = true // Bool | Show only events that are initiated by this account (optional) (default to false)
 let subjectOnly = true // Bool | filter actions where requested account is not real subject (for example sender or receiver jettons) (optional) (default to false)
@@ -393,7 +393,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **initiator** | **Bool** | Show only events that are initiated by this account | [optional] [default to false]
  **subjectOnly** | **Bool** | filter actions where requested account is not real subject (for example sender or receiver jettons) | [optional] [default to false]
@@ -433,7 +433,7 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let id = 987 // Int | extra currency id
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let startDate = 987 // Int64 |  (optional)
@@ -458,7 +458,7 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **id** | **Int** | extra currency id | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **startDate** | **Int64** |  | [optional] 
@@ -495,7 +495,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let jettonId = "jettonId_example" // String | jetton ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas (optional)
 let supportedExtensions = ["inner_example"] // [String] | comma separated list supported extensions (optional)
 
@@ -517,7 +517,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **jettonId** | **String** | jetton ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | [optional] 
  **supportedExtensions** | [**[String]**](String.md) | comma separated list supported extensions | [optional] 
 
@@ -553,7 +553,7 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let jettonId = "jettonId_example" // String | jetton ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let startDate = 987 // Int64 |  (optional)
@@ -578,7 +578,7 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **jettonId** | **String** | jetton ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **startDate** | **Int64** |  | [optional] 
@@ -614,7 +614,7 @@ Get all Jettons balances by owner address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas (optional)
 let supportedExtensions = ["inner_example"] // [String] | comma separated list supported extensions (optional)
 
@@ -635,7 +635,7 @@ AccountsAPI.getAccountJettonsBalances(accountId: accountId, xCapability: xCapabi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | [optional] 
  **supportedExtensions** | [**[String]**](String.md) | comma separated list supported extensions | [optional] 
 
@@ -670,7 +670,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 
 AccountsAPI.getAccountJettonsHistory(accountId: accountId, limit: limit, xCapability: xCapability, beforeLt: beforeLt) { (response, error) in
@@ -691,7 +691,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
 
 ### Return type
@@ -724,7 +724,7 @@ Get account's multisigs
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.getAccountMultisigs(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -743,7 +743,7 @@ AccountsAPI.getAccountMultisigs(accountId: accountId, xCapability: xCapability) 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -775,7 +775,7 @@ Get all NFT items by owner address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let collection = "collection_example" // String | nft collection (optional)
 let limit = 987 // Int |  (optional) (default to 1000)
 let offset = 987 // Int |  (optional) (default to 0)
@@ -798,7 +798,7 @@ AccountsAPI.getAccountNftItems(accountId: accountId, xCapability: xCapability, c
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **collection** | **String** | nft collection | [optional] 
  **limit** | **Int** |  | [optional] [default to 1000]
  **offset** | **Int** |  | [optional] [default to 0]
@@ -834,7 +834,7 @@ Get public key by account id
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.getAccountPublicKey(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -853,7 +853,7 @@ AccountsAPI.getAccountPublicKey(accountId: accountId, xCapability: xCapability) 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -885,7 +885,7 @@ Get all subscriptions by wallet address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.getAccountSubscriptions(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -904,7 +904,7 @@ AccountsAPI.getAccountSubscriptions(accountId: accountId, xCapability: xCapabili
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -936,7 +936,7 @@ Get traces for account
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 
@@ -957,7 +957,7 @@ AccountsAPI.getAccountTraces(accountId: accountId, xCapability: xCapability, bef
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
 
@@ -990,7 +990,7 @@ Get human-friendly information about several accounts without low-level details.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currency = "currency_example" // String |  (optional)
 let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
 
@@ -1010,7 +1010,7 @@ AccountsAPI.getAccounts(xCapability: xCapability, currency: currency, getAccount
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currency** | **String** |  | [optional] 
  **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
 
@@ -1046,7 +1046,7 @@ import TonAPI
 let accountId = "accountId_example" // String | account ID
 let jettonId = "jettonId_example" // String | jetton ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let startDate = 987 // Int64 |  (optional)
 let endDate = 987 // Int64 |  (optional)
@@ -1070,7 +1070,7 @@ Name | Type | Description  | Notes
  **accountId** | **String** | account ID | 
  **jettonId** | **String** | jetton ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **startDate** | **Int64** |  | [optional] 
  **endDate** | **Int64** |  | [optional] 
@@ -1105,7 +1105,7 @@ Update internal cache for a particular account
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.reindexAccount(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -1124,7 +1124,7 @@ AccountsAPI.reindexAccount(accountId: accountId, xCapability: xCapability) { (re
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -1156,7 +1156,7 @@ Search by account domain name
 import TonAPI
 
 let name = "name_example" // String | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 AccountsAPI.searchAccounts(name: name, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -1175,7 +1175,7 @@ AccountsAPI.searchAccounts(name: name, xCapability: xCapability) { (response, er
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **String** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

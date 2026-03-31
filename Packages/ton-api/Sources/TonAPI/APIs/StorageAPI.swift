@@ -13,20 +13,29 @@ import AnyCodable
 open class StorageAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getStorageProviders: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: GetStorageProviders200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getStorageProviders() async throws -> GetStorageProviders200Response {
-        return try await getStorageProvidersWithRequestBuilder().execute().body
+    open class func getStorageProviders(xCapability: XCapability_getStorageProviders? = nil) async throws -> GetStorageProviders200Response {
+        return try await getStorageProvidersWithRequestBuilder(xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/storage/providers
      - Get TON storage providers deployed to the blockchain.
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<GetStorageProviders200Response> 
      */
-    open class func getStorageProvidersWithRequestBuilder() -> RequestBuilder<GetStorageProviders200Response> {
+    open class func getStorageProvidersWithRequestBuilder(xCapability: XCapability_getStorageProviders? = nil) -> RequestBuilder<GetStorageProviders200Response> {
         let localVariablePath = "/v2/storage/providers"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -34,7 +43,7 @@ open class StorageAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

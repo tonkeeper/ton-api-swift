@@ -13,22 +13,31 @@ import AnyCodable
 open class MultisigAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getMultisigAccount: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: Multisig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getMultisigAccount(accountId: String) async throws -> Multisig {
-        return try await getMultisigAccountWithRequestBuilder(accountId: accountId).execute().body
+    open class func getMultisigAccount(accountId: String, xCapability: XCapability_getMultisigAccount? = nil) async throws -> Multisig {
+        return try await getMultisigAccountWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/multisig/{account_id}
      - Get multisig account info
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<Multisig> 
      */
-    open class func getMultisigAccountWithRequestBuilder(accountId: String) -> RequestBuilder<Multisig> {
+    open class func getMultisigAccountWithRequestBuilder(accountId: String, xCapability: XCapability_getMultisigAccount? = nil) -> RequestBuilder<Multisig> {
         var localVariablePath = "/v2/multisig/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -39,7 +48,7 @@ open class MultisigAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -50,22 +59,31 @@ open class MultisigAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getMultisigOrder: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: MultisigOrder
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getMultisigOrder(accountId: String) async throws -> MultisigOrder {
-        return try await getMultisigOrderWithRequestBuilder(accountId: accountId).execute().body
+    open class func getMultisigOrder(accountId: String, xCapability: XCapability_getMultisigOrder? = nil) async throws -> MultisigOrder {
+        return try await getMultisigOrderWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/multisig/order/{account_id}
      - Get multisig order
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<MultisigOrder> 
      */
-    open class func getMultisigOrderWithRequestBuilder(accountId: String) -> RequestBuilder<MultisigOrder> {
+    open class func getMultisigOrderWithRequestBuilder(accountId: String, xCapability: XCapability_getMultisigOrder? = nil) -> RequestBuilder<MultisigOrder> {
         var localVariablePath = "/v2/multisig/order/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -76,7 +94,7 @@ open class MultisigAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

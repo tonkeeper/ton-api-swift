@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 # **getAllRawShardsInfo**
 ```swift
-    open class func getAllRawShardsInfo(blockId: String, completion: @escaping (_ data: GetAllRawShardsInfo200Response?, _ error: Error?) -> Void)
+    open class func getAllRawShardsInfo(blockId: String, xCapability: XCapability_getAllRawShardsInfo? = nil, completion: @escaping (_ data: GetAllRawShardsInfo200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -37,8 +37,9 @@ Get all raw shards info
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getAllRawShardsInfo(blockId: blockId) { (response, error) in
+LiteServerAPI.getAllRawShardsInfo(blockId: blockId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -55,6 +56,7 @@ LiteServerAPI.getAllRawShardsInfo(blockId: blockId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -73,7 +75,7 @@ No authorization required
 
 # **getOutMsgQueueSizes**
 ```swift
-    open class func getOutMsgQueueSizes(completion: @escaping (_ data: GetOutMsgQueueSizes200Response?, _ error: Error?) -> Void)
+    open class func getOutMsgQueueSizes(xCapability: XCapability_getOutMsgQueueSizes? = nil, completion: @escaping (_ data: GetOutMsgQueueSizes200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -85,8 +87,9 @@ Get out msg queue sizes
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getOutMsgQueueSizes() { (response, error) in
+LiteServerAPI.getOutMsgQueueSizes(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -99,7 +102,10 @@ LiteServerAPI.getOutMsgQueueSizes() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -118,7 +124,7 @@ No authorization required
 
 # **getRawAccountState**
 ```swift
-    open class func getRawAccountState(accountId: String, targetBlock: String? = nil, completion: @escaping (_ data: GetRawAccountState200Response?, _ error: Error?) -> Void)
+    open class func getRawAccountState(accountId: String, xCapability: XCapability_getRawAccountState? = nil, targetBlock: String? = nil, completion: @escaping (_ data: GetRawAccountState200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -131,9 +137,10 @@ Get raw account state
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let targetBlock = "targetBlock_example" // String | target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
 
-LiteServerAPI.getRawAccountState(accountId: accountId, targetBlock: targetBlock) { (response, error) in
+LiteServerAPI.getRawAccountState(accountId: accountId, xCapability: xCapability, targetBlock: targetBlock) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -150,6 +157,7 @@ LiteServerAPI.getRawAccountState(accountId: accountId, targetBlock: targetBlock)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **targetBlock** | **String** | target block: (workchain,shard,seqno,root_hash,file_hash) | [optional] 
 
 ### Return type
@@ -169,7 +177,7 @@ No authorization required
 
 # **getRawBlockProof**
 ```swift
-    open class func getRawBlockProof(knownBlock: String, mode: Int, targetBlock: String? = nil, completion: @escaping (_ data: GetRawBlockProof200Response?, _ error: Error?) -> Void)
+    open class func getRawBlockProof(knownBlock: String, mode: Int, xCapability: XCapability_getRawBlockProof? = nil, targetBlock: String? = nil, completion: @escaping (_ data: GetRawBlockProof200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -183,9 +191,10 @@ import TonAPI
 
 let knownBlock = "knownBlock_example" // String | known block: (workchain,shard,seqno,root_hash,file_hash)
 let mode = 987 // Int | mode
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let targetBlock = "targetBlock_example" // String | target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
 
-LiteServerAPI.getRawBlockProof(knownBlock: knownBlock, mode: mode, targetBlock: targetBlock) { (response, error) in
+LiteServerAPI.getRawBlockProof(knownBlock: knownBlock, mode: mode, xCapability: xCapability, targetBlock: targetBlock) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -203,6 +212,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **knownBlock** | **String** | known block: (workchain,shard,seqno,root_hash,file_hash) | 
  **mode** | **Int** | mode | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **targetBlock** | **String** | target block: (workchain,shard,seqno,root_hash,file_hash) | [optional] 
 
 ### Return type
@@ -222,7 +232,7 @@ No authorization required
 
 # **getRawBlockchainBlock**
 ```swift
-    open class func getRawBlockchainBlock(blockId: String, completion: @escaping (_ data: GetRawBlockchainBlock200Response?, _ error: Error?) -> Void)
+    open class func getRawBlockchainBlock(blockId: String, xCapability: XCapability_getRawBlockchainBlock? = nil, completion: @escaping (_ data: GetRawBlockchainBlock200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -235,8 +245,9 @@ Get raw blockchain block
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawBlockchainBlock(blockId: blockId) { (response, error) in
+LiteServerAPI.getRawBlockchainBlock(blockId: blockId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -253,6 +264,7 @@ LiteServerAPI.getRawBlockchainBlock(blockId: blockId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -271,7 +283,7 @@ No authorization required
 
 # **getRawBlockchainBlockHeader**
 ```swift
-    open class func getRawBlockchainBlockHeader(blockId: String, mode: Int, completion: @escaping (_ data: GetRawBlockchainBlockHeader200Response?, _ error: Error?) -> Void)
+    open class func getRawBlockchainBlockHeader(blockId: String, mode: Int, xCapability: XCapability_getRawBlockchainBlockHeader? = nil, completion: @escaping (_ data: GetRawBlockchainBlockHeader200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -285,8 +297,9 @@ import TonAPI
 
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
 let mode = 987 // Int | mode
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawBlockchainBlockHeader(blockId: blockId, mode: mode) { (response, error) in
+LiteServerAPI.getRawBlockchainBlockHeader(blockId: blockId, mode: mode, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -304,6 +317,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
  **mode** | **Int** | mode | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -322,7 +336,7 @@ No authorization required
 
 # **getRawBlockchainBlockState**
 ```swift
-    open class func getRawBlockchainBlockState(blockId: String, completion: @escaping (_ data: GetRawBlockchainBlockState200Response?, _ error: Error?) -> Void)
+    open class func getRawBlockchainBlockState(blockId: String, xCapability: XCapability_getRawBlockchainBlockState? = nil, completion: @escaping (_ data: GetRawBlockchainBlockState200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -335,8 +349,9 @@ Get raw blockchain block state
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawBlockchainBlockState(blockId: blockId) { (response, error) in
+LiteServerAPI.getRawBlockchainBlockState(blockId: blockId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -353,6 +368,7 @@ LiteServerAPI.getRawBlockchainBlockState(blockId: blockId) { (response, error) i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -371,7 +387,7 @@ No authorization required
 
 # **getRawConfig**
 ```swift
-    open class func getRawConfig(blockId: String, mode: Int, completion: @escaping (_ data: GetRawConfig200Response?, _ error: Error?) -> Void)
+    open class func getRawConfig(blockId: String, mode: Int, xCapability: XCapability_getRawConfig? = nil, completion: @escaping (_ data: GetRawConfig200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -385,8 +401,9 @@ import TonAPI
 
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
 let mode = 987 // Int | mode
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawConfig(blockId: blockId, mode: mode) { (response, error) in
+LiteServerAPI.getRawConfig(blockId: blockId, mode: mode, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -404,6 +421,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
  **mode** | **Int** | mode | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -422,7 +440,7 @@ No authorization required
 
 # **getRawListBlockTransactions**
 ```swift
-    open class func getRawListBlockTransactions(blockId: String, mode: Int, count: Int, accountId: String? = nil, lt: Int64? = nil, completion: @escaping (_ data: GetRawListBlockTransactions200Response?, _ error: Error?) -> Void)
+    open class func getRawListBlockTransactions(blockId: String, mode: Int, count: Int, xCapability: XCapability_getRawListBlockTransactions? = nil, accountId: String? = nil, lt: Int64? = nil, completion: @escaping (_ data: GetRawListBlockTransactions200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -437,10 +455,11 @@ import TonAPI
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
 let mode = 987 // Int | mode
 let count = 987 // Int | count
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let accountId = "accountId_example" // String | account ID (optional)
 let lt = 987 // Int64 | lt (optional)
 
-LiteServerAPI.getRawListBlockTransactions(blockId: blockId, mode: mode, count: count, accountId: accountId, lt: lt) { (response, error) in
+LiteServerAPI.getRawListBlockTransactions(blockId: blockId, mode: mode, count: count, xCapability: xCapability, accountId: accountId, lt: lt) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -459,6 +478,7 @@ Name | Type | Description  | Notes
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
  **mode** | **Int** | mode | 
  **count** | **Int** | count | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **accountId** | **String** | account ID | [optional] 
  **lt** | **Int64** | lt | [optional] 
 
@@ -479,7 +499,7 @@ No authorization required
 
 # **getRawMasterchainInfo**
 ```swift
-    open class func getRawMasterchainInfo(completion: @escaping (_ data: GetRawMasterchainInfo200Response?, _ error: Error?) -> Void)
+    open class func getRawMasterchainInfo(xCapability: XCapability_getRawMasterchainInfo? = nil, completion: @escaping (_ data: GetRawMasterchainInfo200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -491,8 +511,9 @@ Get raw masterchain info
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawMasterchainInfo() { (response, error) in
+LiteServerAPI.getRawMasterchainInfo(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -505,7 +526,10 @@ LiteServerAPI.getRawMasterchainInfo() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -524,7 +548,7 @@ No authorization required
 
 # **getRawMasterchainInfoExt**
 ```swift
-    open class func getRawMasterchainInfoExt(mode: Int, completion: @escaping (_ data: GetRawMasterchainInfoExt200Response?, _ error: Error?) -> Void)
+    open class func getRawMasterchainInfoExt(mode: Int, xCapability: XCapability_getRawMasterchainInfoExt? = nil, completion: @escaping (_ data: GetRawMasterchainInfoExt200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -537,8 +561,9 @@ Get raw masterchain info ext
 import TonAPI
 
 let mode = 987 // Int | mode
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawMasterchainInfoExt(mode: mode) { (response, error) in
+LiteServerAPI.getRawMasterchainInfoExt(mode: mode, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -555,6 +580,7 @@ LiteServerAPI.getRawMasterchainInfoExt(mode: mode) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **mode** | **Int** | mode | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -573,7 +599,7 @@ No authorization required
 
 # **getRawShardBlockProof**
 ```swift
-    open class func getRawShardBlockProof(blockId: String, completion: @escaping (_ data: GetRawShardBlockProof200Response?, _ error: Error?) -> Void)
+    open class func getRawShardBlockProof(blockId: String, xCapability: XCapability_getRawShardBlockProof? = nil, completion: @escaping (_ data: GetRawShardBlockProof200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -586,8 +612,9 @@ Get raw shard block proof
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,root_hash,file_hash)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawShardBlockProof(blockId: blockId) { (response, error) in
+LiteServerAPI.getRawShardBlockProof(blockId: blockId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -604,6 +631,7 @@ LiteServerAPI.getRawShardBlockProof(blockId: blockId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID: (workchain,shard,seqno,root_hash,file_hash) | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -622,7 +650,7 @@ No authorization required
 
 # **getRawShardInfo**
 ```swift
-    open class func getRawShardInfo(blockId: String, workchain: Int, shard: Int64, exact: Bool, completion: @escaping (_ data: GetRawShardInfo200Response?, _ error: Error?) -> Void)
+    open class func getRawShardInfo(blockId: String, workchain: Int, shard: Int64, exact: Bool, xCapability: XCapability_getRawShardInfo? = nil, completion: @escaping (_ data: GetRawShardInfo200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -638,8 +666,9 @@ let blockId = "blockId_example" // String | block ID: (workchain,shard,seqno,roo
 let workchain = 987 // Int | workchain
 let shard = 987 // Int64 | shard
 let exact = false // Bool | exact
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawShardInfo(blockId: blockId, workchain: workchain, shard: shard, exact: exact) { (response, error) in
+LiteServerAPI.getRawShardInfo(blockId: blockId, workchain: workchain, shard: shard, exact: exact, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -659,6 +688,7 @@ Name | Type | Description  | Notes
  **workchain** | **Int** | workchain | 
  **shard** | **Int64** | shard | 
  **exact** | **Bool** | exact | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -677,7 +707,7 @@ No authorization required
 
 # **getRawTime**
 ```swift
-    open class func getRawTime(completion: @escaping (_ data: GetRawTime200Response?, _ error: Error?) -> Void)
+    open class func getRawTime(xCapability: XCapability_getRawTime? = nil, completion: @escaping (_ data: GetRawTime200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -689,8 +719,9 @@ Get raw time
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawTime() { (response, error) in
+LiteServerAPI.getRawTime(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -703,7 +734,10 @@ LiteServerAPI.getRawTime() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -722,7 +756,7 @@ No authorization required
 
 # **getRawTransactions**
 ```swift
-    open class func getRawTransactions(accountId: String, count: Int, lt: Int64, hash: String, completion: @escaping (_ data: GetRawTransactions200Response?, _ error: Error?) -> Void)
+    open class func getRawTransactions(accountId: String, count: Int, lt: Int64, hash: String, xCapability: XCapability_getRawTransactions? = nil, completion: @escaping (_ data: GetRawTransactions200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -738,8 +772,9 @@ let accountId = "accountId_example" // String | account ID
 let count = 987 // Int | count
 let lt = 987 // Int64 | lt
 let hash = "hash_example" // String | hash
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.getRawTransactions(accountId: accountId, count: count, lt: lt, hash: hash) { (response, error) in
+LiteServerAPI.getRawTransactions(accountId: accountId, count: count, lt: lt, hash: hash, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -759,6 +794,7 @@ Name | Type | Description  | Notes
  **count** | **Int** | count | 
  **lt** | **Int64** | lt | 
  **hash** | **String** | hash | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -777,7 +813,7 @@ No authorization required
 
 # **sendRawMessage**
 ```swift
-    open class func sendRawMessage(sendRawMessageRequest: SendRawMessageRequest, completion: @escaping (_ data: SendRawMessage200Response?, _ error: Error?) -> Void)
+    open class func sendRawMessage(sendRawMessageRequest: SendRawMessageRequest, xCapability: XCapability_sendRawMessage? = nil, completion: @escaping (_ data: SendRawMessage200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -790,8 +826,9 @@ Send raw message to blockchain
 import TonAPI
 
 let sendRawMessageRequest = sendRawMessage_request(body: "body_example") // SendRawMessageRequest | Data that is expected
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-LiteServerAPI.sendRawMessage(sendRawMessageRequest: sendRawMessageRequest) { (response, error) in
+LiteServerAPI.sendRawMessage(sendRawMessageRequest: sendRawMessageRequest, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -808,6 +845,7 @@ LiteServerAPI.sendRawMessage(sendRawMessageRequest: sendRawMessageRequest) { (re
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sendRawMessageRequest** | [**SendRawMessageRequest**](SendRawMessageRequest.md) | Data that is expected | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 

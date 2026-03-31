@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **dnsResolve**
 ```swift
-    open class func dnsResolve(domainName: String, filter: Bool? = nil, completion: @escaping (_ data: DnsRecord?, _ error: Error?) -> Void)
+    open class func dnsResolve(domainName: String, xCapability: XCapability_dnsResolve? = nil, filter: Bool? = nil, completion: @escaping (_ data: DnsRecord?, _ error: Error?) -> Void)
 ```
 
 
@@ -25,9 +25,10 @@ DNS resolve for domain name
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let filter = true // Bool |  (optional) (default to false)
 
-DNSAPI.dnsResolve(domainName: domainName, filter: filter) { (response, error) in
+DNSAPI.dnsResolve(domainName: domainName, xCapability: xCapability, filter: filter) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -44,6 +45,7 @@ DNSAPI.dnsResolve(domainName: domainName, filter: filter) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **filter** | **Bool** |  | [optional] [default to false]
 
 ### Return type
@@ -63,7 +65,7 @@ No authorization required
 
 # **getAllAuctions**
 ```swift
-    open class func getAllAuctions(tld: String? = nil, completion: @escaping (_ data: Auctions?, _ error: Error?) -> Void)
+    open class func getAllAuctions(xCapability: XCapability_getAllAuctions? = nil, tld: String? = nil, completion: @escaping (_ data: Auctions?, _ error: Error?) -> Void)
 ```
 
 
@@ -75,9 +77,10 @@ Get all auctions
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let tld = "tld_example" // String | domain filter for current auctions \"ton\" or \"t.me\" (optional)
 
-DNSAPI.getAllAuctions(tld: tld) { (response, error) in
+DNSAPI.getAllAuctions(xCapability: xCapability, tld: tld) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -93,6 +96,7 @@ DNSAPI.getAllAuctions(tld: tld) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **tld** | **String** | domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot; | [optional] 
 
 ### Return type
@@ -112,7 +116,7 @@ No authorization required
 
 # **getDnsInfo**
 ```swift
-    open class func getDnsInfo(domainName: String, completion: @escaping (_ data: DomainInfo?, _ error: Error?) -> Void)
+    open class func getDnsInfo(domainName: String, xCapability: XCapability_getDnsInfo? = nil, completion: @escaping (_ data: DomainInfo?, _ error: Error?) -> Void)
 ```
 
 
@@ -125,8 +129,9 @@ Get full information about domain name
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-DNSAPI.getDnsInfo(domainName: domainName) { (response, error) in
+DNSAPI.getDnsInfo(domainName: domainName, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -143,6 +148,7 @@ DNSAPI.getDnsInfo(domainName: domainName) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -161,7 +167,7 @@ No authorization required
 
 # **getDomainBids**
 ```swift
-    open class func getDomainBids(domainName: String, completion: @escaping (_ data: DomainBids?, _ error: Error?) -> Void)
+    open class func getDomainBids(domainName: String, xCapability: XCapability_getDomainBids? = nil, completion: @escaping (_ data: DomainBids?, _ error: Error?) -> Void)
 ```
 
 
@@ -174,8 +180,9 @@ Get domain bids
 import TonAPI
 
 let domainName = "domainName_example" // String | domain name with .ton or .t.me
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-DNSAPI.getDomainBids(domainName: domainName) { (response, error) in
+DNSAPI.getDomainBids(domainName: domainName, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -192,6 +199,7 @@ DNSAPI.getDomainBids(domainName: domainName) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **String** | domain name with .ton or .t.me | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 

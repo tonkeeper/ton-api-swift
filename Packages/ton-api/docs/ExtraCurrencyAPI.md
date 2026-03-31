@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 # **getExtraCurrencyInfo**
 ```swift
-    open class func getExtraCurrencyInfo(id: Int, completion: @escaping (_ data: EcPreview?, _ error: Error?) -> Void)
+    open class func getExtraCurrencyInfo(id: Int, xCapability: XCapability_getExtraCurrencyInfo? = nil, completion: @escaping (_ data: EcPreview?, _ error: Error?) -> Void)
 ```
 
 
@@ -22,8 +22,9 @@ Get extra currency info by id
 import TonAPI
 
 let id = 987 // Int | extra currency id
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-ExtraCurrencyAPI.getExtraCurrencyInfo(id: id) { (response, error) in
+ExtraCurrencyAPI.getExtraCurrencyInfo(id: id, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -40,6 +41,7 @@ ExtraCurrencyAPI.getExtraCurrencyInfo(id: id) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Int** | extra currency id | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 

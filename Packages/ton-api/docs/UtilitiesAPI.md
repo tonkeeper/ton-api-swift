@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **addressParse**
 ```swift
-    open class func addressParse(accountId: String, completion: @escaping (_ data: AddressParse200Response?, _ error: Error?) -> Void)
+    open class func addressParse(accountId: String, xCapability: XCapability_addressParse? = nil, completion: @escaping (_ data: AddressParse200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -25,8 +25,9 @@ parse address and display in all formats
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-UtilitiesAPI.addressParse(accountId: accountId) { (response, error) in
+UtilitiesAPI.addressParse(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,6 +44,7 @@ UtilitiesAPI.addressParse(accountId: accountId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -61,7 +63,7 @@ No authorization required
 
 # **getOpenapiJson**
 ```swift
-    open class func getOpenapiJson(completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
+    open class func getOpenapiJson(xCapability: XCapability_getOpenapiJson? = nil, completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
 ```
 
 
@@ -73,8 +75,9 @@ Get the openapi.json file
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-UtilitiesAPI.getOpenapiJson() { (response, error) in
+UtilitiesAPI.getOpenapiJson(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -87,7 +90,10 @@ UtilitiesAPI.getOpenapiJson() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -106,7 +112,7 @@ No authorization required
 
 # **getOpenapiYml**
 ```swift
-    open class func getOpenapiYml(completion: @escaping (_ data: URL?, _ error: Error?) -> Void)
+    open class func getOpenapiYml(xCapability: XCapability_getOpenapiYml? = nil, completion: @escaping (_ data: URL?, _ error: Error?) -> Void)
 ```
 
 
@@ -118,8 +124,9 @@ Get the openapi.yml file
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-UtilitiesAPI.getOpenapiYml() { (response, error) in
+UtilitiesAPI.getOpenapiYml(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -132,7 +139,10 @@ UtilitiesAPI.getOpenapiYml() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -151,7 +161,7 @@ No authorization required
 
 # **status**
 ```swift
-    open class func status(completion: @escaping (_ data: ServiceStatus?, _ error: Error?) -> Void)
+    open class func status(xCapability: XCapability_status? = nil, completion: @escaping (_ data: ServiceStatus?, _ error: Error?) -> Void)
 ```
 
 
@@ -163,8 +173,9 @@ Status
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-UtilitiesAPI.status() { (response, error) in
+UtilitiesAPI.status(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -177,7 +188,10 @@ UtilitiesAPI.status() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 

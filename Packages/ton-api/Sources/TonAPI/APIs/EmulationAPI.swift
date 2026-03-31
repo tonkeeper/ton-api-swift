@@ -13,22 +13,31 @@ import AnyCodable
 open class EmulationAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_decodeMessage: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: DecodedMessage
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func decodeMessage(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner) async throws -> DecodedMessage {
-        return try await decodeMessageWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner).execute().body
+    open class func decodeMessage(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_decodeMessage? = nil) async throws -> DecodedMessage {
+        return try await decodeMessageWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability).execute().body
     }
 
     /**
      - POST /v2/message/decode
      - Decode a given message. Only external incoming messages can be decoded currently.
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<DecodedMessage> 
      */
-    open class func decodeMessageWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner) -> RequestBuilder<DecodedMessage> {
+    open class func decodeMessageWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_decodeMessage? = nil) -> RequestBuilder<DecodedMessage> {
         let localVariablePath = "/v2/message/decode"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
@@ -37,6 +46,7 @@ open class EmulationAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -47,16 +57,24 @@ open class EmulationAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_emulateMessageToAccountEvent: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: AccountEvent
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> AccountEvent {
-        return try await emulateMessageToAccountEventWithRequestBuilder(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToAccountEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> AccountEvent {
+        return try await emulateMessageToAccountEventWithRequestBuilder(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
@@ -64,11 +82,12 @@ open class EmulationAPI {
      - Emulate sending message to retrieve account-specific events
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<AccountEvent> 
      */
-    open class func emulateMessageToAccountEventWithRequestBuilder(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<AccountEvent> {
+    open class func emulateMessageToAccountEventWithRequestBuilder(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToAccountEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<AccountEvent> {
         var localVariablePath = "/v2/accounts/{account_id}/events/emulate"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -83,6 +102,7 @@ open class EmulationAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -94,26 +114,35 @@ open class EmulationAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_emulateMessageToEvent: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Event
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> Event {
-        return try await emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> Event {
+        return try await emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
      - POST /v2/events/emulate
      - Emulate sending message to retrieve general blockchain events
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Event> 
      */
-    open class func emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Event> {
+    open class func emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Event> {
         let localVariablePath = "/v2/events/emulate"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
@@ -125,6 +154,7 @@ open class EmulationAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -136,24 +166,33 @@ open class EmulationAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_emulateMessageToTrace: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Trace
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil) async throws -> Trace {
-        return try await emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToTrace? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> Trace {
+        return try await emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
      - POST /v2/traces/emulate
      - Emulate sending message to retrieve with a detailed execution trace
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Trace> 
      */
-    open class func emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Trace> {
+    open class func emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToTrace? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Trace> {
         let localVariablePath = "/v2/traces/emulate"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
@@ -165,6 +204,7 @@ open class EmulationAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -175,26 +215,35 @@ open class EmulationAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_emulateMessageToWallet: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: MessageConsequences
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil) async throws -> MessageConsequences {
-        return try await emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage, currency: currency).execute().body
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, xCapability: XCapability_emulateMessageToWallet? = nil, acceptLanguage: String? = nil, currency: String? = nil) async throws -> MessageConsequences {
+        return try await emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: emulateMessageToWalletRequest, xCapability: xCapability, acceptLanguage: acceptLanguage, currency: currency).execute().body
     }
 
     /**
      - POST /v2/wallet/emulate
      - Emulate sending message to retrieve the resulting wallet state
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: RequestBuilder<MessageConsequences> 
      */
-    open class func emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil) -> RequestBuilder<MessageConsequences> {
+    open class func emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, xCapability: XCapability_emulateMessageToWallet? = nil, acceptLanguage: String? = nil, currency: String? = nil) -> RequestBuilder<MessageConsequences> {
         let localVariablePath = "/v2/wallet/emulate"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: emulateMessageToWalletRequest)
@@ -206,6 +255,7 @@ open class EmulationAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 

@@ -13,26 +13,35 @@ import AnyCodable
 open class EventsAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_emulateMessageToEvent: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Event
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> Event {
-        return try await emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> Event {
+        return try await emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
      - POST /v2/events/emulate
      - Emulate sending message to retrieve general blockchain events
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Event> 
      */
-    open class func emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Event> {
+    open class func emulateMessageToEventWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Event> {
         let localVariablePath = "/v2/events/emulate"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
@@ -44,6 +53,7 @@ open class EventsAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -55,24 +65,33 @@ open class EventsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getEvent: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: Event
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getEvent(eventId: String, acceptLanguage: String? = nil) async throws -> Event {
-        return try await getEventWithRequestBuilder(eventId: eventId, acceptLanguage: acceptLanguage).execute().body
+    open class func getEvent(eventId: String, xCapability: XCapability_getEvent? = nil, acceptLanguage: String? = nil) async throws -> Event {
+        return try await getEventWithRequestBuilder(eventId: eventId, xCapability: xCapability, acceptLanguage: acceptLanguage).execute().body
     }
 
     /**
      - GET /v2/events/{event_id}
      - Get an event either by event ID or a hash of any transaction in a trace. An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<Event> 
      */
-    open class func getEventWithRequestBuilder(eventId: String, acceptLanguage: String? = nil) -> RequestBuilder<Event> {
+    open class func getEventWithRequestBuilder(eventId: String, xCapability: XCapability_getEvent? = nil, acceptLanguage: String? = nil) -> RequestBuilder<Event> {
         var localVariablePath = "/v2/events/{event_id}"
         let eventIdPreEscape = "\(APIHelper.mapValueToPathItem(eventId))"
         let eventIdPostEscape = eventIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -83,6 +102,7 @@ open class EventsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 

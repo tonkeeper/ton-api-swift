@@ -13,8 +13,16 @@ import AnyCodable
 open class RatesAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getChartRates: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter token: (query) accept jetton master address 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currency: (query)  (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
@@ -22,21 +30,22 @@ open class RatesAPI {
      - returns: GetChartRates200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getChartRates(token: String, currency: String? = nil, startDate: Int64? = nil, endDate: Int64? = nil, pointsCount: Int? = nil) async throws -> GetChartRates200Response {
-        return try await getChartRatesWithRequestBuilder(token: token, currency: currency, startDate: startDate, endDate: endDate, pointsCount: pointsCount).execute().body
+    open class func getChartRates(token: String, xCapability: XCapability_getChartRates? = nil, currency: String? = nil, startDate: Int64? = nil, endDate: Int64? = nil, pointsCount: Int? = nil) async throws -> GetChartRates200Response {
+        return try await getChartRatesWithRequestBuilder(token: token, xCapability: xCapability, currency: currency, startDate: startDate, endDate: endDate, pointsCount: pointsCount).execute().body
     }
 
     /**
      - GET /v2/rates/chart
      - Get chart by token
      - parameter token: (query) accept jetton master address 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currency: (query)  (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
      - parameter pointsCount: (query)  (optional, default to 200)
      - returns: RequestBuilder<GetChartRates200Response> 
      */
-    open class func getChartRatesWithRequestBuilder(token: String, currency: String? = nil, startDate: Int64? = nil, endDate: Int64? = nil, pointsCount: Int? = nil) -> RequestBuilder<GetChartRates200Response> {
+    open class func getChartRatesWithRequestBuilder(token: String, xCapability: XCapability_getChartRates? = nil, currency: String? = nil, startDate: Int64? = nil, endDate: Int64? = nil, pointsCount: Int? = nil) -> RequestBuilder<GetChartRates200Response> {
         let localVariablePath = "/v2/rates/chart"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -51,7 +60,7 @@ open class RatesAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -62,20 +71,29 @@ open class RatesAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getMarketsRates: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: GetMarketsRates200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getMarketsRates() async throws -> GetMarketsRates200Response {
-        return try await getMarketsRatesWithRequestBuilder().execute().body
+    open class func getMarketsRates(xCapability: XCapability_getMarketsRates? = nil) async throws -> GetMarketsRates200Response {
+        return try await getMarketsRatesWithRequestBuilder(xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/rates/markets
      - Get the TON price from markets
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<GetMarketsRates200Response> 
      */
-    open class func getMarketsRatesWithRequestBuilder() -> RequestBuilder<GetMarketsRates200Response> {
+    open class func getMarketsRatesWithRequestBuilder(xCapability: XCapability_getMarketsRates? = nil) -> RequestBuilder<GetMarketsRates200Response> {
         let localVariablePath = "/v2/rates/markets"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -83,7 +101,7 @@ open class RatesAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -94,14 +112,22 @@ open class RatesAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getRates: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: GetRates200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRates(tokens: [String], currencies: [String]) async throws -> GetRates200Response {
-        return try await getRatesWithRequestBuilder(tokens: tokens, currencies: currencies).execute().body
+    open class func getRates(tokens: [String], currencies: [String], xCapability: XCapability_getRates? = nil) async throws -> GetRates200Response {
+        return try await getRatesWithRequestBuilder(tokens: tokens, currencies: currencies, xCapability: xCapability).execute().body
     }
 
     /**
@@ -109,9 +135,10 @@ open class RatesAPI {
      - Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
      - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<GetRates200Response> 
      */
-    open class func getRatesWithRequestBuilder(tokens: [String], currencies: [String]) -> RequestBuilder<GetRates200Response> {
+    open class func getRatesWithRequestBuilder(tokens: [String], currencies: [String], xCapability: XCapability_getRates? = nil) -> RequestBuilder<GetRates200Response> {
         let localVariablePath = "/v2/rates"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -123,7 +150,7 @@ open class RatesAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

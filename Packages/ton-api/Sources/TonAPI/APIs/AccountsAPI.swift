@@ -13,22 +13,31 @@ import AnyCodable
 open class AccountsAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_accountDnsBackResolve: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: DomainNames
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func accountDnsBackResolve(accountId: String) async throws -> DomainNames {
-        return try await accountDnsBackResolveWithRequestBuilder(accountId: accountId).execute().body
+    open class func accountDnsBackResolve(accountId: String, xCapability: XCapability_accountDnsBackResolve? = nil) async throws -> DomainNames {
+        return try await accountDnsBackResolveWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/dns/backresolve
      - Get account's domains
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<DomainNames> 
      */
-    open class func accountDnsBackResolveWithRequestBuilder(accountId: String) -> RequestBuilder<DomainNames> {
+    open class func accountDnsBackResolveWithRequestBuilder(accountId: String, xCapability: XCapability_accountDnsBackResolve? = nil) -> RequestBuilder<DomainNames> {
         var localVariablePath = "/v2/accounts/{account_id}/dns/backresolve"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -39,7 +48,7 @@ open class AccountsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -50,16 +59,24 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_emulateMessageToAccountEvent: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: AccountEvent
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> AccountEvent {
-        return try await emulateMessageToAccountEventWithRequestBuilder(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToAccountEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> AccountEvent {
+        return try await emulateMessageToAccountEventWithRequestBuilder(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
@@ -67,11 +84,12 @@ open class AccountsAPI {
      - Emulate sending message to retrieve account-specific events
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<AccountEvent> 
      */
-    open class func emulateMessageToAccountEventWithRequestBuilder(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<AccountEvent> {
+    open class func emulateMessageToAccountEventWithRequestBuilder(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToAccountEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<AccountEvent> {
         var localVariablePath = "/v2/accounts/{account_id}/events/emulate"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -86,6 +104,7 @@ open class AccountsAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -97,22 +116,31 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccount: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: Account
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccount(accountId: String) async throws -> Account {
-        return try await getAccountWithRequestBuilder(accountId: accountId).execute().body
+    open class func getAccount(accountId: String, xCapability: XCapability_getAccount? = nil) async throws -> Account {
+        return try await getAccountWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}
      - Get human-friendly information about an account without low-level details.
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<Account> 
      */
-    open class func getAccountWithRequestBuilder(accountId: String) -> RequestBuilder<Account> {
+    open class func getAccountWithRequestBuilder(accountId: String, xCapability: XCapability_getAccount? = nil) -> RequestBuilder<Account> {
         var localVariablePath = "/v2/accounts/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -123,7 +151,7 @@ open class AccountsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -134,15 +162,23 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountDiff: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter startDate: (query)  
      - parameter endDate: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: GetAccountDiff200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountDiff(accountId: String, startDate: Int64, endDate: Int64) async throws -> GetAccountDiff200Response {
-        return try await getAccountDiffWithRequestBuilder(accountId: accountId, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountDiff(accountId: String, startDate: Int64, endDate: Int64, xCapability: XCapability_getAccountDiff? = nil) async throws -> GetAccountDiff200Response {
+        return try await getAccountDiffWithRequestBuilder(accountId: accountId, startDate: startDate, endDate: endDate, xCapability: xCapability).execute().body
     }
 
     /**
@@ -151,9 +187,10 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter startDate: (query)  
      - parameter endDate: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<GetAccountDiff200Response> 
      */
-    open class func getAccountDiffWithRequestBuilder(accountId: String, startDate: Int64, endDate: Int64) -> RequestBuilder<GetAccountDiff200Response> {
+    open class func getAccountDiffWithRequestBuilder(accountId: String, startDate: Int64, endDate: Int64, xCapability: XCapability_getAccountDiff? = nil) -> RequestBuilder<GetAccountDiff200Response> {
         var localVariablePath = "/v2/accounts/{account_id}/diff"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -168,7 +205,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -179,24 +216,33 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountDnsExpiring: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter period: (query) number of days before expiration (optional)
      - returns: DnsExpiring
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountDnsExpiring(accountId: String, period: Int? = nil) async throws -> DnsExpiring {
-        return try await getAccountDnsExpiringWithRequestBuilder(accountId: accountId, period: period).execute().body
+    open class func getAccountDnsExpiring(accountId: String, xCapability: XCapability_getAccountDnsExpiring? = nil, period: Int? = nil) async throws -> DnsExpiring {
+        return try await getAccountDnsExpiringWithRequestBuilder(accountId: accountId, xCapability: xCapability, period: period).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/dns/expiring
      - Get expiring account .ton dns
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter period: (query) number of days before expiration (optional)
      - returns: RequestBuilder<DnsExpiring> 
      */
-    open class func getAccountDnsExpiringWithRequestBuilder(accountId: String, period: Int? = nil) -> RequestBuilder<DnsExpiring> {
+    open class func getAccountDnsExpiringWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountDnsExpiring? = nil, period: Int? = nil) -> RequestBuilder<DnsExpiring> {
         var localVariablePath = "/v2/accounts/{account_id}/dns/expiring"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -210,7 +256,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -221,16 +267,24 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountEvent: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
      - returns: AccountEvent
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountEvent(accountId: String, eventId: String, acceptLanguage: String? = nil, subjectOnly: Bool? = nil) async throws -> AccountEvent {
-        return try await getAccountEventWithRequestBuilder(accountId: accountId, eventId: eventId, acceptLanguage: acceptLanguage, subjectOnly: subjectOnly).execute().body
+    open class func getAccountEvent(accountId: String, eventId: String, xCapability: XCapability_getAccountEvent? = nil, acceptLanguage: String? = nil, subjectOnly: Bool? = nil) async throws -> AccountEvent {
+        return try await getAccountEventWithRequestBuilder(accountId: accountId, eventId: eventId, xCapability: xCapability, acceptLanguage: acceptLanguage, subjectOnly: subjectOnly).execute().body
     }
 
     /**
@@ -238,11 +292,12 @@ open class AccountsAPI {
      - Get event for an account by event_id
      - parameter accountId: (path) account ID 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
      - returns: RequestBuilder<AccountEvent> 
      */
-    open class func getAccountEventWithRequestBuilder(accountId: String, eventId: String, acceptLanguage: String? = nil, subjectOnly: Bool? = nil) -> RequestBuilder<AccountEvent> {
+    open class func getAccountEventWithRequestBuilder(accountId: String, eventId: String, xCapability: XCapability_getAccountEvent? = nil, acceptLanguage: String? = nil, subjectOnly: Bool? = nil) -> RequestBuilder<AccountEvent> {
         var localVariablePath = "/v2/accounts/{account_id}/events/{event_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -259,6 +314,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -270,9 +326,17 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountEvents: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter initiator: (query) Show only events that are initiated by this account (optional, default to false)
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
@@ -282,8 +346,8 @@ open class AccountsAPI {
      - returns: AccountEvents
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountEvents(accountId: String, limit: Int, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getAccountEventsWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, initiator: initiator, subjectOnly: subjectOnly, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountEvents(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
+        return try await getAccountEventsWithRequestBuilder(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, initiator: initiator, subjectOnly: subjectOnly, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
     }
 
     /**
@@ -291,6 +355,7 @@ open class AccountsAPI {
      - Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter initiator: (query) Show only events that are initiated by this account (optional, default to false)
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
@@ -299,7 +364,7 @@ open class AccountsAPI {
      - parameter endDate: (query)  (optional)
      - returns: RequestBuilder<AccountEvents> 
      */
-    open class func getAccountEventsWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getAccountEventsWithRequestBuilder(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/accounts/{account_id}/events"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -318,6 +383,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -329,10 +395,18 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountExtraCurrencyHistoryByID: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter id: (path) extra currency id 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -340,8 +414,8 @@ open class AccountsAPI {
      - returns: AccountEvents
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountExtraCurrencyHistoryByID(accountId: String, id: Int, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getAccountExtraCurrencyHistoryByIDWithRequestBuilder(accountId: accountId, id: id, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountExtraCurrencyHistoryByID(accountId: String, id: Int, limit: Int, xCapability: XCapability_getAccountExtraCurrencyHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
+        return try await getAccountExtraCurrencyHistoryByIDWithRequestBuilder(accountId: accountId, id: id, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
     }
 
     /**
@@ -350,13 +424,14 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter id: (path) extra currency id 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
      - returns: RequestBuilder<AccountEvents> 
      */
-    open class func getAccountExtraCurrencyHistoryByIDWithRequestBuilder(accountId: String, id: Int, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getAccountExtraCurrencyHistoryByIDWithRequestBuilder(accountId: String, id: Int, limit: Int, xCapability: XCapability_getAccountExtraCurrencyHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/accounts/{account_id}/extra-currency/{id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -376,6 +451,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -387,16 +463,24 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountJettonBalance: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: JettonBalance
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonBalance(accountId: String, jettonId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil) async throws -> JettonBalance {
-        return try await getAccountJettonBalanceWithRequestBuilder(accountId: accountId, jettonId: jettonId, currencies: currencies, supportedExtensions: supportedExtensions).execute().body
+    open class func getAccountJettonBalance(accountId: String, jettonId: String, xCapability: XCapability_getAccountJettonBalance? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil) async throws -> JettonBalance {
+        return try await getAccountJettonBalanceWithRequestBuilder(accountId: accountId, jettonId: jettonId, xCapability: xCapability, currencies: currencies, supportedExtensions: supportedExtensions).execute().body
     }
 
     /**
@@ -404,11 +488,12 @@ open class AccountsAPI {
      - Get Jetton balance by owner address
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: RequestBuilder<JettonBalance> 
      */
-    open class func getAccountJettonBalanceWithRequestBuilder(accountId: String, jettonId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil) -> RequestBuilder<JettonBalance> {
+    open class func getAccountJettonBalanceWithRequestBuilder(accountId: String, jettonId: String, xCapability: XCapability_getAccountJettonBalance? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil) -> RequestBuilder<JettonBalance> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons/{jetton_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -426,7 +511,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -437,10 +522,18 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountJettonHistoryByID: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -449,8 +542,8 @@ open class AccountsAPI {
      */
     @available(*, deprecated, message: "This operation is deprecated.")
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonHistoryByID(accountId: String, jettonId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getAccountJettonHistoryByIDWithRequestBuilder(accountId: accountId, jettonId: jettonId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountJettonHistoryByID(accountId: String, jettonId: String, limit: Int, xCapability: XCapability_getAccountJettonHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
+        return try await getAccountJettonHistoryByIDWithRequestBuilder(accountId: accountId, jettonId: jettonId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
     }
 
     /**
@@ -459,6 +552,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -466,7 +560,7 @@ open class AccountsAPI {
      - returns: RequestBuilder<AccountEvents> 
      */
     @available(*, deprecated, message: "This operation is deprecated.")
-    open class func getAccountJettonHistoryByIDWithRequestBuilder(accountId: String, jettonId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getAccountJettonHistoryByIDWithRequestBuilder(accountId: String, jettonId: String, limit: Int, xCapability: XCapability_getAccountJettonHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons/{jetton_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -486,6 +580,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -497,26 +592,35 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountJettonsBalances: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: JettonsBalances
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonsBalances(accountId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil) async throws -> JettonsBalances {
-        return try await getAccountJettonsBalancesWithRequestBuilder(accountId: accountId, currencies: currencies, supportedExtensions: supportedExtensions).execute().body
+    open class func getAccountJettonsBalances(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil) async throws -> JettonsBalances {
+        return try await getAccountJettonsBalancesWithRequestBuilder(accountId: accountId, xCapability: xCapability, currencies: currencies, supportedExtensions: supportedExtensions).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/jettons
      - Get all Jettons balances by owner address
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: RequestBuilder<JettonsBalances> 
      */
-    open class func getAccountJettonsBalancesWithRequestBuilder(accountId: String, currencies: [String]? = nil, supportedExtensions: [String]? = nil) -> RequestBuilder<JettonsBalances> {
+    open class func getAccountJettonsBalancesWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil) -> RequestBuilder<JettonsBalances> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -531,7 +635,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -542,15 +646,23 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountJettonsHistory: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: JettonOperations
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonsHistory(accountId: String, limit: Int, beforeLt: Int64? = nil) async throws -> JettonOperations {
-        return try await getAccountJettonsHistoryWithRequestBuilder(accountId: accountId, limit: limit, beforeLt: beforeLt).execute().body
+    open class func getAccountJettonsHistory(accountId: String, limit: Int, xCapability: XCapability_getAccountJettonsHistory? = nil, beforeLt: Int64? = nil) async throws -> JettonOperations {
+        return try await getAccountJettonsHistoryWithRequestBuilder(accountId: accountId, limit: limit, xCapability: xCapability, beforeLt: beforeLt).execute().body
     }
 
     /**
@@ -558,10 +670,11 @@ open class AccountsAPI {
      - Get the transfer jettons history for account
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: RequestBuilder<JettonOperations> 
      */
-    open class func getAccountJettonsHistoryWithRequestBuilder(accountId: String, limit: Int, beforeLt: Int64? = nil) -> RequestBuilder<JettonOperations> {
+    open class func getAccountJettonsHistoryWithRequestBuilder(accountId: String, limit: Int, xCapability: XCapability_getAccountJettonsHistory? = nil, beforeLt: Int64? = nil) -> RequestBuilder<JettonOperations> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -576,7 +689,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -587,22 +700,31 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountMultisigs: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: Multisigs
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountMultisigs(accountId: String) async throws -> Multisigs {
-        return try await getAccountMultisigsWithRequestBuilder(accountId: accountId).execute().body
+    open class func getAccountMultisigs(accountId: String, xCapability: XCapability_getAccountMultisigs? = nil) async throws -> Multisigs {
+        return try await getAccountMultisigsWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/multisigs
      - Get account's multisigs
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<Multisigs> 
      */
-    open class func getAccountMultisigsWithRequestBuilder(accountId: String) -> RequestBuilder<Multisigs> {
+    open class func getAccountMultisigsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountMultisigs? = nil) -> RequestBuilder<Multisigs> {
         var localVariablePath = "/v2/accounts/{account_id}/multisigs"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -613,7 +735,7 @@ open class AccountsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -624,8 +746,16 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountNftItems: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter collection: (query) nft collection (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
@@ -633,21 +763,22 @@ open class AccountsAPI {
      - returns: NftItems
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountNftItems(accountId: String, collection: String? = nil, limit: Int? = nil, offset: Int? = nil, indirectOwnership: Bool? = nil) async throws -> NftItems {
-        return try await getAccountNftItemsWithRequestBuilder(accountId: accountId, collection: collection, limit: limit, offset: offset, indirectOwnership: indirectOwnership).execute().body
+    open class func getAccountNftItems(accountId: String, xCapability: XCapability_getAccountNftItems? = nil, collection: String? = nil, limit: Int? = nil, offset: Int? = nil, indirectOwnership: Bool? = nil) async throws -> NftItems {
+        return try await getAccountNftItemsWithRequestBuilder(accountId: accountId, xCapability: xCapability, collection: collection, limit: limit, offset: offset, indirectOwnership: indirectOwnership).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/nfts
      - Get all NFT items by owner address
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter collection: (query) nft collection (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - parameter indirectOwnership: (query) Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional, default to false)
      - returns: RequestBuilder<NftItems> 
      */
-    open class func getAccountNftItemsWithRequestBuilder(accountId: String, collection: String? = nil, limit: Int? = nil, offset: Int? = nil, indirectOwnership: Bool? = nil) -> RequestBuilder<NftItems> {
+    open class func getAccountNftItemsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountNftItems? = nil, collection: String? = nil, limit: Int? = nil, offset: Int? = nil, indirectOwnership: Bool? = nil) -> RequestBuilder<NftItems> {
         var localVariablePath = "/v2/accounts/{account_id}/nfts"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -664,7 +795,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -675,22 +806,31 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountPublicKey: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: GetAccountPublicKey200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountPublicKey(accountId: String) async throws -> GetAccountPublicKey200Response {
-        return try await getAccountPublicKeyWithRequestBuilder(accountId: accountId).execute().body
+    open class func getAccountPublicKey(accountId: String, xCapability: XCapability_getAccountPublicKey? = nil) async throws -> GetAccountPublicKey200Response {
+        return try await getAccountPublicKeyWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/publickey
      - Get public key by account id
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<GetAccountPublicKey200Response> 
      */
-    open class func getAccountPublicKeyWithRequestBuilder(accountId: String) -> RequestBuilder<GetAccountPublicKey200Response> {
+    open class func getAccountPublicKeyWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountPublicKey? = nil) -> RequestBuilder<GetAccountPublicKey200Response> {
         var localVariablePath = "/v2/accounts/{account_id}/publickey"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -701,7 +841,7 @@ open class AccountsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -712,22 +852,31 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountSubscriptions: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: Subscriptions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountSubscriptions(accountId: String) async throws -> Subscriptions {
-        return try await getAccountSubscriptionsWithRequestBuilder(accountId: accountId).execute().body
+    open class func getAccountSubscriptions(accountId: String, xCapability: XCapability_getAccountSubscriptions? = nil) async throws -> Subscriptions {
+        return try await getAccountSubscriptionsWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/subscriptions
      - Get all subscriptions by wallet address
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<Subscriptions> 
      */
-    open class func getAccountSubscriptionsWithRequestBuilder(accountId: String) -> RequestBuilder<Subscriptions> {
+    open class func getAccountSubscriptionsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountSubscriptions? = nil) -> RequestBuilder<Subscriptions> {
         var localVariablePath = "/v2/accounts/{account_id}/subscriptions"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -738,7 +887,7 @@ open class AccountsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -749,26 +898,35 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountTraces: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: TraceIDs
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountTraces(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil) async throws -> TraceIDs {
-        return try await getAccountTracesWithRequestBuilder(accountId: accountId, beforeLt: beforeLt, limit: limit).execute().body
+    open class func getAccountTraces(accountId: String, xCapability: XCapability_getAccountTraces? = nil, beforeLt: Int64? = nil, limit: Int? = nil) async throws -> TraceIDs {
+        return try await getAccountTracesWithRequestBuilder(accountId: accountId, xCapability: xCapability, beforeLt: beforeLt, limit: limit).execute().body
     }
 
     /**
      - GET /v2/accounts/{account_id}/traces
      - Get traces for account
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: RequestBuilder<TraceIDs> 
      */
-    open class func getAccountTracesWithRequestBuilder(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil) -> RequestBuilder<TraceIDs> {
+    open class func getAccountTracesWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountTraces? = nil, beforeLt: Int64? = nil, limit: Int? = nil) -> RequestBuilder<TraceIDs> {
         var localVariablePath = "/v2/accounts/{account_id}/traces"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -783,7 +941,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -794,24 +952,33 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccounts: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currency: (query)  (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: Accounts
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccounts(currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> Accounts {
-        return try await getAccountsWithRequestBuilder(currency: currency, getAccountsRequest: getAccountsRequest).execute().body
+    open class func getAccounts(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> Accounts {
+        return try await getAccountsWithRequestBuilder(xCapability: xCapability, currency: currency, getAccountsRequest: getAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/accounts/_bulk
      - Get human-friendly information about several accounts without low-level details.
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter currency: (query)  (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<Accounts> 
      */
-    open class func getAccountsWithRequestBuilder(currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<Accounts> {
+    open class func getAccountsWithRequestBuilder(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<Accounts> {
         let localVariablePath = "/v2/accounts/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
@@ -823,6 +990,7 @@ open class AccountsAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -833,18 +1001,26 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getJettonAccountHistoryByID: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
      - returns: JettonOperations
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonAccountHistoryByID(accountId: String, jettonId: String, limit: Int, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> JettonOperations {
-        return try await getJettonAccountHistoryByIDWithRequestBuilder(accountId: accountId, jettonId: jettonId, limit: limit, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getJettonAccountHistoryByID(accountId: String, jettonId: String, limit: Int, xCapability: XCapability_getJettonAccountHistoryByID? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> JettonOperations {
+        return try await getJettonAccountHistoryByIDWithRequestBuilder(accountId: accountId, jettonId: jettonId, limit: limit, xCapability: xCapability, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
     }
 
     /**
@@ -853,12 +1029,13 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
      - returns: RequestBuilder<JettonOperations> 
      */
-    open class func getJettonAccountHistoryByIDWithRequestBuilder(accountId: String, jettonId: String, limit: Int, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<JettonOperations> {
+    open class func getJettonAccountHistoryByIDWithRequestBuilder(accountId: String, jettonId: String, limit: Int, xCapability: XCapability_getJettonAccountHistoryByID? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<JettonOperations> {
         var localVariablePath = "/v2/jettons/{jetton_id}/accounts/{account_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -878,7 +1055,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -889,22 +1066,31 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_reindexAccount: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func reindexAccount(accountId: String) async throws {
-        return try await reindexAccountWithRequestBuilder(accountId: accountId).execute().body
+    open class func reindexAccount(accountId: String, xCapability: XCapability_reindexAccount? = nil) async throws {
+        return try await reindexAccountWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - POST /v2/accounts/{account_id}/reindex
      - Update internal cache for a particular account
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<Void> 
      */
-    open class func reindexAccountWithRequestBuilder(accountId: String) -> RequestBuilder<Void> {
+    open class func reindexAccountWithRequestBuilder(accountId: String, xCapability: XCapability_reindexAccount? = nil) -> RequestBuilder<Void> {
         var localVariablePath = "/v2/accounts/{account_id}/reindex"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -915,7 +1101,7 @@ open class AccountsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -926,22 +1112,31 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_searchAccounts: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter name: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: FoundAccounts
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func searchAccounts(name: String) async throws -> FoundAccounts {
-        return try await searchAccountsWithRequestBuilder(name: name).execute().body
+    open class func searchAccounts(name: String, xCapability: XCapability_searchAccounts? = nil) async throws -> FoundAccounts {
+        return try await searchAccountsWithRequestBuilder(name: name, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/accounts/search
      - Search by account domain name
      - parameter name: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<FoundAccounts> 
      */
-    open class func searchAccountsWithRequestBuilder(name: String) -> RequestBuilder<FoundAccounts> {
+    open class func searchAccountsWithRequestBuilder(name: String, xCapability: XCapability_searchAccounts? = nil) -> RequestBuilder<FoundAccounts> {
         let localVariablePath = "/v2/accounts/search"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -952,7 +1147,7 @@ open class AccountsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

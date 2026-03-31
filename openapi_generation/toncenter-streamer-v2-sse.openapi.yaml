@@ -1,0 +1,450 @@
+openapi: 3.1.0
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+info:
+  title: Toncenter Streaming API v2 (SSE)
+  version: 0.1.0
+  summary: OpenAPI description for the Server-Sent Events interface of Toncenter Streaming API v2
+  description: |
+    SSE-only OpenAPI 3.1 schema derived from the public Toncenter Streaming API v2
+    document at:
+    https://gist.github.com/dungeon-master-666/98db8d73e9cd9a1b7802bc06ded5b155
+
+    This document models the HTTP request and the JSON payloads carried by the
+    SSE stream. The streaming payloads delegated by the source doc to Toncenter
+    API v3 (`Transaction`, `Action`, `TraceNode`, `AccountState`, `JettonWallet`)
+    are intentionally kept as opaque objects here instead of guessing fields that
+    are not specified in the source.
+externalDocs:
+  description: Source document
+  url: https://gist.github.com/dungeon-master-666/98db8d73e9cd9a1b7802bc06ded5b155
+servers:
+  - url: https://toncenter.com
+    description: Mainnet
+  - url: https://testnet.toncenter.com
+    description: Testnet
+tags:
+  - name: Streaming
+    description: SSE subscription endpoint for real-time TON blockchain updates
+paths:
+  /api/streaming/v2/sse:
+    post:
+      tags:
+        - Streaming
+      operationId: subscribeSse
+      summary: Open an SSE subscription
+      description: |
+        Creates a Server-Sent Events stream for the requested subscription.
+
+        The request body is sent once. No additional client messages are sent on
+        the same connection.
+
+        Stream behavior from the source document:
+        - The first payload is `{"status":"subscribed"}`.
+        - Subsequent payloads are streamed as SSE `data:` frames containing JSON.
+        - The server emits `: keepalive` comments every 15 seconds.
+        - SSE comments must be ignored by clients.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SseSubscriptionRequest'
+            examples:
+              lowLatency:
+                summary: Lowest-latency address subscription
+                value:
+                  addresses:
+                    - EQC123...
+                    - 0:abc456...
+                  types:
+                    - transactions
+                    - actions
+                  min_finality: pending
+                  include_address_book: true
+                  include_metadata: false
+                  action_types:
+                    - jetton_transfer
+                    - ton_transfer
+              traceOnly:
+                summary: Subscribe to a specific trace
+                value:
+                  trace_external_hash_norms:
+                    - E7im...+MjE=
+                  types:
+                    - trace
+                  min_finality: pending
+                  include_address_book: true
+                  include_metadata: true
+      responses:
+        '200':
+          description: |
+            SSE stream established successfully.
+
+            The HTTP response body uses `text/event-stream`. Each `data:` frame
+            contains one JSON object matching `SseJsonPayload`. Keepalive comments
+            are sent as `: keepalive`.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: Raw SSE stream carrying JSON payloads in `data:` frames.
+              examples:
+                subscribedThenKeepalive:
+                  summary: Initial subscribed message followed by a keepalive comment
+                  value: |-
+                    data: {"status":"subscribed"}
+
+                    : keepalive
+
+          x-event-stream-items:
+            oneOf:
+              - $ref: '#/components/schemas/SubscribedStatus'
+              - $ref: '#/components/schemas/StreamEvent'
+        '400':
+          description: Invalid subscription request
+        '415':
+          description: Unsupported media type
+components:
+  schemas:
+    Address:
+      type: string
+      description: TON account or contract address in any valid format accepted by Toncenter.
+      examples:
+        - EQC123...
+        - 0:18AA...
+    TraceExternalHashNorm:
+      type: string
+      description: Normalized hash of the external message that initiated a trace.
+      examples:
+        - E7im...+MjE=
+    Finality:
+      type: string
+      description: Finality level for trace-based events.
+      enum:
+        - pending
+        - confirmed
+        - finalized
+    NonPendingFinality:
+      type: string
+      description: Finality level for non-trace events, which are never emitted as pending.
+      enum:
+        - confirmed
+        - finalized
+    SubscriptionType:
+      type: string
+      description: Event type that can be requested in a subscription.
+      enum:
+        - transactions
+        - actions
+        - trace
+        - account_state_change
+        - jettons_change
+    SseSubscriptionRequest:
+      type: object
+      description: |
+        SSE subscription parameters.
+
+        Rules from the source document:
+        - `types` is required.
+        - If subscribing to `trace`, `trace_external_hash_norms` is required.
+        - If subscribing to any non-`trace` event type, `addresses` is required.
+        - `supported_action_types` defaults to `["latest"]` on the server side.
+      additionalProperties: false
+      required:
+        - types
+      properties:
+        addresses:
+          type: array
+          description: Wallet or contract addresses to monitor.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Address'
+        trace_external_hash_norms:
+          type: array
+          description: Trace external hashes to monitor.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/TraceExternalHashNorm'
+        types:
+          type: array
+          description: Event types to receive.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/SubscriptionType'
+          uniqueItems: true
+        min_finality:
+          $ref: '#/components/schemas/Finality'
+        include_address_book:
+          type: boolean
+          description: Include friendly names and TON DNS information for known addresses.
+        include_metadata:
+          type: boolean
+          description: Include metadata for known token contracts such as Jettons and NFTs.
+        action_types:
+          type: array
+          description: |
+            Filter delivered actions by action classification type.
+            Applies only to `actions` events.
+          minItems: 1
+          items:
+            type: string
+          examples:
+            - - jetton_transfer
+              - ton_transfer
+        supported_action_types:
+          type: array
+          description: Advertises which action classification versions the client understands.
+          minItems: 1
+          items:
+            type: string
+          default:
+            - latest
+      allOf:
+        - if:
+            properties:
+              types:
+                contains:
+                  const: trace
+            required:
+              - types
+          then:
+            required:
+              - trace_external_hash_norms
+        - if:
+            properties:
+              types:
+                contains:
+                  const: transactions
+            required:
+              - types
+          then:
+            required:
+              - addresses
+        - if:
+            properties:
+              types:
+                contains:
+                  const: actions
+            required:
+              - types
+          then:
+            required:
+              - addresses
+        - if:
+            properties:
+              types:
+                contains:
+                  const: account_state_change
+            required:
+              - types
+          then:
+            required:
+              - addresses
+        - if:
+            properties:
+              types:
+                contains:
+                  const: jettons_change
+            required:
+              - types
+          then:
+            required:
+              - addresses
+    SubscribedStatus:
+      type: object
+      description: First JSON payload sent after a successful SSE subscription is created.
+      additionalProperties: false
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          const: subscribed
+    StreamEvent:
+      oneOf:
+        - $ref: '#/components/schemas/TransactionsNotification'
+        - $ref: '#/components/schemas/ActionsNotification'
+        - $ref: '#/components/schemas/TraceNotification'
+        - $ref: '#/components/schemas/AccountStateNotification'
+        - $ref: '#/components/schemas/JettonsNotification'
+        - $ref: '#/components/schemas/TraceInvalidatedNotification'
+      discriminator:
+        propertyName: type
+        mapping:
+          transactions: '#/components/schemas/TransactionsNotification'
+          actions: '#/components/schemas/ActionsNotification'
+          trace: '#/components/schemas/TraceNotification'
+          account_state_change: '#/components/schemas/AccountStateNotification'
+          jettons_change: '#/components/schemas/JettonsNotification'
+          trace_invalidated: '#/components/schemas/TraceInvalidatedNotification'
+    SseJsonPayload:
+      oneOf:
+        - $ref: '#/components/schemas/SubscribedStatus'
+        - $ref: '#/components/schemas/StreamEvent'
+    TransactionsNotification:
+      type: object
+      description: Trace-scoped transaction snapshot, ordered by LT descending.
+      additionalProperties: false
+      required:
+        - type
+        - finality
+        - trace_external_hash_norm
+        - transactions
+      properties:
+        type:
+          type: string
+          const: transactions
+        finality:
+          $ref: '#/components/schemas/Finality'
+        trace_external_hash_norm:
+          $ref: '#/components/schemas/TraceExternalHashNorm'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        address_book:
+          $ref: '#/components/schemas/AddressBook'
+        metadata:
+          $ref: '#/components/schemas/MetadataMap'
+    ActionsNotification:
+      type: object
+      description: Classified actions derived from a trace.
+      additionalProperties: false
+      required:
+        - type
+        - finality
+        - trace_external_hash_norm
+        - actions
+      properties:
+        type:
+          type: string
+          const: actions
+        finality:
+          $ref: '#/components/schemas/Finality'
+        trace_external_hash_norm:
+          $ref: '#/components/schemas/TraceExternalHashNorm'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        address_book:
+          $ref: '#/components/schemas/AddressBook'
+        metadata:
+          $ref: '#/components/schemas/MetadataMap'
+    TraceNotification:
+      type: object
+      description: Full trace tree plus transaction map and optional actions.
+      additionalProperties: false
+      required:
+        - type
+        - finality
+        - trace_external_hash_norm
+        - trace
+        - transactions
+      properties:
+        type:
+          type: string
+          const: trace
+        finality:
+          $ref: '#/components/schemas/Finality'
+        trace_external_hash_norm:
+          $ref: '#/components/schemas/TraceExternalHashNorm'
+        trace:
+          $ref: '#/components/schemas/TraceNode'
+        transactions:
+          type: object
+          description: Map of transaction hash to transaction object.
+          additionalProperties:
+            $ref: '#/components/schemas/Transaction'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        address_book:
+          $ref: '#/components/schemas/AddressBook'
+        metadata:
+          $ref: '#/components/schemas/MetadataMap'
+    AccountStateNotification:
+      type: object
+      description: Account state after a confirmed or finalized transaction on a subscribed address.
+      additionalProperties: false
+      required:
+        - type
+        - finality
+        - account
+        - state
+      properties:
+        type:
+          type: string
+          const: account_state_change
+        finality:
+          $ref: '#/components/schemas/NonPendingFinality'
+        account:
+          $ref: '#/components/schemas/Address'
+        state:
+          $ref: '#/components/schemas/AccountState'
+    JettonsNotification:
+      type: object
+      description: Jetton wallet snapshot for a wallet or owner related to a subscribed address.
+      additionalProperties: false
+      required:
+        - type
+        - finality
+        - jetton
+      properties:
+        type:
+          type: string
+          const: jettons_change
+        finality:
+          $ref: '#/components/schemas/NonPendingFinality'
+        jetton:
+          $ref: '#/components/schemas/JettonWallet'
+        address_book:
+          $ref: '#/components/schemas/AddressBook'
+        metadata:
+          $ref: '#/components/schemas/MetadataMap'
+    TraceInvalidatedNotification:
+      type: object
+      description: |
+        Signals that a previously emitted pending or confirmed trace is no longer
+        valid and should be discarded locally.
+      additionalProperties: false
+      required:
+        - type
+        - trace_external_hash_norm
+      properties:
+        type:
+          type: string
+          const: trace_invalidated
+        trace_external_hash_norm:
+          $ref: '#/components/schemas/TraceExternalHashNorm'
+    AddressBook:
+      type: object
+      description: Mapping of addresses to friendly-address and TON DNS information.
+      additionalProperties: true
+    MetadataMap:
+      type: object
+      description: Mapping of token-related addresses to metadata objects.
+      additionalProperties: true
+    Transaction:
+      type: object
+      description: Opaque Toncenter API v3 Transaction object.
+      additionalProperties: true
+    Action:
+      type: object
+      description: Opaque Toncenter API v3 Action object.
+      additionalProperties: true
+    TraceNode:
+      type: object
+      description: Opaque Toncenter API v3 TraceNode object.
+      additionalProperties: true
+    AccountState:
+      type: object
+      description: |
+        Account state similar to Toncenter API v3 AccountState, without full code
+        and data BoCs according to the source document.
+      additionalProperties: true
+    JettonWallet:
+      type: object
+      description: Opaque Toncenter API v3 JettonWallet object.
+      additionalProperties: true

@@ -11,6 +11,7 @@ let package = Package(
     products: [
         .library(name: "TonAPI", targets: ["TonAPI"]),
         .library(name: "TonStreamingAPI", targets: ["TonStreamingAPI"]),
+        .library(name: "TonStreamingAPIV2", targets: ["TonStreamingAPIV2"]),
         .library(name: "StreamURLSessionTransport", targets: ["StreamURLSessionTransport"]),
         .library(name: "EventSource", targets: ["EventSource"])
     ],
@@ -33,6 +34,15 @@ let package = Package(
                   .target(name: "EventSource")
                 ],
                 path: "Packages/ton-streaming-api",
+                sources: ["Sources"]
+               ),
+        .target(name: "TonStreamingAPIV2",
+                dependencies: [
+                  .byName(name: "AnyCodable"),
+                  .target(name: "StreamURLSessionTransport"),
+                  .target(name: "EventSource")
+                ],
+                path: "Packages/ton-streaming-api-v2",
                 sources: ["Sources"]
                ),
         .target(name: "StreamURLSessionTransport",

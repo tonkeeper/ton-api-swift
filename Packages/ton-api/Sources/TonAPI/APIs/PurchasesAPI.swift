@@ -13,26 +13,35 @@ import AnyCodable
 open class PurchasesAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getPurchaseHistory: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last invoices (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: AccountPurchases
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getPurchaseHistory(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil) async throws -> AccountPurchases {
-        return try await getPurchaseHistoryWithRequestBuilder(accountId: accountId, beforeLt: beforeLt, limit: limit).execute().body
+    open class func getPurchaseHistory(accountId: String, xCapability: XCapability_getPurchaseHistory? = nil, beforeLt: Int64? = nil, limit: Int? = nil) async throws -> AccountPurchases {
+        return try await getPurchaseHistoryWithRequestBuilder(accountId: accountId, xCapability: xCapability, beforeLt: beforeLt, limit: limit).execute().body
     }
 
     /**
      - GET /v2/purchases/{account_id}/history
      - Get history of purchases
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter beforeLt: (query) omit this parameter to get last invoices (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: RequestBuilder<AccountPurchases> 
      */
-    open class func getPurchaseHistoryWithRequestBuilder(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil) -> RequestBuilder<AccountPurchases> {
+    open class func getPurchaseHistoryWithRequestBuilder(accountId: String, xCapability: XCapability_getPurchaseHistory? = nil, beforeLt: Int64? = nil, limit: Int? = nil) -> RequestBuilder<AccountPurchases> {
         var localVariablePath = "/v2/purchases/{account_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -47,7 +56,7 @@ open class PurchasesAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

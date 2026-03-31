@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 # **emulateMessageToEvent**
 ```swift
-    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
+    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
 ```
 
 
@@ -23,10 +23,11 @@ Emulate sending message to retrieve general blockchain events
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EventsAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EventsAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,6 +44,7 @@ EventsAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEsti
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -63,7 +65,7 @@ No authorization required
 
 # **getEvent**
 ```swift
-    open class func getEvent(eventId: String, acceptLanguage: String? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
+    open class func getEvent(eventId: String, xCapability: XCapability_getEvent? = nil, acceptLanguage: String? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
 ```
 
 
@@ -76,9 +78,10 @@ Get an event either by event ID or a hash of any transaction in a trace. An even
 import TonAPI
 
 let eventId = "eventId_example" // String | event ID or transaction hash in hex (without 0x) or base64url format
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
-EventsAPI.getEvent(eventId: eventId, acceptLanguage: acceptLanguage) { (response, error) in
+EventsAPI.getEvent(eventId: eventId, xCapability: xCapability, acceptLanguage: acceptLanguage) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -95,6 +98,7 @@ EventsAPI.getEvent(eventId: eventId, acceptLanguage: acceptLanguage) { (response
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **eventId** | **String** | event ID or transaction hash in hex (without 0x) or base64url format | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **getAccountNominatorsPools**
 ```swift
-    open class func getAccountNominatorsPools(accountId: String, completion: @escaping (_ data: AccountStaking?, _ error: Error?) -> Void)
+    open class func getAccountNominatorsPools(accountId: String, xCapability: XCapability_getAccountNominatorsPools? = nil, completion: @escaping (_ data: AccountStaking?, _ error: Error?) -> Void)
 ```
 
 
@@ -25,8 +25,9 @@ All pools where account participates
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-StakingAPI.getAccountNominatorsPools(accountId: accountId) { (response, error) in
+StakingAPI.getAccountNominatorsPools(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,6 +44,7 @@ StakingAPI.getAccountNominatorsPools(accountId: accountId) { (response, error) i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -61,7 +63,7 @@ No authorization required
 
 # **getStakingPoolHistory**
 ```swift
-    open class func getStakingPoolHistory(accountId: String, completion: @escaping (_ data: GetStakingPoolHistory200Response?, _ error: Error?) -> Void)
+    open class func getStakingPoolHistory(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil, completion: @escaping (_ data: GetStakingPoolHistory200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -74,8 +76,9 @@ Pool history
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-StakingAPI.getStakingPoolHistory(accountId: accountId) { (response, error) in
+StakingAPI.getStakingPoolHistory(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -92,6 +95,7 @@ StakingAPI.getStakingPoolHistory(accountId: accountId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -110,7 +114,7 @@ No authorization required
 
 # **getStakingPoolInfo**
 ```swift
-    open class func getStakingPoolInfo(accountId: String, acceptLanguage: String? = nil, completion: @escaping (_ data: GetStakingPoolInfo200Response?, _ error: Error?) -> Void)
+    open class func getStakingPoolInfo(accountId: String, xCapability: XCapability_getStakingPoolInfo? = nil, acceptLanguage: String? = nil, completion: @escaping (_ data: GetStakingPoolInfo200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -123,9 +127,10 @@ Stacking pool info
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
-StakingAPI.getStakingPoolInfo(accountId: accountId, acceptLanguage: acceptLanguage) { (response, error) in
+StakingAPI.getStakingPoolInfo(accountId: accountId, xCapability: xCapability, acceptLanguage: acceptLanguage) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -142,6 +147,7 @@ StakingAPI.getStakingPoolInfo(accountId: accountId, acceptLanguage: acceptLangua
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type
@@ -161,7 +167,7 @@ No authorization required
 
 # **getStakingPools**
 ```swift
-    open class func getStakingPools(availableFor: String? = nil, includeUnverified: Bool? = nil, acceptLanguage: String? = nil, completion: @escaping (_ data: GetStakingPools200Response?, _ error: Error?) -> Void)
+    open class func getStakingPools(xCapability: XCapability_getStakingPools? = nil, availableFor: String? = nil, includeUnverified: Bool? = nil, acceptLanguage: String? = nil, completion: @escaping (_ data: GetStakingPools200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -173,11 +179,12 @@ All pools available in network
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let availableFor = "availableFor_example" // String | account ID (optional)
 let includeUnverified = false // Bool | return also pools not from white list - just compatible by interfaces (maybe dangerous!) (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
-StakingAPI.getStakingPools(availableFor: availableFor, includeUnverified: includeUnverified, acceptLanguage: acceptLanguage) { (response, error) in
+StakingAPI.getStakingPools(xCapability: xCapability, availableFor: availableFor, includeUnverified: includeUnverified, acceptLanguage: acceptLanguage) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -193,6 +200,7 @@ StakingAPI.getStakingPools(availableFor: availableFor, includeUnverified: includ
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **availableFor** | **String** | account ID | [optional] 
  **includeUnverified** | **Bool** | return also pools not from white list - just compatible by interfaces (maybe dangerous!) | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]

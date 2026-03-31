@@ -13,16 +13,24 @@ import AnyCodable
 open class NFTAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getAccountNftHistory: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: NftOperations
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountNftHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil) async throws -> NftOperations {
-        return try await getAccountNftHistoryWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt).execute().body
+    open class func getAccountNftHistory(accountId: String, limit: Int, xCapability: XCapability_getAccountNftHistory? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil) async throws -> NftOperations {
+        return try await getAccountNftHistoryWithRequestBuilder(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, beforeLt: beforeLt).execute().body
     }
 
     /**
@@ -30,11 +38,12 @@ open class NFTAPI {
      - Get the transfer nft history
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: RequestBuilder<NftOperations> 
      */
-    open class func getAccountNftHistoryWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil) -> RequestBuilder<NftOperations> {
+    open class func getAccountNftHistoryWithRequestBuilder(accountId: String, limit: Int, xCapability: XCapability_getAccountNftHistory? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil) -> RequestBuilder<NftOperations> {
         var localVariablePath = "/v2/accounts/{account_id}/nfts/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -49,6 +58,7 @@ open class NFTAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -60,26 +70,35 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getItemsFromCollection: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: NftItems
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getItemsFromCollection(accountId: String, limit: Int? = nil, offset: Int? = nil) async throws -> NftItems {
-        return try await getItemsFromCollectionWithRequestBuilder(accountId: accountId, limit: limit, offset: offset).execute().body
+    open class func getItemsFromCollection(accountId: String, xCapability: XCapability_getItemsFromCollection? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> NftItems {
+        return try await getItemsFromCollectionWithRequestBuilder(accountId: accountId, xCapability: xCapability, limit: limit, offset: offset).execute().body
     }
 
     /**
      - GET /v2/nfts/collections/{account_id}/items
      - Get NFT items from collection by collection address
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<NftItems> 
      */
-    open class func getItemsFromCollectionWithRequestBuilder(accountId: String, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<NftItems> {
+    open class func getItemsFromCollectionWithRequestBuilder(accountId: String, xCapability: XCapability_getItemsFromCollection? = nil, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<NftItems> {
         var localVariablePath = "/v2/nfts/collections/{account_id}/items"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -94,7 +113,7 @@ open class NFTAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -105,22 +124,31 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getNftCollection: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: NftCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftCollection(accountId: String) async throws -> NftCollection {
-        return try await getNftCollectionWithRequestBuilder(accountId: accountId).execute().body
+    open class func getNftCollection(accountId: String, xCapability: XCapability_getNftCollection? = nil) async throws -> NftCollection {
+        return try await getNftCollectionWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/nfts/collections/{account_id}
      - Get NFT collection by collection address
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<NftCollection> 
      */
-    open class func getNftCollectionWithRequestBuilder(accountId: String) -> RequestBuilder<NftCollection> {
+    open class func getNftCollectionWithRequestBuilder(accountId: String, xCapability: XCapability_getNftCollection? = nil) -> RequestBuilder<NftCollection> {
         var localVariablePath = "/v2/nfts/collections/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -131,7 +159,7 @@ open class NFTAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -142,22 +170,31 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getNftCollectionItemsByAddresses: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: NftCollections
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftCollectionItemsByAddresses(getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftCollections {
-        return try await getNftCollectionItemsByAddressesWithRequestBuilder(getAccountsRequest: getAccountsRequest).execute().body
+    open class func getNftCollectionItemsByAddresses(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftCollections {
+        return try await getNftCollectionItemsByAddressesWithRequestBuilder(xCapability: xCapability, getAccountsRequest: getAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/nfts/collections/_bulk
      - Get NFT collection items by their addresses
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<NftCollections> 
      */
-    open class func getNftCollectionItemsByAddressesWithRequestBuilder(getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftCollections> {
+    open class func getNftCollectionItemsByAddressesWithRequestBuilder(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftCollections> {
         let localVariablePath = "/v2/nfts/collections/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
@@ -166,6 +203,7 @@ open class NFTAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -176,24 +214,33 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getNftCollections: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: NftCollections
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftCollections(limit: Int? = nil, offset: Int? = nil) async throws -> NftCollections {
-        return try await getNftCollectionsWithRequestBuilder(limit: limit, offset: offset).execute().body
+    open class func getNftCollections(xCapability: XCapability_getNftCollections? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> NftCollections {
+        return try await getNftCollectionsWithRequestBuilder(xCapability: xCapability, limit: limit, offset: offset).execute().body
     }
 
     /**
      - GET /v2/nfts/collections
      - Get NFT collections
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<NftCollections> 
      */
-    open class func getNftCollectionsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<NftCollections> {
+    open class func getNftCollectionsWithRequestBuilder(xCapability: XCapability_getNftCollections? = nil, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<NftCollections> {
         let localVariablePath = "/v2/nfts/collections"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -205,7 +252,7 @@ open class NFTAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -216,9 +263,17 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getNftHistoryByID: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -227,8 +282,8 @@ open class NFTAPI {
      */
     @available(*, deprecated, message: "This operation is deprecated.")
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftHistoryByID(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getNftHistoryByIDWithRequestBuilder(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getNftHistoryByID(accountId: String, limit: Int, xCapability: XCapability_getNftHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
+        return try await getNftHistoryByIDWithRequestBuilder(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
     }
 
     /**
@@ -236,6 +291,7 @@ open class NFTAPI {
      - Please use `getAccountNftHistory`` instead
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -243,7 +299,7 @@ open class NFTAPI {
      - returns: RequestBuilder<AccountEvents> 
      */
     @available(*, deprecated, message: "This operation is deprecated.")
-    open class func getNftHistoryByIDWithRequestBuilder(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getNftHistoryByIDWithRequestBuilder(accountId: String, limit: Int, xCapability: XCapability_getNftHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/nfts/{account_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -260,6 +316,7 @@ open class NFTAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
+            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -271,22 +328,31 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getNftItemByAddress: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: NftItem
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftItemByAddress(accountId: String) async throws -> NftItem {
-        return try await getNftItemByAddressWithRequestBuilder(accountId: accountId).execute().body
+    open class func getNftItemByAddress(accountId: String, xCapability: XCapability_getNftItemByAddress? = nil) async throws -> NftItem {
+        return try await getNftItemByAddressWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/nfts/{account_id}
      - Get NFT item by its address
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<NftItem> 
      */
-    open class func getNftItemByAddressWithRequestBuilder(accountId: String) -> RequestBuilder<NftItem> {
+    open class func getNftItemByAddressWithRequestBuilder(accountId: String, xCapability: XCapability_getNftItemByAddress? = nil) -> RequestBuilder<NftItem> {
         var localVariablePath = "/v2/nfts/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -297,7 +363,7 @@ open class NFTAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -308,22 +374,31 @@ open class NFTAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getNftItemsByAddresses: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: NftItems
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftItemsByAddresses(getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftItems {
-        return try await getNftItemsByAddressesWithRequestBuilder(getAccountsRequest: getAccountsRequest).execute().body
+    open class func getNftItemsByAddresses(xCapability: XCapability_getNftItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftItems {
+        return try await getNftItemsByAddressesWithRequestBuilder(xCapability: xCapability, getAccountsRequest: getAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/nfts/_bulk
      - Get NFT items by their addresses
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<NftItems> 
      */
-    open class func getNftItemsByAddressesWithRequestBuilder(getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftItems> {
+    open class func getNftItemsByAddressesWithRequestBuilder(xCapability: XCapability_getNftItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftItems> {
         let localVariablePath = "/v2/nfts/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
@@ -332,6 +407,7 @@ open class NFTAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 # **getStorageProviders**
 ```swift
-    open class func getStorageProviders(completion: @escaping (_ data: GetStorageProviders200Response?, _ error: Error?) -> Void)
+    open class func getStorageProviders(xCapability: XCapability_getStorageProviders? = nil, completion: @escaping (_ data: GetStorageProviders200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -21,8 +21,9 @@ Get TON storage providers deployed to the blockchain.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-StorageAPI.getStorageProviders() { (response, error) in
+StorageAPI.getStorageProviders(xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -35,7 +36,10 @@ StorageAPI.getStorageProviders() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 

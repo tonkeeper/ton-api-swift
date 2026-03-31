@@ -13,22 +13,31 @@ import AnyCodable
 open class UtilitiesAPI {
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_addressParse: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: AddressParse200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func addressParse(accountId: String) async throws -> AddressParse200Response {
-        return try await addressParseWithRequestBuilder(accountId: accountId).execute().body
+    open class func addressParse(accountId: String, xCapability: XCapability_addressParse? = nil) async throws -> AddressParse200Response {
+        return try await addressParseWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/address/{account_id}/parse
      - parse address and display in all formats
      - parameter accountId: (path) account ID 
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<AddressParse200Response> 
      */
-    open class func addressParseWithRequestBuilder(accountId: String) -> RequestBuilder<AddressParse200Response> {
+    open class func addressParseWithRequestBuilder(accountId: String, xCapability: XCapability_addressParse? = nil) -> RequestBuilder<AddressParse200Response> {
         var localVariablePath = "/v2/address/{account_id}/parse"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -39,7 +48,7 @@ open class UtilitiesAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -50,20 +59,29 @@ open class UtilitiesAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getOpenapiJson: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: AnyCodable
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getOpenapiJson() async throws -> AnyCodable {
-        return try await getOpenapiJsonWithRequestBuilder().execute().body
+    open class func getOpenapiJson(xCapability: XCapability_getOpenapiJson? = nil) async throws -> AnyCodable {
+        return try await getOpenapiJsonWithRequestBuilder(xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/openapi.json
      - Get the openapi.json file
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<AnyCodable> 
      */
-    open class func getOpenapiJsonWithRequestBuilder() -> RequestBuilder<AnyCodable> {
+    open class func getOpenapiJsonWithRequestBuilder(xCapability: XCapability_getOpenapiJson? = nil) -> RequestBuilder<AnyCodable> {
         let localVariablePath = "/v2/openapi.json"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -71,7 +89,7 @@ open class UtilitiesAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -82,20 +100,29 @@ open class UtilitiesAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getOpenapiYml: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: URL
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getOpenapiYml() async throws -> URL {
-        return try await getOpenapiYmlWithRequestBuilder().execute().body
+    open class func getOpenapiYml(xCapability: XCapability_getOpenapiYml? = nil) async throws -> URL {
+        return try await getOpenapiYmlWithRequestBuilder(xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/openapi.yml
      - Get the openapi.yml file
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<URL> 
      */
-    open class func getOpenapiYmlWithRequestBuilder() -> RequestBuilder<URL> {
+    open class func getOpenapiYmlWithRequestBuilder(xCapability: XCapability_getOpenapiYml? = nil) -> RequestBuilder<URL> {
         let localVariablePath = "/v2/openapi.yml"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -103,7 +130,7 @@ open class UtilitiesAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -114,20 +141,29 @@ open class UtilitiesAPI {
     }
 
     /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_status: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
 
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: ServiceStatus
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func status() async throws -> ServiceStatus {
-        return try await statusWithRequestBuilder().execute().body
+    open class func status(xCapability: XCapability_status? = nil) async throws -> ServiceStatus {
+        return try await statusWithRequestBuilder(xCapability: xCapability).execute().body
     }
 
     /**
      - GET /v2/status
      - Status
+     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
      - returns: RequestBuilder<ServiceStatus> 
      */
-    open class func statusWithRequestBuilder() -> RequestBuilder<ServiceStatus> {
+    open class func statusWithRequestBuilder(xCapability: XCapability_status? = nil) -> RequestBuilder<ServiceStatus> {
         let localVariablePath = "/v2/status"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -135,7 +171,7 @@ open class UtilitiesAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

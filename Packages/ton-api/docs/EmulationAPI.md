@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 # **decodeMessage**
 ```swift
-    open class func decodeMessage(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, completion: @escaping (_ data: DecodedMessage?, _ error: Error?) -> Void)
+    open class func decodeMessage(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_decodeMessage? = nil, completion: @escaping (_ data: DecodedMessage?, _ error: Error?) -> Void)
 ```
 
 
@@ -26,8 +26,9 @@ Decode a given message. Only external incoming messages can be decoded currently
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 
-EmulationAPI.decodeMessage(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner) { (response, error) in
+EmulationAPI.decodeMessage(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -44,6 +45,7 @@ EmulationAPI.decodeMessage(gaslessEstimateRequestMessagesInner: gaslessEstimateR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
 
 ### Return type
 
@@ -62,7 +64,7 @@ No authorization required
 
 # **emulateMessageToAccountEvent**
 ```swift
-    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: AccountEvent?, _ error: Error?) -> Void)
+    open class func emulateMessageToAccountEvent(accountId: String, gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToAccountEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: AccountEvent?, _ error: Error?) -> Void)
 ```
 
 
@@ -76,10 +78,11 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EmulationAPI.emulateMessageToAccountEvent(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EmulationAPI.emulateMessageToAccountEvent(accountId: accountId, gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -97,6 +100,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -117,7 +121,7 @@ No authorization required
 
 # **emulateMessageToEvent**
 ```swift
-    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
+    open class func emulateMessageToEvent(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToEvent? = nil, acceptLanguage: String? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
 ```
 
 
@@ -130,10 +134,11 @@ Emulate sending message to retrieve general blockchain events
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EmulationAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EmulationAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, acceptLanguage: acceptLanguage, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -150,6 +155,7 @@ EmulationAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessE
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -170,7 +176,7 @@ No authorization required
 
 # **emulateMessageToTrace**
 ```swift
-    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
+    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToTrace? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
 ```
 
 
@@ -183,9 +189,10 @@ Emulate sending message to retrieve with a detailed execution trace
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-EmulationAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+EmulationAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -202,6 +209,7 @@ EmulationAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessE
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
 ### Return type
@@ -221,7 +229,7 @@ No authorization required
 
 # **emulateMessageToWallet**
 ```swift
-    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, xCapability: XCapability_emulateMessageToWallet? = nil, acceptLanguage: String? = nil, currency: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
 ```
 
 
@@ -234,10 +242,11 @@ Emulate sending message to retrieve the resulting wallet state
 import TonAPI
 
 let emulateMessageToWalletRequest = emulateMessageToWallet_request(boc: "boc_example", params: [emulateMessageToWallet_request_params_inner(address: "address_example", balance: 123)]) // EmulateMessageToWalletRequest | bag-of-cells serialized to base64/hex and additional parameters to configure emulation
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let currency = "currency_example" // String |  (optional)
 
-EmulationAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage, currency: currency) { (response, error) in
+EmulationAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, xCapability: xCapability, acceptLanguage: acceptLanguage, currency: currency) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -254,6 +263,7 @@ EmulationAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessag
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **emulateMessageToWalletRequest** | [**EmulateMessageToWalletRequest**](EmulateMessageToWalletRequest.md) | bag-of-cells serialized to base64/hex and additional parameters to configure emulation | 
+ **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **currency** | **String** |  | [optional] 
 

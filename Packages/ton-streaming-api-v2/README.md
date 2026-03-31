@@ -35,7 +35,7 @@ All URIs are relative to *https://toncenter.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*StreamingAPI* | [**subscribeSse**](docs/StreamingAPI.md#subscribesse) | **POST** /api/streaming/v2/sse | Open an SSE subscription
+*StreamingAPI* | [**subscribeSse**](docs/StreamingAPI.md#subscribesse) | **POST** /streaming/v2/sse | Open an SSE subscription
 
 
 ## Documentation For Models

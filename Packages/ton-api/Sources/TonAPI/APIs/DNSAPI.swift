@@ -22,7 +22,7 @@ open class DNSAPI {
     /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter filter: (query)  (optional, default to false)
      - returns: DnsRecord
      */
@@ -35,7 +35,7 @@ open class DNSAPI {
      - GET /v2/dns/{domain_name}/resolve
      - DNS resolve for domain name
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter filter: (query)  (optional, default to false)
      - returns: RequestBuilder<DnsRecord> 
      */
@@ -72,7 +72,7 @@ open class DNSAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter tld: (query) domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot; (optional)
      - returns: Auctions
      */
@@ -84,7 +84,7 @@ open class DNSAPI {
     /**
      - GET /v2/dns/auctions
      - Get all auctions
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter tld: (query) domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot; (optional)
      - returns: RequestBuilder<Auctions> 
      */
@@ -119,7 +119,7 @@ open class DNSAPI {
     /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: DomainInfo
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -131,7 +131,7 @@ open class DNSAPI {
      - GET /v2/dns/{domain_name}
      - Get full information about domain name
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<DomainInfo> 
      */
     open class func getDnsInfoWithRequestBuilder(domainName: String, xCapability: XCapability_getDnsInfo? = nil) -> RequestBuilder<DomainInfo> {
@@ -165,7 +165,7 @@ open class DNSAPI {
     /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: DomainBids
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -177,7 +177,7 @@ open class DNSAPI {
      - GET /v2/dns/{domain_name}/bids
      - Get domain bids
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<DomainBids> 
      */
     open class func getDomainBidsWithRequestBuilder(domainName: String, xCapability: XCapability_getDomainBids? = nil) -> RequestBuilder<DomainBids> {

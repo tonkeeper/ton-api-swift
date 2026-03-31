@@ -26,7 +26,7 @@ tags:
   - name: Streaming
     description: SSE subscription endpoint for real-time TON blockchain updates
 paths:
-  /api/streaming/v2/sse:
+  /streaming/v2/sse:
     post:
       tags:
         - Streaming

@@ -25,7 +25,7 @@ All pools where account participates
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 StakingAPI.getAccountNominatorsPools(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -44,7 +44,7 @@ StakingAPI.getAccountNominatorsPools(accountId: accountId, xCapability: xCapabil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -76,7 +76,7 @@ Pool history
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 StakingAPI.getStakingPoolHistory(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -95,7 +95,7 @@ StakingAPI.getStakingPoolHistory(accountId: accountId, xCapability: xCapability)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -127,7 +127,7 @@ Stacking pool info
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
 StakingAPI.getStakingPoolInfo(accountId: accountId, xCapability: xCapability, acceptLanguage: acceptLanguage) { (response, error) in
@@ -147,7 +147,7 @@ StakingAPI.getStakingPoolInfo(accountId: accountId, xCapability: xCapability, ac
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type
@@ -179,7 +179,7 @@ All pools available in network
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let availableFor = "availableFor_example" // String | account ID (optional)
 let includeUnverified = false // Bool | return also pools not from white list - just compatible by interfaces (maybe dangerous!) (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
@@ -200,7 +200,7 @@ StakingAPI.getStakingPools(xCapability: xCapability, availableFor: availableFor,
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **availableFor** | **String** | account ID | [optional] 
  **includeUnverified** | **Bool** | return also pools not from white list - just compatible by interfaces (maybe dangerous!) | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]

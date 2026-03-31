@@ -26,7 +26,7 @@ Decode a given message. Only external incoming messages can be decoded currently
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 EmulationAPI.decodeMessage(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -45,7 +45,7 @@ EmulationAPI.decodeMessage(gaslessEstimateRequestMessagesInner: gaslessEstimateR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -78,7 +78,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -134,7 +134,7 @@ Emulate sending message to retrieve general blockchain events
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let ignoreSignatureCheck = true // Bool |  (optional)
 
@@ -155,7 +155,7 @@ EmulationAPI.emulateMessageToEvent(gaslessEstimateRequestMessagesInner: gaslessE
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
@@ -189,7 +189,7 @@ Emulate sending message to retrieve with a detailed execution trace
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let ignoreSignatureCheck = true // Bool |  (optional)
 
 EmulationAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
@@ -209,7 +209,7 @@ EmulationAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessE
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
 ### Return type
@@ -242,7 +242,7 @@ Emulate sending message to retrieve the resulting wallet state
 import TonAPI
 
 let emulateMessageToWalletRequest = emulateMessageToWallet_request(boc: "boc_example", params: [emulateMessageToWallet_request_params_inner(address: "address_example", balance: 123)]) // EmulateMessageToWalletRequest | bag-of-cells serialized to base64/hex and additional parameters to configure emulation
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let currency = "currency_example" // String |  (optional)
 
@@ -263,7 +263,7 @@ EmulationAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessag
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **emulateMessageToWalletRequest** | [**EmulateMessageToWalletRequest**](EmulateMessageToWalletRequest.md) | bag-of-cells serialized to base64/hex and additional parameters to configure emulation | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **currency** | **String** |  | [optional] 
 

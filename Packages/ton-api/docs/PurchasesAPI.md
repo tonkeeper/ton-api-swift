@@ -22,7 +22,7 @@ Get history of purchases
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last invoices (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 
@@ -43,7 +43,7 @@ PurchasesAPI.getPurchaseHistory(accountId: accountId, xCapability: xCapability, 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last invoices | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
 

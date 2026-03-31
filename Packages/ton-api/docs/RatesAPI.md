@@ -24,7 +24,7 @@ Get chart by token
 import TonAPI
 
 let token = "token_example" // String | accept jetton master address
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currency = "currency_example" // String |  (optional)
 let startDate = 987 // Int64 |  (optional)
 let endDate = 987 // Int64 |  (optional)
@@ -47,7 +47,7 @@ RatesAPI.getChartRates(token: token, xCapability: xCapability, currency: currenc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **token** | **String** | accept jetton master address | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currency** | **String** |  | [optional] 
  **startDate** | **Int64** |  | [optional] 
  **endDate** | **Int64** |  | [optional] 
@@ -82,7 +82,7 @@ Get the TON price from markets
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 RatesAPI.getMarketsRates(xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -100,7 +100,7 @@ RatesAPI.getMarketsRates(xCapability: xCapability) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -133,7 +133,7 @@ import TonAPI
 
 let tokens = ["inner_example"] // [String] | accept ton and jetton master addresses, separated by commas
 let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 RatesAPI.getRates(tokens: tokens, currencies: currencies, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -153,7 +153,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tokens** | [**[String]**](String.md) | accept ton and jetton master addresses, separated by commas | 
  **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

@@ -4,7 +4,7 @@ All URIs are relative to *https://toncenter.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**subscribeSse**](StreamingAPI.md#subscribesse) | **POST** /api/streaming/v2/sse | Open an SSE subscription
+[**subscribeSse**](StreamingAPI.md#subscribesse) | **POST** /streaming/v2/sse | Open an SSE subscription
 
 
 # **subscribeSse**

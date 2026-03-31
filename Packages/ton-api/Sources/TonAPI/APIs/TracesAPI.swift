@@ -22,7 +22,7 @@ open class TracesAPI {
     /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Trace
      */
@@ -35,7 +35,7 @@ open class TracesAPI {
      - POST /v2/traces/emulate
      - Emulate sending message to retrieve with a detailed execution trace
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Trace> 
      */
@@ -71,7 +71,7 @@ open class TracesAPI {
     /**
 
      - parameter traceId: (path) trace ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Trace
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -83,7 +83,7 @@ open class TracesAPI {
      - GET /v2/traces/{trace_id}
      - Get the trace by trace ID or hash of any transaction in trace
      - parameter traceId: (path) trace ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Trace> 
      */
     open class func getTraceWithRequestBuilder(traceId: String, xCapability: XCapability_getTrace? = nil) -> RequestBuilder<Trace> {

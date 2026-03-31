@@ -3139,7 +3139,6 @@ components:
         type: string
         enum:
           - sub-second
-        default: sub-second
         example: sub-second
     masterchainSeqno:
       in: path

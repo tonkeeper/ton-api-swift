@@ -22,7 +22,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: DomainNames
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/dns/backresolve
      - Get account's domains
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<DomainNames> 
      */
     open class func accountDnsBackResolveWithRequestBuilder(accountId: String, xCapability: XCapability_accountDnsBackResolve? = nil) -> RequestBuilder<DomainNames> {
@@ -69,7 +69,7 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: AccountEvent
@@ -84,7 +84,7 @@ open class AccountsAPI {
      - Emulate sending message to retrieve account-specific events
      - parameter accountId: (path) account ID 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<AccountEvent> 
@@ -125,7 +125,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Account
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -137,7 +137,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}
      - Get human-friendly information about an account without low-level details.
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Account> 
      */
     open class func getAccountWithRequestBuilder(accountId: String, xCapability: XCapability_getAccount? = nil) -> RequestBuilder<Account> {
@@ -173,7 +173,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter startDate: (query)  
      - parameter endDate: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetAccountDiff200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -187,7 +187,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter startDate: (query)  
      - parameter endDate: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetAccountDiff200Response> 
      */
     open class func getAccountDiffWithRequestBuilder(accountId: String, startDate: Int64, endDate: Int64, xCapability: XCapability_getAccountDiff? = nil) -> RequestBuilder<GetAccountDiff200Response> {
@@ -225,7 +225,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter period: (query) number of days before expiration (optional)
      - returns: DnsExpiring
      */
@@ -238,7 +238,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/dns/expiring
      - Get expiring account .ton dns
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter period: (query) number of days before expiration (optional)
      - returns: RequestBuilder<DnsExpiring> 
      */
@@ -277,7 +277,7 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
      - returns: AccountEvent
@@ -292,7 +292,7 @@ open class AccountsAPI {
      - Get event for an account by event_id
      - parameter accountId: (path) account ID 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
      - returns: RequestBuilder<AccountEvent> 
@@ -336,7 +336,7 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter initiator: (query) Show only events that are initiated by this account (optional, default to false)
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
@@ -355,7 +355,7 @@ open class AccountsAPI {
      - Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter initiator: (query) Show only events that are initiated by this account (optional, default to false)
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
@@ -406,7 +406,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter id: (path) extra currency id 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -424,7 +424,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter id: (path) extra currency id 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -473,7 +473,7 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: JettonBalance
@@ -488,7 +488,7 @@ open class AccountsAPI {
      - Get Jetton balance by owner address
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: RequestBuilder<JettonBalance> 
@@ -533,7 +533,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -552,7 +552,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -601,7 +601,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: JettonsBalances
@@ -615,7 +615,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/jettons
      - Get all Jettons balances by owner address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: RequestBuilder<JettonsBalances> 
@@ -656,7 +656,7 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: JettonOperations
      */
@@ -670,7 +670,7 @@ open class AccountsAPI {
      - Get the transfer jettons history for account
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: RequestBuilder<JettonOperations> 
      */
@@ -709,7 +709,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Multisigs
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -721,7 +721,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/multisigs
      - Get account's multisigs
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Multisigs> 
      */
     open class func getAccountMultisigsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountMultisigs? = nil) -> RequestBuilder<Multisigs> {
@@ -755,7 +755,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter collection: (query) nft collection (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
@@ -771,7 +771,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/nfts
      - Get all NFT items by owner address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter collection: (query) nft collection (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
@@ -815,7 +815,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetAccountPublicKey200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -827,7 +827,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/publickey
      - Get public key by account id
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetAccountPublicKey200Response> 
      */
     open class func getAccountPublicKeyWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountPublicKey? = nil) -> RequestBuilder<GetAccountPublicKey200Response> {
@@ -861,7 +861,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Subscriptions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -873,7 +873,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/subscriptions
      - Get all subscriptions by wallet address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Subscriptions> 
      */
     open class func getAccountSubscriptionsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountSubscriptions? = nil) -> RequestBuilder<Subscriptions> {
@@ -907,7 +907,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: TraceIDs
@@ -921,7 +921,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/traces
      - Get traces for account
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter limit: (query)  (optional, default to 100)
      - returns: RequestBuilder<TraceIDs> 
@@ -960,7 +960,7 @@ open class AccountsAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currency: (query)  (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: Accounts
@@ -973,7 +973,7 @@ open class AccountsAPI {
     /**
      - POST /v2/accounts/_bulk
      - Get human-friendly information about several accounts without low-level details.
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currency: (query)  (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<Accounts> 
@@ -1012,7 +1012,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
@@ -1029,7 +1029,7 @@ open class AccountsAPI {
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
@@ -1075,7 +1075,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1087,7 +1087,7 @@ open class AccountsAPI {
      - POST /v2/accounts/{account_id}/reindex
      - Update internal cache for a particular account
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Void> 
      */
     open class func reindexAccountWithRequestBuilder(accountId: String, xCapability: XCapability_reindexAccount? = nil) -> RequestBuilder<Void> {
@@ -1121,7 +1121,7 @@ open class AccountsAPI {
     /**
 
      - parameter name: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: FoundAccounts
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -1133,7 +1133,7 @@ open class AccountsAPI {
      - GET /v2/accounts/search
      - Search by account domain name
      - parameter name: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<FoundAccounts> 
      */
     open class func searchAccountsWithRequestBuilder(name: String, xCapability: XCapability_searchAccounts? = nil) -> RequestBuilder<FoundAccounts> {

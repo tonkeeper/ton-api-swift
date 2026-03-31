@@ -23,7 +23,7 @@ open class NFTAPI {
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: NftOperations
@@ -38,7 +38,7 @@ open class NFTAPI {
      - Get the transfer nft history
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - returns: RequestBuilder<NftOperations> 
@@ -79,7 +79,7 @@ open class NFTAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: NftItems
@@ -93,7 +93,7 @@ open class NFTAPI {
      - GET /v2/nfts/collections/{account_id}/items
      - Get NFT items from collection by collection address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<NftItems> 
@@ -133,7 +133,7 @@ open class NFTAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: NftCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -145,7 +145,7 @@ open class NFTAPI {
      - GET /v2/nfts/collections/{account_id}
      - Get NFT collection by collection address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<NftCollection> 
      */
     open class func getNftCollectionWithRequestBuilder(accountId: String, xCapability: XCapability_getNftCollection? = nil) -> RequestBuilder<NftCollection> {
@@ -178,7 +178,7 @@ open class NFTAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: NftCollections
      */
@@ -190,7 +190,7 @@ open class NFTAPI {
     /**
      - POST /v2/nfts/collections/_bulk
      - Get NFT collection items by their addresses
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<NftCollections> 
      */
@@ -222,7 +222,7 @@ open class NFTAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: NftCollections
@@ -235,7 +235,7 @@ open class NFTAPI {
     /**
      - GET /v2/nfts/collections
      - Get NFT collections
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<NftCollections> 
@@ -273,7 +273,7 @@ open class NFTAPI {
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -291,7 +291,7 @@ open class NFTAPI {
      - Please use `getAccountNftHistory`` instead
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
@@ -337,7 +337,7 @@ open class NFTAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: NftItem
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -349,7 +349,7 @@ open class NFTAPI {
      - GET /v2/nfts/{account_id}
      - Get NFT item by its address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<NftItem> 
      */
     open class func getNftItemByAddressWithRequestBuilder(accountId: String, xCapability: XCapability_getNftItemByAddress? = nil) -> RequestBuilder<NftItem> {
@@ -382,7 +382,7 @@ open class NFTAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: NftItems
      */
@@ -394,7 +394,7 @@ open class NFTAPI {
     /**
      - POST /v2/nfts/_bulk
      - Get NFT items by their addresses
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<NftItems> 
      */

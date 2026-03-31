@@ -22,7 +22,7 @@ open class MultisigAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Multisig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -34,7 +34,7 @@ open class MultisigAPI {
      - GET /v2/multisig/{account_id}
      - Get multisig account info
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Multisig> 
      */
     open class func getMultisigAccountWithRequestBuilder(accountId: String, xCapability: XCapability_getMultisigAccount? = nil) -> RequestBuilder<Multisig> {
@@ -68,7 +68,7 @@ open class MultisigAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: MultisigOrder
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -80,7 +80,7 @@ open class MultisigAPI {
      - GET /v2/multisig/order/{account_id}
      - Get multisig order
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<MultisigOrder> 
      */
     open class func getMultisigOrderWithRequestBuilder(accountId: String, xCapability: XCapability_getMultisigOrder? = nil) -> RequestBuilder<MultisigOrder> {

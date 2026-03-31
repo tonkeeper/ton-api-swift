@@ -25,7 +25,7 @@ parse address and display in all formats
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 UtilitiesAPI.addressParse(accountId: accountId, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -44,7 +44,7 @@ UtilitiesAPI.addressParse(accountId: accountId, xCapability: xCapability) { (res
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -75,7 +75,7 @@ Get the openapi.json file
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 UtilitiesAPI.getOpenapiJson(xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -93,7 +93,7 @@ UtilitiesAPI.getOpenapiJson(xCapability: xCapability) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -124,7 +124,7 @@ Get the openapi.yml file
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 UtilitiesAPI.getOpenapiYml(xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -142,7 +142,7 @@ UtilitiesAPI.getOpenapiYml(xCapability: xCapability) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -173,7 +173,7 @@ Status
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 UtilitiesAPI.status(xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -191,7 +191,7 @@ UtilitiesAPI.status(xCapability: xCapability) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

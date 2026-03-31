@@ -21,7 +21,7 @@ open class StorageAPI {
 
     /**
 
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetStorageProviders200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -32,7 +32,7 @@ open class StorageAPI {
     /**
      - GET /v2/storage/providers
      - Get TON storage providers deployed to the blockchain.
-     - parameter xCapability: (header) Request sub-second capability. (optional, default to .subSecond)
+     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetStorageProviders200Response> 
      */
     open class func getStorageProvidersWithRequestBuilder(xCapability: XCapability_getStorageProviders? = nil) -> RequestBuilder<GetStorageProviders200Response> {

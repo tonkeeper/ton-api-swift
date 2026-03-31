@@ -23,7 +23,7 @@ Returns configuration of gasless transfers
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 GaslessAPI.gaslessConfig(xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -41,7 +41,7 @@ GaslessAPI.gaslessConfig(xCapability: xCapability) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -74,7 +74,7 @@ import TonAPI
 
 let masterId = "masterId_example" // String | jetton to pay commission
 let gaslessEstimateRequest = gaslessEstimate_request(throwErrorIfNotEnoughJettons: false, returnEmulation: false, walletAddress: "walletAddress_example", walletPublicKey: "walletPublicKey_example", messages: [gaslessEstimate_request_messages_inner(boc: "boc_example")]) // GaslessEstimateRequest | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 
 GaslessAPI.gaslessEstimate(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest, xCapability: xCapability, acceptLanguage: acceptLanguage) { (response, error) in
@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterId** | **String** | jetton to pay commission | 
  **gaslessEstimateRequest** | [**GaslessEstimateRequest**](GaslessEstimateRequest.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
 
 ### Return type
@@ -128,7 +128,7 @@ Submits the signed gasless transaction message to the network
 import TonAPI
 
 let gaslessSendRequest = gaslessSend_request(walletPublicKey: "walletPublicKey_example", boc: "boc_example") // GaslessSendRequest | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional) (default to .subSecond)
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
 GaslessAPI.gaslessSend(gaslessSendRequest: gaslessSendRequest, xCapability: xCapability) { (response, error) in
     guard error == nil else {
@@ -147,7 +147,7 @@ GaslessAPI.gaslessSend(gaslessSendRequest: gaslessSendRequest, xCapability: xCap
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessSendRequest** | [**GaslessSendRequest**](GaslessSendRequest.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] [default to .subSecond]
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

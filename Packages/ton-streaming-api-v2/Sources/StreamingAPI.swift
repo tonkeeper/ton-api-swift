@@ -90,7 +90,7 @@ public final class StreamingAPI {
   ) async throws -> URLRequest {
     let host = try await hostProvider()
     var urlComponents = URLComponents(url: host, resolvingAgainstBaseURL: true)
-    urlComponents?.path = "/api/streaming/v2/sse"
+    urlComponents?.path = "/streaming/v2/sse"
     
     guard let url = urlComponents?.url else {
       throw Error.incorrectUrl

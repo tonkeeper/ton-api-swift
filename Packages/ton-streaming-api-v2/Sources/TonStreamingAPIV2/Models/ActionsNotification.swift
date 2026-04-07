@@ -13,9 +13,8 @@ import AnyCodable
 /** Classified actions derived from a trace. */
 public struct ActionsNotification: Codable, JSONEncodable, Hashable {
 
-    public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum ModelType: String, Codable, CaseIterable {
         case actions = "actions"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var type: ModelType
     public var finality: Finality

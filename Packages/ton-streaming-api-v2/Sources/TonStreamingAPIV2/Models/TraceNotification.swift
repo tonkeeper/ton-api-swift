@@ -13,9 +13,8 @@ import AnyCodable
 /** Full trace tree plus transaction map and optional actions. */
 public struct TraceNotification: Codable, JSONEncodable, Hashable {
 
-    public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum ModelType: String, Codable, CaseIterable {
         case trace = "trace"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var type: ModelType
     public var finality: Finality

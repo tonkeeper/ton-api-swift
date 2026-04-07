@@ -11,9 +11,8 @@ import AnyCodable
 #endif
 
 /** Finality level for trace-based events. */
-public enum Finality: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+public enum Finality: String, Codable, CaseIterable {
     case pending = "pending"
     case confirmed = "confirmed"
     case finalized = "finalized"
-    case unknownDefaultOpenApi = "unknown_default_open_api"
 }

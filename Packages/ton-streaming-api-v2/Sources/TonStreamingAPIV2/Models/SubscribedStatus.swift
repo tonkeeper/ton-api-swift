@@ -13,9 +13,8 @@ import AnyCodable
 /** First JSON payload sent after a successful SSE subscription is created. */
 public struct SubscribedStatus: Codable, JSONEncodable, Hashable {
 
-    public enum Status: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum Status: String, Codable, CaseIterable {
         case subscribed = "subscribed"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var status: Status
 

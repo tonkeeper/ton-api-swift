@@ -8,12 +8,13 @@ generate_swift_package() {
   local input_path="$1"
   local output_path="$2"
   local project_name="$3"
+  local enum_unknown_default_case="$4"
 
   openapi-generator generate -i "$input_path" -g swift5 -o "$output_path" \
   --additional-properties=\
 projectName="$project_name",\
 swiftUseApiNamespace=false,\
-enumUnknownDefaultCase=true,\
+enumUnknownDefaultCase="$enum_unknown_default_case",\
 responseAs=AsyncAwait,\
 useSPMFileStructure=true,\
 validatable=false
@@ -75,11 +76,13 @@ PY
 generate_swift_package \
   "$REPO_ROOT/openapi_generation/tonapi.yml" \
   "$REPO_ROOT/Packages/ton-api" \
-  "TonAPI"
+  "TonAPI" \
+  "true"
 
 generate_swift_package \
   "$REPO_ROOT/openapi_generation/toncenter-streamer-v2-sse.openapi.yaml" \
   "$REPO_ROOT/Packages/ton-streaming-api-v2" \
-  "TonStreamingAPIV2"
+  "TonStreamingAPIV2" \
+  "false"
 
 postprocess_generated_swift_sources

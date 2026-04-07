@@ -13,9 +13,8 @@ import AnyCodable
 /** Account state after a confirmed or finalized transaction on a subscribed address. */
 public struct AccountStateNotification: Codable, JSONEncodable, Hashable {
 
-    public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum ModelType: String, Codable, CaseIterable {
         case accountStateChange = "account_state_change"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var type: ModelType
     public var finality: NonPendingFinality

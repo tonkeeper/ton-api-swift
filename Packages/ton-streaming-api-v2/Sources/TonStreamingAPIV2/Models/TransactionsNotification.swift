@@ -13,9 +13,8 @@ import AnyCodable
 /** Trace-scoped transaction snapshot, ordered by LT descending. */
 public struct TransactionsNotification: Codable, JSONEncodable, Hashable {
 
-    public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum ModelType: String, Codable, CaseIterable {
         case transactions = "transactions"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var type: ModelType
     public var finality: Finality

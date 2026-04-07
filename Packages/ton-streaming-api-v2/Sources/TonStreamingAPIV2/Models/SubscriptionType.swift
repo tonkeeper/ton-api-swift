@@ -11,11 +11,10 @@ import AnyCodable
 #endif
 
 /** Event type that can be requested in a subscription. */
-public enum SubscriptionType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+public enum SubscriptionType: String, Codable, CaseIterable {
     case transactions = "transactions"
     case actions = "actions"
     case trace = "trace"
     case accountStateChange = "account_state_change"
     case jettonsChange = "jettons_change"
-    case unknownDefaultOpenApi = "unknown_default_open_api"
 }

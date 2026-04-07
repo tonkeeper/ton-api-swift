@@ -13,9 +13,8 @@ import AnyCodable
 /** Signals that a previously emitted pending or confirmed trace is no longer valid and should be discarded locally.  */
 public struct TraceInvalidatedNotification: Codable, JSONEncodable, Hashable {
 
-    public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum ModelType: String, Codable, CaseIterable {
         case traceInvalidated = "trace_invalidated"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var type: ModelType
     /** Normalized hash of the external message that initiated a trace. */

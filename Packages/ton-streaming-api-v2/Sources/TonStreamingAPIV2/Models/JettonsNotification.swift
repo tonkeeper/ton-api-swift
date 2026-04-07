@@ -13,9 +13,8 @@ import AnyCodable
 /** Jetton wallet snapshot for a wallet or owner related to a subscribed address. */
 public struct JettonsNotification: Codable, JSONEncodable, Hashable {
 
-    public enum ModelType: String, Codable, CaseIterable, CaseIterableDefaultsLast {
+    public enum ModelType: String, Codable, CaseIterable {
         case jettonsChange = "jettons_change"
-        case unknownDefaultOpenApi = "unknown_default_open_api"
     }
     public var type: ModelType
     public var finality: NonPendingFinality

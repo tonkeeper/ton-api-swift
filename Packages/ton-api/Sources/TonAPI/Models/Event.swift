@@ -19,11 +19,15 @@ public struct Event: Codable, JSONEncodable, Hashable {
     /** scam */
     public var isScam: Bool
     public var lt: Int64
-    /** Event is not finished yet. Transactions still happening */
+    /** Event trace is not finished yet. Transactions still happening. */
     public var inProgress: Bool
     public var progress: Float
+    /** ID of the slice where this event was finalized. Null if not yet finalized. */
+    public var lastSliceId: Int64?
+    /** Normalized hash of the root external inbound message (hex). */
+    public var extMsgHash: String?
 
-    public init(eventId: String, timestamp: Int64, actions: [Action], valueFlow: [ValueFlow], isScam: Bool, lt: Int64, inProgress: Bool, progress: Float) {
+    public init(eventId: String, timestamp: Int64, actions: [Action], valueFlow: [ValueFlow], isScam: Bool, lt: Int64, inProgress: Bool, progress: Float, lastSliceId: Int64? = nil, extMsgHash: String? = nil) {
         self.eventId = eventId
         self.timestamp = timestamp
         self.actions = actions
@@ -32,6 +36,8 @@ public struct Event: Codable, JSONEncodable, Hashable {
         self.lt = lt
         self.inProgress = inProgress
         self.progress = progress
+        self.lastSliceId = lastSliceId
+        self.extMsgHash = extMsgHash
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -43,6 +49,8 @@ public struct Event: Codable, JSONEncodable, Hashable {
         case lt
         case inProgress = "in_progress"
         case progress
+        case lastSliceId = "last_slice_id"
+        case extMsgHash = "ext_msg_hash"
     }
 
     // Encodable protocol methods
@@ -57,6 +65,8 @@ public struct Event: Codable, JSONEncodable, Hashable {
         try container.encode(lt, forKey: .lt)
         try container.encode(inProgress, forKey: .inProgress)
         try container.encode(progress, forKey: .progress)
+        try container.encodeIfPresent(lastSliceId, forKey: .lastSliceId)
+        try container.encodeIfPresent(extMsgHash, forKey: .extMsgHash)
     }
 }
 

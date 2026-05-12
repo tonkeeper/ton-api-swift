@@ -17,6 +17,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case extraCurrencyTransfer = "ExtraCurrencyTransfer"
         case contractDeploy = "ContractDeploy"
         case jettonTransfer = "JettonTransfer"
+        case flawedJettonTransfer = "FlawedJettonTransfer"
         case jettonBurn = "JettonBurn"
         case jettonMint = "JettonMint"
         case nftItemTransfer = "NftItemTransfer"
@@ -40,6 +41,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case depositTokenStake = "DepositTokenStake"
         case withdrawTokenStakeRequest = "WithdrawTokenStakeRequest"
         case liquidityDeposit = "LiquidityDeposit"
+        case oracleRequest = "OracleRequest"
         case unknown = "Unknown"
         case unknownDefaultOpenApi = "unknown_default_open_api"
     }
@@ -54,6 +56,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var extraCurrencyTransfer: ExtraCurrencyTransferAction?
     public var contractDeploy: ContractDeployAction?
     public var jettonTransfer: JettonTransferAction?
+    public var flawedJettonTransfer: FlawedJettonTransferAction?
     public var jettonBurn: JettonBurnAction?
     public var jettonMint: JettonMintAction?
     public var nftItemTransfer: NftItemTransferAction?
@@ -77,16 +80,18 @@ public struct Action: Codable, JSONEncodable, Hashable {
     public var depositTokenStake: DepositTokenStakeAction?
     public var withdrawTokenStakeRequest: WithdrawTokenStakeRequestAction?
     public var liquidityDeposit: LiquidityDepositAction?
+    public var oracleRequest: OracleRequestAction?
     public var simplePreview: ActionSimplePreview
     public var baseTransactions: [String]
 
-    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, purchase: PurchaseAction? = nil, addExtension: AddExtensionAction? = nil, removeExtension: RemoveExtensionAction? = nil, setSignatureAllowedAction: SetSignatureAllowedAction? = nil, gasRelay: GasRelayAction? = nil, depositTokenStake: DepositTokenStakeAction? = nil, withdrawTokenStakeRequest: WithdrawTokenStakeRequestAction? = nil, liquidityDeposit: LiquidityDepositAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
+    public init(type: ModelType, status: Status, tonTransfer: TonTransferAction? = nil, extraCurrencyTransfer: ExtraCurrencyTransferAction? = nil, contractDeploy: ContractDeployAction? = nil, jettonTransfer: JettonTransferAction? = nil, flawedJettonTransfer: FlawedJettonTransferAction? = nil, jettonBurn: JettonBurnAction? = nil, jettonMint: JettonMintAction? = nil, nftItemTransfer: NftItemTransferAction? = nil, subscribe: SubscriptionAction? = nil, unSubscribe: UnSubscriptionAction? = nil, auctionBid: AuctionBidAction? = nil, nftPurchase: NftPurchaseAction? = nil, depositStake: DepositStakeAction? = nil, withdrawStake: WithdrawStakeAction? = nil, withdrawStakeRequest: WithdrawStakeRequestAction? = nil, electionsDepositStake: ElectionsDepositStakeAction? = nil, electionsRecoverStake: ElectionsRecoverStakeAction? = nil, jettonSwap: JettonSwapAction? = nil, smartContractExec: SmartContractAction? = nil, domainRenew: DomainRenewAction? = nil, purchase: PurchaseAction? = nil, addExtension: AddExtensionAction? = nil, removeExtension: RemoveExtensionAction? = nil, setSignatureAllowedAction: SetSignatureAllowedAction? = nil, gasRelay: GasRelayAction? = nil, depositTokenStake: DepositTokenStakeAction? = nil, withdrawTokenStakeRequest: WithdrawTokenStakeRequestAction? = nil, liquidityDeposit: LiquidityDepositAction? = nil, oracleRequest: OracleRequestAction? = nil, simplePreview: ActionSimplePreview, baseTransactions: [String]) {
         self.type = type
         self.status = status
         self.tonTransfer = tonTransfer
         self.extraCurrencyTransfer = extraCurrencyTransfer
         self.contractDeploy = contractDeploy
         self.jettonTransfer = jettonTransfer
+        self.flawedJettonTransfer = flawedJettonTransfer
         self.jettonBurn = jettonBurn
         self.jettonMint = jettonMint
         self.nftItemTransfer = nftItemTransfer
@@ -110,6 +115,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         self.depositTokenStake = depositTokenStake
         self.withdrawTokenStakeRequest = withdrawTokenStakeRequest
         self.liquidityDeposit = liquidityDeposit
+        self.oracleRequest = oracleRequest
         self.simplePreview = simplePreview
         self.baseTransactions = baseTransactions
     }
@@ -121,6 +127,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case extraCurrencyTransfer = "ExtraCurrencyTransfer"
         case contractDeploy = "ContractDeploy"
         case jettonTransfer = "JettonTransfer"
+        case flawedJettonTransfer = "FlawedJettonTransfer"
         case jettonBurn = "JettonBurn"
         case jettonMint = "JettonMint"
         case nftItemTransfer = "NftItemTransfer"
@@ -144,6 +151,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         case depositTokenStake = "DepositTokenStake"
         case withdrawTokenStakeRequest = "WithdrawTokenStakeRequest"
         case liquidityDeposit = "LiquidityDeposit"
+        case oracleRequest = "OracleRequest"
         case simplePreview = "simple_preview"
         case baseTransactions = "base_transactions"
     }
@@ -158,6 +166,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(extraCurrencyTransfer, forKey: .extraCurrencyTransfer)
         try container.encodeIfPresent(contractDeploy, forKey: .contractDeploy)
         try container.encodeIfPresent(jettonTransfer, forKey: .jettonTransfer)
+        try container.encodeIfPresent(flawedJettonTransfer, forKey: .flawedJettonTransfer)
         try container.encodeIfPresent(jettonBurn, forKey: .jettonBurn)
         try container.encodeIfPresent(jettonMint, forKey: .jettonMint)
         try container.encodeIfPresent(nftItemTransfer, forKey: .nftItemTransfer)
@@ -181,6 +190,7 @@ public struct Action: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(depositTokenStake, forKey: .depositTokenStake)
         try container.encodeIfPresent(withdrawTokenStakeRequest, forKey: .withdrawTokenStakeRequest)
         try container.encodeIfPresent(liquidityDeposit, forKey: .liquidityDeposit)
+        try container.encodeIfPresent(oracleRequest, forKey: .oracleRequest)
         try container.encode(simplePreview, forKey: .simplePreview)
         try container.encode(baseTransactions, forKey: .baseTransactions)
     }

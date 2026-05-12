@@ -10,6 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
+/** Paginated list of events for a single account. */
 public struct AccountEvents: Codable, JSONEncodable, Hashable {
 
     public var events: [AccountEvent]

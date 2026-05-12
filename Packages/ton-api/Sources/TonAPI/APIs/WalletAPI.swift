@@ -13,35 +13,26 @@ import AnyCodable
 open class WalletAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_emulateMessageToWallet: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: MessageConsequences
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, xCapability: XCapability_emulateMessageToWallet? = nil, acceptLanguage: String? = nil, currency: String? = nil) async throws -> MessageConsequences {
-        return try await emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: emulateMessageToWalletRequest, xCapability: xCapability, acceptLanguage: acceptLanguage, currency: currency).execute().body
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil) async throws -> MessageConsequences {
+        return try await emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage, currency: currency).execute().body
     }
 
     /**
      - POST /v2/wallet/emulate
-     - Emulate sending message to retrieve the resulting wallet state
+     - Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter currency: (query)  (optional)
      - returns: RequestBuilder<MessageConsequences> 
      */
-    open class func emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, xCapability: XCapability_emulateMessageToWallet? = nil, acceptLanguage: String? = nil, currency: String? = nil) -> RequestBuilder<MessageConsequences> {
+    open class func emulateMessageToWalletWithRequestBuilder(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil) -> RequestBuilder<MessageConsequences> {
         let localVariablePath = "/v2/wallet/emulate"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: emulateMessageToWalletRequest)
@@ -53,7 +44,6 @@ open class WalletAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -65,31 +55,22 @@ open class WalletAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getAccountSeqno: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Seqno
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountSeqno(accountId: String, xCapability: XCapability_getAccountSeqno? = nil) async throws -> Seqno {
-        return try await getAccountSeqnoWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getAccountSeqno(accountId: String) async throws -> Seqno {
+        return try await getAccountSeqnoWithRequestBuilder(accountId: accountId).execute().body
     }
 
     /**
      - GET /v2/wallet/{account_id}/seqno
      - Get account seqno
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Seqno> 
      */
-    open class func getAccountSeqnoWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountSeqno? = nil) -> RequestBuilder<Seqno> {
+    open class func getAccountSeqnoWithRequestBuilder(accountId: String) -> RequestBuilder<Seqno> {
         var localVariablePath = "/v2/wallet/{account_id}/seqno"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -100,7 +81,7 @@ open class WalletAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -111,31 +92,22 @@ open class WalletAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getWalletInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Wallet
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getWalletInfo(accountId: String, xCapability: XCapability_getWalletInfo? = nil) async throws -> Wallet {
-        return try await getWalletInfoWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getWalletInfo(accountId: String) async throws -> Wallet {
+        return try await getWalletInfoWithRequestBuilder(accountId: accountId).execute().body
     }
 
     /**
      - GET /v2/wallet/{account_id}
      - Get human-friendly information about a wallet without low-level details.
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Wallet> 
      */
-    open class func getWalletInfoWithRequestBuilder(accountId: String, xCapability: XCapability_getWalletInfo? = nil) -> RequestBuilder<Wallet> {
+    open class func getWalletInfoWithRequestBuilder(accountId: String) -> RequestBuilder<Wallet> {
         var localVariablePath = "/v2/wallet/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -146,7 +118,7 @@ open class WalletAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -157,31 +129,22 @@ open class WalletAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getWalletsByPublicKey: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter publicKey: (path)  
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Wallets
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getWalletsByPublicKey(publicKey: String, xCapability: XCapability_getWalletsByPublicKey? = nil) async throws -> Wallets {
-        return try await getWalletsByPublicKeyWithRequestBuilder(publicKey: publicKey, xCapability: xCapability).execute().body
+    open class func getWalletsByPublicKey(publicKey: String) async throws -> Wallets {
+        return try await getWalletsByPublicKeyWithRequestBuilder(publicKey: publicKey).execute().body
     }
 
     /**
      - GET /v2/pubkeys/{public_key}/wallets
      - Get wallets by public key
      - parameter publicKey: (path)  
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Wallets> 
      */
-    open class func getWalletsByPublicKeyWithRequestBuilder(publicKey: String, xCapability: XCapability_getWalletsByPublicKey? = nil) -> RequestBuilder<Wallets> {
+    open class func getWalletsByPublicKeyWithRequestBuilder(publicKey: String) -> RequestBuilder<Wallets> {
         var localVariablePath = "/v2/pubkeys/{public_key}/wallets"
         let publicKeyPreEscape = "\(APIHelper.mapValueToPathItem(publicKey))"
         let publicKeyPostEscape = publicKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -192,7 +155,7 @@ open class WalletAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -203,31 +166,56 @@ open class WalletAPI {
     }
 
     /**
-     * enum for parameter xCapability
+
+     - parameter getWalletsByPublicKeyBulkRequest: (body) a list of hex-encoded ed25519 public keys (optional)
+     - returns: WalletsByPublicKeys
      */
-    public enum XCapability_tonConnectProof: String, CaseIterable {
-        case subSecond = "sub-second"
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getWalletsByPublicKeyBulk(getWalletsByPublicKeyBulkRequest: GetWalletsByPublicKeyBulkRequest? = nil) async throws -> WalletsByPublicKeys {
+        return try await getWalletsByPublicKeyBulkWithRequestBuilder(getWalletsByPublicKeyBulkRequest: getWalletsByPublicKeyBulkRequest).execute().body
+    }
+
+    /**
+     - POST /v2/pubkeys/wallets/_bulk
+     - Get wallets by a list of public keys
+     - parameter getWalletsByPublicKeyBulkRequest: (body) a list of hex-encoded ed25519 public keys (optional)
+     - returns: RequestBuilder<WalletsByPublicKeys> 
+     */
+    open class func getWalletsByPublicKeyBulkWithRequestBuilder(getWalletsByPublicKeyBulkRequest: GetWalletsByPublicKeyBulkRequest? = nil) -> RequestBuilder<WalletsByPublicKeys> {
+        let localVariablePath = "/v2/pubkeys/wallets/_bulk"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getWalletsByPublicKeyBulkRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<WalletsByPublicKeys>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
      - parameter tonConnectProofRequest: (body) Data that is expected from TON Connect 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: TonConnectProof200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func tonConnectProof(tonConnectProofRequest: TonConnectProofRequest, xCapability: XCapability_tonConnectProof? = nil) async throws -> TonConnectProof200Response {
-        return try await tonConnectProofWithRequestBuilder(tonConnectProofRequest: tonConnectProofRequest, xCapability: xCapability).execute().body
+    open class func tonConnectProof(tonConnectProofRequest: TonConnectProofRequest) async throws -> TonConnectProof200Response {
+        return try await tonConnectProofWithRequestBuilder(tonConnectProofRequest: tonConnectProofRequest).execute().body
     }
 
     /**
      - POST /v2/wallet/auth/proof
      - Account verification and token issuance
      - parameter tonConnectProofRequest: (body) Data that is expected from TON Connect 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<TonConnectProof200Response> 
      */
-    open class func tonConnectProofWithRequestBuilder(tonConnectProofRequest: TonConnectProofRequest, xCapability: XCapability_tonConnectProof? = nil) -> RequestBuilder<TonConnectProof200Response> {
+    open class func tonConnectProofWithRequestBuilder(tonConnectProofRequest: TonConnectProofRequest) -> RequestBuilder<TonConnectProof200Response> {
         let localVariablePath = "/v2/wallet/auth/proof"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: tonConnectProofRequest)
@@ -236,7 +224,6 @@ open class WalletAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

@@ -10,6 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
+/** Result of emulating a wallet message on the current blockchain state: describes the expected on-chain consequences (trace, high-level AccountEvent, risk) for the signing wallet. For UI display only.  */
 public struct MessageConsequences: Codable, JSONEncodable, Hashable {
 
     public var trace: Trace

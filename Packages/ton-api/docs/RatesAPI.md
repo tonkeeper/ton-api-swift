@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 # **getChartRates**
 ```swift
-    open class func getChartRates(token: String, xCapability: XCapability_getChartRates? = nil, currency: String? = nil, startDate: Int64? = nil, endDate: Int64? = nil, pointsCount: Int? = nil, completion: @escaping (_ data: GetChartRates200Response?, _ error: Error?) -> Void)
+    open class func getChartRates(token: String, currency: String? = nil, startDate: Int64? = nil, endDate: Int64? = nil, pointsCount: Int? = nil, completion: @escaping (_ data: GetChartRates200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -24,13 +24,12 @@ Get chart by token
 import TonAPI
 
 let token = "token_example" // String | accept jetton master address
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currency = "currency_example" // String |  (optional)
 let startDate = 987 // Int64 |  (optional)
 let endDate = 987 // Int64 |  (optional)
 let pointsCount = 987 // Int |  (optional) (default to 200)
 
-RatesAPI.getChartRates(token: token, xCapability: xCapability, currency: currency, startDate: startDate, endDate: endDate, pointsCount: pointsCount) { (response, error) in
+RatesAPI.getChartRates(token: token, currency: currency, startDate: startDate, endDate: endDate, pointsCount: pointsCount) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -47,7 +46,6 @@ RatesAPI.getChartRates(token: token, xCapability: xCapability, currency: currenc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **token** | **String** | accept jetton master address | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currency** | **String** |  | [optional] 
  **startDate** | **Int64** |  | [optional] 
  **endDate** | **Int64** |  | [optional] 
@@ -70,7 +68,7 @@ No authorization required
 
 # **getMarketsRates**
 ```swift
-    open class func getMarketsRates(xCapability: XCapability_getMarketsRates? = nil, completion: @escaping (_ data: GetMarketsRates200Response?, _ error: Error?) -> Void)
+    open class func getMarketsRates(completion: @escaping (_ data: GetMarketsRates200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -82,9 +80,8 @@ Get the TON price from markets
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-RatesAPI.getMarketsRates(xCapability: xCapability) { (response, error) in
+RatesAPI.getMarketsRates() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -97,10 +94,7 @@ RatesAPI.getMarketsRates(xCapability: xCapability) { (response, error) in
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -119,7 +113,7 @@ No authorization required
 
 # **getRates**
 ```swift
-    open class func getRates(tokens: [String], currencies: [String], xCapability: XCapability_getRates? = nil, completion: @escaping (_ data: GetRates200Response?, _ error: Error?) -> Void)
+    open class func getRates(tokens: [String], currencies: [String], completion: @escaping (_ data: GetRates200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -133,9 +127,8 @@ import TonAPI
 
 let tokens = ["inner_example"] // [String] | accept ton and jetton master addresses, separated by commas
 let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-RatesAPI.getRates(tokens: tokens, currencies: currencies, xCapability: xCapability) { (response, error) in
+RatesAPI.getRates(tokens: tokens, currencies: currencies) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -153,7 +146,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tokens** | [**[String]**](String.md) | accept ton and jetton master addresses, separated by commas | 
  **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

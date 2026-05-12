@@ -13,31 +13,22 @@ import AnyCodable
 open class StakingAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getAccountNominatorsPools: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: AccountStaking
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountNominatorsPools(accountId: String, xCapability: XCapability_getAccountNominatorsPools? = nil) async throws -> AccountStaking {
-        return try await getAccountNominatorsPoolsWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getAccountNominatorsPools(accountId: String) async throws -> AccountStaking {
+        return try await getAccountNominatorsPoolsWithRequestBuilder(accountId: accountId).execute().body
     }
 
     /**
      - GET /v2/staking/nominator/{account_id}/pools
      - All pools where account participates
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<AccountStaking> 
      */
-    open class func getAccountNominatorsPoolsWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountNominatorsPools? = nil) -> RequestBuilder<AccountStaking> {
+    open class func getAccountNominatorsPoolsWithRequestBuilder(accountId: String) -> RequestBuilder<AccountStaking> {
         var localVariablePath = "/v2/staking/nominator/{account_id}/pools"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -48,7 +39,7 @@ open class StakingAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -59,31 +50,26 @@ open class StakingAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getStakingPoolHistory: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter beforeLt: (query) omit this parameter to get last log entries (optional)
+     - parameter limit: (query)  (optional, default to 100)
      - returns: GetStakingPoolHistory200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getStakingPoolHistory(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil) async throws -> GetStakingPoolHistory200Response {
-        return try await getStakingPoolHistoryWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getStakingPoolHistory(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil) async throws -> GetStakingPoolHistory200Response {
+        return try await getStakingPoolHistoryWithRequestBuilder(accountId: accountId, beforeLt: beforeLt, limit: limit).execute().body
     }
 
     /**
      - GET /v2/staking/pool/{account_id}/history
      - Pool history
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter beforeLt: (query) omit this parameter to get last log entries (optional)
+     - parameter limit: (query)  (optional, default to 100)
      - returns: RequestBuilder<GetStakingPoolHistory200Response> 
      */
-    open class func getStakingPoolHistoryWithRequestBuilder(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil) -> RequestBuilder<GetStakingPoolHistory200Response> {
+    open class func getStakingPoolHistoryWithRequestBuilder(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil) -> RequestBuilder<GetStakingPoolHistory200Response> {
         var localVariablePath = "/v2/staking/pool/{account_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -91,10 +77,14 @@ open class StakingAPI {
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -105,33 +95,24 @@ open class StakingAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getStakingPoolInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: GetStakingPoolInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getStakingPoolInfo(accountId: String, xCapability: XCapability_getStakingPoolInfo? = nil, acceptLanguage: String? = nil) async throws -> GetStakingPoolInfo200Response {
-        return try await getStakingPoolInfoWithRequestBuilder(accountId: accountId, xCapability: xCapability, acceptLanguage: acceptLanguage).execute().body
+    open class func getStakingPoolInfo(accountId: String, acceptLanguage: String? = nil) async throws -> GetStakingPoolInfo200Response {
+        return try await getStakingPoolInfoWithRequestBuilder(accountId: accountId, acceptLanguage: acceptLanguage).execute().body
     }
 
     /**
      - GET /v2/staking/pool/{account_id}
      - Stacking pool info
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<GetStakingPoolInfo200Response> 
      */
-    open class func getStakingPoolInfoWithRequestBuilder(accountId: String, xCapability: XCapability_getStakingPoolInfo? = nil, acceptLanguage: String? = nil) -> RequestBuilder<GetStakingPoolInfo200Response> {
+    open class func getStakingPoolInfoWithRequestBuilder(accountId: String, acceptLanguage: String? = nil) -> RequestBuilder<GetStakingPoolInfo200Response> {
         var localVariablePath = "/v2/staking/pool/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -142,7 +123,6 @@ open class StakingAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -154,35 +134,26 @@ open class StakingAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getStakingPools: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter availableFor: (query) account ID (optional)
      - parameter includeUnverified: (query) return also pools not from white list - just compatible by interfaces (maybe dangerous!) (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: GetStakingPools200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getStakingPools(xCapability: XCapability_getStakingPools? = nil, availableFor: String? = nil, includeUnverified: Bool? = nil, acceptLanguage: String? = nil) async throws -> GetStakingPools200Response {
-        return try await getStakingPoolsWithRequestBuilder(xCapability: xCapability, availableFor: availableFor, includeUnverified: includeUnverified, acceptLanguage: acceptLanguage).execute().body
+    open class func getStakingPools(availableFor: String? = nil, includeUnverified: Bool? = nil, acceptLanguage: String? = nil) async throws -> GetStakingPools200Response {
+        return try await getStakingPoolsWithRequestBuilder(availableFor: availableFor, includeUnverified: includeUnverified, acceptLanguage: acceptLanguage).execute().body
     }
 
     /**
      - GET /v2/staking/pools
      - All pools available in network
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter availableFor: (query) account ID (optional)
      - parameter includeUnverified: (query) return also pools not from white list - just compatible by interfaces (maybe dangerous!) (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<GetStakingPools200Response> 
      */
-    open class func getStakingPoolsWithRequestBuilder(xCapability: XCapability_getStakingPools? = nil, availableFor: String? = nil, includeUnverified: Bool? = nil, acceptLanguage: String? = nil) -> RequestBuilder<GetStakingPools200Response> {
+    open class func getStakingPoolsWithRequestBuilder(availableFor: String? = nil, includeUnverified: Bool? = nil, acceptLanguage: String? = nil) -> RequestBuilder<GetStakingPools200Response> {
         let localVariablePath = "/v2/staking/pools"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -194,7 +165,6 @@ open class StakingAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 

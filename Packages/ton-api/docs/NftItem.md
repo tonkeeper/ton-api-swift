@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **approvedBy** | **[String]** | Please use trust field | 
 **includeCnft** | **Bool** |  | [optional] 
 **trust** | [**TrustType**](TrustType.md) |  | 
+**codeHash** | **String** | Hash of the NFT item account code cell (hex) | [optional] 
+**dataHash** | **String** | Hash of the NFT item account data cell (hex) | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

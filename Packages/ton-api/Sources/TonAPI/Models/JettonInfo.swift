@@ -20,8 +20,18 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
     public var verification: JettonVerificationType
     public var holdersCount: Int
     public var scaledUi: ScaledUI?
+    /** base64-encoded hash of jetton master code cell */
+    public var codeHash: String?
+    /** base64-encoded hash of jetton master data cell */
+    public var dataHash: String?
+    /** last transaction lt of the jetton master account */
+    public var lastTransactionLt: String?
+    /** DNS name resolving to this address (e.g. admin.ton) */
+    public var name: String?
+    /** Contract interfaces implemented by the account (e.g. multisig_v2, wallet_v3r2) */
+    public var interfaces: [String]?
 
-    public init(mintable: Bool, totalSupply: String, admin: AccountAddress? = nil, metadata: JettonMetadata, preview: String, verification: JettonVerificationType, holdersCount: Int, scaledUi: ScaledUI? = nil) {
+    public init(mintable: Bool, totalSupply: String, admin: AccountAddress? = nil, metadata: JettonMetadata, preview: String, verification: JettonVerificationType, holdersCount: Int, scaledUi: ScaledUI? = nil, codeHash: String? = nil, dataHash: String? = nil, lastTransactionLt: String? = nil, name: String? = nil, interfaces: [String]? = nil) {
         self.mintable = mintable
         self.totalSupply = totalSupply
         self.admin = admin
@@ -30,6 +40,11 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
         self.verification = verification
         self.holdersCount = holdersCount
         self.scaledUi = scaledUi
+        self.codeHash = codeHash
+        self.dataHash = dataHash
+        self.lastTransactionLt = lastTransactionLt
+        self.name = name
+        self.interfaces = interfaces
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -41,6 +56,11 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
         case verification
         case holdersCount = "holders_count"
         case scaledUi = "scaled_ui"
+        case codeHash = "code_hash"
+        case dataHash = "data_hash"
+        case lastTransactionLt = "last_transaction_lt"
+        case name
+        case interfaces
     }
 
     // Encodable protocol methods
@@ -55,6 +75,11 @@ public struct JettonInfo: Codable, JSONEncodable, Hashable {
         try container.encode(verification, forKey: .verification)
         try container.encode(holdersCount, forKey: .holdersCount)
         try container.encodeIfPresent(scaledUi, forKey: .scaledUi)
+        try container.encodeIfPresent(codeHash, forKey: .codeHash)
+        try container.encodeIfPresent(dataHash, forKey: .dataHash)
+        try container.encodeIfPresent(lastTransactionLt, forKey: .lastTransactionLt)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(interfaces, forKey: .interfaces)
     }
 }
 

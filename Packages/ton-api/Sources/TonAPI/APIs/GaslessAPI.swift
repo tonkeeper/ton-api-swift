@@ -13,29 +13,20 @@ import AnyCodable
 open class GaslessAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_gaslessConfig: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GaslessConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func gaslessConfig(xCapability: XCapability_gaslessConfig? = nil) async throws -> GaslessConfig {
-        return try await gaslessConfigWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func gaslessConfig() async throws -> GaslessConfig {
+        return try await gaslessConfigWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/gasless/config
      - Returns configuration of gasless transfers
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GaslessConfig> 
      */
-    open class func gaslessConfigWithRequestBuilder(xCapability: XCapability_gaslessConfig? = nil) -> RequestBuilder<GaslessConfig> {
+    open class func gaslessConfigWithRequestBuilder() -> RequestBuilder<GaslessConfig> {
         let localVariablePath = "/v2/gasless/config"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -43,7 +34,7 @@ open class GaslessAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -54,23 +45,15 @@ open class GaslessAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_gaslessEstimate: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: SignRawParams
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func gaslessEstimate(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, xCapability: XCapability_gaslessEstimate? = nil, acceptLanguage: String? = nil) async throws -> SignRawParams {
-        return try await gaslessEstimateWithRequestBuilder(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest, xCapability: xCapability, acceptLanguage: acceptLanguage).execute().body
+    open class func gaslessEstimate(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, acceptLanguage: String? = nil) async throws -> SignRawParams {
+        return try await gaslessEstimateWithRequestBuilder(masterId: masterId, gaslessEstimateRequest: gaslessEstimateRequest, acceptLanguage: acceptLanguage).execute().body
     }
 
     /**
@@ -78,11 +61,10 @@ open class GaslessAPI {
      - Estimates the cost of the given messages and returns a payload to sign
      - parameter masterId: (path) jetton to pay commission 
      - parameter gaslessEstimateRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<SignRawParams> 
      */
-    open class func gaslessEstimateWithRequestBuilder(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, xCapability: XCapability_gaslessEstimate? = nil, acceptLanguage: String? = nil) -> RequestBuilder<SignRawParams> {
+    open class func gaslessEstimateWithRequestBuilder(masterId: String, gaslessEstimateRequest: GaslessEstimateRequest, acceptLanguage: String? = nil) -> RequestBuilder<SignRawParams> {
         var localVariablePath = "/v2/gasless/estimate/{master_id}"
         let masterIdPreEscape = "\(APIHelper.mapValueToPathItem(masterId))"
         let masterIdPostEscape = masterIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -94,7 +76,6 @@ open class GaslessAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 
@@ -106,31 +87,22 @@ open class GaslessAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_gaslessSend: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GaslessTx
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func gaslessSend(gaslessSendRequest: GaslessSendRequest, xCapability: XCapability_gaslessSend? = nil) async throws -> GaslessTx {
-        return try await gaslessSendWithRequestBuilder(gaslessSendRequest: gaslessSendRequest, xCapability: xCapability).execute().body
+    open class func gaslessSend(gaslessSendRequest: GaslessSendRequest) async throws -> GaslessTx {
+        return try await gaslessSendWithRequestBuilder(gaslessSendRequest: gaslessSendRequest).execute().body
     }
 
     /**
      - POST /v2/gasless/send
      - Submits the signed gasless transaction message to the network
      - parameter gaslessSendRequest: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GaslessTx> 
      */
-    open class func gaslessSendWithRequestBuilder(gaslessSendRequest: GaslessSendRequest, xCapability: XCapability_gaslessSend? = nil) -> RequestBuilder<GaslessTx> {
+    open class func gaslessSendWithRequestBuilder(gaslessSendRequest: GaslessSendRequest) -> RequestBuilder<GaslessTx> {
         let localVariablePath = "/v2/gasless/send"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessSendRequest)
@@ -139,7 +111,6 @@ open class GaslessAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

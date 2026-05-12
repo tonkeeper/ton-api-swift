@@ -17,12 +17,14 @@ public struct DnsRecord: Codable, JSONEncodable, Hashable {
     public var sites: [String]
     /** tonstorage bag id */
     public var storage: String?
+    public var picture: PictureDNS?
 
-    public init(wallet: WalletDNS? = nil, nextResolver: String? = nil, sites: [String], storage: String? = nil) {
+    public init(wallet: WalletDNS? = nil, nextResolver: String? = nil, sites: [String], storage: String? = nil, picture: PictureDNS? = nil) {
         self.wallet = wallet
         self.nextResolver = nextResolver
         self.sites = sites
         self.storage = storage
+        self.picture = picture
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -30,6 +32,7 @@ public struct DnsRecord: Codable, JSONEncodable, Hashable {
         case nextResolver = "next_resolver"
         case sites
         case storage
+        case picture
     }
 
     // Encodable protocol methods
@@ -40,6 +43,7 @@ public struct DnsRecord: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(nextResolver, forKey: .nextResolver)
         try container.encode(sites, forKey: .sites)
         try container.encodeIfPresent(storage, forKey: .storage)
+        try container.encodeIfPresent(picture, forKey: .picture)
     }
 }
 

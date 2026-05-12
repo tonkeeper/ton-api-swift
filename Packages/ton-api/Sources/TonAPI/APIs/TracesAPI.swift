@@ -13,33 +13,24 @@ import AnyCodable
 open class TracesAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_emulateMessageToTrace: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: Trace
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToTrace? = nil, ignoreSignatureCheck: Bool? = nil) async throws -> Trace {
-        return try await emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
+    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil) async throws -> Trace {
+        return try await emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, ignoreSignatureCheck: ignoreSignatureCheck).execute().body
     }
 
     /**
      - POST /v2/traces/emulate
      - Emulate sending message to retrieve with a detailed execution trace
      - parameter gaslessEstimateRequestMessagesInner: (body) bag-of-cells serialized to hex 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter ignoreSignatureCheck: (query)  (optional)
      - returns: RequestBuilder<Trace> 
      */
-    open class func emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToTrace? = nil, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Trace> {
+    open class func emulateMessageToTraceWithRequestBuilder(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil) -> RequestBuilder<Trace> {
         let localVariablePath = "/v2/traces/emulate"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: gaslessEstimateRequestMessagesInner)
@@ -51,7 +42,6 @@ open class TracesAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -62,31 +52,22 @@ open class TracesAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getTrace: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter traceId: (path) trace ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Trace
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getTrace(traceId: String, xCapability: XCapability_getTrace? = nil) async throws -> Trace {
-        return try await getTraceWithRequestBuilder(traceId: traceId, xCapability: xCapability).execute().body
+    open class func getTrace(traceId: String) async throws -> Trace {
+        return try await getTraceWithRequestBuilder(traceId: traceId).execute().body
     }
 
     /**
      - GET /v2/traces/{trace_id}
      - Get the trace by trace ID or hash of any transaction in trace
      - parameter traceId: (path) trace ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Trace> 
      */
-    open class func getTraceWithRequestBuilder(traceId: String, xCapability: XCapability_getTrace? = nil) -> RequestBuilder<Trace> {
+    open class func getTraceWithRequestBuilder(traceId: String) -> RequestBuilder<Trace> {
         var localVariablePath = "/v2/traces/{trace_id}"
         let traceIdPreEscape = "\(APIHelper.mapValueToPathItem(traceId))"
         let traceIdPostEscape = traceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -97,7 +78,7 @@ open class TracesAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

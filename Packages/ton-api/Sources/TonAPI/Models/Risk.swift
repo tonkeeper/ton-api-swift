@@ -10,15 +10,18 @@ import Foundation
 import AnyCodable
 #endif
 
-/** Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain. */
+/** Conservative upper bound on assets this wallet may lose if the emulated message is sent and the counterparty behaves maliciously. Values may exceed current balances (e.g. already-authorized future receipts). For UI display only.  */
 public struct Risk: Codable, JSONEncodable, Hashable {
 
-    /** transfer all the remaining balance of the wallet. */
+    /** True if the message semantics allow sweeping all current and future remaining TON balance of the wallet (e.g. “send all” / drain patterns).  */
     public var transferAllRemainingBalance: Bool
+    /** Maximum TON amount that may leave the wallet in the worst case, in nanotons. */
     public var ton: Int64
+    /** Jetton positions that may be debited from the wallet in the worst case. */
     public var jettons: [JettonQuantity]
+    /** NFT items that may be transferred out of the wallet in the worst case. */
     public var nfts: [NftItem]
-    /** Estimated equivalent value of all assets at risk in selected currency (for example USD) */
+    /** Estimated equivalent of all assets at risk (TON, jettons, NFTs) in the selected currency from currencyQuery (e.g. USD). Approximate, best-effort UI value.  */
     public var totalEquivalent: Float?
 
     public init(transferAllRemainingBalance: Bool, ton: Int64, jettons: [JettonQuantity], nfts: [NftItem], totalEquivalent: Float? = nil) {

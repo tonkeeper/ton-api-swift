@@ -9,8 +9,10 @@ Name | Type | Description | Notes
 **valueFlow** | [ValueFlow] |  | 
 **isScam** | **Bool** | scam | 
 **lt** | **Int64** |  | 
-**inProgress** | **Bool** | Event is not finished yet. Transactions still happening | 
+**inProgress** | **Bool** | Event trace is not finished yet. Transactions still happening. | 
 **progress** | **Float** |  | 
+**lastSliceId** | **Int64** | ID of the slice where this event was finalized. Null if not yet finalized. | [optional] 
+**extMsgHash** | **String** | Normalized hash of the root external inbound message (hex). | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

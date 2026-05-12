@@ -8,17 +8,18 @@ Method | HTTP request | Description
 [**getAccountSeqno**](WalletAPI.md#getaccountseqno) | **GET** /v2/wallet/{account_id}/seqno | 
 [**getWalletInfo**](WalletAPI.md#getwalletinfo) | **GET** /v2/wallet/{account_id} | 
 [**getWalletsByPublicKey**](WalletAPI.md#getwalletsbypublickey) | **GET** /v2/pubkeys/{public_key}/wallets | 
+[**getWalletsByPublicKeyBulk**](WalletAPI.md#getwalletsbypublickeybulk) | **POST** /v2/pubkeys/wallets/_bulk | 
 [**tonConnectProof**](WalletAPI.md#tonconnectproof) | **POST** /v2/wallet/auth/proof | 
 
 
 # **emulateMessageToWallet**
 ```swift
-    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, xCapability: XCapability_emulateMessageToWallet? = nil, acceptLanguage: String? = nil, currency: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
+    open class func emulateMessageToWallet(emulateMessageToWalletRequest: EmulateMessageToWalletRequest, acceptLanguage: String? = nil, currency: String? = nil, completion: @escaping (_ data: MessageConsequences?, _ error: Error?) -> Void)
 ```
 
 
 
-Emulate sending message to retrieve the resulting wallet state
+Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
 
 ### Example
 ```swift
@@ -26,11 +27,10 @@ Emulate sending message to retrieve the resulting wallet state
 import TonAPI
 
 let emulateMessageToWalletRequest = emulateMessageToWallet_request(boc: "boc_example", params: [emulateMessageToWallet_request_params_inner(address: "address_example", balance: 123)]) // EmulateMessageToWalletRequest | bag-of-cells serialized to base64/hex and additional parameters to configure emulation
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let currency = "currency_example" // String |  (optional)
 
-WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, xCapability: xCapability, acceptLanguage: acceptLanguage, currency: currency) { (response, error) in
+WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageToWalletRequest, acceptLanguage: acceptLanguage, currency: currency) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -47,7 +47,6 @@ WalletAPI.emulateMessageToWallet(emulateMessageToWalletRequest: emulateMessageTo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **emulateMessageToWalletRequest** | [**EmulateMessageToWalletRequest**](EmulateMessageToWalletRequest.md) | bag-of-cells serialized to base64/hex and additional parameters to configure emulation | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **currency** | **String** |  | [optional] 
 
@@ -68,7 +67,7 @@ No authorization required
 
 # **getAccountSeqno**
 ```swift
-    open class func getAccountSeqno(accountId: String, xCapability: XCapability_getAccountSeqno? = nil, completion: @escaping (_ data: Seqno?, _ error: Error?) -> Void)
+    open class func getAccountSeqno(accountId: String, completion: @escaping (_ data: Seqno?, _ error: Error?) -> Void)
 ```
 
 
@@ -81,9 +80,8 @@ Get account seqno
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-WalletAPI.getAccountSeqno(accountId: accountId, xCapability: xCapability) { (response, error) in
+WalletAPI.getAccountSeqno(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -100,7 +98,6 @@ WalletAPI.getAccountSeqno(accountId: accountId, xCapability: xCapability) { (res
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -119,7 +116,7 @@ No authorization required
 
 # **getWalletInfo**
 ```swift
-    open class func getWalletInfo(accountId: String, xCapability: XCapability_getWalletInfo? = nil, completion: @escaping (_ data: Wallet?, _ error: Error?) -> Void)
+    open class func getWalletInfo(accountId: String, completion: @escaping (_ data: Wallet?, _ error: Error?) -> Void)
 ```
 
 
@@ -132,9 +129,8 @@ Get human-friendly information about a wallet without low-level details.
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-WalletAPI.getWalletInfo(accountId: accountId, xCapability: xCapability) { (response, error) in
+WalletAPI.getWalletInfo(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -151,7 +147,6 @@ WalletAPI.getWalletInfo(accountId: accountId, xCapability: xCapability) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -170,7 +165,7 @@ No authorization required
 
 # **getWalletsByPublicKey**
 ```swift
-    open class func getWalletsByPublicKey(publicKey: String, xCapability: XCapability_getWalletsByPublicKey? = nil, completion: @escaping (_ data: Wallets?, _ error: Error?) -> Void)
+    open class func getWalletsByPublicKey(publicKey: String, completion: @escaping (_ data: Wallets?, _ error: Error?) -> Void)
 ```
 
 
@@ -183,9 +178,8 @@ Get wallets by public key
 import TonAPI
 
 let publicKey = "publicKey_example" // String | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-WalletAPI.getWalletsByPublicKey(publicKey: publicKey, xCapability: xCapability) { (response, error) in
+WalletAPI.getWalletsByPublicKey(publicKey: publicKey) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -202,7 +196,6 @@ WalletAPI.getWalletsByPublicKey(publicKey: publicKey, xCapability: xCapability) 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **publicKey** | **String** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -219,9 +212,58 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getWalletsByPublicKeyBulk**
+```swift
+    open class func getWalletsByPublicKeyBulk(getWalletsByPublicKeyBulkRequest: GetWalletsByPublicKeyBulkRequest? = nil, completion: @escaping (_ data: WalletsByPublicKeys?, _ error: Error?) -> Void)
+```
+
+
+
+Get wallets by a list of public keys
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let getWalletsByPublicKeyBulkRequest = getWalletsByPublicKeyBulk_request(publicKeys: ["publicKeys_example"]) // GetWalletsByPublicKeyBulkRequest | a list of hex-encoded ed25519 public keys (optional)
+
+WalletAPI.getWalletsByPublicKeyBulk(getWalletsByPublicKeyBulkRequest: getWalletsByPublicKeyBulkRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getWalletsByPublicKeyBulkRequest** | [**GetWalletsByPublicKeyBulkRequest**](GetWalletsByPublicKeyBulkRequest.md) | a list of hex-encoded ed25519 public keys | [optional] 
+
+### Return type
+
+[**WalletsByPublicKeys**](WalletsByPublicKeys.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **tonConnectProof**
 ```swift
-    open class func tonConnectProof(tonConnectProofRequest: TonConnectProofRequest, xCapability: XCapability_tonConnectProof? = nil, completion: @escaping (_ data: TonConnectProof200Response?, _ error: Error?) -> Void)
+    open class func tonConnectProof(tonConnectProofRequest: TonConnectProofRequest, completion: @escaping (_ data: TonConnectProof200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -234,9 +276,8 @@ Account verification and token issuance
 import TonAPI
 
 let tonConnectProofRequest = tonConnectProof_request(address: "address_example", proof: tonConnectProof_request_proof(timestamp: 123, domain: tonConnectProof_request_proof_domain(lengthBytes: 123, value: "value_example"), signature: "signature_example", payload: "payload_example", stateInit: "stateInit_example")) // TonConnectProofRequest | Data that is expected from TON Connect
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-WalletAPI.tonConnectProof(tonConnectProofRequest: tonConnectProofRequest, xCapability: xCapability) { (response, error) in
+WalletAPI.tonConnectProof(tonConnectProofRequest: tonConnectProofRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -253,7 +294,6 @@ WalletAPI.tonConnectProof(tonConnectProofRequest: tonConnectProofRequest, xCapab
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tonConnectProofRequest** | [**TonConnectProofRequest**](TonConnectProofRequest.md) | Data that is expected from TON Connect | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

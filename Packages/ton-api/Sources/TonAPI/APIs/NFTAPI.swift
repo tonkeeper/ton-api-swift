@@ -179,25 +179,25 @@ open class NFTAPI {
     /**
 
      - parameter xCapability: (header) Request sub-second capability. (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: NftCollections
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftCollectionItemsByAddresses(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftCollections {
-        return try await getNftCollectionItemsByAddressesWithRequestBuilder(xCapability: xCapability, getAccountsRequest: getAccountsRequest).execute().body
+    open class func getNftCollectionItemsByAddresses(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> NftCollections {
+        return try await getNftCollectionItemsByAddressesWithRequestBuilder(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/nfts/collections/_bulk
      - Get NFT collection items by their addresses
      - parameter xCapability: (header) Request sub-second capability. (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<NftCollections> 
      */
-    open class func getNftCollectionItemsByAddressesWithRequestBuilder(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftCollections> {
+    open class func getNftCollectionItemsByAddressesWithRequestBuilder(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<NftCollections> {
         let localVariablePath = "/v2/nfts/collections/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
@@ -383,25 +383,25 @@ open class NFTAPI {
     /**
 
      - parameter xCapability: (header) Request sub-second capability. (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: NftItems
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getNftItemsByAddresses(xCapability: XCapability_getNftItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> NftItems {
-        return try await getNftItemsByAddressesWithRequestBuilder(xCapability: xCapability, getAccountsRequest: getAccountsRequest).execute().body
+    open class func getNftItemsByAddresses(xCapability: XCapability_getNftItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> NftItems {
+        return try await getNftItemsByAddressesWithRequestBuilder(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/nfts/_bulk
      - Get NFT items by their addresses
      - parameter xCapability: (header) Request sub-second capability. (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<NftItems> 
      */
-    open class func getNftItemsByAddressesWithRequestBuilder(xCapability: XCapability_getNftItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<NftItems> {
+    open class func getNftItemsByAddressesWithRequestBuilder(xCapability: XCapability_getNftItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<NftItems> {
         let localVariablePath = "/v2/nfts/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 

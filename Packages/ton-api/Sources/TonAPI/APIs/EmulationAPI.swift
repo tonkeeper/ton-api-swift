@@ -236,7 +236,7 @@ open class EmulationAPI {
 
     /**
      - POST /v2/wallet/emulate
-     - Emulate sending message to retrieve the resulting wallet state
+     - Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
      - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")

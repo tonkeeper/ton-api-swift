@@ -13,13 +13,17 @@ import AnyCodable
 public struct GaslessTx: Codable, JSONEncodable, Hashable {
 
     public var protocolName: String
+    /** Normalized hash of the external message. */
+    public var external: String?
 
-    public init(protocolName: String) {
+    public init(protocolName: String, external: String? = nil) {
         self.protocolName = protocolName
+        self.external = external
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case protocolName = "protocol_name"
+        case external
     }
 
     // Encodable protocol methods
@@ -27,6 +31,7 @@ public struct GaslessTx: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(protocolName, forKey: .protocolName)
+        try container.encodeIfPresent(external, forKey: .external)
     }
 }
 

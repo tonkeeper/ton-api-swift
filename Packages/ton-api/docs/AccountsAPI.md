@@ -353,7 +353,7 @@ No authorization required
 
 # **getAccountEvents**
 ```swift
-    open class func getAccountEvents(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
+    open class func getAccountEvents(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, afterLt: Int64? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, sortOrder: SortOrder_getAccountEvents? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
 ```
 
 
@@ -371,11 +371,13 @@ let xCapability = "xCapability_example" // String | Request sub-second capabilit
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let initiator = true // Bool | Show only events that are initiated by this account (optional) (default to false)
 let subjectOnly = true // Bool | filter actions where requested account is not real subject (for example sender or receiver jettons) (optional) (default to false)
+let afterLt = 987 // Int64 | omit this parameter to get last events (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let startDate = 987 // Int64 |  (optional)
 let endDate = 987 // Int64 |  (optional)
+let sortOrder = "sortOrder_example" // String |  (optional) (default to .desc)
 
-AccountsAPI.getAccountEvents(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, initiator: initiator, subjectOnly: subjectOnly, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
+AccountsAPI.getAccountEvents(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, initiator: initiator, subjectOnly: subjectOnly, afterLt: afterLt, beforeLt: beforeLt, startDate: startDate, endDate: endDate, sortOrder: sortOrder) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -397,9 +399,11 @@ Name | Type | Description  | Notes
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **initiator** | **Bool** | Show only events that are initiated by this account | [optional] [default to false]
  **subjectOnly** | **Bool** | filter actions where requested account is not real subject (for example sender or receiver jettons) | [optional] [default to false]
+ **afterLt** | **Int64** | omit this parameter to get last events | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **startDate** | **Int64** |  | [optional] 
  **endDate** | **Int64** |  | [optional] 
+ **sortOrder** | **String** |  | [optional] [default to .desc]
 
 ### Return type
 
@@ -601,7 +605,7 @@ No authorization required
 
 # **getAccountJettonsBalances**
 ```swift
-    open class func getAccountJettonsBalances(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil, completion: @escaping (_ data: JettonsBalances?, _ error: Error?) -> Void)
+    open class func getAccountJettonsBalances(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil, limit: Int? = nil, offset: Int? = nil, completion: @escaping (_ data: JettonsBalances?, _ error: Error?) -> Void)
 ```
 
 
@@ -617,8 +621,10 @@ let accountId = "accountId_example" // String | account ID
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas (optional)
 let supportedExtensions = ["inner_example"] // [String] | comma separated list supported extensions (optional)
+let limit = 987 // Int |  (optional) (default to 1000)
+let offset = 987 // Int |  (optional) (default to 0)
 
-AccountsAPI.getAccountJettonsBalances(accountId: accountId, xCapability: xCapability, currencies: currencies, supportedExtensions: supportedExtensions) { (response, error) in
+AccountsAPI.getAccountJettonsBalances(accountId: accountId, xCapability: xCapability, currencies: currencies, supportedExtensions: supportedExtensions, limit: limit, offset: offset) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -638,6 +644,8 @@ Name | Type | Description  | Notes
  **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | [optional] 
  **supportedExtensions** | [**[String]**](String.md) | comma separated list supported extensions | [optional] 
+ **limit** | **Int** |  | [optional] [default to 1000]
+ **offset** | **Int** |  | [optional] [default to 0]
 
 ### Return type
 
@@ -978,7 +986,7 @@ No authorization required
 
 # **getAccounts**
 ```swift
-    open class func getAccounts(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil, completion: @escaping (_ data: Accounts?, _ error: Error?) -> Void)
+    open class func getAccounts(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: Accounts?, _ error: Error?) -> Void)
 ```
 
 
@@ -992,9 +1000,9 @@ import TonAPI
 
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let currency = "currency_example" // String |  (optional)
-let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
+let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-AccountsAPI.getAccounts(xCapability: xCapability, currency: currency, getAccountsRequest: getAccountsRequest) { (response, error) in
+AccountsAPI.getAccounts(xCapability: xCapability, currency: currency, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1012,7 +1020,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xCapability** | **String** | Request sub-second capability. | [optional] 
  **currency** | **String** |  | [optional] 
- **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
+ **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
 

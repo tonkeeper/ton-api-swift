@@ -69,11 +69,13 @@ open class StakingAPI {
 
      - parameter accountId: (path) account ID 
      - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter beforeLt: (query) omit this parameter to get last log entries (optional)
+     - parameter limit: (query)  (optional, default to 100)
      - returns: GetStakingPoolHistory200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getStakingPoolHistory(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil) async throws -> GetStakingPoolHistory200Response {
-        return try await getStakingPoolHistoryWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getStakingPoolHistory(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil, beforeLt: Int64? = nil, limit: Int? = nil) async throws -> GetStakingPoolHistory200Response {
+        return try await getStakingPoolHistoryWithRequestBuilder(accountId: accountId, xCapability: xCapability, beforeLt: beforeLt, limit: limit).execute().body
     }
 
     /**
@@ -81,9 +83,11 @@ open class StakingAPI {
      - Pool history
      - parameter accountId: (path) account ID 
      - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter beforeLt: (query) omit this parameter to get last log entries (optional)
+     - parameter limit: (query)  (optional, default to 100)
      - returns: RequestBuilder<GetStakingPoolHistory200Response> 
      */
-    open class func getStakingPoolHistoryWithRequestBuilder(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil) -> RequestBuilder<GetStakingPoolHistory200Response> {
+    open class func getStakingPoolHistoryWithRequestBuilder(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil, beforeLt: Int64? = nil, limit: Int? = nil) -> RequestBuilder<GetStakingPoolHistory200Response> {
         var localVariablePath = "/v2/staking/pool/{account_id}/history"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -91,7 +95,11 @@ open class StakingAPI {
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             "X-Capability": xCapability?.encodeToJSON(),

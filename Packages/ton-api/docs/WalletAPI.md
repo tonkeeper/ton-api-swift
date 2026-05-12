@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**getAccountSeqno**](WalletAPI.md#getaccountseqno) | **GET** /v2/wallet/{account_id}/seqno | 
 [**getWalletInfo**](WalletAPI.md#getwalletinfo) | **GET** /v2/wallet/{account_id} | 
 [**getWalletsByPublicKey**](WalletAPI.md#getwalletsbypublickey) | **GET** /v2/pubkeys/{public_key}/wallets | 
+[**getWalletsByPublicKeyBulk**](WalletAPI.md#getwalletsbypublickeybulk) | **POST** /v2/pubkeys/wallets/_bulk | 
 [**tonConnectProof**](WalletAPI.md#tonconnectproof) | **POST** /v2/wallet/auth/proof | 
 
 
@@ -18,7 +19,7 @@ Method | HTTP request | Description
 
 
 
-Emulate sending message to retrieve the resulting wallet state
+Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
 
 ### Example
 ```swift
@@ -215,6 +216,57 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getWalletsByPublicKeyBulk**
+```swift
+    open class func getWalletsByPublicKeyBulk(xCapability: XCapability_getWalletsByPublicKeyBulk? = nil, getWalletsByPublicKeyBulkRequest: GetWalletsByPublicKeyBulkRequest? = nil, completion: @escaping (_ data: WalletsByPublicKeys?, _ error: Error?) -> Void)
+```
+
+
+
+Get wallets by a list of public keys
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
+let getWalletsByPublicKeyBulkRequest = getWalletsByPublicKeyBulk_request(publicKeys: ["publicKeys_example"]) // GetWalletsByPublicKeyBulkRequest | a list of hex-encoded ed25519 public keys (optional)
+
+WalletAPI.getWalletsByPublicKeyBulk(xCapability: xCapability, getWalletsByPublicKeyBulkRequest: getWalletsByPublicKeyBulkRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
+ **getWalletsByPublicKeyBulkRequest** | [**GetWalletsByPublicKeyBulkRequest**](GetWalletsByPublicKeyBulkRequest.md) | a list of hex-encoded ed25519 public keys | [optional] 
+
+### Return type
+
+[**WalletsByPublicKeys**](WalletsByPublicKeys.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

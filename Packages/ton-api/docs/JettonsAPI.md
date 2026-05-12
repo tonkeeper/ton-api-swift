@@ -120,7 +120,7 @@ No authorization required
 
 # **getJettonInfosByAddresses**
 ```swift
-    open class func getJettonInfosByAddresses(xCapability: XCapability_getJettonInfosByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil, completion: @escaping (_ data: Jettons?, _ error: Error?) -> Void)
+    open class func getJettonInfosByAddresses(xCapability: XCapability_getJettonInfosByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: Jettons?, _ error: Error?) -> Void)
 ```
 
 
@@ -133,9 +133,9 @@ Get jetton metadata items by jetton master addresses
 import TonAPI
 
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
-let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
+let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-JettonsAPI.getJettonInfosByAddresses(xCapability: xCapability, getAccountsRequest: getAccountsRequest) { (response, error) in
+JettonsAPI.getJettonInfosByAddresses(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -152,7 +152,7 @@ JettonsAPI.getJettonInfosByAddresses(xCapability: xCapability, getAccountsReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xCapability** | **String** | Request sub-second capability. | [optional] 
- **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
+ **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
 

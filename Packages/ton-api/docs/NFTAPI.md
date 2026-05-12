@@ -179,7 +179,7 @@ No authorization required
 
 # **getNftCollectionItemsByAddresses**
 ```swift
-    open class func getNftCollectionItemsByAddresses(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
+    open class func getNftCollectionItemsByAddresses(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
 ```
 
 
@@ -192,9 +192,9 @@ Get NFT collection items by their addresses
 import TonAPI
 
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
-let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
+let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getAccountsRequest: getAccountsRequest) { (response, error) in
+NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -211,7 +211,7 @@ NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getAccountsReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xCapability** | **String** | Request sub-second capability. | [optional] 
- **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
+ **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
 
@@ -395,7 +395,7 @@ No authorization required
 
 # **getNftItemsByAddresses**
 ```swift
-    open class func getNftItemsByAddresses(xCapability: XCapability_getNftItemsByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil, completion: @escaping (_ data: NftItems?, _ error: Error?) -> Void)
+    open class func getNftItemsByAddresses(xCapability: XCapability_getNftItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: NftItems?, _ error: Error?) -> Void)
 ```
 
 
@@ -408,9 +408,9 @@ Get NFT items by their addresses
 import TonAPI
 
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
-let getAccountsRequest = getAccounts_request(accountIds: ["accountIds_example"]) // GetAccountsRequest | a list of account ids (optional)
+let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getAccountsRequest: getAccountsRequest) { (response, error) in
+NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -427,7 +427,7 @@ NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getAccountsRequest: getA
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xCapability** | **String** | Request sub-second capability. | [optional] 
- **getAccountsRequest** | [**GetAccountsRequest**](GetAccountsRequest.md) | a list of account ids | [optional] 
+ **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
 

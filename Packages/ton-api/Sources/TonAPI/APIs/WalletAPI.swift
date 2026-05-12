@@ -34,7 +34,7 @@ open class WalletAPI {
 
     /**
      - POST /v2/wallet/emulate
-     - Emulate sending message to retrieve the resulting wallet state
+     - Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
      - parameter emulateMessageToWalletRequest: (body) bag-of-cells serialized to base64/hex and additional parameters to configure emulation 
      - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
@@ -200,6 +200,50 @@ open class WalletAPI {
         let localVariableRequestBuilder: RequestBuilder<Wallets>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getWalletsByPublicKeyBulk: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter getWalletsByPublicKeyBulkRequest: (body) a list of hex-encoded ed25519 public keys (optional)
+     - returns: WalletsByPublicKeys
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getWalletsByPublicKeyBulk(xCapability: XCapability_getWalletsByPublicKeyBulk? = nil, getWalletsByPublicKeyBulkRequest: GetWalletsByPublicKeyBulkRequest? = nil) async throws -> WalletsByPublicKeys {
+        return try await getWalletsByPublicKeyBulkWithRequestBuilder(xCapability: xCapability, getWalletsByPublicKeyBulkRequest: getWalletsByPublicKeyBulkRequest).execute().body
+    }
+
+    /**
+     - POST /v2/pubkeys/wallets/_bulk
+     - Get wallets by a list of public keys
+     - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter getWalletsByPublicKeyBulkRequest: (body) a list of hex-encoded ed25519 public keys (optional)
+     - returns: RequestBuilder<WalletsByPublicKeys> 
+     */
+    open class func getWalletsByPublicKeyBulkWithRequestBuilder(xCapability: XCapability_getWalletsByPublicKeyBulk? = nil, getWalletsByPublicKeyBulkRequest: GetWalletsByPublicKeyBulkRequest? = nil) -> RequestBuilder<WalletsByPublicKeys> {
+        let localVariablePath = "/v2/pubkeys/wallets/_bulk"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getWalletsByPublicKeyBulkRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<WalletsByPublicKeys>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**

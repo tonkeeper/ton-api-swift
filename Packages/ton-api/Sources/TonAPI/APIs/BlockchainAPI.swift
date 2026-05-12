@@ -606,11 +606,13 @@ open class BlockchainAPI {
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
      - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter offset: (query)  (optional, default to 0)
+     - parameter limit: (query)  (optional)
      - returns: Transactions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil) async throws -> Transactions {
-        return try await getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability).execute().body
+    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, offset: Int? = nil, limit: Int? = nil) async throws -> Transactions {
+        return try await getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability, offset: offset, limit: limit).execute().body
     }
 
     /**
@@ -618,9 +620,11 @@ open class BlockchainAPI {
      - Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
      - parameter masterchainSeqno: (path) masterchain block seqno 
      - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter offset: (query)  (optional, default to 0)
+     - parameter limit: (query)  (optional)
      - returns: RequestBuilder<Transactions> 
      */
-    open class func getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil) -> RequestBuilder<Transactions> {
+    open class func getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, offset: Int? = nil, limit: Int? = nil) -> RequestBuilder<Transactions> {
         var localVariablePath = "/v2/blockchain/masterchain/{masterchain_seqno}/transactions"
         let masterchainSeqnoPreEscape = "\(APIHelper.mapValueToPathItem(masterchainSeqno))"
         let masterchainSeqnoPostEscape = masterchainSeqnoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -628,7 +632,11 @@ open class BlockchainAPI {
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             "X-Capability": xCapability?.encodeToJSON(),
@@ -685,6 +693,50 @@ open class BlockchainAPI {
         let localVariableRequestBuilder: RequestBuilder<BlockchainRawAccount>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+     * enum for parameter xCapability
+     */
+    public enum XCapability_getBlockchainRawAccounts: String, CaseIterable {
+        case subSecond = "sub-second"
+    }
+
+    /**
+
+     - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
+     - returns: BlockchainRawAccounts
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getBlockchainRawAccounts(xCapability: XCapability_getBlockchainRawAccounts? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> BlockchainRawAccounts {
+        return try await getBlockchainRawAccountsWithRequestBuilder(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
+    }
+
+    /**
+     - POST /v2/blockchain/accounts/_bulk
+     - Get low-level information about several accounts taken directly from the blockchain.
+     - parameter xCapability: (header) Request sub-second capability. (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
+     - returns: RequestBuilder<BlockchainRawAccounts> 
+     */
+    open class func getBlockchainRawAccountsWithRequestBuilder(xCapability: XCapability_getBlockchainRawAccounts? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<BlockchainRawAccounts> {
+        let localVariablePath = "/v2/blockchain/accounts/_bulk"
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+            "X-Capability": xCapability?.encodeToJSON(),
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<BlockchainRawAccounts>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**

@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**getBlockchainMasterchainShards**](BlockchainAPI.md#getblockchainmasterchainshards) | **GET** /v2/blockchain/masterchain/{masterchain_seqno}/shards | 
 [**getBlockchainMasterchainTransactions**](BlockchainAPI.md#getblockchainmasterchaintransactions) | **GET** /v2/blockchain/masterchain/{masterchain_seqno}/transactions | 
 [**getBlockchainRawAccount**](BlockchainAPI.md#getblockchainrawaccount) | **GET** /v2/blockchain/accounts/{account_id} | 
+[**getBlockchainRawAccounts**](BlockchainAPI.md#getblockchainrawaccounts) | **POST** /v2/blockchain/accounts/_bulk | 
 [**getBlockchainTransaction**](BlockchainAPI.md#getblockchaintransaction) | **GET** /v2/blockchain/transactions/{transaction_id} | 
 [**getBlockchainTransactionByMessageHash**](BlockchainAPI.md#getblockchaintransactionbymessagehash) | **GET** /v2/blockchain/messages/{msg_id}/transaction | 
 [**getBlockchainValidators**](BlockchainAPI.md#getblockchainvalidators) | **GET** /v2/blockchain/validators | 
@@ -654,7 +655,7 @@ No authorization required
 
 # **getBlockchainMasterchainTransactions**
 ```swift
-    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
+    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, offset: Int? = nil, limit: Int? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
 ```
 
 
@@ -668,8 +669,10 @@ import TonAPI
 
 let masterchainSeqno = 987 // Int | masterchain block seqno
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
+let offset = 987 // Int |  (optional) (default to 0)
+let limit = 987 // Int |  (optional)
 
-BlockchainAPI.getBlockchainMasterchainTransactions(masterchainSeqno: masterchainSeqno, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainMasterchainTransactions(masterchainSeqno: masterchainSeqno, xCapability: xCapability, offset: offset, limit: limit) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -687,6 +690,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterchainSeqno** | **Int** | masterchain block seqno | 
  **xCapability** | **String** | Request sub-second capability. | [optional] 
+ **offset** | **Int** |  | [optional] [default to 0]
+ **limit** | **Int** |  | [optional] 
 
 ### Return type
 
@@ -750,6 +755,57 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getBlockchainRawAccounts**
+```swift
+    open class func getBlockchainRawAccounts(xCapability: XCapability_getBlockchainRawAccounts? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: BlockchainRawAccounts?, _ error: Error?) -> Void)
+```
+
+
+
+Get low-level information about several accounts taken directly from the blockchain.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
+let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
+
+BlockchainAPI.getBlockchainRawAccounts(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **xCapability** | **String** | Request sub-second capability. | [optional] 
+ **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
+
+### Return type
+
+[**BlockchainRawAccounts**](BlockchainRawAccounts.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

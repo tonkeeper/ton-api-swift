@@ -333,6 +333,14 @@ open class AccountsAPI {
     }
 
     /**
+     * enum for parameter sortOrder
+     */
+    public enum SortOrder_getAccountEvents: String, CaseIterable {
+        case desc = "desc"
+        case asc = "asc"
+    }
+
+    /**
 
      - parameter accountId: (path) account ID 
      - parameter limit: (query)  
@@ -340,14 +348,16 @@ open class AccountsAPI {
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter initiator: (query) Show only events that are initiated by this account (optional, default to false)
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
+     - parameter afterLt: (query) omit this parameter to get last events (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
+     - parameter sortOrder: (query)  (optional, default to .desc)
      - returns: AccountEvents
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountEvents(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) async throws -> AccountEvents {
-        return try await getAccountEventsWithRequestBuilder(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, initiator: initiator, subjectOnly: subjectOnly, beforeLt: beforeLt, startDate: startDate, endDate: endDate).execute().body
+    open class func getAccountEvents(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, afterLt: Int64? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, sortOrder: SortOrder_getAccountEvents? = nil) async throws -> AccountEvents {
+        return try await getAccountEventsWithRequestBuilder(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, initiator: initiator, subjectOnly: subjectOnly, afterLt: afterLt, beforeLt: beforeLt, startDate: startDate, endDate: endDate, sortOrder: sortOrder).execute().body
     }
 
     /**
@@ -359,12 +369,14 @@ open class AccountsAPI {
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - parameter initiator: (query) Show only events that are initiated by this account (optional, default to false)
      - parameter subjectOnly: (query) filter actions where requested account is not real subject (for example sender or receiver jettons) (optional, default to false)
+     - parameter afterLt: (query) omit this parameter to get last events (optional)
      - parameter beforeLt: (query) omit this parameter to get last events (optional)
      - parameter startDate: (query)  (optional)
      - parameter endDate: (query)  (optional)
+     - parameter sortOrder: (query)  (optional, default to .desc)
      - returns: RequestBuilder<AccountEvents> 
      */
-    open class func getAccountEventsWithRequestBuilder(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil) -> RequestBuilder<AccountEvents> {
+    open class func getAccountEventsWithRequestBuilder(accountId: String, limit: Int, xCapability: XCapability_getAccountEvents? = nil, acceptLanguage: String? = nil, initiator: Bool? = nil, subjectOnly: Bool? = nil, afterLt: Int64? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, sortOrder: SortOrder_getAccountEvents? = nil) -> RequestBuilder<AccountEvents> {
         var localVariablePath = "/v2/accounts/{account_id}/events"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -376,10 +388,12 @@ open class AccountsAPI {
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "initiator": (wrappedValue: initiator?.encodeToJSON(), isExplode: false),
             "subject_only": (wrappedValue: subjectOnly?.encodeToJSON(), isExplode: true),
+            "after_lt": (wrappedValue: afterLt?.encodeToJSON(), isExplode: true),
             "before_lt": (wrappedValue: beforeLt?.encodeToJSON(), isExplode: true),
             "limit": (wrappedValue: limit.encodeToJSON(), isExplode: true),
             "start_date": (wrappedValue: startDate?.encodeToJSON(), isExplode: true),
             "end_date": (wrappedValue: endDate?.encodeToJSON(), isExplode: true),
+            "sort_order": (wrappedValue: sortOrder?.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -604,11 +618,13 @@ open class AccountsAPI {
      - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
+     - parameter limit: (query)  (optional, default to 1000)
+     - parameter offset: (query)  (optional, default to 0)
      - returns: JettonsBalances
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountJettonsBalances(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil) async throws -> JettonsBalances {
-        return try await getAccountJettonsBalancesWithRequestBuilder(accountId: accountId, xCapability: xCapability, currencies: currencies, supportedExtensions: supportedExtensions).execute().body
+    open class func getAccountJettonsBalances(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> JettonsBalances {
+        return try await getAccountJettonsBalancesWithRequestBuilder(accountId: accountId, xCapability: xCapability, currencies: currencies, supportedExtensions: supportedExtensions, limit: limit, offset: offset).execute().body
     }
 
     /**
@@ -618,9 +634,11 @@ open class AccountsAPI {
      - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
+     - parameter limit: (query)  (optional, default to 1000)
+     - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<JettonsBalances> 
      */
-    open class func getAccountJettonsBalancesWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil) -> RequestBuilder<JettonsBalances> {
+    open class func getAccountJettonsBalancesWithRequestBuilder(accountId: String, xCapability: XCapability_getAccountJettonsBalances? = nil, currencies: [String]? = nil, supportedExtensions: [String]? = nil, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<JettonsBalances> {
         var localVariablePath = "/v2/accounts/{account_id}/jettons"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -632,6 +650,8 @@ open class AccountsAPI {
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "currencies": (wrappedValue: currencies?.encodeToJSON(), isExplode: false),
             "supported_extensions": (wrappedValue: supportedExtensions?.encodeToJSON(), isExplode: false),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
+            "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -962,12 +982,12 @@ open class AccountsAPI {
 
      - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currency: (query)  (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: Accounts
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccounts(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> Accounts {
-        return try await getAccountsWithRequestBuilder(xCapability: xCapability, currency: currency, getAccountsRequest: getAccountsRequest).execute().body
+    open class func getAccounts(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> Accounts {
+        return try await getAccountsWithRequestBuilder(xCapability: xCapability, currency: currency, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
     }
 
     /**
@@ -975,13 +995,13 @@ open class AccountsAPI {
      - Get human-friendly information about several accounts without low-level details.
      - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter currency: (query)  (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<Accounts> 
      */
-    open class func getAccountsWithRequestBuilder(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<Accounts> {
+    open class func getAccountsWithRequestBuilder(xCapability: XCapability_getAccounts? = nil, currency: String? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<Accounts> {
         let localVariablePath = "/v2/accounts/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([

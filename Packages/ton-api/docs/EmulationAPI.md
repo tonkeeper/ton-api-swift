@@ -234,7 +234,7 @@ No authorization required
 
 
 
-Emulate sending message to retrieve the resulting wallet state
+Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
 
 ### Example
 ```swift

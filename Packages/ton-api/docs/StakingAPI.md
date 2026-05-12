@@ -63,7 +63,7 @@ No authorization required
 
 # **getStakingPoolHistory**
 ```swift
-    open class func getStakingPoolHistory(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil, completion: @escaping (_ data: GetStakingPoolHistory200Response?, _ error: Error?) -> Void)
+    open class func getStakingPoolHistory(accountId: String, xCapability: XCapability_getStakingPoolHistory? = nil, beforeLt: Int64? = nil, limit: Int? = nil, completion: @escaping (_ data: GetStakingPoolHistory200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -77,8 +77,10 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
+let beforeLt = 987 // Int64 | omit this parameter to get last log entries (optional)
+let limit = 987 // Int |  (optional) (default to 100)
 
-StakingAPI.getStakingPoolHistory(accountId: accountId, xCapability: xCapability) { (response, error) in
+StakingAPI.getStakingPoolHistory(accountId: accountId, xCapability: xCapability, beforeLt: beforeLt, limit: limit) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -96,6 +98,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **xCapability** | **String** | Request sub-second capability. | [optional] 
+ **beforeLt** | **Int64** | omit this parameter to get last log entries | [optional] 
+ **limit** | **Int** |  | [optional] [default to 100]
 
 ### Return type
 

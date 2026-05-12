@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time. */
+/** High-level view over a transaction trace caused by a single inbound message. TonAPI analyses the trace, detects known patterns and groups low-level transactions into user-facing actions (Jetton transfer, NFT purchase, etc.). Actions are a best-effort UI abstraction and may change; do not rely on them for protocol-critical logic.  */
 public struct AccountEvent: Codable, JSONEncodable, Hashable {
 
     public var eventId: String
@@ -20,13 +20,16 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
     /** scam */
     public var isScam: Bool
     public var lt: Int64
-    /** Event is not finished yet. Transactions still happening */
+    /** Event trace is not finished yet. Transactions still happening. */
     public var inProgress: Bool
-    /** TODO */
+    /** Net TON change for this account not explained by actions, in nanotons: extra = final_balance - initial_balance - sum(explicit TON changes from actions). extra < 0 - implicit fee, extra > 0 - refund. For UI display only  */
     public var extra: Int64
+    /** Event completion ratio in [0,1] */
     public var progress: Float
+    /** Normalized hash of the root external inbound message (hex). */
+    public var extMsgHash: String?
 
-    public init(eventId: String, account: AccountAddress, timestamp: Int64, actions: [Action], isScam: Bool, lt: Int64, inProgress: Bool, extra: Int64, progress: Float) {
+    public init(eventId: String, account: AccountAddress, timestamp: Int64, actions: [Action], isScam: Bool, lt: Int64, inProgress: Bool, extra: Int64, progress: Float, extMsgHash: String? = nil) {
         self.eventId = eventId
         self.account = account
         self.timestamp = timestamp
@@ -36,6 +39,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         self.inProgress = inProgress
         self.extra = extra
         self.progress = progress
+        self.extMsgHash = extMsgHash
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -48,6 +52,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         case inProgress = "in_progress"
         case extra
         case progress
+        case extMsgHash = "ext_msg_hash"
     }
 
     // Encodable protocol methods
@@ -63,6 +68,7 @@ public struct AccountEvent: Codable, JSONEncodable, Hashable {
         try container.encode(inProgress, forKey: .inProgress)
         try container.encode(extra, forKey: .extra)
         try container.encode(progress, forKey: .progress)
+        try container.encodeIfPresent(extMsgHash, forKey: .extMsgHash)
     }
 }
 

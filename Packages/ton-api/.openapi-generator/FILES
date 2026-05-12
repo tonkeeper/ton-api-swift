@@ -19,6 +19,7 @@ Sources/TonAPI/APIs/MultisigAPI.swift
 Sources/TonAPI/APIs/NFTAPI.swift
 Sources/TonAPI/APIs/PurchasesAPI.swift
 Sources/TonAPI/APIs/RatesAPI.swift
+Sources/TonAPI/APIs/RewardsAPI.swift
 Sources/TonAPI/APIs/StakingAPI.swift
 Sources/TonAPI/APIs/StorageAPI.swift
 Sources/TonAPI/APIs/TracesAPI.swift
@@ -54,6 +55,7 @@ Sources/TonAPI/Models/AuctionBidAction.swift
 Sources/TonAPI/Models/Auctions.swift
 Sources/TonAPI/Models/BlockCurrencyCollection.swift
 Sources/TonAPI/Models/BlockCurrencyCollectionOtherInner.swift
+Sources/TonAPI/Models/BlockInfo.swift
 Sources/TonAPI/Models/BlockLimits.swift
 Sources/TonAPI/Models/BlockParamLimits.swift
 Sources/TonAPI/Models/BlockRaw.swift
@@ -82,6 +84,7 @@ Sources/TonAPI/Models/BlockchainConfig24.swift
 Sources/TonAPI/Models/BlockchainConfig25.swift
 Sources/TonAPI/Models/BlockchainConfig28.swift
 Sources/TonAPI/Models/BlockchainConfig29.swift
+Sources/TonAPI/Models/BlockchainConfig30.swift
 Sources/TonAPI/Models/BlockchainConfig31.swift
 Sources/TonAPI/Models/BlockchainConfig40.swift
 Sources/TonAPI/Models/BlockchainConfig43.swift
@@ -99,6 +102,7 @@ Sources/TonAPI/Models/BlockchainConfig9.swift
 Sources/TonAPI/Models/BlockchainLibrary.swift
 Sources/TonAPI/Models/BlockchainRawAccount.swift
 Sources/TonAPI/Models/BlockchainRawAccountLibrariesInner.swift
+Sources/TonAPI/Models/BlockchainRawAccounts.swift
 Sources/TonAPI/Models/BouncePhaseType.swift
 Sources/TonAPI/Models/ComputePhase.swift
 Sources/TonAPI/Models/ComputeSkipReason.swift
@@ -137,6 +141,7 @@ Sources/TonAPI/Models/ExecGetMethodWithBodyForBlockchainAccountRequest.swift
 Sources/TonAPI/Models/ExtraCurrencies.swift
 Sources/TonAPI/Models/ExtraCurrency.swift
 Sources/TonAPI/Models/ExtraCurrencyTransferAction.swift
+Sources/TonAPI/Models/FlawedJettonTransferAction.swift
 Sources/TonAPI/Models/FoundAccounts.swift
 Sources/TonAPI/Models/FoundAccountsAddressesInner.swift
 Sources/TonAPI/Models/GasLimitPrices.swift
@@ -150,8 +155,8 @@ Sources/TonAPI/Models/GaslessTx.swift
 Sources/TonAPI/Models/GetAccountDiff200Response.swift
 Sources/TonAPI/Models/GetAccountInfoByStateInitRequest.swift
 Sources/TonAPI/Models/GetAccountPublicKey200Response.swift
-Sources/TonAPI/Models/GetAccountsRequest.swift
 Sources/TonAPI/Models/GetAllRawShardsInfo200Response.swift
+Sources/TonAPI/Models/GetBlockchainRawAccountsRequest.swift
 Sources/TonAPI/Models/GetChartRates200Response.swift
 Sources/TonAPI/Models/GetMarketsRates200Response.swift
 Sources/TonAPI/Models/GetOpenapiJsonDefaultResponse.swift
@@ -183,6 +188,7 @@ Sources/TonAPI/Models/GetStakingPoolInfo200Response.swift
 Sources/TonAPI/Models/GetStakingPools200Response.swift
 Sources/TonAPI/Models/GetStorageProviders200Response.swift
 Sources/TonAPI/Models/GetTonConnectPayload200Response.swift
+Sources/TonAPI/Models/GetWalletsByPublicKeyBulkRequest.swift
 Sources/TonAPI/Models/ImagePreview.swift
 Sources/TonAPI/Models/InitStateRaw.swift
 Sources/TonAPI/Models/JettonBalance.swift
@@ -220,6 +226,7 @@ Sources/TonAPI/Models/Multisig.swift
 Sources/TonAPI/Models/MultisigOrder.swift
 Sources/TonAPI/Models/MultisigOrderChangingParameters.swift
 Sources/TonAPI/Models/Multisigs.swift
+Sources/TonAPI/Models/NewConsensusConfig.swift
 Sources/TonAPI/Models/NftCollection.swift
 Sources/TonAPI/Models/NftCollections.swift
 Sources/TonAPI/Models/NftItem.swift
@@ -229,8 +236,12 @@ Sources/TonAPI/Models/NftItems.swift
 Sources/TonAPI/Models/NftOperation.swift
 Sources/TonAPI/Models/NftOperations.swift
 Sources/TonAPI/Models/NftPurchaseAction.swift
+Sources/TonAPI/Models/NominatorRewardEntry.swift
 Sources/TonAPI/Models/Oracle.swift
 Sources/TonAPI/Models/OracleBridgeParams.swift
+Sources/TonAPI/Models/OraclePriceFeed.swift
+Sources/TonAPI/Models/OracleRequestAction.swift
+Sources/TonAPI/Models/PictureDNS.swift
 Sources/TonAPI/Models/PoolImplementation.swift
 Sources/TonAPI/Models/PoolImplementationType.swift
 Sources/TonAPI/Models/PoolInfo.swift
@@ -242,7 +253,10 @@ Sources/TonAPI/Models/ReducedBlock.swift
 Sources/TonAPI/Models/ReducedBlocks.swift
 Sources/TonAPI/Models/Refund.swift
 Sources/TonAPI/Models/RemoveExtensionAction.swift
+Sources/TonAPI/Models/RewardsStats.swift
 Sources/TonAPI/Models/Risk.swift
+Sources/TonAPI/Models/RoundInfo.swift
+Sources/TonAPI/Models/RoundRewardsResponse.swift
 Sources/TonAPI/Models/Sale.swift
 Sources/TonAPI/Models/ScaledUI.swift
 Sources/TonAPI/Models/SendBlockchainMessageRequest.swift
@@ -278,8 +292,12 @@ Sources/TonAPI/Models/Transactions.swift
 Sources/TonAPI/Models/TrustType.swift
 Sources/TonAPI/Models/TvmStackRecord.swift
 Sources/TonAPI/Models/UnSubscriptionAction.swift
+Sources/TonAPI/Models/ValidationRound.swift
+Sources/TonAPI/Models/ValidationRoundsResponse.swift
 Sources/TonAPI/Models/Validator.swift
+Sources/TonAPI/Models/ValidatorRewardEntry.swift
 Sources/TonAPI/Models/Validators.swift
+Sources/TonAPI/Models/ValidatorsResponse.swift
 Sources/TonAPI/Models/ValidatorsSet.swift
 Sources/TonAPI/Models/ValidatorsSetListInner.swift
 Sources/TonAPI/Models/ValueFlow.swift
@@ -290,6 +308,8 @@ Sources/TonAPI/Models/WalletDNS.swift
 Sources/TonAPI/Models/WalletPlugin.swift
 Sources/TonAPI/Models/WalletStats.swift
 Sources/TonAPI/Models/Wallets.swift
+Sources/TonAPI/Models/WalletsByPublicKey.swift
+Sources/TonAPI/Models/WalletsByPublicKeys.swift
 Sources/TonAPI/Models/WithdrawStakeAction.swift
 Sources/TonAPI/Models/WithdrawStakeRequestAction.swift
 Sources/TonAPI/Models/WithdrawTokenStakeRequestAction.swift
@@ -323,6 +343,7 @@ docs/AuctionBidAction.md
 docs/Auctions.md
 docs/BlockCurrencyCollection.md
 docs/BlockCurrencyCollectionOtherInner.md
+docs/BlockInfo.md
 docs/BlockLimits.md
 docs/BlockParamLimits.md
 docs/BlockRaw.md
@@ -352,6 +373,7 @@ docs/BlockchainConfig24.md
 docs/BlockchainConfig25.md
 docs/BlockchainConfig28.md
 docs/BlockchainConfig29.md
+docs/BlockchainConfig30.md
 docs/BlockchainConfig31.md
 docs/BlockchainConfig40.md
 docs/BlockchainConfig43.md
@@ -369,6 +391,7 @@ docs/BlockchainConfig9.md
 docs/BlockchainLibrary.md
 docs/BlockchainRawAccount.md
 docs/BlockchainRawAccountLibrariesInner.md
+docs/BlockchainRawAccounts.md
 docs/BouncePhaseType.md
 docs/ComputePhase.md
 docs/ComputeSkipReason.md
@@ -412,6 +435,7 @@ docs/ExtraCurrencies.md
 docs/ExtraCurrency.md
 docs/ExtraCurrencyAPI.md
 docs/ExtraCurrencyTransferAction.md
+docs/FlawedJettonTransferAction.md
 docs/FoundAccounts.md
 docs/FoundAccountsAddressesInner.md
 docs/GasLimitPrices.md
@@ -426,8 +450,8 @@ docs/GaslessTx.md
 docs/GetAccountDiff200Response.md
 docs/GetAccountInfoByStateInitRequest.md
 docs/GetAccountPublicKey200Response.md
-docs/GetAccountsRequest.md
 docs/GetAllRawShardsInfo200Response.md
+docs/GetBlockchainRawAccountsRequest.md
 docs/GetChartRates200Response.md
 docs/GetMarketsRates200Response.md
 docs/GetOpenapiJsonDefaultResponse.md
@@ -459,6 +483,7 @@ docs/GetStakingPoolInfo200Response.md
 docs/GetStakingPools200Response.md
 docs/GetStorageProviders200Response.md
 docs/GetTonConnectPayload200Response.md
+docs/GetWalletsByPublicKeyBulkRequest.md
 docs/ImagePreview.md
 docs/InitStateRaw.md
 docs/JettonBalance.md
@@ -500,6 +525,7 @@ docs/MultisigOrder.md
 docs/MultisigOrderChangingParameters.md
 docs/Multisigs.md
 docs/NFTAPI.md
+docs/NewConsensusConfig.md
 docs/NftCollection.md
 docs/NftCollections.md
 docs/NftItem.md
@@ -509,8 +535,12 @@ docs/NftItems.md
 docs/NftOperation.md
 docs/NftOperations.md
 docs/NftPurchaseAction.md
+docs/NominatorRewardEntry.md
 docs/Oracle.md
 docs/OracleBridgeParams.md
+docs/OraclePriceFeed.md
+docs/OracleRequestAction.md
+docs/PictureDNS.md
 docs/PoolImplementation.md
 docs/PoolImplementationType.md
 docs/PoolInfo.md
@@ -524,7 +554,11 @@ docs/ReducedBlock.md
 docs/ReducedBlocks.md
 docs/Refund.md
 docs/RemoveExtensionAction.md
+docs/RewardsAPI.md
+docs/RewardsStats.md
 docs/Risk.md
+docs/RoundInfo.md
+docs/RoundRewardsResponse.md
 docs/Sale.md
 docs/ScaledUI.md
 docs/SendBlockchainMessageRequest.md
@@ -564,8 +598,12 @@ docs/TrustType.md
 docs/TvmStackRecord.md
 docs/UnSubscriptionAction.md
 docs/UtilitiesAPI.md
+docs/ValidationRound.md
+docs/ValidationRoundsResponse.md
 docs/Validator.md
+docs/ValidatorRewardEntry.md
 docs/Validators.md
+docs/ValidatorsResponse.md
 docs/ValidatorsSet.md
 docs/ValidatorsSetListInner.md
 docs/ValueFlow.md
@@ -577,6 +615,8 @@ docs/WalletDNS.md
 docs/WalletPlugin.md
 docs/WalletStats.md
 docs/Wallets.md
+docs/WalletsByPublicKey.md
+docs/WalletsByPublicKeys.md
 docs/WithdrawStakeAction.md
 docs/WithdrawStakeRequestAction.md
 docs/WithdrawTokenStakeRequestAction.md

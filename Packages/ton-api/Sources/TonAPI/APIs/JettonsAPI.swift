@@ -122,25 +122,25 @@ open class JettonsAPI {
     /**
 
      - parameter xCapability: (header) Request sub-second capability. (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: Jettons
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonInfosByAddresses(xCapability: XCapability_getJettonInfosByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) async throws -> Jettons {
-        return try await getJettonInfosByAddressesWithRequestBuilder(xCapability: xCapability, getAccountsRequest: getAccountsRequest).execute().body
+    open class func getJettonInfosByAddresses(xCapability: XCapability_getJettonInfosByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> Jettons {
+        return try await getJettonInfosByAddressesWithRequestBuilder(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/jettons/_bulk
      - Get jetton metadata items by jetton master addresses
      - parameter xCapability: (header) Request sub-second capability. (optional)
-     - parameter getAccountsRequest: (body) a list of account ids (optional)
+     - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<Jettons> 
      */
-    open class func getJettonInfosByAddressesWithRequestBuilder(xCapability: XCapability_getJettonInfosByAddresses? = nil, getAccountsRequest: GetAccountsRequest? = nil) -> RequestBuilder<Jettons> {
+    open class func getJettonInfosByAddressesWithRequestBuilder(xCapability: XCapability_getJettonInfosByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<Jettons> {
         let localVariablePath = "/v2/jettons/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountsRequest)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 

@@ -13,31 +13,22 @@ import AnyCodable
 open class ExtraCurrencyAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getExtraCurrencyInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter id: (path) extra currency id 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: EcPreview
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getExtraCurrencyInfo(id: Int, xCapability: XCapability_getExtraCurrencyInfo? = nil) async throws -> EcPreview {
-        return try await getExtraCurrencyInfoWithRequestBuilder(id: id, xCapability: xCapability).execute().body
+    open class func getExtraCurrencyInfo(id: Int) async throws -> EcPreview {
+        return try await getExtraCurrencyInfoWithRequestBuilder(id: id).execute().body
     }
 
     /**
      - GET /v2/extra-currency/{id}
      - Get extra currency info by id
      - parameter id: (path) extra currency id 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<EcPreview> 
      */
-    open class func getExtraCurrencyInfoWithRequestBuilder(id: Int, xCapability: XCapability_getExtraCurrencyInfo? = nil) -> RequestBuilder<EcPreview> {
+    open class func getExtraCurrencyInfoWithRequestBuilder(id: Int) -> RequestBuilder<EcPreview> {
         var localVariablePath = "/v2/extra-currency/{id}"
         let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -48,7 +39,7 @@ open class ExtraCurrencyAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

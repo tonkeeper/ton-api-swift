@@ -13,35 +13,26 @@ import AnyCodable
 open class JettonsAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getJettonHolders: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: JettonHolders
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonHolders(accountId: String, xCapability: XCapability_getJettonHolders? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> JettonHolders {
-        return try await getJettonHoldersWithRequestBuilder(accountId: accountId, xCapability: xCapability, limit: limit, offset: offset).execute().body
+    open class func getJettonHolders(accountId: String, limit: Int? = nil, offset: Int? = nil) async throws -> JettonHolders {
+        return try await getJettonHoldersWithRequestBuilder(accountId: accountId, limit: limit, offset: offset).execute().body
     }
 
     /**
      - GET /v2/jettons/{account_id}/holders
      - Get jetton's holders
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<JettonHolders> 
      */
-    open class func getJettonHoldersWithRequestBuilder(accountId: String, xCapability: XCapability_getJettonHolders? = nil, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<JettonHolders> {
+    open class func getJettonHoldersWithRequestBuilder(accountId: String, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<JettonHolders> {
         var localVariablePath = "/v2/jettons/{account_id}/holders"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -56,7 +47,7 @@ open class JettonsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -67,31 +58,22 @@ open class JettonsAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getJettonInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: JettonInfo
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonInfo(accountId: String, xCapability: XCapability_getJettonInfo? = nil) async throws -> JettonInfo {
-        return try await getJettonInfoWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getJettonInfo(accountId: String) async throws -> JettonInfo {
+        return try await getJettonInfoWithRequestBuilder(accountId: accountId).execute().body
     }
 
     /**
      - GET /v2/jettons/{account_id}
      - Get jetton metadata by jetton master address
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<JettonInfo> 
      */
-    open class func getJettonInfoWithRequestBuilder(accountId: String, xCapability: XCapability_getJettonInfo? = nil) -> RequestBuilder<JettonInfo> {
+    open class func getJettonInfoWithRequestBuilder(accountId: String) -> RequestBuilder<JettonInfo> {
         var localVariablePath = "/v2/jettons/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -102,7 +84,7 @@ open class JettonsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -113,31 +95,22 @@ open class JettonsAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getJettonInfosByAddresses: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: Jettons
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonInfosByAddresses(xCapability: XCapability_getJettonInfosByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> Jettons {
-        return try await getJettonInfosByAddressesWithRequestBuilder(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
+    open class func getJettonInfosByAddresses(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> Jettons {
+        return try await getJettonInfosByAddressesWithRequestBuilder(getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/jettons/_bulk
      - Get jetton metadata items by jetton master addresses
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<Jettons> 
      */
-    open class func getJettonInfosByAddressesWithRequestBuilder(xCapability: XCapability_getJettonInfosByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<Jettons> {
+    open class func getJettonInfosByAddressesWithRequestBuilder(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<Jettons> {
         let localVariablePath = "/v2/jettons/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
@@ -146,7 +119,6 @@ open class JettonsAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -157,22 +129,14 @@ open class JettonsAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getJettonTransferPayload: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: JettonTransferPayload
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonTransferPayload(accountId: String, jettonId: String, xCapability: XCapability_getJettonTransferPayload? = nil) async throws -> JettonTransferPayload {
-        return try await getJettonTransferPayloadWithRequestBuilder(accountId: accountId, jettonId: jettonId, xCapability: xCapability).execute().body
+    open class func getJettonTransferPayload(accountId: String, jettonId: String) async throws -> JettonTransferPayload {
+        return try await getJettonTransferPayloadWithRequestBuilder(accountId: accountId, jettonId: jettonId).execute().body
     }
 
     /**
@@ -180,10 +144,9 @@ open class JettonsAPI {
      - Get jetton's custom payload and state init required for transfer
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<JettonTransferPayload> 
      */
-    open class func getJettonTransferPayloadWithRequestBuilder(accountId: String, jettonId: String, xCapability: XCapability_getJettonTransferPayload? = nil) -> RequestBuilder<JettonTransferPayload> {
+    open class func getJettonTransferPayloadWithRequestBuilder(accountId: String, jettonId: String) -> RequestBuilder<JettonTransferPayload> {
         var localVariablePath = "/v2/jettons/{jetton_id}/transfer/{account_id}/payload"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -197,7 +160,7 @@ open class JettonsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -208,33 +171,24 @@ open class JettonsAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getJettons: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: Jettons
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettons(xCapability: XCapability_getJettons? = nil, limit: Int? = nil, offset: Int? = nil) async throws -> Jettons {
-        return try await getJettonsWithRequestBuilder(xCapability: xCapability, limit: limit, offset: offset).execute().body
+    open class func getJettons(limit: Int? = nil, offset: Int? = nil) async throws -> Jettons {
+        return try await getJettonsWithRequestBuilder(limit: limit, offset: offset).execute().body
     }
 
     /**
      - GET /v2/jettons
      - Get a list of all indexed jetton masters in the blockchain.
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter offset: (query)  (optional, default to 0)
      - returns: RequestBuilder<Jettons> 
      */
-    open class func getJettonsWithRequestBuilder(xCapability: XCapability_getJettons? = nil, limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<Jettons> {
+    open class func getJettonsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil) -> RequestBuilder<Jettons> {
         let localVariablePath = "/v2/jettons"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -246,7 +200,7 @@ open class JettonsAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -257,33 +211,24 @@ open class JettonsAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getJettonsEvents: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: Event
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getJettonsEvents(eventId: String, xCapability: XCapability_getJettonsEvents? = nil, acceptLanguage: String? = nil) async throws -> Event {
-        return try await getJettonsEventsWithRequestBuilder(eventId: eventId, xCapability: xCapability, acceptLanguage: acceptLanguage).execute().body
+    open class func getJettonsEvents(eventId: String, acceptLanguage: String? = nil) async throws -> Event {
+        return try await getJettonsEventsWithRequestBuilder(eventId: eventId, acceptLanguage: acceptLanguage).execute().body
     }
 
     /**
      - GET /v2/events/{event_id}/jettons
      - Get only jetton transfers in the event
      - parameter eventId: (path) event ID or transaction hash in hex (without 0x) or base64url format 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter acceptLanguage: (header)  (optional, default to "en")
      - returns: RequestBuilder<Event> 
      */
-    open class func getJettonsEventsWithRequestBuilder(eventId: String, xCapability: XCapability_getJettonsEvents? = nil, acceptLanguage: String? = nil) -> RequestBuilder<Event> {
+    open class func getJettonsEventsWithRequestBuilder(eventId: String, acceptLanguage: String? = nil) -> RequestBuilder<Event> {
         var localVariablePath = "/v2/events/{event_id}/jettons"
         let eventIdPreEscape = "\(APIHelper.mapValueToPathItem(eventId))"
         let eventIdPostEscape = eventIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -294,7 +239,6 @@ open class JettonsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
             "Accept-Language": acceptLanguage?.encodeToJSON(),
         ]
 

@@ -13,31 +13,22 @@ import AnyCodable
 open class ConnectAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getAccountInfoByStateInit: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter getAccountInfoByStateInitRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: AccountInfoByStateInit
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAccountInfoByStateInit(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest, xCapability: XCapability_getAccountInfoByStateInit? = nil) async throws -> AccountInfoByStateInit {
-        return try await getAccountInfoByStateInitWithRequestBuilder(getAccountInfoByStateInitRequest: getAccountInfoByStateInitRequest, xCapability: xCapability).execute().body
+    open class func getAccountInfoByStateInit(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest) async throws -> AccountInfoByStateInit {
+        return try await getAccountInfoByStateInitWithRequestBuilder(getAccountInfoByStateInitRequest: getAccountInfoByStateInitRequest).execute().body
     }
 
     /**
      - POST /v2/tonconnect/stateinit
      - Get account info by state init
      - parameter getAccountInfoByStateInitRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<AccountInfoByStateInit> 
      */
-    open class func getAccountInfoByStateInitWithRequestBuilder(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest, xCapability: XCapability_getAccountInfoByStateInit? = nil) -> RequestBuilder<AccountInfoByStateInit> {
+    open class func getAccountInfoByStateInitWithRequestBuilder(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest) -> RequestBuilder<AccountInfoByStateInit> {
         let localVariablePath = "/v2/tonconnect/stateinit"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getAccountInfoByStateInitRequest)
@@ -46,7 +37,6 @@ open class ConnectAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -57,29 +47,20 @@ open class ConnectAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getTonConnectPayload: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetTonConnectPayload200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getTonConnectPayload(xCapability: XCapability_getTonConnectPayload? = nil) async throws -> GetTonConnectPayload200Response {
-        return try await getTonConnectPayloadWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getTonConnectPayload() async throws -> GetTonConnectPayload200Response {
+        return try await getTonConnectPayloadWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/tonconnect/payload
      - Get a payload for further token receipt
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetTonConnectPayload200Response> 
      */
-    open class func getTonConnectPayloadWithRequestBuilder(xCapability: XCapability_getTonConnectPayload? = nil) -> RequestBuilder<GetTonConnectPayload200Response> {
+    open class func getTonConnectPayloadWithRequestBuilder() -> RequestBuilder<GetTonConnectPayload200Response> {
         let localVariablePath = "/v2/tonconnect/payload"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -87,7 +68,7 @@ open class ConnectAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

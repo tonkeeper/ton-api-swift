@@ -13,31 +13,22 @@ import AnyCodable
 open class BlockchainAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_blockchainAccountInspect: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainAccountInspect
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func blockchainAccountInspect(accountId: String, xCapability: XCapability_blockchainAccountInspect? = nil) async throws -> BlockchainAccountInspect {
-        return try await blockchainAccountInspectWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func blockchainAccountInspect(accountId: String) async throws -> BlockchainAccountInspect {
+        return try await blockchainAccountInspectWithRequestBuilder(accountId: accountId).execute().body
     }
 
     /**
      - GET /v2/blockchain/accounts/{account_id}/inspect
      - Blockchain account inspect
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainAccountInspect> 
      */
-    open class func blockchainAccountInspectWithRequestBuilder(accountId: String, xCapability: XCapability_blockchainAccountInspect? = nil) -> RequestBuilder<BlockchainAccountInspect> {
+    open class func blockchainAccountInspectWithRequestBuilder(accountId: String) -> RequestBuilder<BlockchainAccountInspect> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}/inspect"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -48,7 +39,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -59,21 +50,13 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_downloadBlockchainBlockBoc: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: URL
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func downloadBlockchainBlockBoc(blockId: String, xCapability: XCapability_downloadBlockchainBlockBoc? = nil) async throws -> URL {
-        return try await downloadBlockchainBlockBocWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func downloadBlockchainBlockBoc(blockId: String) async throws -> URL {
+        return try await downloadBlockchainBlockBocWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
@@ -81,10 +64,9 @@ open class BlockchainAPI {
      - Download blockchain block BOC
      - responseHeaders: [Content-Disposition(String)]
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<URL> 
      */
-    open class func downloadBlockchainBlockBocWithRequestBuilder(blockId: String, xCapability: XCapability_downloadBlockchainBlockBoc? = nil) -> RequestBuilder<URL> {
+    open class func downloadBlockchainBlockBocWithRequestBuilder(blockId: String) -> RequestBuilder<URL> {
         var localVariablePath = "/v2/blockchain/blocks/{block_id}/boc"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -95,7 +77,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -106,23 +88,15 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_execGetMethodForBlockchainAccount: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter args: (query)  (optional)
      - returns: MethodExecutionResult
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, xCapability: XCapability_execGetMethodForBlockchainAccount? = nil, args: [String]? = nil) async throws -> MethodExecutionResult {
-        return try await execGetMethodForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, xCapability: xCapability, args: args).execute().body
+    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil) async throws -> MethodExecutionResult {
+        return try await execGetMethodForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, args: args).execute().body
     }
 
     /**
@@ -130,11 +104,10 @@ open class BlockchainAPI {
      - Execute get method for account
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter args: (query)  (optional)
      - returns: RequestBuilder<MethodExecutionResult> 
      */
-    open class func execGetMethodForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, xCapability: XCapability_execGetMethodForBlockchainAccount? = nil, args: [String]? = nil) -> RequestBuilder<MethodExecutionResult> {
+    open class func execGetMethodForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, args: [String]? = nil) -> RequestBuilder<MethodExecutionResult> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}/methods/{method_name}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -151,7 +124,7 @@ open class BlockchainAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -162,23 +135,15 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_execGetMethodWithBodyForBlockchainAccount: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter execGetMethodWithBodyForBlockchainAccountRequest: (body) Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
      - returns: MethodExecutionResult
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func execGetMethodWithBodyForBlockchainAccount(accountId: String, methodName: String, xCapability: XCapability_execGetMethodWithBodyForBlockchainAccount? = nil, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil) async throws -> MethodExecutionResult {
-        return try await execGetMethodWithBodyForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, xCapability: xCapability, execGetMethodWithBodyForBlockchainAccountRequest: execGetMethodWithBodyForBlockchainAccountRequest).execute().body
+    open class func execGetMethodWithBodyForBlockchainAccount(accountId: String, methodName: String, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil) async throws -> MethodExecutionResult {
+        return try await execGetMethodWithBodyForBlockchainAccountWithRequestBuilder(accountId: accountId, methodName: methodName, execGetMethodWithBodyForBlockchainAccountRequest: execGetMethodWithBodyForBlockchainAccountRequest).execute().body
     }
 
     /**
@@ -186,11 +151,10 @@ open class BlockchainAPI {
      - Execute get method for account
      - parameter accountId: (path) account ID 
      - parameter methodName: (path) contract get method name 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter execGetMethodWithBodyForBlockchainAccountRequest: (body) Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
      - returns: RequestBuilder<MethodExecutionResult> 
      */
-    open class func execGetMethodWithBodyForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, xCapability: XCapability_execGetMethodWithBodyForBlockchainAccount? = nil, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil) -> RequestBuilder<MethodExecutionResult> {
+    open class func execGetMethodWithBodyForBlockchainAccountWithRequestBuilder(accountId: String, methodName: String, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil) -> RequestBuilder<MethodExecutionResult> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}/methods/{method_name}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -205,7 +169,6 @@ open class BlockchainAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -213,13 +176,6 @@ open class BlockchainAPI {
         let localVariableRequestBuilder: RequestBuilder<MethodExecutionResult>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
-    }
-
-    /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainAccountTransactions: String, CaseIterable {
-        case subSecond = "sub-second"
     }
 
     /**
@@ -233,7 +189,6 @@ open class BlockchainAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter afterLt: (query) omit this parameter to get last transactions (optional)
      - parameter beforeLt: (query) omit this parameter to get last transactions (optional)
      - parameter limit: (query)  (optional, default to 100)
@@ -241,22 +196,21 @@ open class BlockchainAPI {
      - returns: Transactions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainAccountTransactions(accountId: String, xCapability: XCapability_getBlockchainAccountTransactions? = nil, afterLt: Int64? = nil, beforeLt: Int64? = nil, limit: Int? = nil, sortOrder: SortOrder_getBlockchainAccountTransactions? = nil) async throws -> Transactions {
-        return try await getBlockchainAccountTransactionsWithRequestBuilder(accountId: accountId, xCapability: xCapability, afterLt: afterLt, beforeLt: beforeLt, limit: limit, sortOrder: sortOrder).execute().body
+    open class func getBlockchainAccountTransactions(accountId: String, afterLt: Int64? = nil, beforeLt: Int64? = nil, limit: Int? = nil, sortOrder: SortOrder_getBlockchainAccountTransactions? = nil) async throws -> Transactions {
+        return try await getBlockchainAccountTransactionsWithRequestBuilder(accountId: accountId, afterLt: afterLt, beforeLt: beforeLt, limit: limit, sortOrder: sortOrder).execute().body
     }
 
     /**
      - GET /v2/blockchain/accounts/{account_id}/transactions
      - Get account transactions
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter afterLt: (query) omit this parameter to get last transactions (optional)
      - parameter beforeLt: (query) omit this parameter to get last transactions (optional)
      - parameter limit: (query)  (optional, default to 100)
      - parameter sortOrder: (query)  (optional, default to .desc)
      - returns: RequestBuilder<Transactions> 
      */
-    open class func getBlockchainAccountTransactionsWithRequestBuilder(accountId: String, xCapability: XCapability_getBlockchainAccountTransactions? = nil, afterLt: Int64? = nil, beforeLt: Int64? = nil, limit: Int? = nil, sortOrder: SortOrder_getBlockchainAccountTransactions? = nil) -> RequestBuilder<Transactions> {
+    open class func getBlockchainAccountTransactionsWithRequestBuilder(accountId: String, afterLt: Int64? = nil, beforeLt: Int64? = nil, limit: Int? = nil, sortOrder: SortOrder_getBlockchainAccountTransactions? = nil) -> RequestBuilder<Transactions> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}/transactions"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -273,7 +227,7 @@ open class BlockchainAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -284,31 +238,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainBlock: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlock
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainBlock(blockId: String, xCapability: XCapability_getBlockchainBlock? = nil) async throws -> BlockchainBlock {
-        return try await getBlockchainBlockWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func getBlockchainBlock(blockId: String) async throws -> BlockchainBlock {
+        return try await getBlockchainBlockWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
      - GET /v2/blockchain/blocks/{block_id}
      - Get blockchain block data
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlock> 
      */
-    open class func getBlockchainBlockWithRequestBuilder(blockId: String, xCapability: XCapability_getBlockchainBlock? = nil) -> RequestBuilder<BlockchainBlock> {
+    open class func getBlockchainBlockWithRequestBuilder(blockId: String) -> RequestBuilder<BlockchainBlock> {
         var localVariablePath = "/v2/blockchain/blocks/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -319,7 +264,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -330,31 +275,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainBlockTransactions: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transactions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainBlockTransactions(blockId: String, xCapability: XCapability_getBlockchainBlockTransactions? = nil) async throws -> Transactions {
-        return try await getBlockchainBlockTransactionsWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func getBlockchainBlockTransactions(blockId: String) async throws -> Transactions {
+        return try await getBlockchainBlockTransactionsWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
      - GET /v2/blockchain/blocks/{block_id}/transactions
      - Get transactions from block
      - parameter blockId: (path) block ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transactions> 
      */
-    open class func getBlockchainBlockTransactionsWithRequestBuilder(blockId: String, xCapability: XCapability_getBlockchainBlockTransactions? = nil) -> RequestBuilder<Transactions> {
+    open class func getBlockchainBlockTransactionsWithRequestBuilder(blockId: String) -> RequestBuilder<Transactions> {
         var localVariablePath = "/v2/blockchain/blocks/{block_id}/transactions"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -365,7 +301,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -376,29 +312,20 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainConfig: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainConfig(xCapability: XCapability_getBlockchainConfig? = nil) async throws -> BlockchainConfig {
-        return try await getBlockchainConfigWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getBlockchainConfig() async throws -> BlockchainConfig {
+        return try await getBlockchainConfigWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/blockchain/config
      - Get blockchain config
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainConfig> 
      */
-    open class func getBlockchainConfigWithRequestBuilder(xCapability: XCapability_getBlockchainConfig? = nil) -> RequestBuilder<BlockchainConfig> {
+    open class func getBlockchainConfigWithRequestBuilder() -> RequestBuilder<BlockchainConfig> {
         let localVariablePath = "/v2/blockchain/config"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -406,7 +333,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -417,31 +344,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainConfigFromBlock: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainConfigFromBlock(masterchainSeqno: Int, xCapability: XCapability_getBlockchainConfigFromBlock? = nil) async throws -> BlockchainConfig {
-        return try await getBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability).execute().body
+    open class func getBlockchainConfigFromBlock(masterchainSeqno: Int) async throws -> BlockchainConfig {
+        return try await getBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: masterchainSeqno).execute().body
     }
 
     /**
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/config
      - Get blockchain config from a specific block, if present.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainConfig> 
      */
-    open class func getBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainConfigFromBlock? = nil) -> RequestBuilder<BlockchainConfig> {
+    open class func getBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: Int) -> RequestBuilder<BlockchainConfig> {
         var localVariablePath = "/v2/blockchain/masterchain/{masterchain_seqno}/config"
         let masterchainSeqnoPreEscape = "\(APIHelper.mapValueToPathItem(masterchainSeqno))"
         let masterchainSeqnoPostEscape = masterchainSeqnoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -452,7 +370,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -463,31 +381,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainMasterchainBlocks: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlocks
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainMasterchainBlocks(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainBlocks? = nil) async throws -> BlockchainBlocks {
-        return try await getBlockchainMasterchainBlocksWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability).execute().body
+    open class func getBlockchainMasterchainBlocks(masterchainSeqno: Int) async throws -> BlockchainBlocks {
+        return try await getBlockchainMasterchainBlocksWithRequestBuilder(masterchainSeqno: masterchainSeqno).execute().body
     }
 
     /**
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/blocks
      - Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlocks> 
      */
-    open class func getBlockchainMasterchainBlocksWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainBlocks? = nil) -> RequestBuilder<BlockchainBlocks> {
+    open class func getBlockchainMasterchainBlocksWithRequestBuilder(masterchainSeqno: Int) -> RequestBuilder<BlockchainBlocks> {
         var localVariablePath = "/v2/blockchain/masterchain/{masterchain_seqno}/blocks"
         let masterchainSeqnoPreEscape = "\(APIHelper.mapValueToPathItem(masterchainSeqno))"
         let masterchainSeqnoPostEscape = masterchainSeqnoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -498,7 +407,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -509,29 +418,20 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainMasterchainHead: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlock
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainMasterchainHead(xCapability: XCapability_getBlockchainMasterchainHead? = nil) async throws -> BlockchainBlock {
-        return try await getBlockchainMasterchainHeadWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getBlockchainMasterchainHead() async throws -> BlockchainBlock {
+        return try await getBlockchainMasterchainHeadWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/blockchain/masterchain-head
      - Get last known masterchain block
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlock> 
      */
-    open class func getBlockchainMasterchainHeadWithRequestBuilder(xCapability: XCapability_getBlockchainMasterchainHead? = nil) -> RequestBuilder<BlockchainBlock> {
+    open class func getBlockchainMasterchainHeadWithRequestBuilder() -> RequestBuilder<BlockchainBlock> {
         let localVariablePath = "/v2/blockchain/masterchain-head"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -539,7 +439,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -550,31 +450,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainMasterchainShards: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainBlockShards
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainMasterchainShards(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainShards? = nil) async throws -> BlockchainBlockShards {
-        return try await getBlockchainMasterchainShardsWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability).execute().body
+    open class func getBlockchainMasterchainShards(masterchainSeqno: Int) async throws -> BlockchainBlockShards {
+        return try await getBlockchainMasterchainShardsWithRequestBuilder(masterchainSeqno: masterchainSeqno).execute().body
     }
 
     /**
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/shards
      - Get blockchain block shards
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainBlockShards> 
      */
-    open class func getBlockchainMasterchainShardsWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainShards? = nil) -> RequestBuilder<BlockchainBlockShards> {
+    open class func getBlockchainMasterchainShardsWithRequestBuilder(masterchainSeqno: Int) -> RequestBuilder<BlockchainBlockShards> {
         var localVariablePath = "/v2/blockchain/masterchain/{masterchain_seqno}/shards"
         let masterchainSeqnoPreEscape = "\(APIHelper.mapValueToPathItem(masterchainSeqno))"
         let masterchainSeqnoPostEscape = masterchainSeqnoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -585,7 +476,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -596,35 +487,26 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainMasterchainTransactions: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter offset: (query)  (optional, default to 0)
      - parameter limit: (query)  (optional)
      - returns: Transactions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, offset: Int? = nil, limit: Int? = nil) async throws -> Transactions {
-        return try await getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability, offset: offset, limit: limit).execute().body
+    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, offset: Int? = nil, limit: Int? = nil) async throws -> Transactions {
+        return try await getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: masterchainSeqno, offset: offset, limit: limit).execute().body
     }
 
     /**
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/transactions
      - Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter offset: (query)  (optional, default to 0)
      - parameter limit: (query)  (optional)
      - returns: RequestBuilder<Transactions> 
      */
-    open class func getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, offset: Int? = nil, limit: Int? = nil) -> RequestBuilder<Transactions> {
+    open class func getBlockchainMasterchainTransactionsWithRequestBuilder(masterchainSeqno: Int, offset: Int? = nil, limit: Int? = nil) -> RequestBuilder<Transactions> {
         var localVariablePath = "/v2/blockchain/masterchain/{masterchain_seqno}/transactions"
         let masterchainSeqnoPreEscape = "\(APIHelper.mapValueToPathItem(masterchainSeqno))"
         let masterchainSeqnoPostEscape = masterchainSeqnoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -639,7 +521,7 @@ open class BlockchainAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -650,31 +532,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainRawAccount: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainRawAccount
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainRawAccount(accountId: String, xCapability: XCapability_getBlockchainRawAccount? = nil) async throws -> BlockchainRawAccount {
-        return try await getBlockchainRawAccountWithRequestBuilder(accountId: accountId, xCapability: xCapability).execute().body
+    open class func getBlockchainRawAccount(accountId: String) async throws -> BlockchainRawAccount {
+        return try await getBlockchainRawAccountWithRequestBuilder(accountId: accountId).execute().body
     }
 
     /**
      - GET /v2/blockchain/accounts/{account_id}
      - Get low-level information about an account taken directly from the blockchain.
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainRawAccount> 
      */
-    open class func getBlockchainRawAccountWithRequestBuilder(accountId: String, xCapability: XCapability_getBlockchainRawAccount? = nil) -> RequestBuilder<BlockchainRawAccount> {
+    open class func getBlockchainRawAccountWithRequestBuilder(accountId: String) -> RequestBuilder<BlockchainRawAccount> {
         var localVariablePath = "/v2/blockchain/accounts/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -685,7 +558,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -696,31 +569,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainRawAccounts: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: BlockchainRawAccounts
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainRawAccounts(xCapability: XCapability_getBlockchainRawAccounts? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> BlockchainRawAccounts {
-        return try await getBlockchainRawAccountsWithRequestBuilder(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
+    open class func getBlockchainRawAccounts(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) async throws -> BlockchainRawAccounts {
+        return try await getBlockchainRawAccountsWithRequestBuilder(getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest).execute().body
     }
 
     /**
      - POST /v2/blockchain/accounts/_bulk
      - Get low-level information about several accounts taken directly from the blockchain.
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter getBlockchainRawAccountsRequest: (body) a list of account ids (optional)
      - returns: RequestBuilder<BlockchainRawAccounts> 
      */
-    open class func getBlockchainRawAccountsWithRequestBuilder(xCapability: XCapability_getBlockchainRawAccounts? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<BlockchainRawAccounts> {
+    open class func getBlockchainRawAccountsWithRequestBuilder(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil) -> RequestBuilder<BlockchainRawAccounts> {
         let localVariablePath = "/v2/blockchain/accounts/_bulk"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getBlockchainRawAccountsRequest)
@@ -729,7 +593,6 @@ open class BlockchainAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -740,31 +603,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainTransaction: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter transactionId: (path) transaction ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transaction
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainTransaction(transactionId: String, xCapability: XCapability_getBlockchainTransaction? = nil) async throws -> Transaction {
-        return try await getBlockchainTransactionWithRequestBuilder(transactionId: transactionId, xCapability: xCapability).execute().body
+    open class func getBlockchainTransaction(transactionId: String) async throws -> Transaction {
+        return try await getBlockchainTransactionWithRequestBuilder(transactionId: transactionId).execute().body
     }
 
     /**
      - GET /v2/blockchain/transactions/{transaction_id}
      - Get transaction data
      - parameter transactionId: (path) transaction ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transaction> 
      */
-    open class func getBlockchainTransactionWithRequestBuilder(transactionId: String, xCapability: XCapability_getBlockchainTransaction? = nil) -> RequestBuilder<Transaction> {
+    open class func getBlockchainTransactionWithRequestBuilder(transactionId: String) -> RequestBuilder<Transaction> {
         var localVariablePath = "/v2/blockchain/transactions/{transaction_id}"
         let transactionIdPreEscape = "\(APIHelper.mapValueToPathItem(transactionId))"
         let transactionIdPostEscape = transactionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -775,7 +629,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -786,31 +640,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainTransactionByMessageHash: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter msgId: (path) message ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Transaction
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainTransactionByMessageHash(msgId: String, xCapability: XCapability_getBlockchainTransactionByMessageHash? = nil) async throws -> Transaction {
-        return try await getBlockchainTransactionByMessageHashWithRequestBuilder(msgId: msgId, xCapability: xCapability).execute().body
+    open class func getBlockchainTransactionByMessageHash(msgId: String) async throws -> Transaction {
+        return try await getBlockchainTransactionByMessageHashWithRequestBuilder(msgId: msgId).execute().body
     }
 
     /**
      - GET /v2/blockchain/messages/{msg_id}/transaction
      - Get transaction data by message hash
      - parameter msgId: (path) message ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Transaction> 
      */
-    open class func getBlockchainTransactionByMessageHashWithRequestBuilder(msgId: String, xCapability: XCapability_getBlockchainTransactionByMessageHash? = nil) -> RequestBuilder<Transaction> {
+    open class func getBlockchainTransactionByMessageHashWithRequestBuilder(msgId: String) -> RequestBuilder<Transaction> {
         var localVariablePath = "/v2/blockchain/messages/{msg_id}/transaction"
         let msgIdPreEscape = "\(APIHelper.mapValueToPathItem(msgId))"
         let msgIdPostEscape = msgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -821,7 +666,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -832,29 +677,20 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getBlockchainValidators: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Validators
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getBlockchainValidators(xCapability: XCapability_getBlockchainValidators? = nil) async throws -> Validators {
-        return try await getBlockchainValidatorsWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getBlockchainValidators() async throws -> Validators {
+        return try await getBlockchainValidatorsWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/blockchain/validators
      - Get blockchain validators
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Validators> 
      */
-    open class func getBlockchainValidatorsWithRequestBuilder(xCapability: XCapability_getBlockchainValidators? = nil) -> RequestBuilder<Validators> {
+    open class func getBlockchainValidatorsWithRequestBuilder() -> RequestBuilder<Validators> {
         let localVariablePath = "/v2/blockchain/validators"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -862,7 +698,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -873,31 +709,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getLibraryByHash: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter hash: (path) hash in hex (without 0x) format 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: BlockchainLibrary
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getLibraryByHash(hash: String, xCapability: XCapability_getLibraryByHash? = nil) async throws -> BlockchainLibrary {
-        return try await getLibraryByHashWithRequestBuilder(hash: hash, xCapability: xCapability).execute().body
+    open class func getLibraryByHash(hash: String) async throws -> BlockchainLibrary {
+        return try await getLibraryByHashWithRequestBuilder(hash: hash).execute().body
     }
 
     /**
      - GET /v2/blockchain/libraries/{hash}
      - Get library cell
      - parameter hash: (path) hash in hex (without 0x) format 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<BlockchainLibrary> 
      */
-    open class func getLibraryByHashWithRequestBuilder(hash: String, xCapability: XCapability_getLibraryByHash? = nil) -> RequestBuilder<BlockchainLibrary> {
+    open class func getLibraryByHashWithRequestBuilder(hash: String) -> RequestBuilder<BlockchainLibrary> {
         var localVariablePath = "/v2/blockchain/libraries/{hash}"
         let hashPreEscape = "\(APIHelper.mapValueToPathItem(hash))"
         let hashPostEscape = hashPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -908,7 +735,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -919,29 +746,20 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawBlockchainConfig: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RawBlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawBlockchainConfig(xCapability: XCapability_getRawBlockchainConfig? = nil) async throws -> RawBlockchainConfig {
-        return try await getRawBlockchainConfigWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getRawBlockchainConfig() async throws -> RawBlockchainConfig {
+        return try await getRawBlockchainConfigWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/blockchain/config/raw
      - Get raw blockchain config
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<RawBlockchainConfig> 
      */
-    open class func getRawBlockchainConfigWithRequestBuilder(xCapability: XCapability_getRawBlockchainConfig? = nil) -> RequestBuilder<RawBlockchainConfig> {
+    open class func getRawBlockchainConfigWithRequestBuilder() -> RequestBuilder<RawBlockchainConfig> {
         let localVariablePath = "/v2/blockchain/config/raw"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -949,7 +767,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -960,31 +778,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawBlockchainConfigFromBlock: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RawBlockchainConfig
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawBlockchainConfigFromBlock(masterchainSeqno: Int, xCapability: XCapability_getRawBlockchainConfigFromBlock? = nil) async throws -> RawBlockchainConfig {
-        return try await getRawBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: masterchainSeqno, xCapability: xCapability).execute().body
+    open class func getRawBlockchainConfigFromBlock(masterchainSeqno: Int) async throws -> RawBlockchainConfig {
+        return try await getRawBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: masterchainSeqno).execute().body
     }
 
     /**
      - GET /v2/blockchain/masterchain/{masterchain_seqno}/config/raw
      - Get raw blockchain config from a specific block, if present.
      - parameter masterchainSeqno: (path) masterchain block seqno 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<RawBlockchainConfig> 
      */
-    open class func getRawBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: Int, xCapability: XCapability_getRawBlockchainConfigFromBlock? = nil) -> RequestBuilder<RawBlockchainConfig> {
+    open class func getRawBlockchainConfigFromBlockWithRequestBuilder(masterchainSeqno: Int) -> RequestBuilder<RawBlockchainConfig> {
         var localVariablePath = "/v2/blockchain/masterchain/{masterchain_seqno}/config/raw"
         let masterchainSeqnoPreEscape = "\(APIHelper.mapValueToPathItem(masterchainSeqno))"
         let masterchainSeqnoPostEscape = masterchainSeqnoPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -995,7 +804,7 @@ open class BlockchainAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1006,22 +815,14 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getReducedBlockchainBlocks: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter from: (query)  
      - parameter to: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: ReducedBlocks
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getReducedBlockchainBlocks(from: Int64, to: Int64, xCapability: XCapability_getReducedBlockchainBlocks? = nil) async throws -> ReducedBlocks {
-        return try await getReducedBlockchainBlocksWithRequestBuilder(from: from, to: to, xCapability: xCapability).execute().body
+    open class func getReducedBlockchainBlocks(from: Int64, to: Int64) async throws -> ReducedBlocks {
+        return try await getReducedBlockchainBlocksWithRequestBuilder(from: from, to: to).execute().body
     }
 
     /**
@@ -1029,10 +830,9 @@ open class BlockchainAPI {
      - Get reduced blockchain blocks data
      - parameter from: (query)  
      - parameter to: (query)  
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<ReducedBlocks> 
      */
-    open class func getReducedBlockchainBlocksWithRequestBuilder(from: Int64, to: Int64, xCapability: XCapability_getReducedBlockchainBlocks? = nil) -> RequestBuilder<ReducedBlocks> {
+    open class func getReducedBlockchainBlocksWithRequestBuilder(from: Int64, to: Int64) -> RequestBuilder<ReducedBlocks> {
         let localVariablePath = "/v2/blockchain/reduced/blocks"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -1044,7 +844,7 @@ open class BlockchainAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -1055,31 +855,22 @@ open class BlockchainAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_sendBlockchainMessage: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter sendBlockchainMessageRequest: (body) both a single boc and a batch of boc serialized in base64/hex are accepted 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func sendBlockchainMessage(sendBlockchainMessageRequest: SendBlockchainMessageRequest, xCapability: XCapability_sendBlockchainMessage? = nil) async throws {
-        return try await sendBlockchainMessageWithRequestBuilder(sendBlockchainMessageRequest: sendBlockchainMessageRequest, xCapability: xCapability).execute().body
+    open class func sendBlockchainMessage(sendBlockchainMessageRequest: SendBlockchainMessageRequest) async throws {
+        return try await sendBlockchainMessageWithRequestBuilder(sendBlockchainMessageRequest: sendBlockchainMessageRequest).execute().body
     }
 
     /**
      - POST /v2/blockchain/message
      - Send message to blockchain
      - parameter sendBlockchainMessageRequest: (body) both a single boc and a batch of boc serialized in base64/hex are accepted 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<Void> 
      */
-    open class func sendBlockchainMessageWithRequestBuilder(sendBlockchainMessageRequest: SendBlockchainMessageRequest, xCapability: XCapability_sendBlockchainMessage? = nil) -> RequestBuilder<Void> {
+    open class func sendBlockchainMessageWithRequestBuilder(sendBlockchainMessageRequest: SendBlockchainMessageRequest) -> RequestBuilder<Void> {
         let localVariablePath = "/v2/blockchain/message"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: sendBlockchainMessageRequest)
@@ -1088,7 +879,6 @@ open class BlockchainAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

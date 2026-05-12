@@ -31,7 +31,7 @@ Method | HTTP request | Description
 
 # **blockchainAccountInspect**
 ```swift
-    open class func blockchainAccountInspect(accountId: String, xCapability: XCapability_blockchainAccountInspect? = nil, completion: @escaping (_ data: BlockchainAccountInspect?, _ error: Error?) -> Void)
+    open class func blockchainAccountInspect(accountId: String, completion: @escaping (_ data: BlockchainAccountInspect?, _ error: Error?) -> Void)
 ```
 
 
@@ -44,9 +44,8 @@ Blockchain account inspect
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.blockchainAccountInspect(accountId: accountId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.blockchainAccountInspect(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -63,7 +62,6 @@ BlockchainAPI.blockchainAccountInspect(accountId: accountId, xCapability: xCapab
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -82,7 +80,7 @@ No authorization required
 
 # **downloadBlockchainBlockBoc**
 ```swift
-    open class func downloadBlockchainBlockBoc(blockId: String, xCapability: XCapability_downloadBlockchainBlockBoc? = nil, completion: @escaping (_ data: URL?, _ error: Error?) -> Void)
+    open class func downloadBlockchainBlockBoc(blockId: String, completion: @escaping (_ data: URL?, _ error: Error?) -> Void)
 ```
 
 
@@ -95,9 +93,8 @@ Download blockchain block BOC
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.downloadBlockchainBlockBoc(blockId: blockId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.downloadBlockchainBlockBoc(blockId: blockId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -114,7 +111,6 @@ BlockchainAPI.downloadBlockchainBlockBoc(blockId: blockId, xCapability: xCapabil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -133,7 +129,7 @@ No authorization required
 
 # **execGetMethodForBlockchainAccount**
 ```swift
-    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, xCapability: XCapability_execGetMethodForBlockchainAccount? = nil, args: [String]? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
+    open class func execGetMethodForBlockchainAccount(accountId: String, methodName: String, args: [String]? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
 ```
 
 
@@ -147,10 +143,9 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let methodName = "methodName_example" // String | contract get method name
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let args = ["inner_example"] // [String] |  (optional)
 
-BlockchainAPI.execGetMethodForBlockchainAccount(accountId: accountId, methodName: methodName, xCapability: xCapability, args: args) { (response, error) in
+BlockchainAPI.execGetMethodForBlockchainAccount(accountId: accountId, methodName: methodName, args: args) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -168,7 +163,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **methodName** | **String** | contract get method name | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **args** | [**[String]**](String.md) |  | [optional] 
 
 ### Return type
@@ -188,7 +182,7 @@ No authorization required
 
 # **execGetMethodWithBodyForBlockchainAccount**
 ```swift
-    open class func execGetMethodWithBodyForBlockchainAccount(accountId: String, methodName: String, xCapability: XCapability_execGetMethodWithBodyForBlockchainAccount? = nil, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
+    open class func execGetMethodWithBodyForBlockchainAccount(accountId: String, methodName: String, execGetMethodWithBodyForBlockchainAccountRequest: ExecGetMethodWithBodyForBlockchainAccountRequest? = nil, completion: @escaping (_ data: MethodExecutionResult?, _ error: Error?) -> Void)
 ```
 
 
@@ -202,10 +196,9 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let methodName = "methodName_example" // String | contract get method name
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let execGetMethodWithBodyForBlockchainAccountRequest = execGetMethodWithBodyForBlockchainAccount_request(args: [ExecGetMethodArg(type: ExecGetMethodArgType(), value: "value_example")]) // ExecGetMethodWithBodyForBlockchainAccountRequest | Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  (optional)
 
-BlockchainAPI.execGetMethodWithBodyForBlockchainAccount(accountId: accountId, methodName: methodName, xCapability: xCapability, execGetMethodWithBodyForBlockchainAccountRequest: execGetMethodWithBodyForBlockchainAccountRequest) { (response, error) in
+BlockchainAPI.execGetMethodWithBodyForBlockchainAccount(accountId: accountId, methodName: methodName, execGetMethodWithBodyForBlockchainAccountRequest: execGetMethodWithBodyForBlockchainAccountRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -223,7 +216,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **methodName** | **String** | contract get method name | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **execGetMethodWithBodyForBlockchainAccountRequest** | [**ExecGetMethodWithBodyForBlockchainAccountRequest**](ExecGetMethodWithBodyForBlockchainAccountRequest.md) | Request body for executing a GET method on a blockchain account via POST. This format allows passing arguments in the request body instead of query parameters, which is especially useful for large or complex input data.  | [optional] 
 
 ### Return type
@@ -243,7 +235,7 @@ No authorization required
 
 # **getBlockchainAccountTransactions**
 ```swift
-    open class func getBlockchainAccountTransactions(accountId: String, xCapability: XCapability_getBlockchainAccountTransactions? = nil, afterLt: Int64? = nil, beforeLt: Int64? = nil, limit: Int? = nil, sortOrder: SortOrder_getBlockchainAccountTransactions? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
+    open class func getBlockchainAccountTransactions(accountId: String, afterLt: Int64? = nil, beforeLt: Int64? = nil, limit: Int? = nil, sortOrder: SortOrder_getBlockchainAccountTransactions? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
 ```
 
 
@@ -256,13 +248,12 @@ Get account transactions
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let afterLt = 987 // Int64 | omit this parameter to get last transactions (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last transactions (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 let sortOrder = "sortOrder_example" // String |  (optional) (default to .desc)
 
-BlockchainAPI.getBlockchainAccountTransactions(accountId: accountId, xCapability: xCapability, afterLt: afterLt, beforeLt: beforeLt, limit: limit, sortOrder: sortOrder) { (response, error) in
+BlockchainAPI.getBlockchainAccountTransactions(accountId: accountId, afterLt: afterLt, beforeLt: beforeLt, limit: limit, sortOrder: sortOrder) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -279,7 +270,6 @@ BlockchainAPI.getBlockchainAccountTransactions(accountId: accountId, xCapability
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **afterLt** | **Int64** | omit this parameter to get last transactions | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last transactions | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
@@ -302,7 +292,7 @@ No authorization required
 
 # **getBlockchainBlock**
 ```swift
-    open class func getBlockchainBlock(blockId: String, xCapability: XCapability_getBlockchainBlock? = nil, completion: @escaping (_ data: BlockchainBlock?, _ error: Error?) -> Void)
+    open class func getBlockchainBlock(blockId: String, completion: @escaping (_ data: BlockchainBlock?, _ error: Error?) -> Void)
 ```
 
 
@@ -315,9 +305,8 @@ Get blockchain block data
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainBlock(blockId: blockId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainBlock(blockId: blockId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -334,7 +323,6 @@ BlockchainAPI.getBlockchainBlock(blockId: blockId, xCapability: xCapability) { (
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -353,7 +341,7 @@ No authorization required
 
 # **getBlockchainBlockTransactions**
 ```swift
-    open class func getBlockchainBlockTransactions(blockId: String, xCapability: XCapability_getBlockchainBlockTransactions? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
+    open class func getBlockchainBlockTransactions(blockId: String, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
 ```
 
 
@@ -366,9 +354,8 @@ Get transactions from block
 import TonAPI
 
 let blockId = "blockId_example" // String | block ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainBlockTransactions(blockId: blockId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainBlockTransactions(blockId: blockId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -385,7 +372,6 @@ BlockchainAPI.getBlockchainBlockTransactions(blockId: blockId, xCapability: xCap
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockId** | **String** | block ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -404,7 +390,7 @@ No authorization required
 
 # **getBlockchainConfig**
 ```swift
-    open class func getBlockchainConfig(xCapability: XCapability_getBlockchainConfig? = nil, completion: @escaping (_ data: BlockchainConfig?, _ error: Error?) -> Void)
+    open class func getBlockchainConfig(completion: @escaping (_ data: BlockchainConfig?, _ error: Error?) -> Void)
 ```
 
 
@@ -416,9 +402,8 @@ Get blockchain config
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainConfig(xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainConfig() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -431,10 +416,7 @@ BlockchainAPI.getBlockchainConfig(xCapability: xCapability) { (response, error) 
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -453,7 +435,7 @@ No authorization required
 
 # **getBlockchainConfigFromBlock**
 ```swift
-    open class func getBlockchainConfigFromBlock(masterchainSeqno: Int, xCapability: XCapability_getBlockchainConfigFromBlock? = nil, completion: @escaping (_ data: BlockchainConfig?, _ error: Error?) -> Void)
+    open class func getBlockchainConfigFromBlock(masterchainSeqno: Int, completion: @escaping (_ data: BlockchainConfig?, _ error: Error?) -> Void)
 ```
 
 
@@ -466,9 +448,8 @@ Get blockchain config from a specific block, if present.
 import TonAPI
 
 let masterchainSeqno = 987 // Int | masterchain block seqno
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainConfigFromBlock(masterchainSeqno: masterchainSeqno, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainConfigFromBlock(masterchainSeqno: masterchainSeqno) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -485,7 +466,6 @@ BlockchainAPI.getBlockchainConfigFromBlock(masterchainSeqno: masterchainSeqno, x
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterchainSeqno** | **Int** | masterchain block seqno | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -504,7 +484,7 @@ No authorization required
 
 # **getBlockchainMasterchainBlocks**
 ```swift
-    open class func getBlockchainMasterchainBlocks(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainBlocks? = nil, completion: @escaping (_ data: BlockchainBlocks?, _ error: Error?) -> Void)
+    open class func getBlockchainMasterchainBlocks(masterchainSeqno: Int, completion: @escaping (_ data: BlockchainBlocks?, _ error: Error?) -> Void)
 ```
 
 
@@ -517,9 +497,8 @@ Get all blocks in all shards and workchains between target and previous masterch
 import TonAPI
 
 let masterchainSeqno = 987 // Int | masterchain block seqno
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainMasterchainBlocks(masterchainSeqno: masterchainSeqno, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainMasterchainBlocks(masterchainSeqno: masterchainSeqno) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -536,7 +515,6 @@ BlockchainAPI.getBlockchainMasterchainBlocks(masterchainSeqno: masterchainSeqno,
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterchainSeqno** | **Int** | masterchain block seqno | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -555,7 +533,7 @@ No authorization required
 
 # **getBlockchainMasterchainHead**
 ```swift
-    open class func getBlockchainMasterchainHead(xCapability: XCapability_getBlockchainMasterchainHead? = nil, completion: @escaping (_ data: BlockchainBlock?, _ error: Error?) -> Void)
+    open class func getBlockchainMasterchainHead(completion: @escaping (_ data: BlockchainBlock?, _ error: Error?) -> Void)
 ```
 
 
@@ -567,9 +545,8 @@ Get last known masterchain block
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainMasterchainHead(xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainMasterchainHead() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -582,10 +559,7 @@ BlockchainAPI.getBlockchainMasterchainHead(xCapability: xCapability) { (response
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -604,7 +578,7 @@ No authorization required
 
 # **getBlockchainMasterchainShards**
 ```swift
-    open class func getBlockchainMasterchainShards(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainShards? = nil, completion: @escaping (_ data: BlockchainBlockShards?, _ error: Error?) -> Void)
+    open class func getBlockchainMasterchainShards(masterchainSeqno: Int, completion: @escaping (_ data: BlockchainBlockShards?, _ error: Error?) -> Void)
 ```
 
 
@@ -617,9 +591,8 @@ Get blockchain block shards
 import TonAPI
 
 let masterchainSeqno = 987 // Int | masterchain block seqno
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainMasterchainShards(masterchainSeqno: masterchainSeqno, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainMasterchainShards(masterchainSeqno: masterchainSeqno) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -636,7 +609,6 @@ BlockchainAPI.getBlockchainMasterchainShards(masterchainSeqno: masterchainSeqno,
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterchainSeqno** | **Int** | masterchain block seqno | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -655,7 +627,7 @@ No authorization required
 
 # **getBlockchainMasterchainTransactions**
 ```swift
-    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, xCapability: XCapability_getBlockchainMasterchainTransactions? = nil, offset: Int? = nil, limit: Int? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
+    open class func getBlockchainMasterchainTransactions(masterchainSeqno: Int, offset: Int? = nil, limit: Int? = nil, completion: @escaping (_ data: Transactions?, _ error: Error?) -> Void)
 ```
 
 
@@ -668,11 +640,10 @@ Get all transactions in all shards and workchains between target and previous ma
 import TonAPI
 
 let masterchainSeqno = 987 // Int | masterchain block seqno
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let offset = 987 // Int |  (optional) (default to 0)
 let limit = 987 // Int |  (optional)
 
-BlockchainAPI.getBlockchainMasterchainTransactions(masterchainSeqno: masterchainSeqno, xCapability: xCapability, offset: offset, limit: limit) { (response, error) in
+BlockchainAPI.getBlockchainMasterchainTransactions(masterchainSeqno: masterchainSeqno, offset: offset, limit: limit) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -689,7 +660,6 @@ BlockchainAPI.getBlockchainMasterchainTransactions(masterchainSeqno: masterchain
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterchainSeqno** | **Int** | masterchain block seqno | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **offset** | **Int** |  | [optional] [default to 0]
  **limit** | **Int** |  | [optional] 
 
@@ -710,7 +680,7 @@ No authorization required
 
 # **getBlockchainRawAccount**
 ```swift
-    open class func getBlockchainRawAccount(accountId: String, xCapability: XCapability_getBlockchainRawAccount? = nil, completion: @escaping (_ data: BlockchainRawAccount?, _ error: Error?) -> Void)
+    open class func getBlockchainRawAccount(accountId: String, completion: @escaping (_ data: BlockchainRawAccount?, _ error: Error?) -> Void)
 ```
 
 
@@ -723,9 +693,8 @@ Get low-level information about an account taken directly from the blockchain.
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainRawAccount(accountId: accountId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainRawAccount(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -742,7 +711,6 @@ BlockchainAPI.getBlockchainRawAccount(accountId: accountId, xCapability: xCapabi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -761,7 +729,7 @@ No authorization required
 
 # **getBlockchainRawAccounts**
 ```swift
-    open class func getBlockchainRawAccounts(xCapability: XCapability_getBlockchainRawAccounts? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: BlockchainRawAccounts?, _ error: Error?) -> Void)
+    open class func getBlockchainRawAccounts(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: BlockchainRawAccounts?, _ error: Error?) -> Void)
 ```
 
 
@@ -773,10 +741,9 @@ Get low-level information about several accounts taken directly from the blockch
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-BlockchainAPI.getBlockchainRawAccounts(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
+BlockchainAPI.getBlockchainRawAccounts(getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -792,7 +759,6 @@ BlockchainAPI.getBlockchainRawAccounts(xCapability: xCapability, getBlockchainRa
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
@@ -812,7 +778,7 @@ No authorization required
 
 # **getBlockchainTransaction**
 ```swift
-    open class func getBlockchainTransaction(transactionId: String, xCapability: XCapability_getBlockchainTransaction? = nil, completion: @escaping (_ data: Transaction?, _ error: Error?) -> Void)
+    open class func getBlockchainTransaction(transactionId: String, completion: @escaping (_ data: Transaction?, _ error: Error?) -> Void)
 ```
 
 
@@ -825,9 +791,8 @@ Get transaction data
 import TonAPI
 
 let transactionId = "transactionId_example" // String | transaction ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainTransaction(transactionId: transactionId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainTransaction(transactionId: transactionId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -844,7 +809,6 @@ BlockchainAPI.getBlockchainTransaction(transactionId: transactionId, xCapability
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **transactionId** | **String** | transaction ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -863,7 +827,7 @@ No authorization required
 
 # **getBlockchainTransactionByMessageHash**
 ```swift
-    open class func getBlockchainTransactionByMessageHash(msgId: String, xCapability: XCapability_getBlockchainTransactionByMessageHash? = nil, completion: @escaping (_ data: Transaction?, _ error: Error?) -> Void)
+    open class func getBlockchainTransactionByMessageHash(msgId: String, completion: @escaping (_ data: Transaction?, _ error: Error?) -> Void)
 ```
 
 
@@ -876,9 +840,8 @@ Get transaction data by message hash
 import TonAPI
 
 let msgId = "msgId_example" // String | message ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainTransactionByMessageHash(msgId: msgId, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainTransactionByMessageHash(msgId: msgId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -895,7 +858,6 @@ BlockchainAPI.getBlockchainTransactionByMessageHash(msgId: msgId, xCapability: x
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **msgId** | **String** | message ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -914,7 +876,7 @@ No authorization required
 
 # **getBlockchainValidators**
 ```swift
-    open class func getBlockchainValidators(xCapability: XCapability_getBlockchainValidators? = nil, completion: @escaping (_ data: Validators?, _ error: Error?) -> Void)
+    open class func getBlockchainValidators(completion: @escaping (_ data: Validators?, _ error: Error?) -> Void)
 ```
 
 
@@ -926,9 +888,8 @@ Get blockchain validators
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getBlockchainValidators(xCapability: xCapability) { (response, error) in
+BlockchainAPI.getBlockchainValidators() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -941,10 +902,7 @@ BlockchainAPI.getBlockchainValidators(xCapability: xCapability) { (response, err
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -963,7 +921,7 @@ No authorization required
 
 # **getLibraryByHash**
 ```swift
-    open class func getLibraryByHash(hash: String, xCapability: XCapability_getLibraryByHash? = nil, completion: @escaping (_ data: BlockchainLibrary?, _ error: Error?) -> Void)
+    open class func getLibraryByHash(hash: String, completion: @escaping (_ data: BlockchainLibrary?, _ error: Error?) -> Void)
 ```
 
 
@@ -976,9 +934,8 @@ Get library cell
 import TonAPI
 
 let hash = "hash_example" // String | hash in hex (without 0x) format
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getLibraryByHash(hash: hash, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getLibraryByHash(hash: hash) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -995,7 +952,6 @@ BlockchainAPI.getLibraryByHash(hash: hash, xCapability: xCapability) { (response
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **hash** | **String** | hash in hex (without 0x) format | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -1014,7 +970,7 @@ No authorization required
 
 # **getRawBlockchainConfig**
 ```swift
-    open class func getRawBlockchainConfig(xCapability: XCapability_getRawBlockchainConfig? = nil, completion: @escaping (_ data: RawBlockchainConfig?, _ error: Error?) -> Void)
+    open class func getRawBlockchainConfig(completion: @escaping (_ data: RawBlockchainConfig?, _ error: Error?) -> Void)
 ```
 
 
@@ -1026,9 +982,8 @@ Get raw blockchain config
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getRawBlockchainConfig(xCapability: xCapability) { (response, error) in
+BlockchainAPI.getRawBlockchainConfig() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1041,10 +996,7 @@ BlockchainAPI.getRawBlockchainConfig(xCapability: xCapability) { (response, erro
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -1063,7 +1015,7 @@ No authorization required
 
 # **getRawBlockchainConfigFromBlock**
 ```swift
-    open class func getRawBlockchainConfigFromBlock(masterchainSeqno: Int, xCapability: XCapability_getRawBlockchainConfigFromBlock? = nil, completion: @escaping (_ data: RawBlockchainConfig?, _ error: Error?) -> Void)
+    open class func getRawBlockchainConfigFromBlock(masterchainSeqno: Int, completion: @escaping (_ data: RawBlockchainConfig?, _ error: Error?) -> Void)
 ```
 
 
@@ -1076,9 +1028,8 @@ Get raw blockchain config from a specific block, if present.
 import TonAPI
 
 let masterchainSeqno = 987 // Int | masterchain block seqno
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getRawBlockchainConfigFromBlock(masterchainSeqno: masterchainSeqno, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getRawBlockchainConfigFromBlock(masterchainSeqno: masterchainSeqno) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1095,7 +1046,6 @@ BlockchainAPI.getRawBlockchainConfigFromBlock(masterchainSeqno: masterchainSeqno
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **masterchainSeqno** | **Int** | masterchain block seqno | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -1114,7 +1064,7 @@ No authorization required
 
 # **getReducedBlockchainBlocks**
 ```swift
-    open class func getReducedBlockchainBlocks(from: Int64, to: Int64, xCapability: XCapability_getReducedBlockchainBlocks? = nil, completion: @escaping (_ data: ReducedBlocks?, _ error: Error?) -> Void)
+    open class func getReducedBlockchainBlocks(from: Int64, to: Int64, completion: @escaping (_ data: ReducedBlocks?, _ error: Error?) -> Void)
 ```
 
 
@@ -1128,9 +1078,8 @@ import TonAPI
 
 let from = 987 // Int64 | 
 let to = 987 // Int64 | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.getReducedBlockchainBlocks(from: from, to: to, xCapability: xCapability) { (response, error) in
+BlockchainAPI.getReducedBlockchainBlocks(from: from, to: to) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1148,7 +1097,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **from** | **Int64** |  | 
  **to** | **Int64** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -1167,7 +1115,7 @@ No authorization required
 
 # **sendBlockchainMessage**
 ```swift
-    open class func sendBlockchainMessage(sendBlockchainMessageRequest: SendBlockchainMessageRequest, xCapability: XCapability_sendBlockchainMessage? = nil, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func sendBlockchainMessage(sendBlockchainMessageRequest: SendBlockchainMessageRequest, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 
@@ -1180,9 +1128,8 @@ Send message to blockchain
 import TonAPI
 
 let sendBlockchainMessageRequest = sendBlockchainMessage_request(boc: "boc_example", batch: ["batch_example"], meta: "TODO") // SendBlockchainMessageRequest | both a single boc and a batch of boc serialized in base64/hex are accepted
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-BlockchainAPI.sendBlockchainMessage(sendBlockchainMessageRequest: sendBlockchainMessageRequest, xCapability: xCapability) { (response, error) in
+BlockchainAPI.sendBlockchainMessage(sendBlockchainMessageRequest: sendBlockchainMessageRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1199,7 +1146,6 @@ BlockchainAPI.sendBlockchainMessage(sendBlockchainMessageRequest: sendBlockchain
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sendBlockchainMessageRequest** | [**SendBlockchainMessageRequest**](SendBlockchainMessageRequest.md) | both a single boc and a batch of boc serialized in base64/hex are accepted | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

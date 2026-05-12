@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 # **getAccountNftHistory**
 ```swift
-    open class func getAccountNftHistory(accountId: String, limit: Int, xCapability: XCapability_getAccountNftHistory? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, completion: @escaping (_ data: NftOperations?, _ error: Error?) -> Void)
+    open class func getAccountNftHistory(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, completion: @escaping (_ data: NftOperations?, _ error: Error?) -> Void)
 ```
 
 
@@ -30,11 +30,10 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 
-NFTAPI.getAccountNftHistory(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, beforeLt: beforeLt) { (response, error) in
+NFTAPI.getAccountNftHistory(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -52,7 +51,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
 
@@ -73,7 +71,7 @@ No authorization required
 
 # **getItemsFromCollection**
 ```swift
-    open class func getItemsFromCollection(accountId: String, xCapability: XCapability_getItemsFromCollection? = nil, limit: Int? = nil, offset: Int? = nil, completion: @escaping (_ data: NftItems?, _ error: Error?) -> Void)
+    open class func getItemsFromCollection(accountId: String, limit: Int? = nil, offset: Int? = nil, completion: @escaping (_ data: NftItems?, _ error: Error?) -> Void)
 ```
 
 
@@ -86,11 +84,10 @@ Get NFT items from collection by collection address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let limit = 987 // Int |  (optional) (default to 1000)
 let offset = 987 // Int |  (optional) (default to 0)
 
-NFTAPI.getItemsFromCollection(accountId: accountId, xCapability: xCapability, limit: limit, offset: offset) { (response, error) in
+NFTAPI.getItemsFromCollection(accountId: accountId, limit: limit, offset: offset) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -107,7 +104,6 @@ NFTAPI.getItemsFromCollection(accountId: accountId, xCapability: xCapability, li
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **limit** | **Int** |  | [optional] [default to 1000]
  **offset** | **Int** |  | [optional] [default to 0]
 
@@ -128,7 +124,7 @@ No authorization required
 
 # **getNftCollection**
 ```swift
-    open class func getNftCollection(accountId: String, xCapability: XCapability_getNftCollection? = nil, completion: @escaping (_ data: NftCollection?, _ error: Error?) -> Void)
+    open class func getNftCollection(accountId: String, completion: @escaping (_ data: NftCollection?, _ error: Error?) -> Void)
 ```
 
 
@@ -141,9 +137,8 @@ Get NFT collection by collection address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-NFTAPI.getNftCollection(accountId: accountId, xCapability: xCapability) { (response, error) in
+NFTAPI.getNftCollection(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -160,7 +155,6 @@ NFTAPI.getNftCollection(accountId: accountId, xCapability: xCapability) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -179,7 +173,7 @@ No authorization required
 
 # **getNftCollectionItemsByAddresses**
 ```swift
-    open class func getNftCollectionItemsByAddresses(xCapability: XCapability_getNftCollectionItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
+    open class func getNftCollectionItemsByAddresses(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
 ```
 
 
@@ -191,10 +185,9 @@ Get NFT collection items by their addresses
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
+NFTAPI.getNftCollectionItemsByAddresses(getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -210,7 +203,6 @@ NFTAPI.getNftCollectionItemsByAddresses(xCapability: xCapability, getBlockchainR
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type
@@ -230,7 +222,7 @@ No authorization required
 
 # **getNftCollections**
 ```swift
-    open class func getNftCollections(xCapability: XCapability_getNftCollections? = nil, limit: Int? = nil, offset: Int? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
+    open class func getNftCollections(limit: Int? = nil, offset: Int? = nil, completion: @escaping (_ data: NftCollections?, _ error: Error?) -> Void)
 ```
 
 
@@ -242,11 +234,10 @@ Get NFT collections
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 let offset = 987 // Int |  (optional) (default to 0)
 
-NFTAPI.getNftCollections(xCapability: xCapability, limit: limit, offset: offset) { (response, error) in
+NFTAPI.getNftCollections(limit: limit, offset: offset) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -262,7 +253,6 @@ NFTAPI.getNftCollections(xCapability: xCapability, limit: limit, offset: offset)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
  **offset** | **Int** |  | [optional] [default to 0]
 
@@ -283,7 +273,7 @@ No authorization required
 
 # **getNftHistoryByID**
 ```swift
-    open class func getNftHistoryByID(accountId: String, limit: Int, xCapability: XCapability_getNftHistoryByID? = nil, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
+    open class func getNftHistoryByID(accountId: String, limit: Int, acceptLanguage: String? = nil, beforeLt: Int64? = nil, startDate: Int64? = nil, endDate: Int64? = nil, completion: @escaping (_ data: AccountEvents?, _ error: Error?) -> Void)
 ```
 
 
@@ -297,13 +287,12 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let limit = 987 // Int | 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let acceptLanguage = "acceptLanguage_example" // String |  (optional) (default to "en")
 let beforeLt = 987 // Int64 | omit this parameter to get last events (optional)
 let startDate = 987 // Int64 |  (optional)
 let endDate = 987 // Int64 |  (optional)
 
-NFTAPI.getNftHistoryByID(accountId: accountId, limit: limit, xCapability: xCapability, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
+NFTAPI.getNftHistoryByID(accountId: accountId, limit: limit, acceptLanguage: acceptLanguage, beforeLt: beforeLt, startDate: startDate, endDate: endDate) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -321,7 +310,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **limit** | **Int** |  | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **acceptLanguage** | **String** |  | [optional] [default to &quot;en&quot;]
  **beforeLt** | **Int64** | omit this parameter to get last events | [optional] 
  **startDate** | **Int64** |  | [optional] 
@@ -344,7 +332,7 @@ No authorization required
 
 # **getNftItemByAddress**
 ```swift
-    open class func getNftItemByAddress(accountId: String, xCapability: XCapability_getNftItemByAddress? = nil, completion: @escaping (_ data: NftItem?, _ error: Error?) -> Void)
+    open class func getNftItemByAddress(accountId: String, completion: @escaping (_ data: NftItem?, _ error: Error?) -> Void)
 ```
 
 
@@ -357,9 +345,8 @@ Get NFT item by its address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-NFTAPI.getNftItemByAddress(accountId: accountId, xCapability: xCapability) { (response, error) in
+NFTAPI.getNftItemByAddress(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -376,7 +363,6 @@ NFTAPI.getNftItemByAddress(accountId: accountId, xCapability: xCapability) { (re
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -395,7 +381,7 @@ No authorization required
 
 # **getNftItemsByAddresses**
 ```swift
-    open class func getNftItemsByAddresses(xCapability: XCapability_getNftItemsByAddresses? = nil, getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: NftItems?, _ error: Error?) -> Void)
+    open class func getNftItemsByAddresses(getBlockchainRawAccountsRequest: GetBlockchainRawAccountsRequest? = nil, completion: @escaping (_ data: NftItems?, _ error: Error?) -> Void)
 ```
 
 
@@ -407,10 +393,9 @@ Get NFT items by their addresses
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let getBlockchainRawAccountsRequest = getBlockchainRawAccounts_request(accountIds: ["accountIds_example"]) // GetBlockchainRawAccountsRequest | a list of account ids (optional)
 
-NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
+NFTAPI.getNftItemsByAddresses(getBlockchainRawAccountsRequest: getBlockchainRawAccountsRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -426,7 +411,6 @@ NFTAPI.getNftItemsByAddresses(xCapability: xCapability, getBlockchainRawAccounts
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **getBlockchainRawAccountsRequest** | [**GetBlockchainRawAccountsRequest**](GetBlockchainRawAccountsRequest.md) | a list of account ids | [optional] 
 
 ### Return type

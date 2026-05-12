@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 # **getMultisigAccount**
 ```swift
-    open class func getMultisigAccount(accountId: String, xCapability: XCapability_getMultisigAccount? = nil, completion: @escaping (_ data: Multisig?, _ error: Error?) -> Void)
+    open class func getMultisigAccount(accountId: String, completion: @escaping (_ data: Multisig?, _ error: Error?) -> Void)
 ```
 
 
@@ -23,9 +23,8 @@ Get multisig account info
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-MultisigAPI.getMultisigAccount(accountId: accountId, xCapability: xCapability) { (response, error) in
+MultisigAPI.getMultisigAccount(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -42,7 +41,6 @@ MultisigAPI.getMultisigAccount(accountId: accountId, xCapability: xCapability) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -61,7 +59,7 @@ No authorization required
 
 # **getMultisigOrder**
 ```swift
-    open class func getMultisigOrder(accountId: String, xCapability: XCapability_getMultisigOrder? = nil, completion: @escaping (_ data: MultisigOrder?, _ error: Error?) -> Void)
+    open class func getMultisigOrder(accountId: String, completion: @escaping (_ data: MultisigOrder?, _ error: Error?) -> Void)
 ```
 
 
@@ -74,9 +72,8 @@ Get multisig order
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-MultisigAPI.getMultisigOrder(accountId: accountId, xCapability: xCapability) { (response, error) in
+MultisigAPI.getMultisigOrder(accountId: accountId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -93,7 +90,6 @@ MultisigAPI.getMultisigOrder(accountId: accountId, xCapability: xCapability) { (
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

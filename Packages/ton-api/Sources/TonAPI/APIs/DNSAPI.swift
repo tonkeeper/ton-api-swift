@@ -13,33 +13,24 @@ import AnyCodable
 open class DNSAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_dnsResolve: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter filter: (query)  (optional, default to false)
      - returns: DnsRecord
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func dnsResolve(domainName: String, xCapability: XCapability_dnsResolve? = nil, filter: Bool? = nil) async throws -> DnsRecord {
-        return try await dnsResolveWithRequestBuilder(domainName: domainName, xCapability: xCapability, filter: filter).execute().body
+    open class func dnsResolve(domainName: String, filter: Bool? = nil) async throws -> DnsRecord {
+        return try await dnsResolveWithRequestBuilder(domainName: domainName, filter: filter).execute().body
     }
 
     /**
      - GET /v2/dns/{domain_name}/resolve
      - DNS resolve for domain name
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter filter: (query)  (optional, default to false)
      - returns: RequestBuilder<DnsRecord> 
      */
-    open class func dnsResolveWithRequestBuilder(domainName: String, xCapability: XCapability_dnsResolve? = nil, filter: Bool? = nil) -> RequestBuilder<DnsRecord> {
+    open class func dnsResolveWithRequestBuilder(domainName: String, filter: Bool? = nil) -> RequestBuilder<DnsRecord> {
         var localVariablePath = "/v2/dns/{domain_name}/resolve"
         let domainNamePreEscape = "\(APIHelper.mapValueToPathItem(domainName))"
         let domainNamePostEscape = domainNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -53,7 +44,7 @@ open class DNSAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -64,31 +55,22 @@ open class DNSAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getAllAuctions: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter tld: (query) domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot; (optional)
      - returns: Auctions
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAllAuctions(xCapability: XCapability_getAllAuctions? = nil, tld: String? = nil) async throws -> Auctions {
-        return try await getAllAuctionsWithRequestBuilder(xCapability: xCapability, tld: tld).execute().body
+    open class func getAllAuctions(tld: String? = nil) async throws -> Auctions {
+        return try await getAllAuctionsWithRequestBuilder(tld: tld).execute().body
     }
 
     /**
      - GET /v2/dns/auctions
      - Get all auctions
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter tld: (query) domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot; (optional)
      - returns: RequestBuilder<Auctions> 
      */
-    open class func getAllAuctionsWithRequestBuilder(xCapability: XCapability_getAllAuctions? = nil, tld: String? = nil) -> RequestBuilder<Auctions> {
+    open class func getAllAuctionsWithRequestBuilder(tld: String? = nil) -> RequestBuilder<Auctions> {
         let localVariablePath = "/v2/dns/auctions"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -99,7 +81,7 @@ open class DNSAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -110,31 +92,22 @@ open class DNSAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getDnsInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: DomainInfo
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getDnsInfo(domainName: String, xCapability: XCapability_getDnsInfo? = nil) async throws -> DomainInfo {
-        return try await getDnsInfoWithRequestBuilder(domainName: domainName, xCapability: xCapability).execute().body
+    open class func getDnsInfo(domainName: String) async throws -> DomainInfo {
+        return try await getDnsInfoWithRequestBuilder(domainName: domainName).execute().body
     }
 
     /**
      - GET /v2/dns/{domain_name}
      - Get full information about domain name
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<DomainInfo> 
      */
-    open class func getDnsInfoWithRequestBuilder(domainName: String, xCapability: XCapability_getDnsInfo? = nil) -> RequestBuilder<DomainInfo> {
+    open class func getDnsInfoWithRequestBuilder(domainName: String) -> RequestBuilder<DomainInfo> {
         var localVariablePath = "/v2/dns/{domain_name}"
         let domainNamePreEscape = "\(APIHelper.mapValueToPathItem(domainName))"
         let domainNamePostEscape = domainNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -145,7 +118,7 @@ open class DNSAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -156,31 +129,22 @@ open class DNSAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getDomainBids: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: DomainBids
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getDomainBids(domainName: String, xCapability: XCapability_getDomainBids? = nil) async throws -> DomainBids {
-        return try await getDomainBidsWithRequestBuilder(domainName: domainName, xCapability: xCapability).execute().body
+    open class func getDomainBids(domainName: String) async throws -> DomainBids {
+        return try await getDomainBidsWithRequestBuilder(domainName: domainName).execute().body
     }
 
     /**
      - GET /v2/dns/{domain_name}/bids
      - Get domain bids
      - parameter domainName: (path) domain name with .ton or .t.me 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<DomainBids> 
      */
-    open class func getDomainBidsWithRequestBuilder(domainName: String, xCapability: XCapability_getDomainBids? = nil) -> RequestBuilder<DomainBids> {
+    open class func getDomainBidsWithRequestBuilder(domainName: String) -> RequestBuilder<DomainBids> {
         var localVariablePath = "/v2/dns/{domain_name}/bids"
         let domainNamePreEscape = "\(APIHelper.mapValueToPathItem(domainName))"
         let domainNamePostEscape = domainNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -191,7 +155,7 @@ open class DNSAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

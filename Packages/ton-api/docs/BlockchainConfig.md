@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **_25** | [**BlockchainConfig25**](BlockchainConfig25.md) |  | [optional] 
 **_28** | [**BlockchainConfig28**](BlockchainConfig28.md) |  | [optional] 
 **_29** | [**BlockchainConfig29**](BlockchainConfig29.md) |  | [optional] 
+**_30** | [**BlockchainConfig30**](BlockchainConfig30.md) |  | [optional] 
 **_31** | [**BlockchainConfig31**](BlockchainConfig31.md) |  | [optional] 
 **_32** | [**ValidatorsSet**](ValidatorsSet.md) |  | [optional] 
 **_33** | [**ValidatorsSet**](ValidatorsSet.md) |  | [optional] 

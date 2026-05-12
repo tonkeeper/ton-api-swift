@@ -17,12 +17,14 @@ public struct DepositStakeAction: Codable, JSONEncodable, Hashable {
     public var staker: AccountAddress
     public var pool: AccountAddress
     public var implementation: PoolImplementationType
+    public var stakeMeta: Price?
 
-    public init(amount: Int64, staker: AccountAddress, pool: AccountAddress, implementation: PoolImplementationType) {
+    public init(amount: Int64, staker: AccountAddress, pool: AccountAddress, implementation: PoolImplementationType, stakeMeta: Price? = nil) {
         self.amount = amount
         self.staker = staker
         self.pool = pool
         self.implementation = implementation
+        self.stakeMeta = stakeMeta
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -30,6 +32,7 @@ public struct DepositStakeAction: Codable, JSONEncodable, Hashable {
         case staker
         case pool
         case implementation
+        case stakeMeta = "stake_meta"
     }
 
     // Encodable protocol methods
@@ -40,6 +43,7 @@ public struct DepositStakeAction: Codable, JSONEncodable, Hashable {
         try container.encode(staker, forKey: .staker)
         try container.encode(pool, forKey: .pool)
         try container.encode(implementation, forKey: .implementation)
+        try container.encodeIfPresent(stakeMeta, forKey: .stakeMeta)
     }
 }
 

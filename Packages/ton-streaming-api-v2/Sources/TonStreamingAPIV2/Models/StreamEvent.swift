@@ -36,22 +36,34 @@ public enum StreamEvent: Codable, JSONEncodable, Hashable {
         }
     }
 
+    private enum DiscriminatorCodingKey: String, CodingKey {
+        case type = "type"
+    }
+
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(AccountStateNotification.self) {
-            self = .typeAccountStateNotification(value)
-        } else if let value = try? container.decode(ActionsNotification.self) {
-            self = .typeActionsNotification(value)
-        } else if let value = try? container.decode(JettonsNotification.self) {
-            self = .typeJettonsNotification(value)
-        } else if let value = try? container.decode(TraceInvalidatedNotification.self) {
-            self = .typeTraceInvalidatedNotification(value)
-        } else if let value = try? container.decode(TraceNotification.self) {
-            self = .typeTraceNotification(value)
-        } else if let value = try? container.decode(TransactionsNotification.self) {
-            self = .typeTransactionsNotification(value)
-        } else {
-            throw DecodingError.typeMismatch(Self.Type.self, .init(codingPath: decoder.codingPath, debugDescription: "Unable to decode instance of StreamEvent"))
+        let keyedContainer = try decoder.container(keyedBy: DiscriminatorCodingKey.self)
+        let discriminatorValue = try keyedContainer.decode(String.self, forKey: .type)
+
+        switch discriminatorValue {
+        case "account_state_change":
+            self = .typeAccountStateNotification(try AccountStateNotification(from: decoder))
+        case "actions":
+            self = .typeActionsNotification(try ActionsNotification(from: decoder))
+        case "jettons_change":
+            self = .typeJettonsNotification(try JettonsNotification(from: decoder))
+        case "trace":
+            self = .typeTraceNotification(try TraceNotification(from: decoder))
+        case "trace_invalidated":
+            self = .typeTraceInvalidatedNotification(try TraceInvalidatedNotification(from: decoder))
+        case "transactions":
+            self = .typeTransactionsNotification(try TransactionsNotification(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown discriminator value '\(discriminatorValue)' for StreamEvent"
+                )
+            )
         }
     }
 }

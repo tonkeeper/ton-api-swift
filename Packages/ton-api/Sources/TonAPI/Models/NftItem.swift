@@ -32,8 +32,12 @@ public struct NftItem: Codable, JSONEncodable, Hashable {
     public var approvedBy: [ApprovedBy]
     public var includeCnft: Bool?
     public var trust: TrustType
+    /** Hash of the NFT item account code cell (hex) */
+    public var codeHash: String?
+    /** Hash of the NFT item account data cell (hex) */
+    public var dataHash: String?
 
-    public init(address: String, index: Int64, owner: AccountAddress? = nil, collection: NftItemCollection? = nil, verified: Bool, metadata: [String: AnyCodable], sale: Sale? = nil, previews: [ImagePreview]? = nil, dns: String? = nil, approvedBy: [ApprovedBy], includeCnft: Bool? = nil, trust: TrustType) {
+    public init(address: String, index: Int64, owner: AccountAddress? = nil, collection: NftItemCollection? = nil, verified: Bool, metadata: [String: AnyCodable], sale: Sale? = nil, previews: [ImagePreview]? = nil, dns: String? = nil, approvedBy: [ApprovedBy], includeCnft: Bool? = nil, trust: TrustType, codeHash: String? = nil, dataHash: String? = nil) {
         self.address = address
         self.index = index
         self.owner = owner
@@ -46,6 +50,8 @@ public struct NftItem: Codable, JSONEncodable, Hashable {
         self.approvedBy = approvedBy
         self.includeCnft = includeCnft
         self.trust = trust
+        self.codeHash = codeHash
+        self.dataHash = dataHash
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -61,6 +67,8 @@ public struct NftItem: Codable, JSONEncodable, Hashable {
         case approvedBy = "approved_by"
         case includeCnft = "include_cnft"
         case trust
+        case codeHash = "code_hash"
+        case dataHash = "data_hash"
     }
 
     // Encodable protocol methods
@@ -79,6 +87,8 @@ public struct NftItem: Codable, JSONEncodable, Hashable {
         try container.encode(approvedBy, forKey: .approvedBy)
         try container.encodeIfPresent(includeCnft, forKey: .includeCnft)
         try container.encode(trust, forKey: .trust)
+        try container.encodeIfPresent(codeHash, forKey: .codeHash)
+        try container.encodeIfPresent(dataHash, forKey: .dataHash)
     }
 }
 

@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 # **getAccountInfoByStateInit**
 ```swift
-    open class func getAccountInfoByStateInit(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest, xCapability: XCapability_getAccountInfoByStateInit? = nil, completion: @escaping (_ data: AccountInfoByStateInit?, _ error: Error?) -> Void)
+    open class func getAccountInfoByStateInit(getAccountInfoByStateInitRequest: GetAccountInfoByStateInitRequest, completion: @escaping (_ data: AccountInfoByStateInit?, _ error: Error?) -> Void)
 ```
 
 
@@ -23,9 +23,8 @@ Get account info by state init
 import TonAPI
 
 let getAccountInfoByStateInitRequest = getAccountInfoByStateInit_request(stateInit: "stateInit_example") // GetAccountInfoByStateInitRequest | Data that is expected
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-ConnectAPI.getAccountInfoByStateInit(getAccountInfoByStateInitRequest: getAccountInfoByStateInitRequest, xCapability: xCapability) { (response, error) in
+ConnectAPI.getAccountInfoByStateInit(getAccountInfoByStateInitRequest: getAccountInfoByStateInitRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -42,7 +41,6 @@ ConnectAPI.getAccountInfoByStateInit(getAccountInfoByStateInitRequest: getAccoun
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **getAccountInfoByStateInitRequest** | [**GetAccountInfoByStateInitRequest**](GetAccountInfoByStateInitRequest.md) | Data that is expected | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 
@@ -61,7 +59,7 @@ No authorization required
 
 # **getTonConnectPayload**
 ```swift
-    open class func getTonConnectPayload(xCapability: XCapability_getTonConnectPayload? = nil, completion: @escaping (_ data: GetTonConnectPayload200Response?, _ error: Error?) -> Void)
+    open class func getTonConnectPayload(completion: @escaping (_ data: GetTonConnectPayload200Response?, _ error: Error?) -> Void)
 ```
 
 
@@ -73,9 +71,8 @@ Get a payload for further token receipt
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-ConnectAPI.getTonConnectPayload(xCapability: xCapability) { (response, error) in
+ConnectAPI.getTonConnectPayload() { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -88,10 +85,7 @@ ConnectAPI.getTonConnectPayload(xCapability: xCapability) { (response, error) in
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **xCapability** | **String** | Request sub-second capability. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 

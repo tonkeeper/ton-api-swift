@@ -14,5 +14,6 @@ public enum PoolImplementationType: String, Codable, CaseIterable, CaseIterableD
     case whales = "whales"
     case tf = "tf"
     case liquidtf = "liquidTF"
+    case ffvault = "ffvault"
     case unknownDefaultOpenApi = "unknown_default_open_api"
 }

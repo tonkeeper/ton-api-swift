@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 # **emulateMessageToTrace**
 ```swift
-    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, xCapability: XCapability_emulateMessageToTrace? = nil, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
+    open class func emulateMessageToTrace(gaslessEstimateRequestMessagesInner: GaslessEstimateRequestMessagesInner, ignoreSignatureCheck: Bool? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
 ```
 
 
@@ -23,10 +23,9 @@ Emulate sending message to retrieve with a detailed execution trace
 import TonAPI
 
 let gaslessEstimateRequestMessagesInner = gaslessEstimate_request_messages_inner(boc: "boc_example") // GaslessEstimateRequestMessagesInner | bag-of-cells serialized to hex
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let ignoreSignatureCheck = true // Bool |  (optional)
 
-TracesAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, xCapability: xCapability, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
+TracesAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEstimateRequestMessagesInner, ignoreSignatureCheck: ignoreSignatureCheck) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,7 +42,6 @@ TracesAPI.emulateMessageToTrace(gaslessEstimateRequestMessagesInner: gaslessEsti
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **gaslessEstimateRequestMessagesInner** | [**GaslessEstimateRequestMessagesInner**](GaslessEstimateRequestMessagesInner.md) | bag-of-cells serialized to hex | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **ignoreSignatureCheck** | **Bool** |  | [optional] 
 
 ### Return type
@@ -63,7 +61,7 @@ No authorization required
 
 # **getTrace**
 ```swift
-    open class func getTrace(traceId: String, xCapability: XCapability_getTrace? = nil, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
+    open class func getTrace(traceId: String, completion: @escaping (_ data: Trace?, _ error: Error?) -> Void)
 ```
 
 
@@ -76,9 +74,8 @@ Get the trace by trace ID or hash of any transaction in trace
 import TonAPI
 
 let traceId = "traceId_example" // String | trace ID or transaction hash in hex (without 0x) or base64url format
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 
-TracesAPI.getTrace(traceId: traceId, xCapability: xCapability) { (response, error) in
+TracesAPI.getTrace(traceId: traceId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -95,7 +92,6 @@ TracesAPI.getTrace(traceId: traceId, xCapability: xCapability) { (response, erro
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **traceId** | **String** | trace ID or transaction hash in hex (without 0x) or base64url format | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
 
 ### Return type
 

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **extraCurrencyTransfer** | [**ExtraCurrencyTransferAction**](ExtraCurrencyTransferAction.md) |  | [optional] 
 **contractDeploy** | [**ContractDeployAction**](ContractDeployAction.md) |  | [optional] 
 **jettonTransfer** | [**JettonTransferAction**](JettonTransferAction.md) |  | [optional] 
+**flawedJettonTransfer** | [**FlawedJettonTransferAction**](FlawedJettonTransferAction.md) |  | [optional] 
 **jettonBurn** | [**JettonBurnAction**](JettonBurnAction.md) |  | [optional] 
 **jettonMint** | [**JettonMintAction**](JettonMintAction.md) |  | [optional] 
 **nftItemTransfer** | [**NftItemTransferAction**](NftItemTransferAction.md) |  | [optional] 
@@ -32,6 +33,7 @@ Name | Type | Description | Notes
 **depositTokenStake** | [**DepositTokenStakeAction**](DepositTokenStakeAction.md) |  | [optional] 
 **withdrawTokenStakeRequest** | [**WithdrawTokenStakeRequestAction**](WithdrawTokenStakeRequestAction.md) |  | [optional] 
 **liquidityDeposit** | [**LiquidityDepositAction**](LiquidityDepositAction.md) |  | [optional] 
+**oracleRequest** | [**OracleRequestAction**](OracleRequestAction.md) |  | [optional] 
 **simplePreview** | [**ActionSimplePreview**](ActionSimplePreview.md) |  | 
 **baseTransactions** | **[String]** |  | 
 

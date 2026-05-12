@@ -13,31 +13,22 @@ import AnyCodable
 open class LiteServerAPI {
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getAllRawShardsInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetAllRawShardsInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAllRawShardsInfo(blockId: String, xCapability: XCapability_getAllRawShardsInfo? = nil) async throws -> GetAllRawShardsInfo200Response {
-        return try await getAllRawShardsInfoWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func getAllRawShardsInfo(blockId: String) async throws -> GetAllRawShardsInfo200Response {
+        return try await getAllRawShardsInfoWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
      - GET /v2/liteserver/get_all_shards_info/{block_id}
      - Get all raw shards info
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetAllRawShardsInfo200Response> 
      */
-    open class func getAllRawShardsInfoWithRequestBuilder(blockId: String, xCapability: XCapability_getAllRawShardsInfo? = nil) -> RequestBuilder<GetAllRawShardsInfo200Response> {
+    open class func getAllRawShardsInfoWithRequestBuilder(blockId: String) -> RequestBuilder<GetAllRawShardsInfo200Response> {
         var localVariablePath = "/v2/liteserver/get_all_shards_info/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -48,7 +39,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -59,29 +50,20 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getOutMsgQueueSizes: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetOutMsgQueueSizes200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getOutMsgQueueSizes(xCapability: XCapability_getOutMsgQueueSizes? = nil) async throws -> GetOutMsgQueueSizes200Response {
-        return try await getOutMsgQueueSizesWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getOutMsgQueueSizes() async throws -> GetOutMsgQueueSizes200Response {
+        return try await getOutMsgQueueSizesWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/liteserver/get_out_msg_queue_sizes
      - Get out msg queue sizes
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetOutMsgQueueSizes200Response> 
      */
-    open class func getOutMsgQueueSizesWithRequestBuilder(xCapability: XCapability_getOutMsgQueueSizes? = nil) -> RequestBuilder<GetOutMsgQueueSizes200Response> {
+    open class func getOutMsgQueueSizesWithRequestBuilder() -> RequestBuilder<GetOutMsgQueueSizes200Response> {
         let localVariablePath = "/v2/liteserver/get_out_msg_queue_sizes"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -89,7 +71,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -100,33 +82,24 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawAccountState: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: GetRawAccountState200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawAccountState(accountId: String, xCapability: XCapability_getRawAccountState? = nil, targetBlock: String? = nil) async throws -> GetRawAccountState200Response {
-        return try await getRawAccountStateWithRequestBuilder(accountId: accountId, xCapability: xCapability, targetBlock: targetBlock).execute().body
+    open class func getRawAccountState(accountId: String, targetBlock: String? = nil) async throws -> GetRawAccountState200Response {
+        return try await getRawAccountStateWithRequestBuilder(accountId: accountId, targetBlock: targetBlock).execute().body
     }
 
     /**
      - GET /v2/liteserver/get_account_state/{account_id}
      - Get raw account state
      - parameter accountId: (path) account ID 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: RequestBuilder<GetRawAccountState200Response> 
      */
-    open class func getRawAccountStateWithRequestBuilder(accountId: String, xCapability: XCapability_getRawAccountState? = nil, targetBlock: String? = nil) -> RequestBuilder<GetRawAccountState200Response> {
+    open class func getRawAccountStateWithRequestBuilder(accountId: String, targetBlock: String? = nil) -> RequestBuilder<GetRawAccountState200Response> {
         var localVariablePath = "/v2/liteserver/get_account_state/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -140,7 +113,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -151,23 +124,15 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawBlockProof: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter knownBlock: (query) known block: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: GetRawBlockProof200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawBlockProof(knownBlock: String, mode: Int, xCapability: XCapability_getRawBlockProof? = nil, targetBlock: String? = nil) async throws -> GetRawBlockProof200Response {
-        return try await getRawBlockProofWithRequestBuilder(knownBlock: knownBlock, mode: mode, xCapability: xCapability, targetBlock: targetBlock).execute().body
+    open class func getRawBlockProof(knownBlock: String, mode: Int, targetBlock: String? = nil) async throws -> GetRawBlockProof200Response {
+        return try await getRawBlockProofWithRequestBuilder(knownBlock: knownBlock, mode: mode, targetBlock: targetBlock).execute().body
     }
 
     /**
@@ -175,11 +140,10 @@ open class LiteServerAPI {
      - Get raw block proof
      - parameter knownBlock: (query) known block: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter targetBlock: (query) target block: (workchain,shard,seqno,root_hash,file_hash) (optional)
      - returns: RequestBuilder<GetRawBlockProof200Response> 
      */
-    open class func getRawBlockProofWithRequestBuilder(knownBlock: String, mode: Int, xCapability: XCapability_getRawBlockProof? = nil, targetBlock: String? = nil) -> RequestBuilder<GetRawBlockProof200Response> {
+    open class func getRawBlockProofWithRequestBuilder(knownBlock: String, mode: Int, targetBlock: String? = nil) -> RequestBuilder<GetRawBlockProof200Response> {
         let localVariablePath = "/v2/liteserver/get_block_proof"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -192,7 +156,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -203,31 +167,22 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawBlockchainBlock: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawBlockchainBlock200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawBlockchainBlock(blockId: String, xCapability: XCapability_getRawBlockchainBlock? = nil) async throws -> GetRawBlockchainBlock200Response {
-        return try await getRawBlockchainBlockWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func getRawBlockchainBlock(blockId: String) async throws -> GetRawBlockchainBlock200Response {
+        return try await getRawBlockchainBlockWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
      - GET /v2/liteserver/get_block/{block_id}
      - Get raw blockchain block
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawBlockchainBlock200Response> 
      */
-    open class func getRawBlockchainBlockWithRequestBuilder(blockId: String, xCapability: XCapability_getRawBlockchainBlock? = nil) -> RequestBuilder<GetRawBlockchainBlock200Response> {
+    open class func getRawBlockchainBlockWithRequestBuilder(blockId: String) -> RequestBuilder<GetRawBlockchainBlock200Response> {
         var localVariablePath = "/v2/liteserver/get_block/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -238,7 +193,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -249,22 +204,14 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawBlockchainBlockHeader: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawBlockchainBlockHeader200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawBlockchainBlockHeader(blockId: String, mode: Int, xCapability: XCapability_getRawBlockchainBlockHeader? = nil) async throws -> GetRawBlockchainBlockHeader200Response {
-        return try await getRawBlockchainBlockHeaderWithRequestBuilder(blockId: blockId, mode: mode, xCapability: xCapability).execute().body
+    open class func getRawBlockchainBlockHeader(blockId: String, mode: Int) async throws -> GetRawBlockchainBlockHeader200Response {
+        return try await getRawBlockchainBlockHeaderWithRequestBuilder(blockId: blockId, mode: mode).execute().body
     }
 
     /**
@@ -272,10 +219,9 @@ open class LiteServerAPI {
      - Get raw blockchain block header
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawBlockchainBlockHeader200Response> 
      */
-    open class func getRawBlockchainBlockHeaderWithRequestBuilder(blockId: String, mode: Int, xCapability: XCapability_getRawBlockchainBlockHeader? = nil) -> RequestBuilder<GetRawBlockchainBlockHeader200Response> {
+    open class func getRawBlockchainBlockHeaderWithRequestBuilder(blockId: String, mode: Int) -> RequestBuilder<GetRawBlockchainBlockHeader200Response> {
         var localVariablePath = "/v2/liteserver/get_block_header/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -289,7 +235,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -300,31 +246,22 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawBlockchainBlockState: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawBlockchainBlockState200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawBlockchainBlockState(blockId: String, xCapability: XCapability_getRawBlockchainBlockState? = nil) async throws -> GetRawBlockchainBlockState200Response {
-        return try await getRawBlockchainBlockStateWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func getRawBlockchainBlockState(blockId: String) async throws -> GetRawBlockchainBlockState200Response {
+        return try await getRawBlockchainBlockStateWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
      - GET /v2/liteserver/get_state/{block_id}
      - Get raw blockchain block state
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawBlockchainBlockState200Response> 
      */
-    open class func getRawBlockchainBlockStateWithRequestBuilder(blockId: String, xCapability: XCapability_getRawBlockchainBlockState? = nil) -> RequestBuilder<GetRawBlockchainBlockState200Response> {
+    open class func getRawBlockchainBlockStateWithRequestBuilder(blockId: String) -> RequestBuilder<GetRawBlockchainBlockState200Response> {
         var localVariablePath = "/v2/liteserver/get_state/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -335,7 +272,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -346,22 +283,14 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawConfig: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawConfig200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawConfig(blockId: String, mode: Int, xCapability: XCapability_getRawConfig? = nil) async throws -> GetRawConfig200Response {
-        return try await getRawConfigWithRequestBuilder(blockId: blockId, mode: mode, xCapability: xCapability).execute().body
+    open class func getRawConfig(blockId: String, mode: Int) async throws -> GetRawConfig200Response {
+        return try await getRawConfigWithRequestBuilder(blockId: blockId, mode: mode).execute().body
     }
 
     /**
@@ -369,10 +298,9 @@ open class LiteServerAPI {
      - Get raw config
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawConfig200Response> 
      */
-    open class func getRawConfigWithRequestBuilder(blockId: String, mode: Int, xCapability: XCapability_getRawConfig? = nil) -> RequestBuilder<GetRawConfig200Response> {
+    open class func getRawConfigWithRequestBuilder(blockId: String, mode: Int) -> RequestBuilder<GetRawConfig200Response> {
         var localVariablePath = "/v2/liteserver/get_config_all/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -386,7 +314,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -397,25 +325,17 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawListBlockTransactions: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
      - parameter count: (query) count 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter accountId: (query) account ID (optional)
      - parameter lt: (query) lt (optional)
      - returns: GetRawListBlockTransactions200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawListBlockTransactions(blockId: String, mode: Int, count: Int, xCapability: XCapability_getRawListBlockTransactions? = nil, accountId: String? = nil, lt: Int64? = nil) async throws -> GetRawListBlockTransactions200Response {
-        return try await getRawListBlockTransactionsWithRequestBuilder(blockId: blockId, mode: mode, count: count, xCapability: xCapability, accountId: accountId, lt: lt).execute().body
+    open class func getRawListBlockTransactions(blockId: String, mode: Int, count: Int, accountId: String? = nil, lt: Int64? = nil) async throws -> GetRawListBlockTransactions200Response {
+        return try await getRawListBlockTransactionsWithRequestBuilder(blockId: blockId, mode: mode, count: count, accountId: accountId, lt: lt).execute().body
     }
 
     /**
@@ -424,12 +344,11 @@ open class LiteServerAPI {
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter mode: (query) mode 
      - parameter count: (query) count 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - parameter accountId: (query) account ID (optional)
      - parameter lt: (query) lt (optional)
      - returns: RequestBuilder<GetRawListBlockTransactions200Response> 
      */
-    open class func getRawListBlockTransactionsWithRequestBuilder(blockId: String, mode: Int, count: Int, xCapability: XCapability_getRawListBlockTransactions? = nil, accountId: String? = nil, lt: Int64? = nil) -> RequestBuilder<GetRawListBlockTransactions200Response> {
+    open class func getRawListBlockTransactionsWithRequestBuilder(blockId: String, mode: Int, count: Int, accountId: String? = nil, lt: Int64? = nil) -> RequestBuilder<GetRawListBlockTransactions200Response> {
         var localVariablePath = "/v2/liteserver/list_block_transactions/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -446,7 +365,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -457,29 +376,20 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawMasterchainInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawMasterchainInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawMasterchainInfo(xCapability: XCapability_getRawMasterchainInfo? = nil) async throws -> GetRawMasterchainInfo200Response {
-        return try await getRawMasterchainInfoWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getRawMasterchainInfo() async throws -> GetRawMasterchainInfo200Response {
+        return try await getRawMasterchainInfoWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/liteserver/get_masterchain_info
      - Get raw masterchain info
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawMasterchainInfo200Response> 
      */
-    open class func getRawMasterchainInfoWithRequestBuilder(xCapability: XCapability_getRawMasterchainInfo? = nil) -> RequestBuilder<GetRawMasterchainInfo200Response> {
+    open class func getRawMasterchainInfoWithRequestBuilder() -> RequestBuilder<GetRawMasterchainInfo200Response> {
         let localVariablePath = "/v2/liteserver/get_masterchain_info"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -487,7 +397,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -498,31 +408,22 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawMasterchainInfoExt: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawMasterchainInfoExt200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawMasterchainInfoExt(mode: Int, xCapability: XCapability_getRawMasterchainInfoExt? = nil) async throws -> GetRawMasterchainInfoExt200Response {
-        return try await getRawMasterchainInfoExtWithRequestBuilder(mode: mode, xCapability: xCapability).execute().body
+    open class func getRawMasterchainInfoExt(mode: Int) async throws -> GetRawMasterchainInfoExt200Response {
+        return try await getRawMasterchainInfoExtWithRequestBuilder(mode: mode).execute().body
     }
 
     /**
      - GET /v2/liteserver/get_masterchain_info_ext
      - Get raw masterchain info ext
      - parameter mode: (query) mode 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawMasterchainInfoExt200Response> 
      */
-    open class func getRawMasterchainInfoExtWithRequestBuilder(mode: Int, xCapability: XCapability_getRawMasterchainInfoExt? = nil) -> RequestBuilder<GetRawMasterchainInfoExt200Response> {
+    open class func getRawMasterchainInfoExtWithRequestBuilder(mode: Int) -> RequestBuilder<GetRawMasterchainInfoExt200Response> {
         let localVariablePath = "/v2/liteserver/get_masterchain_info_ext"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -533,7 +434,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -544,31 +445,22 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawShardBlockProof: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawShardBlockProof200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawShardBlockProof(blockId: String, xCapability: XCapability_getRawShardBlockProof? = nil) async throws -> GetRawShardBlockProof200Response {
-        return try await getRawShardBlockProofWithRequestBuilder(blockId: blockId, xCapability: xCapability).execute().body
+    open class func getRawShardBlockProof(blockId: String) async throws -> GetRawShardBlockProof200Response {
+        return try await getRawShardBlockProofWithRequestBuilder(blockId: blockId).execute().body
     }
 
     /**
      - GET /v2/liteserver/get_shard_block_proof/{block_id}
      - Get raw shard block proof
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawShardBlockProof200Response> 
      */
-    open class func getRawShardBlockProofWithRequestBuilder(blockId: String, xCapability: XCapability_getRawShardBlockProof? = nil) -> RequestBuilder<GetRawShardBlockProof200Response> {
+    open class func getRawShardBlockProofWithRequestBuilder(blockId: String) -> RequestBuilder<GetRawShardBlockProof200Response> {
         var localVariablePath = "/v2/liteserver/get_shard_block_proof/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -579,7 +471,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -590,24 +482,16 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawShardInfo: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter blockId: (path) block ID: (workchain,shard,seqno,root_hash,file_hash) 
      - parameter workchain: (query) workchain 
      - parameter shard: (query) shard 
      - parameter exact: (query) exact 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawShardInfo200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawShardInfo(blockId: String, workchain: Int, shard: Int64, exact: Bool, xCapability: XCapability_getRawShardInfo? = nil) async throws -> GetRawShardInfo200Response {
-        return try await getRawShardInfoWithRequestBuilder(blockId: blockId, workchain: workchain, shard: shard, exact: exact, xCapability: xCapability).execute().body
+    open class func getRawShardInfo(blockId: String, workchain: Int, shard: Int64, exact: Bool) async throws -> GetRawShardInfo200Response {
+        return try await getRawShardInfoWithRequestBuilder(blockId: blockId, workchain: workchain, shard: shard, exact: exact).execute().body
     }
 
     /**
@@ -617,10 +501,9 @@ open class LiteServerAPI {
      - parameter workchain: (query) workchain 
      - parameter shard: (query) shard 
      - parameter exact: (query) exact 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawShardInfo200Response> 
      */
-    open class func getRawShardInfoWithRequestBuilder(blockId: String, workchain: Int, shard: Int64, exact: Bool, xCapability: XCapability_getRawShardInfo? = nil) -> RequestBuilder<GetRawShardInfo200Response> {
+    open class func getRawShardInfoWithRequestBuilder(blockId: String, workchain: Int, shard: Int64, exact: Bool) -> RequestBuilder<GetRawShardInfo200Response> {
         var localVariablePath = "/v2/liteserver/get_shard_info/{block_id}"
         let blockIdPreEscape = "\(APIHelper.mapValueToPathItem(blockId))"
         let blockIdPostEscape = blockIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -636,7 +519,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -647,29 +530,20 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawTime: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
 
-    /**
-
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawTime200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawTime(xCapability: XCapability_getRawTime? = nil) async throws -> GetRawTime200Response {
-        return try await getRawTimeWithRequestBuilder(xCapability: xCapability).execute().body
+    open class func getRawTime() async throws -> GetRawTime200Response {
+        return try await getRawTimeWithRequestBuilder().execute().body
     }
 
     /**
      - GET /v2/liteserver/get_time
      - Get raw time
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawTime200Response> 
      */
-    open class func getRawTimeWithRequestBuilder(xCapability: XCapability_getRawTime? = nil) -> RequestBuilder<GetRawTime200Response> {
+    open class func getRawTimeWithRequestBuilder() -> RequestBuilder<GetRawTime200Response> {
         let localVariablePath = "/v2/liteserver/get_time"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -677,7 +551,7 @@ open class LiteServerAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -688,24 +562,16 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_getRawTransactions: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter accountId: (path) account ID 
      - parameter count: (query) count 
      - parameter lt: (query) lt 
      - parameter hash: (query) hash 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: GetRawTransactions200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getRawTransactions(accountId: String, count: Int, lt: Int64, hash: String, xCapability: XCapability_getRawTransactions? = nil) async throws -> GetRawTransactions200Response {
-        return try await getRawTransactionsWithRequestBuilder(accountId: accountId, count: count, lt: lt, hash: hash, xCapability: xCapability).execute().body
+    open class func getRawTransactions(accountId: String, count: Int, lt: Int64, hash: String) async throws -> GetRawTransactions200Response {
+        return try await getRawTransactionsWithRequestBuilder(accountId: accountId, count: count, lt: lt, hash: hash).execute().body
     }
 
     /**
@@ -715,10 +581,9 @@ open class LiteServerAPI {
      - parameter count: (query) count 
      - parameter lt: (query) lt 
      - parameter hash: (query) hash 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<GetRawTransactions200Response> 
      */
-    open class func getRawTransactionsWithRequestBuilder(accountId: String, count: Int, lt: Int64, hash: String, xCapability: XCapability_getRawTransactions? = nil) -> RequestBuilder<GetRawTransactions200Response> {
+    open class func getRawTransactionsWithRequestBuilder(accountId: String, count: Int, lt: Int64, hash: String) -> RequestBuilder<GetRawTransactions200Response> {
         var localVariablePath = "/v2/liteserver/get_transactions/{account_id}"
         let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
         let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -734,7 +599,7 @@ open class LiteServerAPI {
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
-            "X-Capability": xCapability?.encodeToJSON(),
+            :
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
@@ -745,31 +610,22 @@ open class LiteServerAPI {
     }
 
     /**
-     * enum for parameter xCapability
-     */
-    public enum XCapability_sendRawMessage: String, CaseIterable {
-        case subSecond = "sub-second"
-    }
-
-    /**
 
      - parameter sendRawMessageRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: SendRawMessage200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func sendRawMessage(sendRawMessageRequest: SendRawMessageRequest, xCapability: XCapability_sendRawMessage? = nil) async throws -> SendRawMessage200Response {
-        return try await sendRawMessageWithRequestBuilder(sendRawMessageRequest: sendRawMessageRequest, xCapability: xCapability).execute().body
+    open class func sendRawMessage(sendRawMessageRequest: SendRawMessageRequest) async throws -> SendRawMessage200Response {
+        return try await sendRawMessageWithRequestBuilder(sendRawMessageRequest: sendRawMessageRequest).execute().body
     }
 
     /**
      - POST /v2/liteserver/send_message
      - Send raw message to blockchain
      - parameter sendRawMessageRequest: (body) Data that is expected 
-     - parameter xCapability: (header) Request sub-second capability. (optional)
      - returns: RequestBuilder<SendRawMessage200Response> 
      */
-    open class func sendRawMessageWithRequestBuilder(sendRawMessageRequest: SendRawMessageRequest, xCapability: XCapability_sendRawMessage? = nil) -> RequestBuilder<SendRawMessage200Response> {
+    open class func sendRawMessageWithRequestBuilder(sendRawMessageRequest: SendRawMessageRequest) -> RequestBuilder<SendRawMessage200Response> {
         let localVariablePath = "/v2/liteserver/send_message"
         let localVariableURLString = TonAPIAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: sendRawMessageRequest)
@@ -778,7 +634,6 @@ open class LiteServerAPI {
 
         let localVariableNillableHeaders: [String: Any?] = [
             "Content-Type": "application/json",
-            "X-Capability": xCapability?.encodeToJSON(),
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)

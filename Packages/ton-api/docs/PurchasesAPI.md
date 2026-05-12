@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 # **getPurchaseHistory**
 ```swift
-    open class func getPurchaseHistory(accountId: String, xCapability: XCapability_getPurchaseHistory? = nil, beforeLt: Int64? = nil, limit: Int? = nil, completion: @escaping (_ data: AccountPurchases?, _ error: Error?) -> Void)
+    open class func getPurchaseHistory(accountId: String, beforeLt: Int64? = nil, limit: Int? = nil, completion: @escaping (_ data: AccountPurchases?, _ error: Error?) -> Void)
 ```
 
 
@@ -22,11 +22,10 @@ Get history of purchases
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let xCapability = "xCapability_example" // String | Request sub-second capability. (optional)
 let beforeLt = 987 // Int64 | omit this parameter to get last invoices (optional)
 let limit = 987 // Int |  (optional) (default to 100)
 
-PurchasesAPI.getPurchaseHistory(accountId: accountId, xCapability: xCapability, beforeLt: beforeLt, limit: limit) { (response, error) in
+PurchasesAPI.getPurchaseHistory(accountId: accountId, beforeLt: beforeLt, limit: limit) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -43,7 +42,6 @@ PurchasesAPI.getPurchaseHistory(accountId: accountId, xCapability: xCapability, 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **xCapability** | **String** | Request sub-second capability. | [optional] 
  **beforeLt** | **Int64** | omit this parameter to get last invoices | [optional] 
  **limit** | **Int** |  | [optional] [default to 100]
 

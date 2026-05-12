@@ -13,10 +13,10 @@ import AnyCodable
 public struct GaslessSendRequest: Codable, JSONEncodable, Hashable {
 
     /** hex encoded public key */
-    public var walletPublicKey: String
+    public var walletPublicKey: String?
     public var boc: String
 
-    public init(walletPublicKey: String, boc: String) {
+    public init(walletPublicKey: String? = nil, boc: String) {
         self.walletPublicKey = walletPublicKey
         self.boc = boc
     }
@@ -30,7 +30,7 @@ public struct GaslessSendRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(walletPublicKey, forKey: .walletPublicKey)
+        try container.encodeIfPresent(walletPublicKey, forKey: .walletPublicKey)
         try container.encode(boc, forKey: .boc)
     }
 }

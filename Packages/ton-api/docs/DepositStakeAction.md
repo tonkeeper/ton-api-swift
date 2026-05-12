@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **staker** | [**AccountAddress**](AccountAddress.md) |  | 
 **pool** | [**AccountAddress**](AccountAddress.md) |  | 
 **implementation** | [**PoolImplementationType**](PoolImplementationType.md) |  | 
+**stakeMeta** | [**Price**](Price.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

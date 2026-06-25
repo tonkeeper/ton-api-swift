@@ -14,7 +14,7 @@ public struct RewardsStats: Codable, JSONEncodable, Hashable {
 
     /** Time series of APY values as [timestamp_ms, apy] pairs */
     public var apy: [[Double]]
-    /** Time series of total stake in TON as [timestamp_ms, stake] pairs */
+    /** Time series of total stake in Gram as [timestamp_ms, stake] pairs */
     public var totalStake: [[Double]]
 
     public init(apy: [[Double]], totalStake: [[Double]]) {

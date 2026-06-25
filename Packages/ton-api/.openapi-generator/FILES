@@ -15,6 +15,7 @@ Sources/TonAPI/APIs/ExtraCurrencyAPI.swift
 Sources/TonAPI/APIs/GaslessAPI.swift
 Sources/TonAPI/APIs/JettonsAPI.swift
 Sources/TonAPI/APIs/LiteServerAPI.swift
+Sources/TonAPI/APIs/MigrationAPI.swift
 Sources/TonAPI/APIs/MultisigAPI.swift
 Sources/TonAPI/APIs/NFTAPI.swift
 Sources/TonAPI/APIs/PurchasesAPI.swift
@@ -118,8 +119,14 @@ Sources/TonAPI/Models/DecodedMessageExtInMsgDecodedWalletV4.swift
 Sources/TonAPI/Models/DecodedMessageExtInMsgDecodedWalletV5.swift
 Sources/TonAPI/Models/DecodedRawMessage.swift
 Sources/TonAPI/Models/DecodedRawMessageMessage.swift
+Sources/TonAPI/Models/DefiAsset.swift
+Sources/TonAPI/Models/DefiAssetAssetType.swift
+Sources/TonAPI/Models/DefiAssets.swift
+Sources/TonAPI/Models/DefiLockedAsset.swift
+Sources/TonAPI/Models/DefiProvider.swift
 Sources/TonAPI/Models/DepositStakeAction.swift
 Sources/TonAPI/Models/DepositTokenStakeAction.swift
+Sources/TonAPI/Models/DepositXTRAction.swift
 Sources/TonAPI/Models/DnsExpiring.swift
 Sources/TonAPI/Models/DnsExpiringItemsInner.swift
 Sources/TonAPI/Models/DnsRecord.swift
@@ -191,6 +198,7 @@ Sources/TonAPI/Models/GetTonConnectPayload200Response.swift
 Sources/TonAPI/Models/GetWalletsByPublicKeyBulkRequest.swift
 Sources/TonAPI/Models/ImagePreview.swift
 Sources/TonAPI/Models/InitStateRaw.swift
+Sources/TonAPI/Models/JettonAssetInfo.swift
 Sources/TonAPI/Models/JettonBalance.swift
 Sources/TonAPI/Models/JettonBalanceLock.swift
 Sources/TonAPI/Models/JettonBridgeParams.swift
@@ -218,6 +226,11 @@ Sources/TonAPI/Models/MessageConsequences.swift
 Sources/TonAPI/Models/Metadata.swift
 Sources/TonAPI/Models/Method.swift
 Sources/TonAPI/Models/MethodExecutionResult.swift
+Sources/TonAPI/Models/MigrationPrepareRequest.swift
+Sources/TonAPI/Models/MigrationPrepareResponse.swift
+Sources/TonAPI/Models/MigrationTransaction.swift
+Sources/TonAPI/Models/MigrationWalletValue.swift
+Sources/TonAPI/Models/MigrationWallets.swift
 Sources/TonAPI/Models/MisbehaviourPunishmentConfig.swift
 Sources/TonAPI/Models/ModelError.swift
 Sources/TonAPI/Models/ModelProtocol.swift
@@ -313,6 +326,7 @@ Sources/TonAPI/Models/WalletsByPublicKeys.swift
 Sources/TonAPI/Models/WithdrawStakeAction.swift
 Sources/TonAPI/Models/WithdrawStakeRequestAction.swift
 Sources/TonAPI/Models/WithdrawTokenStakeRequestAction.swift
+Sources/TonAPI/Models/WithdrawXTRAction.swift
 Sources/TonAPI/Models/WorkchainDescr.swift
 Sources/TonAPI/OpenISO8601DateFormatter.swift
 Sources/TonAPI/SynchronizedDictionary.swift
@@ -409,8 +423,14 @@ docs/DecodedMessageExtInMsgDecodedWalletV4.md
 docs/DecodedMessageExtInMsgDecodedWalletV5.md
 docs/DecodedRawMessage.md
 docs/DecodedRawMessageMessage.md
+docs/DefiAsset.md
+docs/DefiAssetAssetType.md
+docs/DefiAssets.md
+docs/DefiLockedAsset.md
+docs/DefiProvider.md
 docs/DepositStakeAction.md
 docs/DepositTokenStakeAction.md
+docs/DepositXTRAction.md
 docs/DnsExpiring.md
 docs/DnsExpiringItemsInner.md
 docs/DnsRecord.md
@@ -486,6 +506,7 @@ docs/GetTonConnectPayload200Response.md
 docs/GetWalletsByPublicKeyBulkRequest.md
 docs/ImagePreview.md
 docs/InitStateRaw.md
+docs/JettonAssetInfo.md
 docs/JettonBalance.md
 docs/JettonBalanceLock.md
 docs/JettonBridgeParams.md
@@ -515,6 +536,12 @@ docs/MessageConsequences.md
 docs/Metadata.md
 docs/Method.md
 docs/MethodExecutionResult.md
+docs/MigrationAPI.md
+docs/MigrationPrepareRequest.md
+docs/MigrationPrepareResponse.md
+docs/MigrationTransaction.md
+docs/MigrationWalletValue.md
+docs/MigrationWallets.md
 docs/MisbehaviourPunishmentConfig.md
 docs/ModelError.md
 docs/ModelProtocol.md
@@ -620,6 +647,7 @@ docs/WalletsByPublicKeys.md
 docs/WithdrawStakeAction.md
 docs/WithdrawStakeRequestAction.md
 docs/WithdrawTokenStakeRequestAction.md
+docs/WithdrawXTRAction.md
 docs/WorkchainDescr.md
 git_push.sh
 project.yml

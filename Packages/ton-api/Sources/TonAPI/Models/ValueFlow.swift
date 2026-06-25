@@ -13,13 +13,17 @@ import AnyCodable
 public struct ValueFlow: Codable, JSONEncodable, Hashable {
 
     public var account: AccountAddress
-    public var ton: Int64
+    /** this field will gone after Sept. 2026, use gram instead */
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var ton: Int64?
+    public var gram: Int64
     public var fees: Int64
     public var jettons: [ValueFlowJettonsInner]?
 
-    public init(account: AccountAddress, ton: Int64, fees: Int64, jettons: [ValueFlowJettonsInner]? = nil) {
+    public init(account: AccountAddress, ton: Int64? = nil, gram: Int64, fees: Int64, jettons: [ValueFlowJettonsInner]? = nil) {
         self.account = account
         self.ton = ton
+        self.gram = gram
         self.fees = fees
         self.jettons = jettons
     }
@@ -27,6 +31,7 @@ public struct ValueFlow: Codable, JSONEncodable, Hashable {
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case account
         case ton
+        case gram
         case fees
         case jettons
     }
@@ -36,7 +41,8 @@ public struct ValueFlow: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(account, forKey: .account)
-        try container.encode(ton, forKey: .ton)
+        try container.encodeIfPresent(ton, forKey: .ton)
+        try container.encode(gram, forKey: .gram)
         try container.encode(fees, forKey: .fees)
         try container.encodeIfPresent(jettons, forKey: .jettons)
     }

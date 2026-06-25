@@ -73,7 +73,7 @@ No authorization required
 
 
 
-Get the TON price from markets
+Get the Gram price from markets
 
 ### Example
 ```swift
@@ -125,8 +125,8 @@ Get the token price in the chosen currency for display only. Don’t use this fo
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let tokens = ["inner_example"] // [String] | accept ton and jetton master addresses, separated by commas
-let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas
+let tokens = ["inner_example"] // [String] | accept gram and jetton master addresses, separated by commas
+let currencies = ["inner_example"] // [String] | accept gram and all possible fiat currencies, separated by commas
 
 RatesAPI.getRates(tokens: tokens, currencies: currencies) { (response, error) in
     guard error == nil else {
@@ -144,8 +144,8 @@ RatesAPI.getRates(tokens: tokens, currencies: currencies) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tokens** | [**[String]**](String.md) | accept ton and jetton master addresses, separated by commas | 
- **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | 
+ **tokens** | [**[String]**](String.md) | accept gram and jetton master addresses, separated by commas | 
+ **currencies** | [**[String]**](String.md) | accept gram and all possible fiat currencies, separated by commas | 
 
 ### Return type
 

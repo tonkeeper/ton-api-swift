@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **roundEnd** | **Date** | Validation round end time. | 
 **startBlock** | **Int** | First masterchain block of the round. | 
 **endBlock** | **Int** | Last masterchain block of the round. | 
-**totalBonuses** | **Int64** | amount in nanotons | 
-**totalStake** | **Int64** | amount in nanotons | 
+**totalBonuses** | **Int64** | amount in nanograms | 
+**totalStake** | **Int64** | amount in nanograms | 
 **validators** | [ValidatorRewardEntry] |  | 
 **error** | **String** |  | [optional] 
 

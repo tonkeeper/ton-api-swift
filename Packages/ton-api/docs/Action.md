@@ -34,6 +34,8 @@ Name | Type | Description | Notes
 **withdrawTokenStakeRequest** | [**WithdrawTokenStakeRequestAction**](WithdrawTokenStakeRequestAction.md) |  | [optional] 
 **liquidityDeposit** | [**LiquidityDepositAction**](LiquidityDepositAction.md) |  | [optional] 
 **oracleRequest** | [**OracleRequestAction**](OracleRequestAction.md) |  | [optional] 
+**withdrawXTR** | [**WithdrawXTRAction**](WithdrawXTRAction.md) |  | [optional] 
+**depositXTR** | [**DepositXTRAction**](DepositXTRAction.md) |  | [optional] 
 **simplePreview** | [**ActionSimplePreview**](ActionSimplePreview.md) |  | 
 **baseTransactions** | **[String]** |  | 
 

@@ -15,19 +15,27 @@ public struct JettonSwapAction: Codable, JSONEncodable, Hashable {
     public var dex: String
     public var amountIn: String
     public var amountOut: String
+    /** this field will gone after Sept. 2026, use gram_in instead */
+    @available(*, deprecated, message: "This property is deprecated.")
     public var tonIn: Int64?
+    /** this field will gone after Sept. 2026, use gram_out instead */
+    @available(*, deprecated, message: "This property is deprecated.")
     public var tonOut: Int64?
+    public var gramIn: Int64?
+    public var gramOut: Int64?
     public var userWallet: AccountAddress
     public var router: AccountAddress
     public var jettonMasterIn: JettonPreview?
     public var jettonMasterOut: JettonPreview?
 
-    public init(dex: String, amountIn: String, amountOut: String, tonIn: Int64? = nil, tonOut: Int64? = nil, userWallet: AccountAddress, router: AccountAddress, jettonMasterIn: JettonPreview? = nil, jettonMasterOut: JettonPreview? = nil) {
+    public init(dex: String, amountIn: String, amountOut: String, tonIn: Int64? = nil, tonOut: Int64? = nil, gramIn: Int64? = nil, gramOut: Int64? = nil, userWallet: AccountAddress, router: AccountAddress, jettonMasterIn: JettonPreview? = nil, jettonMasterOut: JettonPreview? = nil) {
         self.dex = dex
         self.amountIn = amountIn
         self.amountOut = amountOut
         self.tonIn = tonIn
         self.tonOut = tonOut
+        self.gramIn = gramIn
+        self.gramOut = gramOut
         self.userWallet = userWallet
         self.router = router
         self.jettonMasterIn = jettonMasterIn
@@ -40,6 +48,8 @@ public struct JettonSwapAction: Codable, JSONEncodable, Hashable {
         case amountOut = "amount_out"
         case tonIn = "ton_in"
         case tonOut = "ton_out"
+        case gramIn = "gram_in"
+        case gramOut = "gram_out"
         case userWallet = "user_wallet"
         case router
         case jettonMasterIn = "jetton_master_in"
@@ -55,6 +65,8 @@ public struct JettonSwapAction: Codable, JSONEncodable, Hashable {
         try container.encode(amountOut, forKey: .amountOut)
         try container.encodeIfPresent(tonIn, forKey: .tonIn)
         try container.encodeIfPresent(tonOut, forKey: .tonOut)
+        try container.encodeIfPresent(gramIn, forKey: .gramIn)
+        try container.encodeIfPresent(gramOut, forKey: .gramOut)
         try container.encode(userWallet, forKey: .userWallet)
         try container.encode(router, forKey: .router)
         try container.encodeIfPresent(jettonMasterIn, forKey: .jettonMasterIn)

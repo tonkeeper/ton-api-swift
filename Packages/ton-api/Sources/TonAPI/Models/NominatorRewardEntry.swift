@@ -16,11 +16,11 @@ public struct NominatorRewardEntry: Codable, JSONEncodable, Hashable {
     public var address: String
     /** Nominator's share of total nominators' deposit (0–1). */
     public var weight: Double
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var reward: Int64
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var effectiveStake: Int64
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var stake: Int64
 
     public init(address: String, weight: Double, reward: Int64, effectiveStake: Int64, stake: Int64) {

@@ -14,7 +14,7 @@ public struct TonTransferAction: Codable, JSONEncodable, Hashable {
 
     public var sender: AccountAddress
     public var recipient: AccountAddress
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var amount: Int64
     public var comment: String?
     public var encryptedComment: EncryptedComment?

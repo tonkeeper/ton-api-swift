@@ -4,7 +4,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **account** | [**AccountAddress**](AccountAddress.md) |  | 
-**ton** | **Int64** |  | 
+**ton** | **Int64** | this field will gone after Sept. 2026, use gram instead | [optional] 
+**gram** | **Int64** |  | 
 **fees** | **Int64** |  | 
 **jettons** | [ValueFlowJettonsInner] |  | [optional] 
 

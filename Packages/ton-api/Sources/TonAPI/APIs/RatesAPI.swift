@@ -72,7 +72,7 @@ open class RatesAPI {
 
     /**
      - GET /v2/rates/markets
-     - Get the TON price from markets
+     - Get the Gram price from markets
      - returns: RequestBuilder<GetMarketsRates200Response> 
      */
     open class func getMarketsRatesWithRequestBuilder() -> RequestBuilder<GetMarketsRates200Response> {
@@ -95,8 +95,8 @@ open class RatesAPI {
 
     /**
 
-     - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
-     - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
+     - parameter tokens: (query) accept gram and jetton master addresses, separated by commas 
+     - parameter currencies: (query) accept gram and all possible fiat currencies, separated by commas 
      - returns: GetRates200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -107,8 +107,8 @@ open class RatesAPI {
     /**
      - GET /v2/rates
      - Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
-     - parameter tokens: (query) accept ton and jetton master addresses, separated by commas 
-     - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas 
+     - parameter tokens: (query) accept gram and jetton master addresses, separated by commas 
+     - parameter currencies: (query) accept gram and all possible fiat currencies, separated by commas 
      - returns: RequestBuilder<GetRates200Response> 
      */
     open class func getRatesWithRequestBuilder(tokens: [String], currencies: [String]) -> RequestBuilder<GetRates200Response> {

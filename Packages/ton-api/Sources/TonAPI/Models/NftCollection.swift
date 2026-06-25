@@ -24,8 +24,9 @@ public struct NftCollection: Codable, JSONEncodable, Hashable {
     public var metadata: [String: AnyCodable]?
     public var previews: [ImagePreview]?
     public var approvedBy: [ApprovedBy]
+    public var trust: TrustType
 
-    public init(address: String, nextItemIndex: Int64, owner: AccountAddress? = nil, rawCollectionContent: String, metadata: [String: AnyCodable]? = nil, previews: [ImagePreview]? = nil, approvedBy: [ApprovedBy]) {
+    public init(address: String, nextItemIndex: Int64, owner: AccountAddress? = nil, rawCollectionContent: String, metadata: [String: AnyCodable]? = nil, previews: [ImagePreview]? = nil, approvedBy: [ApprovedBy], trust: TrustType) {
         self.address = address
         self.nextItemIndex = nextItemIndex
         self.owner = owner
@@ -33,6 +34,7 @@ public struct NftCollection: Codable, JSONEncodable, Hashable {
         self.metadata = metadata
         self.previews = previews
         self.approvedBy = approvedBy
+        self.trust = trust
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -43,6 +45,7 @@ public struct NftCollection: Codable, JSONEncodable, Hashable {
         case metadata
         case previews
         case approvedBy = "approved_by"
+        case trust
     }
 
     // Encodable protocol methods
@@ -56,6 +59,7 @@ public struct NftCollection: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(metadata, forKey: .metadata)
         try container.encodeIfPresent(previews, forKey: .previews)
         try container.encode(approvedBy, forKey: .approvedBy)
+        try container.encode(trust, forKey: .trust)
     }
 }
 

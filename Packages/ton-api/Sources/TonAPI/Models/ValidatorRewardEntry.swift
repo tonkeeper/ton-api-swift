@@ -23,11 +23,11 @@ public struct ValidatorRewardEntry: Codable, JSONEncodable, Hashable {
     public var rank: Int
     /** Validator's public key (hex-encoded Ed25519). */
     public var publicKey: String
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var effectiveStake: Int64
     /** Fraction of total effective stake (0–1). */
     public var weight: Double
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var reward: Int64
     /** Pool smart contract address (bounceable, base64url). */
     public var pool: String?
@@ -35,9 +35,9 @@ public struct ValidatorRewardEntry: Codable, JSONEncodable, Hashable {
     public var poolType: PoolType?
     public var ownerAddress: String?
     public var validatorAddress: String?
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var validatorStake: Int64?
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var nominatorsStake: Int64?
     /** Total funds deposited by the pool: effective_stake + credit (leftover balance kept in the elector contract after election).  */
     public var totalStake: Int64?

@@ -14,16 +14,20 @@ public struct SmartContractAction: Codable, JSONEncodable, Hashable {
 
     public var executor: AccountAddress
     public var contract: AccountAddress
-    /** amount in nanotons */
-    public var tonAttached: Int64
+    /** amount in nanograms */
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var tonAttached: Int64?
+    /** amount in nanograms */
+    public var gramAttached: Int64
     public var operation: String
     public var payload: String?
     public var refund: Refund?
 
-    public init(executor: AccountAddress, contract: AccountAddress, tonAttached: Int64, operation: String, payload: String? = nil, refund: Refund? = nil) {
+    public init(executor: AccountAddress, contract: AccountAddress, tonAttached: Int64? = nil, gramAttached: Int64, operation: String, payload: String? = nil, refund: Refund? = nil) {
         self.executor = executor
         self.contract = contract
         self.tonAttached = tonAttached
+        self.gramAttached = gramAttached
         self.operation = operation
         self.payload = payload
         self.refund = refund
@@ -33,6 +37,7 @@ public struct SmartContractAction: Codable, JSONEncodable, Hashable {
         case executor
         case contract
         case tonAttached = "ton_attached"
+        case gramAttached = "gram_attached"
         case operation
         case payload
         case refund
@@ -44,7 +49,8 @@ public struct SmartContractAction: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(executor, forKey: .executor)
         try container.encode(contract, forKey: .contract)
-        try container.encode(tonAttached, forKey: .tonAttached)
+        try container.encodeIfPresent(tonAttached, forKey: .tonAttached)
+        try container.encode(gramAttached, forKey: .gramAttached)
         try container.encode(operation, forKey: .operation)
         try container.encodeIfPresent(payload, forKey: .payload)
         try container.encodeIfPresent(refund, forKey: .refund)

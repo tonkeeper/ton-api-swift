@@ -28,9 +28,9 @@ public struct RoundRewardsResponse: Codable, JSONEncodable, Hashable {
     public var startBlock: Int
     /** Last masterchain block of the round. */
     public var endBlock: Int
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var totalBonuses: Int64
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var totalStake: Int64
     public var validators: [ValidatorRewardEntry]
     public var error: String?

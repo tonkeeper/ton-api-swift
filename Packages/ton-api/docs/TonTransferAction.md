@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sender** | [**AccountAddress**](AccountAddress.md) |  | 
 **recipient** | [**AccountAddress**](AccountAddress.md) |  | 
-**amount** | **Int64** | amount in nanotons | 
+**amount** | **Int64** | amount in nanograms | 
 **comment** | **String** |  | [optional] 
 **encryptedComment** | [**EncryptedComment**](EncryptedComment.md) |  | [optional] 
 **refund** | [**Refund**](Refund.md) |  | [optional] 

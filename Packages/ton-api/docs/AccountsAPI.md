@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**accountDnsBackResolve**](AccountsAPI.md#accountdnsbackresolve) | **GET** /v2/accounts/{account_id}/dns/backresolve | 
 [**emulateMessageToAccountEvent**](AccountsAPI.md#emulatemessagetoaccountevent) | **POST** /v2/accounts/{account_id}/events/emulate | 
 [**getAccount**](AccountsAPI.md#getaccount) | **GET** /v2/accounts/{account_id} | 
+[**getAccountDefiAssets**](AccountsAPI.md#getaccountdefiassets) | **GET** /v2/accounts/{account_id}/defi/assets | 
 [**getAccountDiff**](AccountsAPI.md#getaccountdiff) | **GET** /v2/accounts/{account_id}/diff | 
 [**getAccountDnsExpiring**](AccountsAPI.md#getaccountdnsexpiring) | **GET** /v2/accounts/{account_id}/dns/expiring | 
 [**getAccountEvent**](AccountsAPI.md#getaccountevent) | **GET** /v2/accounts/{account_id}/events/{event_id} | 
@@ -168,6 +169,55 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Account**](Account.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAccountDefiAssets**
+```swift
+    open class func getAccountDefiAssets(accountId: String, completion: @escaping (_ data: DefiAssets?, _ error: Error?) -> Void)
+```
+
+
+
+Return DeFi assets locked in custom smart contracts: currently returns TON Whales staking and EVAA lending positions. 
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TonAPI
+
+let accountId = "accountId_example" // String | account ID
+
+AccountsAPI.getAccountDefiAssets(accountId: accountId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accountId** | **String** | account ID | 
+
+### Return type
+
+[**DefiAssets**](DefiAssets.md)
 
 ### Authorization
 
@@ -483,7 +533,7 @@ import TonAPI
 
 let accountId = "accountId_example" // String | account ID
 let jettonId = "jettonId_example" // String | jetton ID
-let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas (optional)
+let currencies = ["inner_example"] // [String] | accept gram and all possible fiat currencies, separated by commas (optional)
 let supportedExtensions = ["inner_example"] // [String] | comma separated list supported extensions (optional)
 
 AccountsAPI.getAccountJettonBalance(accountId: accountId, jettonId: jettonId, currencies: currencies, supportedExtensions: supportedExtensions) { (response, error) in
@@ -504,7 +554,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
  **jettonId** | **String** | jetton ID | 
- **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | [optional] 
+ **currencies** | [**[String]**](String.md) | accept gram and all possible fiat currencies, separated by commas | [optional] 
  **supportedExtensions** | [**[String]**](String.md) | comma separated list supported extensions | [optional] 
 
 ### Return type
@@ -598,7 +648,7 @@ Get all Jettons balances by owner address
 import TonAPI
 
 let accountId = "accountId_example" // String | account ID
-let currencies = ["inner_example"] // [String] | accept ton and all possible fiat currencies, separated by commas (optional)
+let currencies = ["inner_example"] // [String] | accept gram and all possible fiat currencies, separated by commas (optional)
 let supportedExtensions = ["inner_example"] // [String] | comma separated list supported extensions (optional)
 let limit = 987 // Int |  (optional) (default to 1000)
 let offset = 987 // Int |  (optional) (default to 0)
@@ -620,7 +670,7 @@ AccountsAPI.getAccountJettonsBalances(accountId: accountId, currencies: currenci
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountId** | **String** | account ID | 
- **currencies** | [**[String]**](String.md) | accept ton and all possible fiat currencies, separated by commas | [optional] 
+ **currencies** | [**[String]**](String.md) | accept gram and all possible fiat currencies, separated by commas | [optional] 
  **supportedExtensions** | [**[String]**](String.md) | comma separated list supported extensions | [optional] 
  **limit** | **Int** |  | [optional] [default to 1000]
  **offset** | **Int** |  | [optional] [default to 0]
@@ -760,7 +810,7 @@ let accountId = "accountId_example" // String | account ID
 let collection = "collection_example" // String | nft collection (optional)
 let limit = 987 // Int |  (optional) (default to 1000)
 let offset = 987 // Int |  (optional) (default to 0)
-let indirectOwnership = true // Bool | Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional) (default to false)
+let indirectOwnership = true // Bool | Selling nft items in TON implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional) (default to false)
 
 AccountsAPI.getAccountNftItems(accountId: accountId, collection: collection, limit: limit, offset: offset, indirectOwnership: indirectOwnership) { (response, error) in
     guard error == nil else {
@@ -782,7 +832,7 @@ Name | Type | Description  | Notes
  **collection** | **String** | nft collection | [optional] 
  **limit** | **Int** |  | [optional] [default to 1000]
  **offset** | **Int** |  | [optional] [default to 0]
- **indirectOwnership** | **Bool** | Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly. | [optional] [default to false]
+ **indirectOwnership** | **Bool** | Selling nft items in TON implemented usually via transfer items to special selling account. This option enables including items which owned not directly. | [optional] [default to false]
 
 ### Return type
 

@@ -29,6 +29,7 @@ Class | Method | HTTP request | Description
 *AccountsAPI* | [**accountDnsBackResolve**](docs/AccountsAPI.md#accountdnsbackresolve) | **GET** /v2/accounts/{account_id}/dns/backresolve | 
 *AccountsAPI* | [**emulateMessageToAccountEvent**](docs/AccountsAPI.md#emulatemessagetoaccountevent) | **POST** /v2/accounts/{account_id}/events/emulate | 
 *AccountsAPI* | [**getAccount**](docs/AccountsAPI.md#getaccount) | **GET** /v2/accounts/{account_id} | 
+*AccountsAPI* | [**getAccountDefiAssets**](docs/AccountsAPI.md#getaccountdefiassets) | **GET** /v2/accounts/{account_id}/defi/assets | 
 *AccountsAPI* | [**getAccountDiff**](docs/AccountsAPI.md#getaccountdiff) | **GET** /v2/accounts/{account_id}/diff | 
 *AccountsAPI* | [**getAccountDnsExpiring**](docs/AccountsAPI.md#getaccountdnsexpiring) | **GET** /v2/accounts/{account_id}/dns/expiring | 
 *AccountsAPI* | [**getAccountEvent**](docs/AccountsAPI.md#getaccountevent) | **GET** /v2/accounts/{account_id}/events/{event_id} | 
@@ -109,6 +110,8 @@ Class | Method | HTTP request | Description
 *LiteServerAPI* | [**getRawTime**](docs/LiteServerAPI.md#getrawtime) | **GET** /v2/liteserver/get_time | 
 *LiteServerAPI* | [**getRawTransactions**](docs/LiteServerAPI.md#getrawtransactions) | **GET** /v2/liteserver/get_transactions/{account_id} | 
 *LiteServerAPI* | [**sendRawMessage**](docs/LiteServerAPI.md#sendrawmessage) | **POST** /v2/liteserver/send_message | 
+*MigrationAPI* | [**getMigrationWallets**](docs/MigrationAPI.md#getmigrationwallets) | **POST** /v2/migration/wallets | 
+*MigrationAPI* | [**prepareMigration**](docs/MigrationAPI.md#preparemigration) | **POST** /v2/migration/prepare | 
 *MultisigAPI* | [**getMultisigAccount**](docs/MultisigAPI.md#getmultisigaccount) | **GET** /v2/multisig/{account_id} | 
 *MultisigAPI* | [**getMultisigOrder**](docs/MultisigAPI.md#getmultisigorder) | **GET** /v2/multisig/order/{account_id} | 
 *NFTAPI* | [**getAccountNftHistory**](docs/NFTAPI.md#getaccountnfthistory) | **GET** /v2/accounts/{account_id}/nfts/history | 
@@ -236,8 +239,14 @@ Class | Method | HTTP request | Description
  - [DecodedMessageExtInMsgDecodedWalletV5](docs/DecodedMessageExtInMsgDecodedWalletV5.md)
  - [DecodedRawMessage](docs/DecodedRawMessage.md)
  - [DecodedRawMessageMessage](docs/DecodedRawMessageMessage.md)
+ - [DefiAsset](docs/DefiAsset.md)
+ - [DefiAssetAssetType](docs/DefiAssetAssetType.md)
+ - [DefiAssets](docs/DefiAssets.md)
+ - [DefiLockedAsset](docs/DefiLockedAsset.md)
+ - [DefiProvider](docs/DefiProvider.md)
  - [DepositStakeAction](docs/DepositStakeAction.md)
  - [DepositTokenStakeAction](docs/DepositTokenStakeAction.md)
+ - [DepositXTRAction](docs/DepositXTRAction.md)
  - [DnsExpiring](docs/DnsExpiring.md)
  - [DnsExpiringItemsInner](docs/DnsExpiringItemsInner.md)
  - [DnsRecord](docs/DnsRecord.md)
@@ -309,6 +318,7 @@ Class | Method | HTTP request | Description
  - [GetWalletsByPublicKeyBulkRequest](docs/GetWalletsByPublicKeyBulkRequest.md)
  - [ImagePreview](docs/ImagePreview.md)
  - [InitStateRaw](docs/InitStateRaw.md)
+ - [JettonAssetInfo](docs/JettonAssetInfo.md)
  - [JettonBalance](docs/JettonBalance.md)
  - [JettonBalanceLock](docs/JettonBalanceLock.md)
  - [JettonBridgeParams](docs/JettonBridgeParams.md)
@@ -336,6 +346,11 @@ Class | Method | HTTP request | Description
  - [Metadata](docs/Metadata.md)
  - [Method](docs/Method.md)
  - [MethodExecutionResult](docs/MethodExecutionResult.md)
+ - [MigrationPrepareRequest](docs/MigrationPrepareRequest.md)
+ - [MigrationPrepareResponse](docs/MigrationPrepareResponse.md)
+ - [MigrationTransaction](docs/MigrationTransaction.md)
+ - [MigrationWalletValue](docs/MigrationWalletValue.md)
+ - [MigrationWallets](docs/MigrationWallets.md)
  - [MisbehaviourPunishmentConfig](docs/MisbehaviourPunishmentConfig.md)
  - [ModelError](docs/ModelError.md)
  - [ModelProtocol](docs/ModelProtocol.md)
@@ -431,6 +446,7 @@ Class | Method | HTTP request | Description
  - [WithdrawStakeAction](docs/WithdrawStakeAction.md)
  - [WithdrawStakeRequestAction](docs/WithdrawStakeRequestAction.md)
  - [WithdrawTokenStakeRequestAction](docs/WithdrawTokenStakeRequestAction.md)
+ - [WithdrawXTRAction](docs/WithdrawXTRAction.md)
  - [WorkchainDescr](docs/WorkchainDescr.md)
 
 

@@ -5,7 +5,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **executor** | [**AccountAddress**](AccountAddress.md) |  | 
 **contract** | [**AccountAddress**](AccountAddress.md) |  | 
-**tonAttached** | **Int64** | amount in nanotons | 
+**tonAttached** | **Int64** | amount in nanograms | [optional] 
+**gramAttached** | **Int64** | amount in nanograms | 
 **operation** | **String** |  | 
 **payload** | **String** |  | [optional] 
 **refund** | [**Refund**](Refund.md) |  | [optional] 

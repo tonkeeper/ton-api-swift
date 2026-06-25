@@ -6,8 +6,10 @@ Name | Type | Description | Notes
 **dex** | **String** |  | 
 **amountIn** | **String** |  | 
 **amountOut** | **String** |  | 
-**tonIn** | **Int64** |  | [optional] 
-**tonOut** | **Int64** |  | [optional] 
+**tonIn** | **Int64** | this field will gone after Sept. 2026, use gram_in instead | [optional] 
+**tonOut** | **Int64** | this field will gone after Sept. 2026, use gram_out instead | [optional] 
+**gramIn** | **Int64** |  | [optional] 
+**gramOut** | **Int64** |  | [optional] 
 **userWallet** | [**AccountAddress**](AccountAddress.md) |  | 
 **router** | [**AccountAddress**](AccountAddress.md) |  | 
 **jettonMasterIn** | [**JettonPreview**](JettonPreview.md) |  | [optional] 

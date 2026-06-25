@@ -22,11 +22,11 @@ public struct ValidatorsResponse: Codable, JSONEncodable, Hashable {
     public var prevElectionId: Int64?
     /** Election ID of the round immediately after this one. Omitted when the current round is not yet finished (next round not known).  */
     public var nextElectionId: Int64?
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var electorBalance: Int64
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var totalStake: Int64
-    /** amount in nanotons */
+    /** amount in nanograms */
     public var rewardPerBlock: Int64
     public var validators: [ValidatorRewardEntry]
 

@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 TON */
+/** The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 Gram */
 public struct BlockchainConfig40: Codable, JSONEncodable, Hashable {
 
     public var misbehaviourPunishmentConfig: MisbehaviourPunishmentConfig

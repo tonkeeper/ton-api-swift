@@ -136,6 +136,43 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
+     - returns: DefiAssets
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getAccountDefiAssets(accountId: String) async throws -> DefiAssets {
+        return try await getAccountDefiAssetsWithRequestBuilder(accountId: accountId).execute().body
+    }
+
+    /**
+     - GET /v2/accounts/{account_id}/defi/assets
+     - Return DeFi assets locked in custom smart contracts: currently returns TON Whales staking and EVAA lending positions. 
+     - parameter accountId: (path) account ID 
+     - returns: RequestBuilder<DefiAssets> 
+     */
+    open class func getAccountDefiAssetsWithRequestBuilder(accountId: String) -> RequestBuilder<DefiAssets> {
+        var localVariablePath = "/v2/accounts/{account_id}/defi/assets"
+        let accountIdPreEscape = "\(APIHelper.mapValueToPathItem(accountId))"
+        let accountIdPostEscape = accountIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{account_id}", with: accountIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TonAPIAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<DefiAssets>.Type = TonAPIAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+    }
+
+    /**
+
+     - parameter accountId: (path) account ID 
      - parameter startDate: (query)  
      - parameter endDate: (query)  
      - returns: GetAccountDiff200Response
@@ -404,7 +441,7 @@ open class AccountsAPI {
 
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
+     - parameter currencies: (query) accept gram and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: JettonBalance
      */
@@ -418,7 +455,7 @@ open class AccountsAPI {
      - Get Jetton balance by owner address
      - parameter accountId: (path) account ID 
      - parameter jettonId: (path) jetton ID 
-     - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
+     - parameter currencies: (query) accept gram and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - returns: RequestBuilder<JettonBalance> 
      */
@@ -513,7 +550,7 @@ open class AccountsAPI {
     /**
 
      - parameter accountId: (path) account ID 
-     - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
+     - parameter currencies: (query) accept gram and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
@@ -528,7 +565,7 @@ open class AccountsAPI {
      - GET /v2/accounts/{account_id}/jettons
      - Get all Jettons balances by owner address
      - parameter accountId: (path) account ID 
-     - parameter currencies: (query) accept ton and all possible fiat currencies, separated by commas (optional)
+     - parameter currencies: (query) accept gram and all possible fiat currencies, separated by commas (optional)
      - parameter supportedExtensions: (query) comma separated list supported extensions (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
@@ -649,7 +686,7 @@ open class AccountsAPI {
      - parameter collection: (query) nft collection (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
-     - parameter indirectOwnership: (query) Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional, default to false)
+     - parameter indirectOwnership: (query) Selling nft items in TON implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional, default to false)
      - returns: NftItems
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -664,7 +701,7 @@ open class AccountsAPI {
      - parameter collection: (query) nft collection (optional)
      - parameter limit: (query)  (optional, default to 1000)
      - parameter offset: (query)  (optional, default to 0)
-     - parameter indirectOwnership: (query) Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional, default to false)
+     - parameter indirectOwnership: (query) Selling nft items in TON implemented usually via transfer items to special selling account. This option enables including items which owned not directly. (optional, default to false)
      - returns: RequestBuilder<NftItems> 
      */
     open class func getAccountNftItemsWithRequestBuilder(accountId: String, collection: String? = nil, limit: Int? = nil, offset: Int? = nil, indirectOwnership: Bool? = nil) -> RequestBuilder<NftItems> {

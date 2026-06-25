@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** The reward in nanoTons for block creation in the TON blockchain. */
+/** The reward in nanograms for block creation in the TON blockchain. */
 public struct BlockchainConfig15: Codable, JSONEncodable, Hashable {
 
     public var validatorsElectedFor: Int64

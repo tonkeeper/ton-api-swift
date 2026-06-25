@@ -14,17 +14,25 @@ public struct JettonBridgePrices: Codable, JSONEncodable, Hashable {
 
     public var bridgeBurnFee: Int64
     public var bridgeMintFee: Int64
-    public var walletMinTonsForStorage: Int64
+    /** this field will gone after Sept. 2026, use wallet_min_gram_for_storage instead */
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var walletMinTonsForStorage: Int64?
+    public var walletMinGramForStorage: Int64
     public var walletGasConsumption: Int64
-    public var minterMinTonsForStorage: Int64
+    /** this field will gone after Sept. 2026, use wallet_min_gram_for_storage instead */
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var minterMinTonsForStorage: Int64?
+    public var minterMinGramForStorage: Int64
     public var discoverGasConsumption: Int64
 
-    public init(bridgeBurnFee: Int64, bridgeMintFee: Int64, walletMinTonsForStorage: Int64, walletGasConsumption: Int64, minterMinTonsForStorage: Int64, discoverGasConsumption: Int64) {
+    public init(bridgeBurnFee: Int64, bridgeMintFee: Int64, walletMinTonsForStorage: Int64? = nil, walletMinGramForStorage: Int64, walletGasConsumption: Int64, minterMinTonsForStorage: Int64? = nil, minterMinGramForStorage: Int64, discoverGasConsumption: Int64) {
         self.bridgeBurnFee = bridgeBurnFee
         self.bridgeMintFee = bridgeMintFee
         self.walletMinTonsForStorage = walletMinTonsForStorage
+        self.walletMinGramForStorage = walletMinGramForStorage
         self.walletGasConsumption = walletGasConsumption
         self.minterMinTonsForStorage = minterMinTonsForStorage
+        self.minterMinGramForStorage = minterMinGramForStorage
         self.discoverGasConsumption = discoverGasConsumption
     }
 
@@ -32,8 +40,10 @@ public struct JettonBridgePrices: Codable, JSONEncodable, Hashable {
         case bridgeBurnFee = "bridge_burn_fee"
         case bridgeMintFee = "bridge_mint_fee"
         case walletMinTonsForStorage = "wallet_min_tons_for_storage"
+        case walletMinGramForStorage = "wallet_min_gram_for_storage"
         case walletGasConsumption = "wallet_gas_consumption"
         case minterMinTonsForStorage = "minter_min_tons_for_storage"
+        case minterMinGramForStorage = "minter_min_gram_for_storage"
         case discoverGasConsumption = "discover_gas_consumption"
     }
 
@@ -43,9 +53,11 @@ public struct JettonBridgePrices: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(bridgeBurnFee, forKey: .bridgeBurnFee)
         try container.encode(bridgeMintFee, forKey: .bridgeMintFee)
-        try container.encode(walletMinTonsForStorage, forKey: .walletMinTonsForStorage)
+        try container.encodeIfPresent(walletMinTonsForStorage, forKey: .walletMinTonsForStorage)
+        try container.encode(walletMinGramForStorage, forKey: .walletMinGramForStorage)
         try container.encode(walletGasConsumption, forKey: .walletGasConsumption)
-        try container.encode(minterMinTonsForStorage, forKey: .minterMinTonsForStorage)
+        try container.encodeIfPresent(minterMinTonsForStorage, forKey: .minterMinTonsForStorage)
+        try container.encode(minterMinGramForStorage, forKey: .minterMinGramForStorage)
         try container.encode(discoverGasConsumption, forKey: .discoverGasConsumption)
     }
 }

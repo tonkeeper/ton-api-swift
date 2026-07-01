@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **price** | [**TokenRates**](TokenRates.md) |  | [optional] 
 **walletAddress** | [**AccountAddress**](AccountAddress.md) |  | 
 **jetton** | [**JettonPreview**](JettonPreview.md) |  | 
+**defiAsset** | [**JettonAssetInfo**](JettonAssetInfo.md) |  | [optional] 
 **extensions** | **[String]** |  | [optional] 
 **lock** | [**JettonBalanceLock**](JettonBalanceLock.md) |  | [optional] 
 

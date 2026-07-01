@@ -16,14 +16,16 @@ public struct JettonBalance: Codable, JSONEncodable, Hashable {
     public var price: TokenRates?
     public var walletAddress: AccountAddress
     public var jetton: JettonPreview
+    public var defiAsset: JettonAssetInfo?
     public var extensions: [String]?
     public var lock: JettonBalanceLock?
 
-    public init(balance: String, price: TokenRates? = nil, walletAddress: AccountAddress, jetton: JettonPreview, extensions: [String]? = nil, lock: JettonBalanceLock? = nil) {
+    public init(balance: String, price: TokenRates? = nil, walletAddress: AccountAddress, jetton: JettonPreview, defiAsset: JettonAssetInfo? = nil, extensions: [String]? = nil, lock: JettonBalanceLock? = nil) {
         self.balance = balance
         self.price = price
         self.walletAddress = walletAddress
         self.jetton = jetton
+        self.defiAsset = defiAsset
         self.extensions = extensions
         self.lock = lock
     }
@@ -33,6 +35,7 @@ public struct JettonBalance: Codable, JSONEncodable, Hashable {
         case price
         case walletAddress = "wallet_address"
         case jetton
+        case defiAsset = "defi_asset"
         case extensions
         case lock
     }
@@ -45,6 +48,7 @@ public struct JettonBalance: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(price, forKey: .price)
         try container.encode(walletAddress, forKey: .walletAddress)
         try container.encode(jetton, forKey: .jetton)
+        try container.encodeIfPresent(defiAsset, forKey: .defiAsset)
         try container.encodeIfPresent(extensions, forKey: .extensions)
         try container.encodeIfPresent(lock, forKey: .lock)
     }

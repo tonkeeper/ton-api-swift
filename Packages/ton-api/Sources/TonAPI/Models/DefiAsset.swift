@@ -12,7 +12,7 @@ import AnyCodable
 
 public struct DefiAsset: Codable, JSONEncodable, Hashable {
 
-    public var assetType: DefiAssetAssetType
+    public var type: DefiAssetType
     /** amount in minimal units of the locked asset */
     public var amount: String
     public var poolAddress: String?
@@ -20,8 +20,8 @@ public struct DefiAsset: Codable, JSONEncodable, Hashable {
     public var defiProvider: DefiProvider
     public var lockedAsset: DefiLockedAsset
 
-    public init(assetType: DefiAssetAssetType, amount: String, poolAddress: String? = nil, assetAddress: String? = nil, defiProvider: DefiProvider, lockedAsset: DefiLockedAsset) {
-        self.assetType = assetType
+    public init(type: DefiAssetType, amount: String, poolAddress: String? = nil, assetAddress: String? = nil, defiProvider: DefiProvider, lockedAsset: DefiLockedAsset) {
+        self.type = type
         self.amount = amount
         self.poolAddress = poolAddress
         self.assetAddress = assetAddress
@@ -30,7 +30,7 @@ public struct DefiAsset: Codable, JSONEncodable, Hashable {
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case assetType = "asset_type"
+        case type
         case amount
         case poolAddress = "pool_address"
         case assetAddress = "asset_address"
@@ -42,7 +42,7 @@ public struct DefiAsset: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(assetType, forKey: .assetType)
+        try container.encode(type, forKey: .type)
         try container.encode(amount, forKey: .amount)
         try container.encodeIfPresent(poolAddress, forKey: .poolAddress)
         try container.encodeIfPresent(assetAddress, forKey: .assetAddress)

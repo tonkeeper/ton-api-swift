@@ -22,9 +22,8 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
     public var score: Int
     public var scaledUi: ScaledUI?
     public var description: String?
-    public var assetInfo: JettonAssetInfo?
 
-    public init(address: String, name: String, symbol: String, decimals: Int, image: String, verification: JettonVerificationType, customPayloadApiUri: String? = nil, score: Int, scaledUi: ScaledUI? = nil, description: String? = nil, assetInfo: JettonAssetInfo? = nil) {
+    public init(address: String, name: String, symbol: String, decimals: Int, image: String, verification: JettonVerificationType, customPayloadApiUri: String? = nil, score: Int, scaledUi: ScaledUI? = nil, description: String? = nil) {
         self.address = address
         self.name = name
         self.symbol = symbol
@@ -35,7 +34,6 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
         self.score = score
         self.scaledUi = scaledUi
         self.description = description
-        self.assetInfo = assetInfo
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -49,7 +47,6 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
         case score
         case scaledUi = "scaled_ui"
         case description
-        case assetInfo = "asset_info"
     }
 
     // Encodable protocol methods
@@ -66,7 +63,6 @@ public struct JettonPreview: Codable, JSONEncodable, Hashable {
         try container.encode(score, forKey: .score)
         try container.encodeIfPresent(scaledUi, forKey: .scaledUi)
         try container.encodeIfPresent(description, forKey: .description)
-        try container.encodeIfPresent(assetInfo, forKey: .assetInfo)
     }
 }
 

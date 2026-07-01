@@ -73,7 +73,7 @@ Prepare ordered signable transactions that migrate every asset from `from` to `t
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TonAPI
 
-let migrationPrepareRequest = MigrationPrepareRequest(from: "from_example", to: "to_example", currency: "currency_example") // MigrationPrepareRequest | 
+let migrationPrepareRequest = MigrationPrepareRequest(from: "from_example", to: "to_example", currency: "currency_example", publicKey: "publicKey_example") // MigrationPrepareRequest | 
 
 MigrationAPI.prepareMigration(migrationPrepareRequest: migrationPrepareRequest) { (response, error) in
     guard error == nil else {

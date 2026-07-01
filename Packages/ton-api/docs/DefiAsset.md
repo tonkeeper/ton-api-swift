@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**assetType** | [**DefiAssetAssetType**](DefiAssetAssetType.md) |  | 
+**type** | [**DefiAssetType**](DefiAssetType.md) |  | 
 **amount** | **String** | amount in minimal units of the locked asset | 
 **poolAddress** | **String** |  | [optional] 
 **assetAddress** | **String** |  | [optional] 

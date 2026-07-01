@@ -120,8 +120,9 @@ Sources/TonAPI/Models/DecodedMessageExtInMsgDecodedWalletV5.swift
 Sources/TonAPI/Models/DecodedRawMessage.swift
 Sources/TonAPI/Models/DecodedRawMessageMessage.swift
 Sources/TonAPI/Models/DefiAsset.swift
-Sources/TonAPI/Models/DefiAssetAssetType.swift
+Sources/TonAPI/Models/DefiAssetType.swift
 Sources/TonAPI/Models/DefiAssets.swift
+Sources/TonAPI/Models/DefiLiquidPoolAssets.swift
 Sources/TonAPI/Models/DefiLockedAsset.swift
 Sources/TonAPI/Models/DefiProvider.swift
 Sources/TonAPI/Models/DepositStakeAction.swift
@@ -241,6 +242,7 @@ Sources/TonAPI/Models/MultisigOrderChangingParameters.swift
 Sources/TonAPI/Models/Multisigs.swift
 Sources/TonAPI/Models/NewConsensusConfig.swift
 Sources/TonAPI/Models/NftCollection.swift
+Sources/TonAPI/Models/NftCollectionMetadataStatus.swift
 Sources/TonAPI/Models/NftCollections.swift
 Sources/TonAPI/Models/NftItem.swift
 Sources/TonAPI/Models/NftItemCollection.swift
@@ -424,8 +426,9 @@ docs/DecodedMessageExtInMsgDecodedWalletV5.md
 docs/DecodedRawMessage.md
 docs/DecodedRawMessageMessage.md
 docs/DefiAsset.md
-docs/DefiAssetAssetType.md
+docs/DefiAssetType.md
 docs/DefiAssets.md
+docs/DefiLiquidPoolAssets.md
 docs/DefiLockedAsset.md
 docs/DefiProvider.md
 docs/DepositStakeAction.md
@@ -554,6 +557,7 @@ docs/Multisigs.md
 docs/NFTAPI.md
 docs/NewConsensusConfig.md
 docs/NftCollection.md
+docs/NftCollectionMetadataStatus.md
 docs/NftCollections.md
 docs/NftItem.md
 docs/NftItemCollection.md

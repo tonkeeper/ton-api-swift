@@ -18,17 +18,21 @@ public struct MigrationPrepareRequest: Codable, JSONEncodable, Hashable {
     public var to: String
     /** fiat currency for the preview values */
     public var currency: String? = "USD"
+    /** hex-encoded ed25519 public key of the source wallet. If `from` wallet is uninitialized, then public_key is used to infer wallet code  */
+    public var publicKey: String?
 
-    public init(from: String, to: String, currency: String? = "USD") {
+    public init(from: String, to: String, currency: String? = "USD", publicKey: String? = nil) {
         self.from = from
         self.to = to
         self.currency = currency
+        self.publicKey = publicKey
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case from
         case to
         case currency
+        case publicKey = "public_key"
     }
 
     // Encodable protocol methods
@@ -38,6 +42,7 @@ public struct MigrationPrepareRequest: Codable, JSONEncodable, Hashable {
         try container.encode(from, forKey: .from)
         try container.encode(to, forKey: .to)
         try container.encodeIfPresent(currency, forKey: .currency)
+        try container.encodeIfPresent(publicKey, forKey: .publicKey)
     }
 }
 

@@ -16,17 +16,21 @@ public struct MigrationTransaction: Codable, JSONEncodable, Hashable {
     public var seqno: Int
     /** base64 BOC of the unsigned wallet body. Sign its hash, prepend the signature, wrap it in an external message and broadcast.  */
     public var boc: String
+    /** base64 BOC of the wallet StateInit (code + data). Present only on the first transaction when the source wallet is not yet initialized  */
+    public var stateInit: String?
     public var emulation: MessageConsequences
 
-    public init(seqno: Int, boc: String, emulation: MessageConsequences) {
+    public init(seqno: Int, boc: String, stateInit: String? = nil, emulation: MessageConsequences) {
         self.seqno = seqno
         self.boc = boc
+        self.stateInit = stateInit
         self.emulation = emulation
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case seqno
         case boc
+        case stateInit = "state_init"
         case emulation
     }
 
@@ -36,6 +40,7 @@ public struct MigrationTransaction: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(seqno, forKey: .seqno)
         try container.encode(boc, forKey: .boc)
+        try container.encodeIfPresent(stateInit, forKey: .stateInit)
         try container.encode(emulation, forKey: .emulation)
     }
 }

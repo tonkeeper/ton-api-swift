@@ -12,17 +12,23 @@ import AnyCodable
 
 public struct JettonAssetInfo: Codable, JSONEncodable, Hashable {
 
-    public var tokenType: DefiAssetAssetType
+    public var tokenType: DefiAssetType
+    public var type: DefiAssetType?
     public var defiProvider: DefiProvider
+    public var poolAssets: DefiLiquidPoolAssets?
 
-    public init(tokenType: DefiAssetAssetType, defiProvider: DefiProvider) {
+    public init(tokenType: DefiAssetType, type: DefiAssetType? = nil, defiProvider: DefiProvider, poolAssets: DefiLiquidPoolAssets? = nil) {
         self.tokenType = tokenType
+        self.type = type
         self.defiProvider = defiProvider
+        self.poolAssets = poolAssets
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case tokenType = "token_type"
+        case type
         case defiProvider = "defi_provider"
+        case poolAssets = "pool_assets"
     }
 
     // Encodable protocol methods
@@ -30,7 +36,9 @@ public struct JettonAssetInfo: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(tokenType, forKey: .tokenType)
+        try container.encodeIfPresent(type, forKey: .type)
         try container.encode(defiProvider, forKey: .defiProvider)
+        try container.encodeIfPresent(poolAssets, forKey: .poolAssets)
     }
 }
 

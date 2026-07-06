@@ -36,6 +36,7 @@ Name | Type | Description | Notes
 **oracleRequest** | [**OracleRequestAction**](OracleRequestAction.md) |  | [optional] 
 **withdrawXTR** | [**WithdrawXTRAction**](WithdrawXTRAction.md) |  | [optional] 
 **depositXTR** | [**DepositXTRAction**](DepositXTRAction.md) |  | [optional] 
+**buyXTR** | [**BuyXTRAction**](BuyXTRAction.md) |  | [optional] 
 **simplePreview** | [**ActionSimplePreview**](ActionSimplePreview.md) |  | 
 **baseTransactions** | **[String]** |  | 
 

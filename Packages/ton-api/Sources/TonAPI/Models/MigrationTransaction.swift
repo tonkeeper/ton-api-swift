@@ -18,12 +18,15 @@ public struct MigrationTransaction: Codable, JSONEncodable, Hashable {
     public var boc: String
     /** base64 BOC of the wallet StateInit (code + data). Present only on the first transaction when the source wallet is not yet initialized  */
     public var stateInit: String?
+    /** ordered raw internal messages carried by this transaction — the cells the wallet resends. These are what populate the payload/actions.  */
+    public var messages: [MigrationOutMessage]
     public var emulation: MessageConsequences
 
-    public init(seqno: Int, boc: String, stateInit: String? = nil, emulation: MessageConsequences) {
+    public init(seqno: Int, boc: String, stateInit: String? = nil, messages: [MigrationOutMessage], emulation: MessageConsequences) {
         self.seqno = seqno
         self.boc = boc
         self.stateInit = stateInit
+        self.messages = messages
         self.emulation = emulation
     }
 
@@ -31,6 +34,7 @@ public struct MigrationTransaction: Codable, JSONEncodable, Hashable {
         case seqno
         case boc
         case stateInit = "state_init"
+        case messages
         case emulation
     }
 
@@ -41,6 +45,7 @@ public struct MigrationTransaction: Codable, JSONEncodable, Hashable {
         try container.encode(seqno, forKey: .seqno)
         try container.encode(boc, forKey: .boc)
         try container.encodeIfPresent(stateInit, forKey: .stateInit)
+        try container.encode(messages, forKey: .messages)
         try container.encode(emulation, forKey: .emulation)
     }
 }

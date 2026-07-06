@@ -105,6 +105,7 @@ Sources/TonAPI/Models/BlockchainRawAccount.swift
 Sources/TonAPI/Models/BlockchainRawAccountLibrariesInner.swift
 Sources/TonAPI/Models/BlockchainRawAccounts.swift
 Sources/TonAPI/Models/BouncePhaseType.swift
+Sources/TonAPI/Models/BuyXTRAction.swift
 Sources/TonAPI/Models/ComputePhase.swift
 Sources/TonAPI/Models/ComputeSkipReason.swift
 Sources/TonAPI/Models/ConfigProposalSetup.swift
@@ -227,6 +228,7 @@ Sources/TonAPI/Models/MessageConsequences.swift
 Sources/TonAPI/Models/Metadata.swift
 Sources/TonAPI/Models/Method.swift
 Sources/TonAPI/Models/MethodExecutionResult.swift
+Sources/TonAPI/Models/MigrationOutMessage.swift
 Sources/TonAPI/Models/MigrationPrepareRequest.swift
 Sources/TonAPI/Models/MigrationPrepareResponse.swift
 Sources/TonAPI/Models/MigrationTransaction.swift
@@ -409,6 +411,7 @@ docs/BlockchainRawAccount.md
 docs/BlockchainRawAccountLibrariesInner.md
 docs/BlockchainRawAccounts.md
 docs/BouncePhaseType.md
+docs/BuyXTRAction.md
 docs/ComputePhase.md
 docs/ComputeSkipReason.md
 docs/ConfigProposalSetup.md
@@ -540,6 +543,7 @@ docs/Metadata.md
 docs/Method.md
 docs/MethodExecutionResult.md
 docs/MigrationAPI.md
+docs/MigrationOutMessage.md
 docs/MigrationPrepareRequest.md
 docs/MigrationPrepareResponse.md
 docs/MigrationTransaction.md

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **description** | **String** |  | 
 **actionImage** | **String** | a link to an image for this particular action. | [optional] 
 **value** | **String** |  | [optional] 
+**fiatValue** | **String** | the value of this action expressed in the requested fiat currency. | [optional] 
 **valueImage** | **String** | a link to an image that depicts this action&#39;s asset. | [optional] 
 **accounts** | [AccountAddress] |  | 
 

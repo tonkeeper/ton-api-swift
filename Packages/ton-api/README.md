@@ -320,6 +320,7 @@ Class | Method | HTTP request | Description
  - [GetWalletsByPublicKeyBulkRequest](docs/GetWalletsByPublicKeyBulkRequest.md)
  - [ImagePreview](docs/ImagePreview.md)
  - [InitStateRaw](docs/InitStateRaw.md)
+ - [InsufficientFunds](docs/InsufficientFunds.md)
  - [JettonAssetInfo](docs/JettonAssetInfo.md)
  - [JettonBalance](docs/JettonBalance.md)
  - [JettonBalanceLock](docs/JettonBalanceLock.md)

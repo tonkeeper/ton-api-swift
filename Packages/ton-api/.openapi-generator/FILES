@@ -200,6 +200,7 @@ Sources/TonAPI/Models/GetTonConnectPayload200Response.swift
 Sources/TonAPI/Models/GetWalletsByPublicKeyBulkRequest.swift
 Sources/TonAPI/Models/ImagePreview.swift
 Sources/TonAPI/Models/InitStateRaw.swift
+Sources/TonAPI/Models/InsufficientFunds.swift
 Sources/TonAPI/Models/JettonAssetInfo.swift
 Sources/TonAPI/Models/JettonBalance.swift
 Sources/TonAPI/Models/JettonBalanceLock.swift
@@ -512,6 +513,7 @@ docs/GetTonConnectPayload200Response.md
 docs/GetWalletsByPublicKeyBulkRequest.md
 docs/ImagePreview.md
 docs/InitStateRaw.md
+docs/InsufficientFunds.md
 docs/JettonAssetInfo.md
 docs/JettonBalance.md
 docs/JettonBalanceLock.md

@@ -18,15 +18,18 @@ public struct ActionSimplePreview: Codable, JSONEncodable, Hashable {
     /** a link to an image for this particular action. */
     public var actionImage: String?
     public var value: String?
+    /** the value of this action expressed in the requested fiat currency. */
+    public var fiatValue: String?
     /** a link to an image that depicts this action's asset. */
     public var valueImage: String?
     public var accounts: [AccountAddress]
 
-    public init(name: String, description: String, actionImage: String? = nil, value: String? = nil, valueImage: String? = nil, accounts: [AccountAddress]) {
+    public init(name: String, description: String, actionImage: String? = nil, value: String? = nil, fiatValue: String? = nil, valueImage: String? = nil, accounts: [AccountAddress]) {
         self.name = name
         self.description = description
         self.actionImage = actionImage
         self.value = value
+        self.fiatValue = fiatValue
         self.valueImage = valueImage
         self.accounts = accounts
     }
@@ -36,6 +39,7 @@ public struct ActionSimplePreview: Codable, JSONEncodable, Hashable {
         case description
         case actionImage = "action_image"
         case value
+        case fiatValue = "fiat_value"
         case valueImage = "value_image"
         case accounts
     }
@@ -48,6 +52,7 @@ public struct ActionSimplePreview: Codable, JSONEncodable, Hashable {
         try container.encode(description, forKey: .description)
         try container.encodeIfPresent(actionImage, forKey: .actionImage)
         try container.encodeIfPresent(value, forKey: .value)
+        try container.encodeIfPresent(fiatValue, forKey: .fiatValue)
         try container.encodeIfPresent(valueImage, forKey: .valueImage)
         try container.encode(accounts, forKey: .accounts)
     }

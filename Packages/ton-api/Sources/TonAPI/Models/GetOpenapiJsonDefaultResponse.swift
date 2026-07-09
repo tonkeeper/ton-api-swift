@@ -14,15 +14,18 @@ public struct GetOpenapiJsonDefaultResponse: Codable, JSONEncodable, Hashable {
 
     public var error: String
     public var errorCode: Int64?
+    public var details: InsufficientFunds?
 
-    public init(error: String, errorCode: Int64? = nil) {
+    public init(error: String, errorCode: Int64? = nil, details: InsufficientFunds? = nil) {
         self.error = error
         self.errorCode = errorCode
+        self.details = details
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case error
         case errorCode = "error_code"
+        case details
     }
 
     // Encodable protocol methods
@@ -31,6 +34,7 @@ public struct GetOpenapiJsonDefaultResponse: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(error, forKey: .error)
         try container.encodeIfPresent(errorCode, forKey: .errorCode)
+        try container.encodeIfPresent(details, forKey: .details)
     }
 }
 

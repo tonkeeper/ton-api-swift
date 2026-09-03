@@ -62,6 +62,10 @@ let package = Package(
         .testTarget(name: "EventSourceTests",
                     dependencies: [.target(name: "EventSource")],
                     path: "Packages/EventSource/Tests"
+                   ),
+        .testTarget(name: "StreamURLSessionTransportTests",
+                    dependencies: [.target(name: "StreamURLSessionTransport")],
+                    path: "Packages/StreamURLSessionTransport/Tests"
                    )
     ]
 )

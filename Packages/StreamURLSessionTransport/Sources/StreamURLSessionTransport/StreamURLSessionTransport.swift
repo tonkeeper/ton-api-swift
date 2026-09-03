@@ -33,8 +33,8 @@ public final class StreamURLSessionTransport {
 
     // Started before the cancellation handler is installed, so `cancel` cannot overlap `resume` —
     // they are sequential in program order rather than serialised after the fact. Resuming a task
-    // whose surrounding Task is already cancelled is harmless: the handler below fires immediately,
-    // cancels it, and the delegate finishes both streams with `URLError.cancelled`.
+    // whose surrounding Task is already cancelled is harmless: the handler below fires immediately
+    // and cancels it.
     task.resume()
 
     var iterator = responses.makeAsyncIterator()
@@ -43,6 +43,14 @@ public final class StreamURLSessionTransport {
     } onCancel: {
       task.cancel()
     }
+
+    // A cancelled `AsyncThrowingStream` finishes its iterator with `nil` rather than an error: its
+    // own internal cancellation handler resumes the pending continuation at once, winning the race
+    // against ours, which first has to round-trip through CFNetwork before the delegate can finish
+    // the stream. Cancellation therefore has to be reported here, or the `guard` below would
+    // misreport it as `noResponse`. This also keeps a response that arrived just before the
+    // cancellation from being handed to a caller that no longer wants it.
+    try Task.checkCancellation()
 
     guard let response else {
       throw URLSessionTransportError.noResponse(url: request.url)

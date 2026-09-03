@@ -8,11 +8,15 @@
 import Foundation
 
 struct EventParser {
-  private let newlineCharacters = ["\r\n", "\n", "\r"]
-  private lazy var eventsDelimeters: [Data] = {
-    newlineCharacters.map { "\($0)\($0)".data(using: .utf8)! }
-  }()
+  private static let eventsDelimeters: [Data] = ["\r\n", "\n", "\r"]
+    .map { Data("\($0)\($0)".utf8) }
+  private static let longestDelimeterCount = 4
+
   private var buffer = Data()
+  /// How much of `buffer` has already been searched. `extractEvents` is called after every append,
+  /// so without this the whole buffer is rescanned each time and assembling one event costs time
+  /// quadratic in its length.
+  private var scannedCount = 0
   
   mutating func append(byte: UInt8) {
     buffer.append(byte)
@@ -29,18 +33,30 @@ struct EventParser {
       let eventChunk = buffer[eventChunkRange]
       eventsChunks.append(eventChunk)
       buffer.removeSubrange(buffer.startIndex..<firstEventDelimeterRange.upperBound)
+      scannedCount = 0
     }
+    // The buffer has been searched to its end; keep back the tail a delimeter could still straddle
+    // once more bytes arrive.
+    scannedCount = max(0, buffer.count - (Self.longestDelimeterCount - 1))
     return eventsChunks.compactMap { parseEvent($0) }
   }
   
-  mutating func firstEventDeliemeterRange() -> Range<Data.Index>? {
-    for eventDelimeter in eventsDelimeters {
-      guard let range = buffer.range(of: eventDelimeter) else {
+  /// - Returns: the earliest delimeter in the unsearched part of the buffer. Earliest rather than
+  /// first-by-delimeter-kind: a stream that mixes line endings would otherwise split an event at a
+  /// later `\r\n\r\n` while an earlier `\n\n` sat unnoticed.
+  func firstEventDeliemeterRange() -> Range<Data.Index>? {
+    let searchRange = buffer.index(buffer.startIndex, offsetBy: min(scannedCount, buffer.count))..<buffer.endIndex
+    var earliest: Range<Data.Index>?
+    for eventDelimeter in Self.eventsDelimeters {
+      guard let range = buffer.range(of: eventDelimeter, in: searchRange) else {
         continue
       }
-      return range
+      if let found = earliest, found.lowerBound <= range.lowerBound {
+        continue
+      }
+      earliest = range
     }
-    return nil
+    return earliest
   }
   
   func parseEvent(_ chunk: Data) -> EventSource.Event? {

@@ -1,42 +1,16 @@
 //
 //  AsyncBytes.swift
-//  
-//
-//  Created by Grigory Serebryanyy on 24.10.2023.
 //
 
 import Foundation
 
-public final class AsyncBytes: AsyncSequence {
-  public typealias AsyncIterator = Iterator
-  public typealias Element = ArraySlice<UInt8>
-  
-  var bytesProvider: BytesProvider
-  let task: URLSessionTask
-  
-  init(bytesProvider: BytesProvider, task: URLSessionTask) {
-    self.bytesProvider = bytesProvider
-    self.task = task
-  }
-  
-  public struct Iterator: AsyncIteratorProtocol {
-    
-    public typealias Element = ArraySlice<UInt8>
-    
-    var bytesProvider: BytesProvider
-    let task: URLSessionTask
-    
-    public mutating func next() async throws -> ArraySlice<UInt8>? {
-      return try await withTaskCancellationHandler {
-        try await bytesProvider.next()
-      } onCancel: { [task] in
-        task.cancel()
-      }
-    }
-  }
-  
-  public func makeAsyncIterator() -> Iterator {
-    Iterator(bytesProvider: bytesProvider, task: task)
-  }
-}
-
+/// The byte chunks of one streaming response.
+///
+/// A plain `AsyncThrowingStream` rather than a hand-rolled buffer-plus-continuation: `yield` is
+/// synchronous and thread-safe, so chunks keep the order the delegate received them in, and the
+/// finish-exactly-once bookkeeping is the stdlib's rather than ours.
+///
+/// Note the buffering is unbounded, which is deliberate. `AsyncStream`'s bounded policies drop
+/// elements, and dropping a chunk of a byte stream corrupts it rather than applying backpressure —
+/// `URLSession` has no producer-suspending API to offer here either.
+public typealias AsyncBytes = AsyncThrowingStream<ArraySlice<UInt8>, Swift.Error>

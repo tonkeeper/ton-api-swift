@@ -12,10 +12,10 @@ public struct StreamingAPI {
   private let hostProvider: () async throws -> URL
   private let tokenProvider: () async throws -> String
   
-  public init(configuration: URLSessionConfiguration,
+  public init(urlSession: URLSession,
               hostProvider: @escaping () async throws -> URL,
               tokenProvider: @escaping () async throws -> String) {
-    self.transport = StreamURLSessionTransport(urlSessionConfiguration: configuration)
+    self.transport = StreamURLSessionTransport(urlSession: urlSession)
     self.hostProvider = hostProvider
     self.tokenProvider = tokenProvider
   }

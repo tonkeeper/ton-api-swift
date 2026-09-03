@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "TonAPI",
     platforms: [
-      .macOS(.v12), .iOS(.v13)
+      .macOS(.v12), .iOS(.v15)
     ],
     products: [
         .library(name: "TonAPI", targets: ["TonAPI"]),
@@ -58,6 +58,10 @@ let package = Package(
         .target(name: "EventSource",
                 path: "Packages/EventSource",
                 sources: ["Sources"]
-               )
+               ),
+        .testTarget(name: "EventSourceTests",
+                    dependencies: [.target(name: "EventSource")],
+                    path: "Packages/EventSource/Tests"
+                   )
     ]
 )

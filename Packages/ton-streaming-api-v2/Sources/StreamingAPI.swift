@@ -14,12 +14,12 @@ public final class StreamingAPI {
   private let jsonDecoder: JSONDecoder
   
   public init(
-    configuration: URLSessionConfiguration = .default,
+    urlSession: URLSession,
     hostProvider: (() async throws -> URL)? = nil,
     tokenProvider: (() async throws -> String)? = nil,
     jsonDecoder: JSONDecoder = CodableHelper.jsonDecoder
   ) {
-    self.transport = StreamURLSessionTransport(urlSessionConfiguration: configuration)
+    self.transport = StreamURLSessionTransport(urlSession: urlSession)
     self.hostProvider = hostProvider ?? {
       guard let url = URL(string: TonStreamingAPIV2API.basePath) else {
         throw Error.incorrectUrl
